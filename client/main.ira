@@ -1,0 +1,24 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="google" content="notranslate" />
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <title>IRA Dashboard</title>
+    <script src="/ira/bower_components/webcomponentsjs/webcomponents.js"}}></script>
+  <script src="/ira/bower_components/chroma-js/chroma.js"></script>
+  <script src="/ira/bower_components/d3/d3.js"></script>
+  <script src="/ira/bower_components/pixi.js/bin/pixi.js"></script>
+  <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Roboto:900,400,300,100' type='text/css'>
+  <link rel="import" href="/ira/bower_components/paper-material/paper-material.html">
+  <link rel="import" href="/ira/bower_components/paper-progress/paper-progress.html">
+  <link rel="import" href="/ira/bower_components/paper-spinner/paper-spinner.html">
+  <link rel="import" href="/ira/bower_components/paper-input/paper-input.html">
+  <script src="https://use.fontawesome.com/776485a324.js"></script>
+  <style is="custom-style">
+    paper-progress {
+      width:100px;
+      border:solid 1px #777777;
+      --paper-progress-active-color: #777777;
+      margin:auto;
+    }
+  </style>
+</head>

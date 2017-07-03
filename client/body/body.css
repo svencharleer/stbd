@@ -1,0 +1,156 @@
+.loading-screen {
+  color: #424242;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-container {
+  display: flex; /* or inline-flex */
+  flex-direction: row;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap
+}
+
+.column-even {
+  background-color: #F7F7F7;
+}
+
+.column {
+
+  justify-content: space-around;
+
+  display: flex; /* or inline-flex */
+  flex-direction: column;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-flex-flow: column wrap;
+  flex-flow: column wrap
+  width:300px;
+}
+
+.flex-row
+{
+  display: flex; /* or inline-flex */
+  flex-direction: row;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap
+}
+
+.flex-item {
+  width: 175px;
+  justify-content: space-around;
+
+  margin-right:10px;
+  margin-left:10px;
+  height:65px;
+}
+.flex-3columns{
+  width:584px;
+}
+
+.flex-4columns{
+  width:780px;
+}
+
+.flex-5columns{
+  width:995px;
+}
+
+
+.flex-column h2, .flex-item h2 {
+  text-align:center;
+  font-weight: lighter;
+  text-transform: lowercase;;
+  font-size:1em;
+  width:195px;
+  overflow:hidden;
+}
+
+#bachelor
+{
+  margin-left:20px;
+}
+.september-column
+{
+  border-left:solid 1px #CBCBCB;
+
+}
+.planning-column
+{
+  border-left:dotted 1px #CBCBCB;
+  border-right:solid 1px #CBCBCB;
+}
+
+.flex-september{
+  border-left: solid 1px #CBCBCB;
+  border-top: solid 1px #CBCBCB;
+  border-right:dotted 1px #CBCBCB;
+}
+.flex-planning{
+  border-right: solid 1px #CBCBCB;
+  border-top: solid 1px #CBCBCB;
+}
+
+.loading{
+  width:100%;
+  text-align: center;
+}
+
+.nostudent{
+  color: #424242;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  display:none;
+}
+.courseseparator{
+  border-top:dotted 1px #DDDDDD;
+  margin-top:10px;
+  margin-left:30px;
+  margin-right:30px;
+}
+
+.hider{
+  text-decoration: none;
+  color:grey;
+  display:inline-block;
+  margin-left:10px;
+  margin-right:10px;
+  font-size:10px;
+}
+.hider:hover{
+  color:red;
+}
+
+.bottomheader{
+    text-align:center;
+
+}

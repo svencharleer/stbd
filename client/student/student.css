@@ -1,0 +1,14 @@
+#student{
+  width:500px;
+  position:absolute;
+  top:5px;
+    z-index: 1000;
+}
+
+#student paper-material{
+    padding:5px;
+}
+
+#student input{
+  width:70px;
+}

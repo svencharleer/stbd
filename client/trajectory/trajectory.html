@@ -1,0 +1,26 @@
+<template name="trajectory">
+  <div id="trajectory">
+    <h2>Positionering ten opzichte van je medestudenten<a class="hider" href="#" onclick="if($('.rowtraject').css('visibility') == 'visible'){$('.rowtraject').css('visibility','hidden');}else{$('.rowtraject').css('visibility','visible');}">x</a></h2> 
+    <div style="position:relative" class="rowtraject">
+
+      <span id="cse100">100</span>
+      <span id="cse50">50</span>
+      <span id="cse0">0</span>
+
+      <div id="trajectory-bg">
+        <div id="trajectory-bg-middleline"></div>
+      </div>
+      <canvas id="trajectory-overlay"></canvas>
+      {{#if Template.subscriptionsReady}}
+      {{#each periods}}
+          {{> trajectoryperiod}}
+      {{/each}}
+      {{/if}}
+      <!-- curves -->
+
+
+      {{update}}
+    </div>
+
+  </div>
+</template>

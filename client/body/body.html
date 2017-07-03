@@ -1,0 +1,195 @@
+<body>
+<div class="loading-screen">
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <paper-spinner alt="Loading Dashboard" active></paper-spinner>
+      <h1 style="color:#7c7c7c; font-size: 16px;">Loading Dashboard</h1>
+    </div>
+</div>
+<div class="nostudent">
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <h1 style="color:#7c7c7c; font-size: 16px;">Geen student gevonden</h1>
+    </div>
+</div>
+{{> student}}
+<div class="flex-container" >
+<div class="flex-row">
+  <div class="flex-4columns">
+
+    {{> trajectory}}
+    {{#if Fails}}
+    {{/if}}
+  </div>
+  <div class="flex-column flex-september colfail">
+
+    {{> september}}
+
+  </div>
+  <div class="flex-column flex-planning colfail2">
+  {{#if Template.subscriptionsReady}}
+    {{> planning}}
+  {{/if}}
+  </div>
+
+
+</div>
+<div class="flex-row">
+<div class="flex-column column-even colijkingstoets">
+  <h2>IJkingstoets</h2>
+  <div class="CSE"></div>
+  {{#if Template.subscriptionsReady}}
+  {{#each ijkingstoetsen}}
+  <div class="flex-item">
+    {{> ijkingstoets}}
+  </div>
+  {{/each}}
+  {{else}}
+    <div class="loading"><paper-spinner alt="Loading" active></paper-spinner></div>
+  {{/if}}
+</div>
+<div class="flex-column colttt">
+  <h2>Tussentijdse Toetsen</h2>
+  <div class="CSE"></div>
+  {{#if Template.subscriptionsReady}}
+  <!-- {{#each TTTs}} -->
+  {{#each studentCourses 0}}
+  <div class="flex-item">
+    {{> course}}
+  </div>
+  {{/each}}
+  {{else}}
+    <div class="loading"><paper-spinner alt="Loading" active></paper-spinner></div>
+  {{/if}}
+</div>
+<div class="flex-column column-even coljan">
+<h2>Januari</h2>
+<div class="CSE">
+{{#with CSE_januari}}
+  {{> CSE_bar }}
+{{/with}}
+</div>
+    {{#if Template.subscriptionsReady}}
+      {{#each studentCourses 1}}
+      <div class="flex-item">
+        {{> course}}
+      </div>
+      {{/each}}
+      {{else}}
+        <div class="loading"><paper-spinner alt="Loading" active></paper-spinner></div>
+      {{/if}}
+</div>
+{{#if ShowJuni}}
+<div class="flex-column coljun">
+<h2>Juni</h2>
+<div class="CSE">
+  {{#with CSE_juni}}
+    {{> CSE_bar }}
+  {{/with}}
+</div>
+      {{#if Template.subscriptionsReady}}
+      {{#each studentCourses 2}}
+      <div class="flex-item">
+        {{> course}}
+      </div>
+      {{/each}}
+      {{else}}
+        <div class="loading"><paper-spinner alt="Loading" active></paper-spinner></div>
+      {{/if}}
+</div>
+{{/if}}
+{{#if ShowSeptember}}
+<div class="flex-column column-even colsep">
+<h2>3e examenperiode</h2>
+<div class="CSE">
+  {{#with CSE_september}}
+    {{> CSE_bar }}
+  {{/with}}
+</div>
+      {{#if Template.subscriptionsReady}}
+      {{#each studentCourses 1 false 2}}
+      <div class="flex-item">
+        {{> course}}
+      </div>
+      {{/each}}
+      <div class="courseseparator"></div>
+      {{#each studentCourses 2 false 2}}
+      <div class="flex-item">
+        {{> course}}
+      </div>
+      {{/each}}
+      {{else}}
+        <div class="loading"><paper-spinner alt="Loading" active></paper-spinner></div>
+      {{/if}}
+</div>
+{{/if}}
+<div class="flex-column  column-even colfail">
+<h2>Onsuccesvolle examens</h2>
+<div class="CSE">
+
+</div>
+      {{#if Template.subscriptionsReady}}
+      {{#each coursesLeft 1}}
+      <div class="flex-item">
+        {{> course}}
+      </div>
+      {{/each}}
+      <div class="courseseparator"></div>
+      {{#each coursesLeft 2}}
+      <div class="flex-item">
+        {{> course}}
+      </div>
+      {{/each}}
+      {{else}}
+        <div class="loading"><paper-spinner alt="Loading" active></paper-spinner></div>
+      {{/if}}
+</div>
+
+
+
+<div class="flex-column planning-column colfail2">
+  <h2>Onsuccesvolle examens</h2>
+  <div class="CSE">
+  </div>
+    <div>
+      {{#if Template.subscriptionsReady}}
+    {{#each coursesLeft 1}}
+      <div class="flex-row">
+        <div class="flex-item">{{> checkbox}}</div>
+      </div>
+      {{/each}}
+        <div class="courseseparator"></div>
+      {{#each coursesLeft 2}}
+        <div class="flex-row">
+          <div class="flex-item">{{> checkbox}}</div>
+        </div>
+        {{/each}}
+        {{else}}
+          <div class="loading"><paper-spinner alt="Loading" active></paper-spinner></div>
+        {{/if}}
+    </div>
+
+</div>
+
+
+
+<div class="flex-column history colhistory">
+  {{> future}}
+</div>
+<div class="flex-row">
+  <div class="flex-item bottomheader"><a  class="hider" href="#" onclick="if($('.colijkingstoets').css('visibility') == 'visible'){$('.colijkingstoets').css('visibility','hidden');}else{$('.colijkingstoets').css('visibility','visible');}">.x.</a></div>
+  <div class="flex-item bottomheader"><a class="hider"  href="#" onclick="if($('.colttt').css('visibility') == 'visible'){$('.colttt').css('visibility','hidden');}else{$('.colttt').css('visibility','visible');}">.x.</a></div>
+  <div class="flex-item bottomheader"><a  class="hider" href="#" onclick="if($('.coljan').css('visibility') == 'visible'){$('.coljan').css('visibility','hidden');}else{$('.coljan').css('visibility','visible');}">.x.</a></div>
+  {{#if ShowJuni}}
+  <div class="flex-item bottomheader"><a  class="hider" href="#" onclick="if($('.coljun').css('visibility') == 'visible'){$('.coljun').css('visibility','hidden');}else{$('.coljun').css('visibility','visible');}">.x.</a></div>
+  {{/if}}
+  {{#if ShowSeptember}}
+  <!--{{#if Fails}}-->
+  <div class="flex-item bottomheader"></div>
+  {{/if}}
+  <div class="flex-item bottomheader"><a  class="hider" href="#" onclick="if($('.colfail').css('visibility') == 'visible'){$('.colfail').css('visibility','hidden');}else{$('.colfail').css('visibility','visible');}">.x.</a></div>
+    <div class="flex-item bottomheader"><a class="hider"  href="#" onclick="if($('.colfail2').css('visibility') == 'visible'){$('.colfail2').css('visibility','hidden');}else{$('.colfail2').css('visibility','visible');}">.x.</a></div>
+  <!--{{/if}}-->
+</div>
+</div>
+</div>
+
+</body>
