@@ -72,10 +72,10 @@ Template.planning.helpers({
     })
 
     //add all the courses they already passed
-    var allCourses = Courses.find({fase:1});
+    var allCourses = Courses.find({phase:1});
     var passedCourses = [];
     allCourses.forEach(function(j){
-      var myCourse = Grades.findOne({idopleidingsond:j._id});
+      var myCourse = Grades.findOne({courseid:j.courseid});
       if(myCourse == undefined) return;
       if(myCourse.grade_try1 < 10 || myCourse.grade_try1 == "NA") return;
       //console.log(j.name, j.credits)
@@ -83,7 +83,7 @@ Template.planning.helpers({
       totalECTS += j.credits;
     })
     //console.log(totalECTS);
-    return {percent: Math.ceil(100 * receivedPLUSplannedECTS/totalECTS)};
+    return {percent: Math.round(100 * receivedPLUSplannedECTS/totalECTS)};
 
   },
   nrOfCourses(){

@@ -353,17 +353,17 @@ getTTT_AlgebraPointDistribution: function(args){
     if(CSE_student["cse1"] >= limit1)
     {
       status = "green";
-      match = {"cse_jan": {$gte:limit1}};
+      match = {"cse_jun": {$gte:limit1}};
 
     }
     else if(CSE_student["cse1"] <limit1 && CSE_student["cse1"] >= limit2)
     {
       status = "orange";
-      match = {$and:[{"cse_jan": {$lt:limit1}},{"cse_jan": {$gte:limit2}}]};
+      match = {$and:[{"cse_jun": {$lt:limit1}},{"cse_jun": {$gte:limit2}}]};
     }
     else {
       status = "red";
-      match = {"cse_jan": {$lt:limit2}};
+      match = {"cse_jun": {$lt:limit2}};
     }
 
    console.log(status);
