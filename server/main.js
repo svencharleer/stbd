@@ -488,8 +488,10 @@ getTTT_AlgebraPointDistribution: function(args){
     })
     console.log("match",Object.keys(studentsThatMatch).length);
     console.log("passed",nrPassed);
-
-    result.percentAllPassed = nrPassed/Object.keys(studentsThatMatch).length;
+    if(Object.keys(studentsThatMatch).length == 0)
+      result.percentAllPassed = 0;
+    else
+      result.percentAllPassed = nrPassed/Object.keys(studentsThatMatch).length;
     return result;
   },
   getFailedCourses(who)

@@ -72,7 +72,7 @@ Template.planning.helpers({
     })
 
     //add all the courses they already passed
-    var allCourses = Courses.find({phase:1});
+    var allCourses = Courses.find({$and:[{phase:1}, {$or:[{semester:1},{semester:2}]}]});
     var passedCourses = [];
     allCourses.forEach(function(j){
       var myCourse = Grades.findOne({courseid:j.courseid});
@@ -82,7 +82,7 @@ Template.planning.helpers({
       receivedPLUSplannedECTS += j.credits;
       totalECTS += j.credits;
     })
-    //console.log(totalECTS);
+    console.log("credits:",receivedPLUSplannedECTS,totalECTS);
     return {percent: Math.round(100 * receivedPLUSplannedECTS/totalECTS)};
 
   },
