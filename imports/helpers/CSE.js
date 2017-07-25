@@ -1,5 +1,5 @@
 //get CSE per semester
-Helpers_GetCSE = function(semester,year) //1 2 3 (sept) 0 = tTT
+Helpers_GetCSE = function(semester,year, pure) //1 2 3 (sept) 0 = tTT
 {
   var courses;
   if(semester == 1)
@@ -31,6 +31,7 @@ Helpers_GetCSE = function(semester,year) //1 2 3 (sept) 0 = tTT
   });
   console.log("apart_cse" + cse_forprint)
   console.log("total_cse" +totalcse)
+  if(pure) return cse;
   if(totalcse>0)
     return Math.round(cse/totalcse*100);
   else {
