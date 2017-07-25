@@ -350,13 +350,13 @@ getTTT_AlgebraPointDistribution: function(args){
       limit2 = Meteor.settings.public.cselimit2;
     }
 
-    if(CSE_student["cse1"] >= limit1)
+    if(CSE_student["cse2"] >= limit1)
     {
       status = "green";
       match = {"cse_jun": {$gte:limit1}};
 
     }
-    else if(CSE_student["cse1"] <limit1 && CSE_student["cse1"] >= limit2)
+    else if(CSE_student["cse2"] <limit1 && CSE_student["cse2"] >= limit2)
     {
       status = "orange";
       match = {$and:[{"cse_jun": {$lt:limit1}},{"cse_jun": {$gte:limit2}}]};
