@@ -13,9 +13,9 @@
 {{> student}}
 <div class="flex-container" >
 <div class="flex-row">
-  <div class="flex-4columns">
-
-    {{> trajectory}}
+  {{#unless ShowSeptember}}
+  <div class="flex-5columns">
+      {{> trajectory}}
     {{#if Fails}}
     {{/if}}
   </div>
@@ -24,11 +24,23 @@
     {{> september}}
 
   </div>
+  {{/unless}}
+  {{#if ShowSeptember}}
+  <div class="flex-5columns">
+
+    {{> trajectory}}
+    {{#if Fails}}
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{#unless ShowSeptember}}
   <div class="flex-column flex-planning colfail2">
   {{#if Template.subscriptionsReady}}
     {{> planning}}
   {{/if}}
   </div>
+  {{/unless}}
 
 
 </div>
@@ -144,7 +156,7 @@
 </div>
 
 
-
+{{#unless ShowSeptember}}
 <div class="flex-column planning-column colfail2">
   <h2>Onsuccesvolle examens</h2>
   <div class="CSE">
@@ -168,6 +180,7 @@
     </div>
 
 </div>
+{{/unless}}
 
 
 

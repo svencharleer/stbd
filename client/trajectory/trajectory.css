@@ -1,7 +1,7 @@
 #trajectory-bg
 {
 
-  width:780px;
+  width:975px;/*780px;*/
   height:100px;
   border-left:solid 1px #B8B8B8;
   border-top:dotted 1px #B8B8B8;
@@ -11,7 +11,7 @@
 
 }
 #trajectory-bg-middleline{
-  width:780px;
+  width:975px;/*780px;*/
   height:50px;
   border-bottom:dotted 1px #B8B8B8;
   z-index: -1;
