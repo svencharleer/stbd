@@ -136,7 +136,7 @@
 </div>
 
 {{/if}}
-<div class="flex-column  column-even colfail">
+<div class="flex-column   colfail">
 <h2>Onsuccesvolle examens</h2>
 <div class="CSE">
 
@@ -160,11 +160,13 @@
 
 {{#if ShowSeptember}}
 <div class="flex-column column-even colsept">
-<h2>Studiepunt planning</h2>
+<h2>Studiebelastingplanning</h2>
 <div class="CSE">
 
 </div>
+{{#if Template.subscriptionsReady}}
  {{> cseplanning}}
+ {{/if}}
 </div>
 {{/if}}
 {{#unless ShowSeptember}}

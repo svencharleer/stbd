@@ -6,6 +6,11 @@ var slider5 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
 
 Template.cseplanning.rendered = function(){
 
+  d3.select("#cseslider_y1").call(slider1);
+  d3.select("#cseslider_y2").call(slider2);
+  d3.select("#cseslider_y3").call(slider3);
+  d3.select("#cseslider_y4").call(slider4);
+  d3.select("#cseslider_y5").call(slider5);
   var cse = Session.get("CSE_september_pure");
   if(cse == undefined) return;
   var cse_remainig = 180 - cse;
@@ -26,11 +31,7 @@ Template.cseplanning.rendered = function(){
 
 
 
-  d3.select("#cseslider_y1").call(slider1);
-  d3.select("#cseslider_y2").call(slider2);
-  d3.select("#cseslider_y3").call(slider3);
-  d3.select("#cseslider_y4").call(slider4);
-  d3.select("#cseslider_y5").call(slider5);
+
 
   var cses = Session.get("CSE_Planning");
   slider1.setValue(cses.cse1);
@@ -42,13 +43,31 @@ Template.cseplanning.rendered = function(){
 
   Tracker.autorun(function(){
 
+    var cse = Session.get("CSE_september_pure");
+    if(cse == undefined) return;
+    var cse_remainig = 180 - cse;
+    var cse2 = Math.floor(cse_remainig/4);
+    var cse3 = Math.floor(cse_remainig/3);
+    var cse4 = cse_remainig - cse3 - cse2;
+    var cse5 = 0;
+    if(cse4 > 60)
+    {
+      cse5 = cse4 - 60;
+      cse4 = 60;
 
-
+    }
+    Session.set("CSE_Planning", {"cse1": cse, "cse2": cse2, "cse3": cse3, "cse4":cse4, "cse5":cse5})
+    slider1.setValue(cses.cse1);
+    slider2.setValue(cses.cse2);
+    slider3.setValue(cses.cse3);
+    slider4.setValue(cses.cse4);
+    slider5.setValue(cses.cse5);
   });
 }
 
 function slide_update(){
   var cses = Session.get("CSE_Planning");
+  if(cses == undefined) return;
   //find updated slider (only one can be updated at a time)
   var updatedSlider = undefined;
   updatedSlider = cses.cse1 != Math.floor(slider1.value()) ? {id:1, s:slider1,v:cses.cse1, r: [cses.cse2,cses.cse3,cses.cse4,cses.cse5]} : updatedSlider;
@@ -97,7 +116,9 @@ Template.cseplanning.helpers(
     'totalCSE': function()
     {
       var cses = Session.get("CSE_Planning");
-      return cses.cse1 + cses.cse2 + cses.cse3 + cses.cse4 + cses.cse5;
+      if(cses != undefined)
+        return cses.cse1 + cses.cse2 + cses.cse3 + cses.cse4 + cses.cse5;
+      return 0;
     }
   }
 )
