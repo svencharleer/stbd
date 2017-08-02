@@ -18,5 +18,8 @@ Start meteor with the flag.
 
 ``
 meteor --settings settings.json
-http://localhost:3000/dev/2016/653523
 ``
+
+Test in browser (chrome) with this:
+
+http://localhost:3000/dev/2016/653523
