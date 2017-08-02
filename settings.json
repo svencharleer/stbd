@@ -1,0 +1,12 @@
+{
+     "public":{
+            "rootroute":"dev",
+            "cselimit1": 100,
+            "cselimit2": 60,
+            "ijkingstoets_juli" : true,
+            "ijkingstoets_september" : true,
+            "showJuni": true,
+            "showSeptember" :true
+        }
+
+}
