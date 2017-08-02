@@ -28,6 +28,12 @@ Template.trajectory.helpers({
     if(Meteor.settings.public.showSeptember== true)  {
       periods.push(september)
     }
+    if(Meteor.settings.public.showJuni== true)  {
+      periods.push(juni)
+    }
+    if(Meteor.settings.public.showSeptember== true)  {
+      periods.push(september)
+    }
     var canvas = $("#trajectory-overlay")
       .attr("width", background.width())
       .attr("height", background.height());

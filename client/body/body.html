@@ -13,9 +13,9 @@
 {{> student}}
 <div class="flex-container" >
 <div class="flex-row">
-  <div class="flex-4columns">
-
-    {{> trajectory}}
+  {{#unless ShowSeptember}}
+  <div class="flex-5columns">
+      {{> trajectory}}
     {{#if Fails}}
     {{/if}}
   </div>
@@ -24,11 +24,25 @@
     {{> september}}
 
   </div>
+  {{/unless}}
+  {{#if ShowSeptember}}
+  <div class="flex-5columns">
+
+    {{> trajectory}}
+    {{#if Fails}}
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{#unless ShowSeptember}}
   <div class="flex-column flex-planning colfail2">
   {{#if Template.subscriptionsReady}}
     {{> planning}}
   {{/if}}
   </div>
+  {{/unless}}
+
+
 
 
 </div>
@@ -97,7 +111,7 @@
 </div>
 {{/if}}
 {{#if ShowSeptember}}
-<div class="flex-column column-even colsep">
+<div class="flex-column column-even colsept">
 <h2>3e examenperiode</h2>
 <div class="CSE">
   {{#with CSE_september}}
@@ -120,8 +134,9 @@
         <div class="loading"><paper-spinner alt="Loading" active></paper-spinner></div>
       {{/if}}
 </div>
+
 {{/if}}
-<div class="flex-column  column-even colfail">
+<div class="flex-column   colfail">
 <h2>Onsuccesvolle examens</h2>
 <div class="CSE">
 
@@ -143,8 +158,18 @@
       {{/if}}
 </div>
 
+{{#if ShowSeptember}}
+<div class="flex-column column-even colsept">
+<h2>Studiebelastingplanning</h2>
+<div class="CSE">
 
-
+</div>
+{{#if Template.subscriptionsReady}}
+ {{> cseplanning}}
+ {{/if}}
+</div>
+{{/if}}
+{{#unless ShowSeptember}}
 <div class="flex-column planning-column colfail2">
   <h2>Onsuccesvolle examens</h2>
   <div class="CSE">
@@ -168,6 +193,7 @@
     </div>
 
 </div>
+{{/unless}}
 
 
 
@@ -183,7 +209,7 @@
   {{/if}}
   {{#if ShowSeptember}}
   <!--{{#if Fails}}-->
-  <div class="flex-item bottomheader"></div>
+  <div class="flex-item bottomheader"><a  class="hider" href="#" onclick="if($('.colsept').css('visibility') == 'visible'){$('.colsept').css('visibility','hidden');}else{$('.colsept').css('visibility','visible');}">.x.</a></div>
   {{/if}}
   <div class="flex-item bottomheader"><a  class="hider" href="#" onclick="if($('.colfail').css('visibility') == 'visible'){$('.colfail').css('visibility','hidden');}else{$('.colfail').css('visibility','visible');}">.x.</a></div>
     <div class="flex-item bottomheader"><a class="hider"  href="#" onclick="if($('.colfail2').css('visibility') == 'visible'){$('.colfail2').css('visibility','hidden');}else{$('.colfail2').css('visibility','visible');}">.x.</a></div>

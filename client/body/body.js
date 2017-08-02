@@ -39,6 +39,11 @@ Template.body.onCreated(function(){
       Session.set("CSE_januari", Helpers_GetCSE(1,year));
       Session.set("CSE_juni", Helpers_GetCSE(2,year));
       Session.set("CSE_september", Helpers_GetCSE(3,year));
+
+      Session.set("CSE_januari_pure", Helpers_GetCSE(1,year,true));
+      Session.set("CSE_juni_pure", Helpers_GetCSE(2,year,true));
+      Session.set("CSE_september_pure", Helpers_GetCSE(3,year,true));
+
       Session.set("CSE_TTT", Helpers_GetTotalPointForPeriod(0,year));
       var score = Ijkingstoets.findOne();
       var iscore = 0;
@@ -300,9 +305,10 @@ Template.body.helpers({
 
     return courses;
   },
-  CSE_januari() { return {percent: Session.get("CSE_januari")} },
-  CSE_juni() { return {percent: Session.get("CSE_juni")} },
-  CSE_september() { return {percent: Session.get("CSE_september")} },
+  CSE_januari() { return {percent: Session.get("CSE_januari"), raw:  Session.get("CSE_januari_pure") } },
+  CSE_juni() { return {percent: Session.get("CSE_juni"), raw:  Session.get("CSE_juni_pure")} },
+  CSE_september() { return {percent: Session.get("CSE_september"), raw:  Session.get("CSE_september_pure")} },
+
   Fails() {
     //console.log("fail fetch of " + Session.get("Fails"))
     return Session.get("Fails");},

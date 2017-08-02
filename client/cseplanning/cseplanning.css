@@ -1,0 +1,64 @@
+.d3slider {
+  width:150px;
+}
+
+.d3-slider {
+  width:50px;
+}
+
+circle.dragger-outer{
+  fill:#f27eea;
+  stroke:none;
+}
+
+circle.dragger-inner {
+  fill:#f27eea;
+
+
+}
+
+rect.d3slider-rect-range
+{
+  fill:#e0e0e0;
+  stroke:#777;
+}
+
+rect.d3slider-rect-value
+{
+  fill:#777;
+}
+
+.slideflex {
+  display: flex; /* or inline-flex */
+  flex-direction: row;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slideflex > span {
+  width: 30px;
+  justify-content: space-around;
+
+  font-size:10px;
+  color:#777777;
+
+}
+.slideflex > svg {
+
+  justify-content: space-around;
+
+}
+#slidetotal {
+  width: 150px;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.slidetotal {
+
+}
