@@ -1,6 +1,6 @@
 # LISSA
 
-## How to run.
+## How to...
 
 Import data from JSON files into meteor database.
 
