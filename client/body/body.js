@@ -18,12 +18,13 @@ Template.body.onCreated(function(){
     //console.log("student now is " + Session.get("student"))
     var handler2 = instance.subscribe("generic_grades",Session.get("student"));
     var handler3 = instance.subscribe("ijkingstoets", Session.get("student"));
-
+    var handler4 = instance.subscribe("generic_cse", Session.get("student"));
     var handler8 = instance.subscribe("generic_students");
-    if(handler2.ready() && handler3.ready() && handler8.ready())
+    if(handler2.ready() && handler3.ready() && handler8.ready() && handler4.ready())
     {
         console.log(Session.get("student"));
-      var studentName = Students.findOne({studentid: Session.get("student")});
+      var studentID = Session.get("student");
+      var studentName = Students.findOne({studentid: studentID});
         console.log(studentName);
       if(studentName == undefined) {
 
@@ -36,13 +37,13 @@ Template.body.onCreated(function(){
 
       //get the CSE for the student
       var year = Session.get("Year");
-      Session.set("CSE_januari", Helpers_GetCSE(1,year));
-      Session.set("CSE_juni", Helpers_GetCSE(2,year));
-      Session.set("CSE_september", Helpers_GetCSE(3,year));
+      Session.set("CSE_januari", Helpers_GetCSE(studentID, 1, year));
+      Session.set("CSE_juni", Helpers_GetCSE(studentID, 2,year));
+      Session.set("CSE_september", Helpers_GetCSE(studentID, 3,year));
 
-      Session.set("CSE_januari_pure", Helpers_GetCSE(1,year,true));
-      Session.set("CSE_juni_pure", Helpers_GetCSE(2,year,true));
-      Session.set("CSE_september_pure", Helpers_GetCSE(3,year,true));
+      Session.set("CSE_januari_pure", Helpers_CalculateCSE(1,year,true));
+      Session.set("CSE_juni_pure", Helpers_CalculateCSE(2,year,true));
+      Session.set("CSE_september_pure", Helpers_CalculateCSE(3,year,true));
 
       Session.set("CSE_TTT", Helpers_GetTotalPointForPeriod(0,year));
       var score = Ijkingstoets.findOne();

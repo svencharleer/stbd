@@ -35,6 +35,10 @@ Meteor.publish("ijkingstoets", function(who){
   return Ijkingstoets.find({student:who});
 })
 
+Meteor.publish("generic_cse", function(who){
+  return CSEs.find({studentid: who});
+})
+
 /*Meteor.publish("TTT_analyse", function(who){
   //return TTT_analyse.find({student:620434});
   return TTT_analyse.find({student:who});
