@@ -55,6 +55,7 @@
   display:inline-block;
   font-size: 10px;
   color:#777777;
+  margin: auto;
 }
 
 .coursegraph{
@@ -71,4 +72,11 @@
   font-size: 10px;
   color:#777777;
   
+}
+
+.coursecontainer:hover{
+  zoom: 150%;
+  z-index: 999;
+  position: absolute;
+  background-color: white
 }
