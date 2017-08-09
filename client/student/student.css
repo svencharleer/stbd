@@ -1,12 +1,9 @@
 #student{
-  width:500px;
+  width: 100%;
   position:absolute;
-  top:5px;
-    z-index: 1000;
-}
-
-#student paper-material{
-    padding:5px;
+  z-index: 1;
+  background: #F7F7F7;
+  padding: 5px;
 }
 
 #student input{
