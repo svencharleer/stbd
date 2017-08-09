@@ -1,9 +1,9 @@
 #student{
   width: 100%;
-  position:absolute;
   z-index: 1;
   background: #F7F7F7;
   padding: 5px;
+  border-bottom: 1px solid #c1c1c1;
 }
 
 #student input{
