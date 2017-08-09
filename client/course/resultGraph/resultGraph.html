@@ -1,14 +1,3 @@
 <template name="resultGraph">
-  <div class="coursecontainer">
-    <div class="coursename">{{name}}
-      <span class="credits">{{formattedCredits credits}}</span>
-    </div>
-    <div class="coursedetails {{id}} coursebox_{{status grade}}">
-
-      <div class="coursegrade coursegrade_{{status grade}}">{{realGrade}}</div>
-
-      <svg class="coursegraph" height="22" width="120"></svg>
-    </div>
-  </div>
-
+  <div id="{{id}}"></div>
 </template>
