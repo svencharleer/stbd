@@ -1,12 +1,14 @@
 <template name="trajectory">
   <div id="trajectory">
-    <h2>Positionering ten opzichte van je medestudenten<a class="hider" href="#" onclick="if($('.rowtraject').css('visibility') == 'visible'){$('.rowtraject').css('visibility','hidden');}else{$('.rowtraject').css('visibility','visible');}">x</a></h2> 
-    <div style="position:relative" class="rowtraject">
+    <h2>Positionering ten opzichte van je medestudenten
+      <!-- <a class="hider fa fa-chevron-up" href="#" onclick="if($('.rowtraject').css('display') == 'block'){$('.rowtraject').css('display','none');}else{$('.rowtraject').css('display','block');}"></a> -->
+      <a class="hider fa fa-chevron-up"></a>
+    </h2>
 
-      <span id="cse100">100</span>
+    <div class="rowtraject">
+    <span id="cse100">100</span>
       <span id="cse50">50</span>
       <span id="cse0">0</span>
-
       <div id="trajectory-bg">
         <div id="trajectory-bg-middleline"></div>
       </div>
@@ -17,8 +19,6 @@
       {{/each}}
       {{/if}}
       <!-- curves -->
-
-
       {{update}}
     </div>
 

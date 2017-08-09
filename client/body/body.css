@@ -53,9 +53,10 @@
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-
   -webkit-flex-flow: row wrap;
-  flex-flow: row wrap
+  flex-flow: row wrap;
+  width: 100%;
+  height: auto;
 }
 
 .flex-item {
@@ -75,7 +76,7 @@
 }
 
 .flex-5columns{
-  width:995px;
+  width: 100%;
 }
 
 
@@ -144,10 +145,12 @@
   display:inline-block;
   margin-left:10px;
   margin-right:10px;
-  font-size:10px;
+  font-size:14px;
+  cursor: pointer;
 }
+
 .hider:hover{
-  color:red;
+  color:#f27eea;
 }
 
 .bottomheader{

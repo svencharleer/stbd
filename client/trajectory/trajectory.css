@@ -1,33 +1,51 @@
-#trajectory-bg
-{
-
-  width:975px;/*780px;*/
+#trajectory-bg {
+  width:100%;/*780px;*/
   height:100px;
-  border-left:solid 1px #B8B8B8;
-  border-top:dotted 1px #B8B8B8;
-  border-bottom:dotted 1px #B8B8B8;
-  position:absolute;;
+  /*border-left:  solid  1px #B8B8B8;
+  border-right: solid  1px #B8B8B8;*/
+  border-top:    solid 1px  #ececec;
+  position:absolute;
   z-index: -1;
 
 }
-#trajectory-bg-middleline{
-  width:975px;/*780px;*/
+
+#trajectory-bg-middleline {
+  width: 100%;
+  /*width:975px;/*780px;*/
   height:50px;
   border-bottom:dotted 1px #B8B8B8;
   z-index: -1;
 }
 
-#trajectory
-{
-  padding-top:20px;
-  padding-bottom:20px;
+#trajectory {
+  /*margin-top:   8px;*/
+  /*margin-bottom:8px;*/
+  width: 973px;
+  border-left:  1px solid #ececec;
+  border-right: 1px solid #ececec;
+  /*border-top:   1px solid #c1c1c1;*/
 }
 
-#trajectory > h2
-{
+#trajectory h2 {
+  display: flex;
+  align-items: center;
   font-size:.8em;
-  font-weight: lighter;
+  font-weight: 300;
+  height: 24px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
 
+#trajectory h2:hover {
+  background: #f5f5f5;
 }
 
 #cse100{
@@ -50,14 +68,23 @@
   position:absolute;
   font-size:.5em;
   color:#B8B8B8;
-  bottom:-8px;
+  bottom:0px;
   left:2px;
+  z-index: 100;
 }
 
-#trajectory-overlay
-{
+#trajectory-overlay {
   position:absolute;
   left:0;
   z-index: -10;
+  width: 100%;
+}
 
+#trajectory .rowtraject {
+  position:relative;
+  max-height: 100px;
+  min-height: 100px;
+  transition: all 0.75s ease-out;
+  overflow: hidden;
+  border-bottom: solid 1px  #ececec;
 }

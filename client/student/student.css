@@ -1,9 +1,9 @@
 #student{
   width: 100%;
   z-index: 1;
-  background: #F7F7F7;
+  background: #fafafa;
   padding: 4px;
-  border-bottom: 1px solid #c1c1c1;
+  border-bottom: 1px solid #ececec;
   display: flex;
   align-items: center;
 }

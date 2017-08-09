@@ -1,6 +1,5 @@
 Template.trajectory.helpers({
-  periods(){
-
+  periods() {
     var r =  [{period:"ijkingstoets"},{period:"TTT"},{period:"januari"}];
     if(Meteor.settings.public.showJuni== true)  {
       r.push({period:"juni"})
@@ -9,11 +8,8 @@ Template.trajectory.helpers({
       r.push({period:"september"})
     }
     return r;
-
-
   },
-  update()
-  {
+  update() {
     //console.log("updating");
     var background = $("#trajectory-bg");
     var ijkingstoets = $("#distribution_ijkingstoets")
@@ -81,9 +77,24 @@ Template.trajectory.helpers({
       context.stroke();
 
     })
-
-
-
   }
+});
 
-})
+Template.trajectory.events({
+  'click h2': function(event, template) {
+    if(template.$(".hider").hasClass("fa-chevron-up")){
+
+      template.$(".rowtraject").css("min-height", "0px");
+      template.$(".rowtraject").css("max-height", "0px");
+
+      template.$(".hider").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+
+    } else if(template.$(".hider").hasClass("fa-chevron-down")){
+
+      template.$(".rowtraject").css("max-height", "100px");
+      template.$(".rowtraject").css("min-height", "100px");
+
+      template.$(".hider").removeClass("fa-chevron-down").addClass("fa-chevron-up");
+    }
+  },
+});
