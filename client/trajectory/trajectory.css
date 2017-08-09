@@ -86,5 +86,5 @@
   min-height: 100px;
   transition: all 0.75s ease-out;
   overflow: hidden;
-  border-bottom: solid 1px  #ececec;
+  /*border-bottom: solid 1px  #ececec;*/
 }

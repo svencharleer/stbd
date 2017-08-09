@@ -30,7 +30,7 @@ body {
 }
 
 .column-even {
-  background-color: #F7F7F7;
+  background-color: #fafafa;
 }
 
 .column {
@@ -90,6 +90,7 @@ body {
   min-height: 550px;
   border-right: 1px solid #ececec;
   border-bottom: 1px solid #ececec;
+  border-top: 1px solid #ececec
 }
 
 .flex-column .periode {
