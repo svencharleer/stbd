@@ -2,10 +2,24 @@
   width: 100%;
   z-index: 1;
   background: #F7F7F7;
-  padding: 5px;
+  padding: 4px;
   border-bottom: 1px solid #c1c1c1;
+  display: flex;
+  align-items: center;
 }
 
 #student input{
-  width:70px;
+  width:80px;
+  margin-left:  8px;
+  margin-right: 8px;
+}
+
+#student .fa {
+  margin-left:  8px;
+  margin-right: 8px;
+}
+
+#student span {
+  font-weight: 300;
+  color: #424242;
 }
