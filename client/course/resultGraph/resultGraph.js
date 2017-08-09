@@ -31,6 +31,7 @@ Template.resultGraph.onRendered(function(){
   var gradeHeight = totalCourseHeight;
   var detailsWidth = totalCourseWidth - gradeWidth;
   var detailsHeight = totalCourseHeight;
+  var border = 1;
 
   var instance = this;
   var data = this.data;
@@ -40,9 +41,12 @@ Template.resultGraph.onRendered(function(){
   var realGrade = data.realGrade;
   var semesterCourse = data.semester;
   var courseCredits  = data.credits;
+  var gradeStatus = status(courseGrade);
+  var courseColor = colorStatus(gradeStatus);
    
-  var bottomLayer = d3.select("#"+courseId).append("svg");
-  var topLayer = d3.select("#"+courseId).append("svg");
+  var container = d3.select("#"+courseId).append("svg");
+  var bottomLayer = container.append("svg");
+  var topLayer = container.append("svg");
 
   function status(grade) {
 
@@ -62,6 +66,23 @@ Template.resultGraph.onRendered(function(){
     }
   };
 
+  function colorStatus(status){
+    switch(status){
+      case "failed":
+        color = "#FD6869";
+        break;
+      case "tolerable":
+        color = "#E1B32";
+        break;
+      case "passed":
+        color = "#A5DC89";
+        break;
+      default:
+        color = "#777777";
+    }
+    return color;
+  }
+
   function formattedCredits(credits){
     if(credits != 0)
       return "["+credits +"stp]";
@@ -77,7 +98,7 @@ Template.resultGraph.onRendered(function(){
           lineNumber = 0,
           lineHeight = 1.1, // ems
           y = text.attr("y"),
-          dy = parseFloat(text.attr("dy")),
+          dy = parseFloat(text.attr("dy")) || 0,
           tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
       while (word = words.pop()) {
         line.push(word);
@@ -97,11 +118,27 @@ Template.resultGraph.onRendered(function(){
     .attr("width", totalCourseWidth)
     .attr("height", totalCourseHeight);
 
-  // topLayer
-  //   .attr("class", "topLayer")
-  //   .attr("width", totalCourseWidth)
-  //   .attr("height", totalCourseHeight)
-  //   .attr("transform", "translate(0," + -totalCourseHeight + ")");
+  
+
+  
+
+  topLayer
+    .attr("class", "topLayer")
+    .attr("width", totalCourseWidth)
+    .attr("height", totalCourseHeight)
+    .attr("x", 0)
+    .attr("y", 0)
+    ;
+
+var borderPath = topLayer.append("rect")
+       			.attr("x", 0)
+       			.attr("y", 0)
+       			.attr("height", totalCourseHeight)
+       			.attr("width", totalCourseWidth)
+       			.style("stroke", courseColor)
+       			.style("fill", "none")
+       			.style("stroke-width", border);
+
   
   
 
@@ -113,16 +150,15 @@ Template.resultGraph.onRendered(function(){
     .append("rect")
       .attr("width", gradeWidth)
       .attr("height", gradeHeight)
-      .attr("fill", function(){
-        return status(courseGrade);
-      })
+      .attr("fill", courseColor)
     ;
+
   svgCourseGrade
     .append("text")
     .text(realGrade)
       .attr("font-family", "sans-serif")
       .attr("font-size", "20px")
-      .attr("fill", "red")
+      .attr("fill", "white")
       .attr("text-anchor", "middle")
       .attr("alignment-baseline", "central")
       .attr("transform", "translate("+ gradeWidth/2.0 +","+ gradeHeight/2.0 + ")")
@@ -133,12 +169,12 @@ Template.resultGraph.onRendered(function(){
     .attr("class" , "details")
     .attr("width", detailsWidth)
     .attr("height", detailsHeight)
-    .attr("transform", "translate("+ gradeWidth + "," + 0 + ")")
+    .attr("x", gradeWidth)
     ;
 
   svgCourseDetails
     .append("text")
-    .text(courseName + formattedCredits(courseCredits))
+    .text(courseName + " " + formattedCredits(courseCredits))
       .attr("font-family", "sans-serif")
       .attr("font-size", "10px")
       .attr("color", "#777777")
@@ -148,13 +184,17 @@ Template.resultGraph.onRendered(function(){
       .call(wrap, detailsWidth)
     ;
   
+  
 
   var svgHistogram = svgCourseDetails.append("svg");
   svgHistogram
     .attr("class" , "histogram")
     .attr("width", detailsWidth)
-    .attr("height", detailsHeight)
+    .attr("height", detailsHeight/2.0)
+    .attr("y", detailsHeight/2.0)
     ;
+
+  
 
   
 
@@ -213,22 +253,22 @@ Template.resultGraph.onRendered(function(){
           .attr("height",1)
           .attr("transform","translate("+ (totalHeight *.5 + 10 *.5) +  "," + (height + 2) +")")
   ;
-  // graph.enter().append("rect")
-  //                   .attr("height",function(d){
-  //                       //wider if it's a grade that past
-  //                       return d.count/(startValues.max- 0) * height;
-  //                   })
-  //                   .attr("width",function(d){
-  //                       return .05 * totalHeight;
-  //                   })
-  //                   .attr("fill", function(d){
+  graph.enter().append("rect")
+                    .attr("height",function(d){
+                        //wider if it's a grade that past
+                        return d.count/(startValues.max- 0) * height;
+                    })
+                    .attr("width",function(d){
+                        return .05 * totalHeight;
+                    })
+                    .attr("fill", function(d){
 
-  //                           return bar;
-  //                   })
-  //                   .attr("transform",function(d,i){
-  //                       var spacing = 10.0;
-  //                       return "translate(" + ((d.grade / 20.0) * spacing +   (d.grade / 20.0) * totalHeight).toString() + ","+ (1.0 - d.count/(startValues.max- 0)) * height+ ")";
+                            return bar;
+                    })
+                    .attr("transform",function(d,i){
+                        var spacing = 10.0;
+                        return "translate(" + ((d.grade / 20.0) * spacing +   (d.grade / 20.0) * totalHeight).toString() + ","+ (1.0 - d.count/(startValues.max- 0)) * height+ ")";
 
-  //                   });
+                    });
 
 });
