@@ -45,7 +45,7 @@
 </div>
 <div class="flex-row">
 <div class="flex-column column-even colijkingstoets">
-  <h2>IJkingstoets</h2>
+  <div class="column-title">IJkingstoets</div>
   <div class="CSE"></div>
   {{#if Template.subscriptionsReady}}
   {{#each ijkingstoetsen}}
@@ -58,7 +58,7 @@
   {{/if}}
 </div>
 <div class="flex-column colttt">
-  <h2>Tussentijdse Toetsen</h2>
+  <div class="column-title">Tussentijdse Toetsen</div>
   <div class="CSE"></div>
   {{#if Template.subscriptionsReady}}
   <!-- {{#each TTTs}} -->
@@ -72,7 +72,8 @@
   {{/if}}
 </div>
 <div class="flex-column column-even coljan">
-<h2>Januari <br> 1e examenperiode</h2>
+<div class="column-title">Januari</div>
+<div class="periode">1e examenperiode</div>
 <div class="CSE">
 {{#with CSE_januari}}
   {{> CSE_bar }}
@@ -90,7 +91,8 @@
 </div>
 {{#if ShowJuni}}
 <div class="flex-column coljun">
-<h2>Juni <br> 2e examenperiode</h2>
+<div class="column-title">Juni</div>
+<div class="periode">2e examenperiode</div>
 <div class="CSE">
   {{#with CSE_juni}}
     {{> CSE_bar }}
@@ -109,7 +111,8 @@
 {{/if}}
 {{#if ShowSeptember}}
 <div class="flex-column column-even colsept">
-<h2>Augustus <br> 3e examenperiode</h2>
+<div class="column-title">Augustus</div>
+<div class="periode">3e examenperiode</div>
 <div class="CSE">
   {{#with CSE_september}}
     {{> CSE_bar }}
@@ -134,7 +137,7 @@
 
 {{/if}}
 <div class="flex-column   colfail">
-<h2>Onsuccesvolle vakken</h2>
+<div class="column-title">Onsuccesvolle vakken</div>
 <div class="CSE">
 
 </div>
@@ -157,7 +160,7 @@
 
 {{#if ShowSeptember}}
 <div class="flex-column column-even colsept">
-<h2>Studiebelastingplanning</h2>
+<div class="column-title">Studiebelastingplanning</div>
 <div class="CSE">
 
 </div>
@@ -168,7 +171,7 @@
 {{/if}}
 {{#unless ShowSeptember}}
 <div class="flex-column planning-column colfail2">
-  <h2>Onsuccesvolle examens</h2>
+  <div class="column-title">Onsuccesvolle examens</div>
   <div class="CSE">
   </div>
     <div>

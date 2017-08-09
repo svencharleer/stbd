@@ -79,14 +79,26 @@
   width: 100%;
 }
 
+.flex-column {
+  width: 195px;
+}
 
-.flex-column h2, .flex-item h2 {
+.flex-column .periode {
+  width: 100%;
+  text-align:center;
+  font-weight: 300;
+  text-transform: lowercase;
+  font-size:0.8em;
+  overflow:hidden;
+}
+
+.flex-column .column-title {
   text-align:center;
   font-weight: lighter;
-  text-transform: lowercase;;
+  text-transform: lowercase;
   font-size:1em;
-  width:195px;
   overflow:hidden;
+  width: 100%;
 }
 
 #bachelor
