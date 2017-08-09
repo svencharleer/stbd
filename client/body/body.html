@@ -45,8 +45,11 @@
 </div>
 <div class="flex-row">
 <div class="flex-column column-even colijkingstoets">
+  <div class="top">
+  <div class="fa fa-compress"></div>
   <div class="column-title">IJkingstoets</div>
   <div class="CSE"></div>
+  </div>
   {{#if Template.subscriptionsReady}}
   {{#each ijkingstoetsen}}
   <div class="flex-item">
@@ -58,8 +61,11 @@
   {{/if}}
 </div>
 <div class="flex-column colttt">
+  <div class="top">
+  <div class="fa fa-compress"></div>
   <div class="column-title">Tussentijdse Toetsen</div>
   <div class="CSE"></div>
+  </div>
   {{#if Template.subscriptionsReady}}
   <!-- {{#each TTTs}} -->
   {{#each studentCourses 0}}
@@ -72,12 +78,15 @@
   {{/if}}
 </div>
 <div class="flex-column column-even coljan">
+<div class="top">
+<div class="fa fa-compress"></div>
 <div class="column-title">Januari</div>
 <div class="periode">1e examenperiode</div>
 <div class="CSE">
 {{#with CSE_januari}}
   {{> CSE_bar }}
 {{/with}}
+</div>
 </div>
     {{#if Template.subscriptionsReady}}
       {{#each studentCourses 1}}
@@ -91,12 +100,15 @@
 </div>
 {{#if ShowJuni}}
 <div class="flex-column coljun">
+<div class="top">
+<div class="fa fa-compress"></div>
 <div class="column-title">Juni</div>
 <div class="periode">2e examenperiode</div>
 <div class="CSE">
   {{#with CSE_juni}}
     {{> CSE_bar }}
   {{/with}}
+</div>
 </div>
       {{#if Template.subscriptionsReady}}
       {{#each studentCourses 2}}
@@ -111,6 +123,8 @@
 {{/if}}
 {{#if ShowSeptember}}
 <div class="flex-column column-even colsept">
+<div class="top">
+<div class="fa fa-compress"></div>
 <div class="column-title">Augustus</div>
 <div class="periode">3e examenperiode</div>
 <div class="CSE">
@@ -118,13 +132,14 @@
     {{> CSE_bar }}
   {{/with}}
 </div>
+</div>
       {{#if Template.subscriptionsReady}}
       {{#each studentCourses 1 false 2}}
       <div class="flex-item">
         {{> course}}
       </div>
       {{/each}}
-      <div class="courseseparator"></div>
+      <!-- <div class="courseseparator"></div> -->
       {{#each studentCourses 2 false 2}}
       <div class="flex-item">
         {{> course}}
@@ -137,9 +152,10 @@
 
 {{/if}}
 <div class="flex-column   colfail">
+<div class="top">
+<div class="fa fa-compress"></div>
 <div class="column-title">Onsuccesvolle vakken</div>
-<div class="CSE">
-
+<div class="CSE"></div>
 </div>
       {{#if Template.subscriptionsReady}}
       {{#each coursesLeft 1}}
@@ -147,7 +163,7 @@
         {{> course}}
       </div>
       {{/each}}
-      <div class="courseseparator"></div>
+      <!-- <div class="courseseparator"></div> -->
       {{#each coursesLeft 2}}
       <div class="flex-item">
         {{> course}}
@@ -160,9 +176,10 @@
 
 {{#if ShowSeptember}}
 <div class="flex-column column-even colsept">
+<div class="top">
+<div class="fa fa-compress"></div>
 <div class="column-title">Studiebelastingplanning</div>
-<div class="CSE">
-
+<div class="CSE"></div>
 </div>
 {{#if Template.subscriptionsReady}}
  {{> cseplanning}}
@@ -181,7 +198,7 @@
         <div class="flex-item">{{> checkbox}}</div>
       </div>
       {{/each}}
-        <div class="courseseparator"></div>
+        <!-- <div class="courseseparator"></div> -->
       {{#each coursesLeft 2}}
         <div class="flex-row">
           <div class="flex-item">{{> checkbox}}</div>
@@ -194,13 +211,11 @@
 
 </div>
 {{/unless}}
-
-
-
 <div class="flex-column history colhistory">
   {{> future}}
 </div>
-<div class="flex-row">
+
+<div class="flex-row" style="display: none;">
   <div class="flex-item bottomheader"><a  class="hider" href="#" onclick="if($('.colijkingstoets').css('visibility') == 'visible'){$('.colijkingstoets').css('visibility','hidden');}else{$('.colijkingstoets').css('visibility','visible');}">.x.</a></div>
   <div class="flex-item bottomheader"><a class="hider"  href="#" onclick="if($('.colttt').css('visibility') == 'visible'){$('.colttt').css('visibility','hidden');}else{$('.colttt').css('visibility','visible');}">.x.</a></div>
   <div class="flex-item bottomheader"><a  class="hider" href="#" onclick="if($('.coljan').css('visibility') == 'visible'){$('.coljan').css('visibility','hidden');}else{$('.coljan').css('visibility','visible');}">.x.</a></div>

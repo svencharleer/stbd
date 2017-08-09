@@ -1,3 +1,9 @@
+body {
+  /* Need to fix this.. to a standard size */
+  max-width: 1470px;
+  min-width: 1470px;
+}
+
 .loading-screen {
   color: #424242;
   position: absolute;
@@ -80,30 +86,62 @@
 }
 
 .flex-column {
-  width: 195px;
+  width: 194px;
+  min-height: 550px;
+  border-right: 1px solid #ececec;
+  border-bottom: 1px solid #ececec;
 }
 
 .flex-column .periode {
   width: 100%;
   text-align:center;
-  font-weight: 300;
+  font-weight: 500;
   text-transform: lowercase;
   font-size:0.8em;
   overflow:hidden;
+  color: #8e8e8e;
+}
+
+.flex-column .top {
+  position: relative;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px dotted #ececec;
+  padding: 8px;
+  padding-top: 12px;
+  cursor: default;
+}
+
+.flex-column .top .fa {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    text-decoration: none;
+    color: grey;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.flex-column .top .fa:hover {
+    color:#f27eea;
 }
 
 .flex-column .column-title {
   text-align:center;
-  font-weight: lighter;
+  font-weight: 300;
   text-transform: lowercase;
   font-size:1em;
   overflow:hidden;
   width: 100%;
+  color: #424242;
 }
 
 #bachelor
 {
-  margin-left:20px;
+  /*margin-left:20px;*/
 }
 .september-column
 {
@@ -168,4 +206,12 @@
 .bottomheader{
     text-align:center;
 
+}
+
+.colhistory {
+  border: 0px;
+  max-width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }

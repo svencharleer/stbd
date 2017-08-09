@@ -1,6 +1,10 @@
 .CSE {
   color: #777777;
   text-align: center;
-  font-size:.8em;
-  height:30px;
+  font-size:.7em;
+  /*height:30px;*/
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
 }
