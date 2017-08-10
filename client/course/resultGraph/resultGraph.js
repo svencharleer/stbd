@@ -339,43 +339,49 @@ Template.resultGraph.onRendered(function(){
 
   createHistogram(svgHistogram, detailsWidth, 20);
 
-  function click(instance, scale){
-    if (clicked){
+  function zoom(instance, scale, click){
+    if (clicked || scale === 1){
       instance
         .style("transform" , "scale(1,1)")
         .style("background", "none")
         .style("z-index", "auto")
+        .style("box-shadow", "none")
         ;
-      clicked = false;
+      if (click){
+        clicked = false;
+      }
     }
     else{
       instance
         .style("transform" , "scale(" + scale + "," + scale )
         .style("background", "white")
         .style("z-index", Number.MAX_SAFE_INTEGER)
+        .style("box-shadow", "10px 10px 5px #888888")
         ;
-      clicked = true;
+      if (click){
+        clicked = true;
+      }    
     }
   }
 
-  // resize on mouseover
   container.on("click", function(){
-    click(d3.select(this), 1.5)
-    
+    zoom(d3.select(this), 1.5, true); 
   })
 
-  // container.on("mouseout", function(){
-  //   d3.select(this)
-  //     .style("transform" , "scale(1,1)")
-  //     .style("background", "none")
-  //     ;
-  // })
-
- container.on("dblclick", function(){
-    click(d3.select(this), 2)
-    
+  container.on("dblclick", function(){
+    zoom(d3.select(this), 2, true)  
   })
 
-  
+  container.on("mouseover", function(){
+    if (clicked === false){
+      zoom(d3.select(this), 1.5, false);
+    }
+    
+  })
+  container.on("mouseout", function(){
+    if (clicked === false){
+      zoom(d3.select(this), 1, false);
+    }
+  }) 
 
 });
