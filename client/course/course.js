@@ -1,6 +1,7 @@
 
 Template.course.onRendered(function(){
   var instance = this;
+  
 
   var bar = "#CBCBCB";
   var barSelect = "#020202";
