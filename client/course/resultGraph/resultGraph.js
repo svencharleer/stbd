@@ -1,27 +1,4 @@
-Template.resultGraph.helpers({
-  status(grade) {
 
-    if(grade < 8)
-    {
-      return "failed";
-    }
-    else if(grade > 9)
-    {
-      return "passed";
-    }
-    else if(grade >= 8 && grade <= 9){
-      return "tolerable";
-    }
-    else {
-      return "failed";
-    }
-  },
-  formattedCredits(credits){
-    if(credits != 0)
-      return "["+credits +"stp]";
-    return "";
-  }
-})
 
 Template.resultGraph.onRendered(function(){
   // TODO: let width depend on screen
@@ -70,7 +47,6 @@ Template.resultGraph.onRendered(function(){
   var courseCredits  = data.credits;
   var gradeStatus = status(realGrade);
   var courseColor = colorStatus(gradeStatus);
-   
   var container = d3.select("#"+courseId +"_"+semesterCourse).append("svg");
   container
     .attr("width",totalCourseWidth)
@@ -97,8 +73,6 @@ Template.resultGraph.onRendered(function(){
   };
 
   function colorStatus(status){
-    
-    
     switch(status){
       case "failed":
         color = "#FD6869";
@@ -112,7 +86,6 @@ Template.resultGraph.onRendered(function(){
       default:
         color = "#777777";
     }
-    console.log(status, color);
     return color;
   }
 
