@@ -1,17 +1,18 @@
-.coursedetails{
+/* .coursecontainer{
+  height: 50px;
+  width: 150px;
   border:solid 1px #A5DC89;
   border-radius: 5px;
   background-color:white;
-  height:35px;
-  display:flex;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
+  padding: 0px;
+}
 
-  -webkit-flex-flow: row wrap;
-  flex-flow: row wrap
+.coursecontainer:hover{
+  zoom: 150%;
+  z-index: 999;
+  position: absolute;
+  background-color: white;
+  text-align: center;
 }
 
 .coursebox_tolerable {
@@ -24,7 +25,22 @@
 .coursebox_passed {
   border-color:#A5DC89;
 }
+*/
+.coursegrade{
+  height:100%;
+  width:35px;
+  display:inline-block;
+  margin:0;
+  padding:0;
+  border-right:none;
 
+  justify-content: space-around;
+  color: white;
+  font-weight: bold;
+  font-size: 1.6em;
+  text-align: center;
+}
+/*
 .coursegrade_tolerable{
   background-color:#E1B32D;
 }
@@ -36,26 +52,43 @@
   background-color:#A5DC89;
 }
 
-.coursegrade{
-  height:100%;
-  width:40px;
-  display:inline-block;
-  margin:0;
-  padding:0;
-  border-right:none;
-  background-color:
 
-  justify-content: space-around;
-  color: white;
-  font-weight: bold;
-  font-size: 1.6em;
-  text-align: center;
+ 
+.coursedetails{
+  background-color:white;
+  height:100%;
+  width: 120px;
+  display:flex;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+
+  overflow: hidden;
 }
+
 .coursename{
+  width:100%;
   display:inline-block;
   font-size: 10px;
   color:#777777;
+  margin: auto;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 .coursegraph{
   display:inline-block;
@@ -72,3 +105,5 @@
   color:#777777;
   
 }
+
+ */
