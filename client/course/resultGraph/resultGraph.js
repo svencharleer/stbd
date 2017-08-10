@@ -55,7 +55,7 @@ Template.resultGraph.onRendered(function(){
   var detailsHeight = gradeHeight;
 
   var border = 2;
-  var radius = 5;
+  var radius = 3;
 
   var clicked = false;
 
@@ -250,7 +250,7 @@ Template.resultGraph.onRendered(function(){
       .attr("color", "#777777")
       .attr("text-anchor", "end")
       .attr("alignment-baseline", "central")
-      .attr("transform", "translate("+ 0.9*courseCreditsWidth +","+ 10 + ")")
+      .attr("transform", "translate("+ 0.9*courseCreditsWidth +","+ 7 + ")")
 
   function createHistogramDict(min, max){
     /**
@@ -356,7 +356,7 @@ Template.resultGraph.onRendered(function(){
         .style("transform" , "scale(" + scale + "," + scale )
         .style("background", "white")
         .style("z-index", Number.MAX_SAFE_INTEGER)
-        .style("box-shadow", "10px 10px 5px #888888")
+        .style("box-shadow", "5px 5px 5px #888888")
         ;
       if (click){
         clicked = true;
