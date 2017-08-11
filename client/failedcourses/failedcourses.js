@@ -45,6 +45,11 @@ Template.failedCourse.onRendered(function(){
   var radius = 0;
   var border = 2;
 
+  var littleFont = "6px";
+  var smallFont = "8px";
+  var mediumFont = "10px";
+  var bigFont = "12px";
+
   // svg variables
   var container = d3.select("#"+courseId +"_failed").append("svg");
   container
@@ -80,12 +85,23 @@ Template.failedCourse.onRendered(function(){
     .text(courseName)
       .attr("font-family", "sans-serif")
       .attr("font-size", function(){
-          return "9px"
+        if (this.getComputedTextLength() > 2 * nameWidth) {
+          return littleFont;
+        }
+        else if (this.getComputedTextLength() > 1.5 * nameWidth){
+          return smallFont;
+        }
+        else if (this.getComputedTextLength() > nameWidth){
+          return mediumFont;
+        }
+        else{
+          return bigFont;
+        }
       })
       .attr("color", "#777777")
-      .attr("text-anchor", "start")
+      .attr("text-anchor", "middle")
       .attr("alignment-baseline", "central")
-      .attr("transform", "translate("+ 0.1*creditsWidth +","+ 10 + ")")
+      .attr("transform", "translate("+ 0.5*nameWidth +","+ 10 + ")")
       .call(wrap, nameWidth)
     ;
 

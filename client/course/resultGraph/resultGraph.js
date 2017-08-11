@@ -210,7 +210,7 @@ Template.resultGraph.onRendered(function(){
       .attr("color", "#777777")
       .attr("text-anchor", "start")
       .attr("alignment-baseline", "central")
-      .attr("transform", "translate("+ 0.1*courseCreditsWidth +","+ 10 + ")")
+      .attr("transform", "translate("+ 0.1*courseNameWidth +","+ 10 + ")")
       .call(wrap, courseNameWidth)
     ;
 

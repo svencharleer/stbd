@@ -155,7 +155,12 @@
 <div class="top">
 <div class="fa fa-compress"></div>
 <div class="column-title">Onsuccesvolle vakken</div>
-<div class="CSE"></div>
+<div class="CSE">
+  {{#with CSE_september}}
+    {{> CSE_bar }}
+  {{/with}}
+
+</div>
 </div>
       {{#if Template.subscriptionsReady}}
       {{#each coursesLeft 1}}
