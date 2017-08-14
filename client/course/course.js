@@ -26,19 +26,13 @@ Template.course.onRendered(function(){
   var bar = "#CBCBCB";
   var barSelect = "#020202";
   var colorScale = chroma.scale(["#0099FF","#F566FF"]);
-  var margin = 0.01 * totalCourseWidth;
-  var widthEachScore = totalWidth / 21;
+  var margin  = 0.05 * totalWidth;
+  var widthEachScore = 0.9 * totalWidth / 21;
   var barFraction = 0.95
   var barWidth = barFraction  * widthEachScore;
   var spaceWidth = (1- barFraction) * widthEachScore;
   var legendFraction = 0.2
   var histogramHeight = (1- legendFraction ) * totalHeight;
-
-
-  
-
-  var bar = "#CBCBCB";
-  var barSelect = "#020202";
 
   instance.autorun(function(){
     //Session.get("student")
@@ -95,7 +89,7 @@ Template.course.onRendered(function(){
                             var space = 0.1 * histogramHeight;
                             var maxBarHeight = 0.9*histogramHeight;
                             var heightUnit = (1.0/ data.max) * maxBarHeight ;
-                            return "translate(" + (d.grade * widthEachScore).toString() + ","+ (space+ maxBarHeight - (d.count * heightUnit))  +  ")";
+                            return "translate(" + ((margin + d.grade * widthEachScore)).toString() + ","+ (space+ maxBarHeight - (d.count * heightUnit))  +  ")";
                               // var spacing = 10.0;
 
 

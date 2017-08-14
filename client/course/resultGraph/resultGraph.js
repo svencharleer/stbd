@@ -239,13 +239,14 @@ Template.resultGraph.onRendered(function(){
     var colorFailed = "#FD686A";
     var margin = 10;
     var height = 1;
-    var barWidth = legendWidth / 21;
+    var barWidth = (0.9*legendWidth) / 21;
+    var space = 0.05 * legendWidth;
     svg
             .append("rect")
             .attr("stroke",colorFailed)
             .attr("width", 8 * barWidth)
             .attr("height",height)
-            .attr("transform", "translate(0, " + (histogramHeight + 2) +")")
+            .attr("transform", "translate(" + space + ", " + (histogramHeight + 2) +")")
             ;
     svg
 
@@ -253,14 +254,14 @@ Template.resultGraph.onRendered(function(){
             .attr("stroke",colorTolerable)
             .attr("width", 2 * barWidth)
             .attr("height", height)
-            .attr("transform","translate("+ (8*barWidth) + "," + (histogramHeight + 2) +")")
+            .attr("transform","translate("+ (space + (8*barWidth)) + "," + (histogramHeight + 2) +")")
     ;
     svg
             .append("rect")
             .attr("stroke",colorPass)
             .attr("width", 11* barWidth)
             .attr("height",height)
-            .attr("transform","translate("+ (10 * barWidth) +  "," + (histogramHeight + 2) +")")
+            .attr("transform","translate("+ (space + (10 * barWidth)) +  "," + (histogramHeight + 2) +")")
     ;
   }
 
@@ -276,8 +277,8 @@ Template.resultGraph.onRendered(function(){
     var bar = "#CBCBCB";
     var barSelect = "#020202";
     var colorScale = chroma.scale(["#0099FF","#F566FF"]);
-    var margin = 0.01 * totalCourseWidth;
-    var widthEachScore = totalWidth / 21;
+    var margin  = 0.05 * totalWidth;
+    var widthEachScore = 0.9 * totalWidth / 21;
     var barFraction = 0.95
     var barWidth = barFraction  * widthEachScore;
     var spaceWidth = (1- barFraction) * widthEachScore;
@@ -321,7 +322,7 @@ Template.resultGraph.onRendered(function(){
                       })
                       .attr("transform",function(d,i){
                         // overwritten in course.js
-                          return "translate(" + (d.grade * widthEachScore).toString() + ","+ (1.0 - d.count/(startValues.max- 0)) * totalHeight+ ")";
+                          return "translate(" + ((margin + d.grade * widthEachScore)).toString() + ","+ (1.0 - d.count/(startValues.max- 0)) * totalHeight+ ")";
 
                       });
   }
