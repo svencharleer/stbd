@@ -82,7 +82,7 @@ Template.course.onRendered(function(){
                               //wider if it's a grade that past
                               //if(d.count == 0) console.log(d.count)
                               // return d.count/(data.max) * height;
-                              var heightUnit = (1.0/ data.max) * histogramHeight;
+                              var heightUnit = (1.0/ data.max) * 0.9*histogramHeight;
                               return d.count * heightUnit;
                           })
                           .attr("fill", function(d){
@@ -92,7 +92,10 @@ Template.course.onRendered(function(){
                                   return bar;
                           })
                           .attr("transform",function(d,i){
-                            return "translate(" + (d.grade * widthEachScore).toString() + ","+ (1.0 - d.count/(data.max- 0)) * histogramHeight+ ")";
+                            var space = 0.1 * histogramHeight;
+                            var maxBarHeight = 0.9*histogramHeight;
+                            var heightUnit = (1.0/ data.max) * maxBarHeight ;
+                            return "translate(" + (d.grade * widthEachScore).toString() + ","+ (space+ maxBarHeight - (d.count * heightUnit))  +  ")";
                               // var spacing = 10.0;
 
 
