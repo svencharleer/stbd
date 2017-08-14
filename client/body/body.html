@@ -155,18 +155,23 @@
 <div class="top">
 <div class="fa fa-compress"><paper-ripple></paper-ripple></div>
 <div class="column-title">Onsuccesvolle vakken</div>
-<div class="CSE"></div>
+<div class="CSE">
+  {{#with CSE_september}}
+    {{> CSE_bar }}
+  {{/with}}
+
+</div>
 </div>
       {{#if Template.subscriptionsReady}}
       {{#each coursesLeft 1}}
       <div class="flex-item">
-        {{> course}}
+         {{> failedCourse}} 
       </div>
       {{/each}}
       <!-- <div class="courseseparator"></div> -->
       {{#each coursesLeft 2}}
       <div class="flex-item">
-        {{> course}}
+         {{> failedCourse}} 
       </div>
       {{/each}}
       {{else}}

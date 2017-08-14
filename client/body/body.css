@@ -46,8 +46,8 @@ body {
   display: flex;
 
   -webkit-flex-flow: column wrap;
-  flex-flow: column wrap
-  width:300px;
+  flex-flow: column wrap;
+  width: 300px;
 }
 
 .flex-row
