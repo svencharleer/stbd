@@ -37,6 +37,7 @@
 .d3slider text {
   font: 10px sans-serif;
   fill: #777777;
+  display: none;
 }
 
 .tick.minor text {
@@ -60,16 +61,6 @@
 .dragger line {
   stroke: #aa0000;
   fill: none;
-}
-
-.dragger-outer {
-  fill: #fff;
-  stroke: #000;
-}
-
-.dragger-inner {
-  fill: #B30424;
-  stroke: none;
 }
 
 .min-marker line {

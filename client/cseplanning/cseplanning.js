@@ -18,20 +18,24 @@ Template.cseplanning.rendered = function(){
   var cse3 = Math.floor(cse_remainig/3);
   var cse4 = cse_remainig - cse3 - cse2;
   var cse5 = 0;
-  if(cse4 > 60)
-  {
+  if(cse4 > 60) {
     cse5 = cse4 - 60;
     cse4 = 60;
-
   }
   Session.set("CSE_Planning", {"cse1": cse, "cse2": cse2, "cse3": cse3, "cse4":cse4, "cse5":cse5})
 
   var cses = Session.get("CSE_Planning");
-  slider1.setValue(cses.cse1);
-  slider2.setValue(cses.cse2);
-  slider3.setValue(cses.cse3);
-  slider4.setValue(cses.cse4);
-  slider5.setValue(cses.cse5);
+  slider1.setValue(Math.floor(cses.cse1));
+  slider2.setValue(Math.floor(cses.cse2));
+  slider3.setValue(Math.floor(cses.cse3));
+  slider4.setValue(Math.floor(cses.cse4));
+  slider5.setValue(Math.floor(cses.cse5));
+
+  Session.set("cse1",Math.floor(cses.cse1));
+  Session.set("cse2",Math.floor(cses.cse2));
+  Session.set("cse3",Math.floor(cses.cse3));
+  Session.set("cse4",Math.floor(cses.cse4));
+  Session.set("cse5",Math.floor(cses.cse5));
 
 
   Tracker.autorun(function(){
@@ -50,12 +54,25 @@ Template.cseplanning.rendered = function(){
 
     }
     Session.set("CSE_Planning", {"cse1": cse, "cse2": cse2, "cse3": cse3, "cse4":cse4, "cse5":cse5})
-    slider1.setValue(cses.cse1);
-    slider2.setValue(cses.cse2);
-    slider3.setValue(cses.cse3);
-    slider4.setValue(cses.cse4);
-    slider5.setValue(cses.cse5);
+    slider1.setValue(Math.floor(cses.cse1));
+    slider2.setValue(Math.floor(cses.cse2));
+    slider3.setValue(Math.floor(cses.cse3));
+    slider4.setValue(Math.floor(cses.cse4));
+    slider5.setValue(Math.floor(cses.cse5));
+
+    Session.set("cse1",Math.floor(cses.cse1));
+    Session.set("cse2",Math.floor(cses.cse2));
+    Session.set("cse3",Math.floor(cses.cse3));
+    Session.set("cse4",Math.floor(cses.cse4));
+    Session.set("cse5",Math.floor(cses.cse5));
   });
+
+  // Set slider callback function
+  slider1.callback(function(slider) {Session.set("cse1",Math.floor(slider.value()));})
+  slider2.callback(function(slider) {Session.set("cse2",Math.floor(slider.value()));})
+  slider3.callback(function(slider) {Session.set("cse3",Math.floor(slider.value()));})
+  slider4.callback(function(slider) {Session.set("cse4",Math.floor(slider.value()));})
+  slider5.callback(function(slider) {Session.set("cse5",Math.floor(slider.value()));})
 }
 
 function slide_update(){
@@ -70,48 +87,51 @@ function slide_update(){
   updatedSlider = cses.cse5 != Math.floor(slider5.value()) ? {id:5,s:slider5,v:cses.cse5, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse4]} : updatedSlider;
 
   //nr 1 can not go below original CSE
-  if(updatedSlider != undefined && updatedSlider.id == 1 && Math.floor(updatedSlider.s.value()) < Session.get("CSE_september_pure"))
-  {
+  if(updatedSlider != undefined && updatedSlider.id == 1 && Math.floor(updatedSlider.s.value()) < Session.get("CSE_september_pure")){
     updatedSlider.s.setValue(Session.get("CSE_september_pure"));
   }
   //else update, and check that we don't go above 180 credits
-  else if(updatedSlider != undefined)
-  {
+  else if(updatedSlider != undefined) {
     var rest = 0;
     for(var i=0;i<4;i++) rest += updatedSlider.r[i];
-    console.log(rest,updatedSlider.s.value())
-    if(Math.floor(updatedSlider.s.value()) + rest > 180)
-    {
+    //console.log(rest,updatedSlider.s.value())
+    if(Math.floor(updatedSlider.s.value()) + rest > 180) {
       updatedSlider.v =180 - rest;
       updatedSlider.s.setValue(updatedSlider.v);
     }
     Session.set("CSE_Planning", {"cse1": Math.floor(slider1.value()), "cse2": Math.floor(slider2.value()),
-     "cse3": Math.floor(slider3.value()), "cse4":Math.floor(slider4.value()), "cse5":Math.floor(slider5.value())})
-
+    "cse3": Math.floor(slider3.value()), "cse4":Math.floor(slider4.value()), "cse5":Math.floor(slider5.value())})
   }
 }
 
 Template.cseplanning.events({
-  'click': function(event, template)
-  {
-
+  'click' (event, template) {
     slide_update()
-
   },
-  'mouseleave': function(event,template)
-  {
+  'mouseleave' (event,template) {
     slide_update();
   }
 });
 
-Template.cseplanning.helpers(
-  {
-    'totalCSE': function()
-    {
-      var cses = Session.get("CSE_Planning");
-      if(cses != undefined)
-        return cses.cse1 + cses.cse2 + cses.cse3 + cses.cse4 + cses.cse5;
-      return 0;
-    }
+Template.cseplanning.helpers({
+  'totalCSE': function() {
+    let cses = Session.get("CSE_Planning");
+    if(cses != undefined) return Session.get("cse1") + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
+    return 0;
+  },
+  'jaar1': function(){
+    return Session.get("cse1");
+  },
+  'jaar2': function(){
+    return Session.get("cse2");
+  },
+  'jaar3': function(){
+    return Session.get("cse3");
+  },
+  'jaar4': function(){
+    return Session.get("cse4");
+  },
+  'jaar5': function(){
+    return Session.get("cse5");
   }
-)
+});

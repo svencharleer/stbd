@@ -1,6 +1,3 @@
-import { Template } from 'meteor/templating';
-
-
 Template.body.onCreated(function(){
   var instance = this;
   var handler = instance.subscribe("generic_courses",function(){});
