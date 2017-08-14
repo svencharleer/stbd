@@ -13,7 +13,7 @@ Template.resultGraph.onRendered(function(){
     Name = 0.8 of width and 0.3 of height
     Grade = 0.25 of width
   */
-  var totalCourseWidth = 150;
+  var totalCourseWidth = window.innerWidth / 8.5;
   var totalCourseHeight = 50;
 
   var fractionNameWidth  = 0.8;
@@ -28,8 +28,8 @@ Template.resultGraph.onRendered(function(){
 
   var gradeWidth = fractionGradeWidth * totalCourseWidth ;
   var gradeHeight = (1-fractionNameHeight) * totalCourseHeight;
-  var detailsWidth = (1-fractionGradeWidth) * totalCourseWidth;
-  var detailsHeight = gradeHeight;
+  var svgHistogramWidth = (1-fractionGradeWidth) * totalCourseWidth;
+  var svgHistogramHeight = gradeHeight;
 
   var border = 2;
   var radius = 3;
@@ -149,7 +149,7 @@ Template.resultGraph.onRendered(function(){
   var svgCourseName = appendSvg(svgCourseInfo, "coursename", courseNameWidth, courseNameHeight,0,0);
   var svgCourseCredits = appendSvg(svgCourseInfo, "coursecredits", courseCreditsWidth, courseCreditsHeight,courseNameWidth,0);
   var svgCourseGrade = appendSvg(bottomLayer, "coursegrade", gradeWidth, gradeHeight,0,courseInfoHeight);
-  var svgHistogram = appendSvg(bottomLayer, "histogram", 0.9* detailsWidth, detailsHeight,(gradeWidth + 0.05*detailsWidth),courseInfoHeight+5);
+  var svgHistogram = appendSvg(bottomLayer, "histogram", svgHistogramWidth, svgHistogramHeight, gradeWidth, courseInfoHeight);
 
   // A rounded border around everything
   var borderPath = topLayer.append("rect")
@@ -197,21 +197,12 @@ Template.resultGraph.onRendered(function(){
     .text(courseName)
       .attr("font-family", "sans-serif")
       .attr("font-size", function(){
-        if (this.getComputedTextLength() > courseNameWidth*2) {
-          return "6px"
-        }
-        else if(this.getComputedTextLength() > courseNameWidth*1.5){
-          return "8px";
-        }
-        else{
-          return "9px"
-        }
+          return "8px"
       })
       .attr("color", "#777777")
       .attr("text-anchor", "start")
       .attr("alignment-baseline", "central")
-      .attr("transform", "translate("+ 0.1*courseNameWidth +","+ 10 + ")")
-      .call(wrap, courseNameWidth)
+      .attr("transform", "translate("+ 0.05*courseNameWidth +","+ (0.5*courseNameHeight) + ")")
     ;
 
     // The credits of the course
@@ -223,7 +214,7 @@ Template.resultGraph.onRendered(function(){
       .attr("color", "#777777")
       .attr("text-anchor", "end")
       .attr("alignment-baseline", "central")
-      .attr("transform", "translate("+ 0.9*courseCreditsWidth +","+ 7 + ")")
+      .attr("transform", "translate("+ 0.9*courseCreditsWidth +","+ 0.5 * courseCreditsHeight + ")")
 
   function createHistogramDict(min, max){
     /**
@@ -238,17 +229,17 @@ Template.resultGraph.onRendered(function(){
     return startValues;
   };
 
-  function createLegend(svg, histogramWidth, histogramHeight){
+  function createLegend(svg, legendWidth, histogramHeight){
     var colorPass = "#3BFD40";
     var colorTolerable= "#E1B32D";
     var colorFailed = "#FD686A";
     var margin = 10;
     var height = 1;
-
+    var barWidth = legendWidth / 21;
     svg
             .append("rect")
             .attr("stroke",colorFailed)
-            .attr("width", histogramWidth *.4 + margin *.4)
+            .attr("width", 8 * barWidth)
             .attr("height",height)
             .attr("transform", "translate(0, " + (histogramHeight + 2) +")")
             ;
@@ -256,36 +247,53 @@ Template.resultGraph.onRendered(function(){
 
             .append("rect")
             .attr("stroke",colorTolerable)
-            .attr("width",histogramWidth *.1 + margin *.1)
+            .attr("width", 2 * barWidth)
             .attr("height", height)
-            .attr("transform","translate("+ (histogramWidth *.4 + margin *.4) + "," + (histogramHeight + 2) +")")
+            .attr("transform","translate("+ (8*barWidth) + "," + (histogramHeight + 2) +")")
     ;
     svg
             .append("rect")
             .attr("stroke",colorPass)
-            .attr("width",histogramWidth *.55 + margin *.55)
+            .attr("width", 11* barWidth)
             .attr("height",height)
-            .attr("transform","translate("+ (histogramWidth *.5 + margin *.5) +  "," + (histogramHeight + 2) +")")
+            .attr("transform","translate("+ (10 * barWidth) +  "," + (histogramHeight + 2) +")")
     ;
   }
 
-  function createHistogram(svg, totalWidth, height){
+  function createHistogram(svg, totalWidth, totalHeight){
+    /*
+    Create a histogram
+    @param svg: svg you want to fill width the histogram + legend
+    @param totalwidth: totalWidth of the svg = width of histogram
+    @param totalHeight: totalHeigth of the svg = height of histogram
+
+    */
     
     var bar = "#CBCBCB";
     var barSelect = "#020202";
     var colorScale = chroma.scale(["#0099FF","#F566FF"]);
+    var margin = 0.01 * totalCourseWidth;
+    var widthEachScore = totalWidth / 21;
+    var barFraction = 0.95
+    var barWidth = barFraction  * widthEachScore;
+    var spaceWidth = (1- barFraction) * widthEachScore;
+    var legendFraction = 0.2
+    var histogramHeight = (1- legendFraction ) * totalHeight;
 
+    
     //create basic graph without data
+    // real data inputted in course.js
+    
     // Temporary max score and minimum score
     var tempMax = 20; var tempMin = 0;
     // Create dict to count nb occurences each score
     var startValues = createHistogramDict(tempMin, tempMax);
-    // ????
+    // ???? init max variable ?????
     startValues.max = 20;
 
     var g = svg.append("g");
-
-    createLegend(svg, totalWidth, height);
+    
+    createLegend(svg, totalWidth, histogramHeight);
     
     // Create bars for every score
     var graph = g.selectAll("rect")
@@ -293,24 +301,28 @@ Template.resultGraph.onRendered(function(){
     
     graph.enter().append("rect")
                       .attr("height",function(d){
-                          //wider if it's a grade that past
-                          return d.count/(startValues.max- 0) * height;
+                        // overwritten in course.js
+                          // max = 100% * histHeight => unitHeight 
+                          var heightUnit = 0.01 * startValues.max * histogramHeight;
+                          return d.count * heightUnit;
                       })
                       .attr("width",function(d){
-                          return .05 * totalWidth;
+                        // not overwritten
+                          return barWidth;
                       })
                       .attr("fill", function(d){
-
+                        // overwritten in course.js
+                        // fill the bars
                               return bar;
                       })
                       .attr("transform",function(d,i){
-                          var spacing = 10.0;
-                          return "translate(" + ((d.grade / 20.0) * spacing +   (d.grade / 20.0) * totalWidth ).toString() + ","+ (1.0 - d.count/(startValues.max- 0)) * height+ ")";
+                        // overwritten in course.js
+                          return "translate(" + (d.grade * widthEachScore).toString() + ","+ (1.0 - d.count/(startValues.max- 0)) * totalHeight+ ")";
 
                       });
   }
 
-  createHistogram(svgHistogram, detailsWidth, 20);
+  createHistogram(svgHistogram, svgHistogramWidth, svgHistogramHeight);
 
   function zoom(instance, scale, click){
     if (clicked || scale === 1){
@@ -356,5 +368,85 @@ Template.resultGraph.onRendered(function(){
       zoom(d3.select(this), 1, false);
     }
   }) 
+
+  instance.autorun(function(){
+    var totalwidth = svgHistogramWidth;
+    var totalHeight = svgHistogramHeight;
+    console.log(instance)
+    //Session.get("student")
+    var handler = instance.subscribe("generic_courses",function(){});
+    var handler2 = instance.subscribe("generic_grades",Session.get("student"));
+    var handler3 = instance.subscribe("ijkingstoets", Session.get("student"));
+
+    if(handler.ready() && handler2.ready() && handler3.ready())
+    {
+
+      var studentGrade = instance.data.grade;
+
+      var method = instance.data.method;
+      var semester = instance.data.semester;
+      var svg = d3.select(instance.find("svg"));
+
+      var graph = svg.select("g").selectAll("rect");
+      var courseId = instance.data.id;
+
+      var totalwidth = svgHistogramWidth;
+      var totalHeight = svgHistogramHeight;
+
+      if(method == undefined) method = "getCoursePointDistribution";
+      if(semester == undefined) semester = 2;
+      //ugly hack: if 3, is 2e zit. we want to show histogram depending on the period
+      //you received the highest grade. 3 means you'll show grade_try2, so
+      //if they got a higher score in try1, we force it to semester=2 (or 1, doesn't matter)
+
+      if(semester == 3 && instance.data.try1 != undefined)
+      {
+        if(instance.data.try1 >= instance.data.try2 || instance.data.try2 == "NA")
+          semester = 2;
+      }
+
+      Meteor.call(method, [courseId, Session.get("Year"), semester], function(err,data){
+        //if(courseId == "H01A4A") console.log(courseId, studentGrade, Session.get("student"));
+        //console.log("getCoursePointDistribution");
+        var totalwidth = svgHistogramWidth;
+        var totalHeight = svgHistogramHeight;        
+        var bar = "#CBCBCB";
+        var barSelect = "#020202";
+        var colorScale = chroma.scale(["#0099FF","#F566FF"]);
+        var margin = 0.01 * totalCourseWidth;
+        var widthEachScore = totalWidth / 21;
+        var barFraction = 0.95
+        var barWidth = barFraction  * widthEachScore;
+        var spaceWidth = (1- barFraction) * widthEachScore;
+        var legendFraction = 0.2
+        var histogramHeight = (1- legendFraction ) * totalHeight;
+        var heightUnit = 0.01 * data.max * histogramHeight;
+
+
+        graph.data(data.numberPerGrades)
+        graph.transition()
+                          .attr("height",function(d){
+                              return d.count * heightUnit;
+                          })
+                          .attr("fill", function(d){
+                              if(d.grade == studentGrade)
+                                  return barSelect;
+                              else
+                                  return bar;
+                          })
+                          .attr("transform",function(d,i){
+                              // var spacing = 10.0;
+
+
+                              // return "translate(" + ((d.grade / 20.0) * spacing +   (d.grade / 20.0) * totalHeight).toString() + ","+ (1.0 - d.count/(data.max- 0)) * height+ ")";
+                              return "translate(" + (d.grade * widthEachScore).toString() + ","+ (1.0 - d.count/(st.max- 0)) * totalHeight+ ")";
+                              
+
+                          });
+
+
+      });
+    }
+  })
 
 });

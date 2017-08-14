@@ -11,17 +11,17 @@ Template.failedCourse.onRendered(function(){
   var courseCredits  = data.credits;
   var gradeStatusTry1 = status(gradeTry1);
   var gradeStatusTry2 = status(gradeTry2);
-  var colorTry1 = colorStatus(gradeStatusTry1);
-  var colorTry2 = colorStatus(gradeStatusTry2);
+  var colorTry1 = colorOfGrade(gradeTry1);
+  var colorTry2 = colorOfGrade(gradeTry2);
   var courseColor = colorCourse(gradeStatusTry1, gradeStatusTry2);
 
 
   // layout variables
-  var totalWidth = 150;
+  var totalWidth = window.innerWidth / 8.5;
   var totalHeight = 50;
 
   var nameWidthFraction = 1;
-  var infoHeightFraction = 0.45;
+  var infoHeightFraction = 0.3;
   var tryWidthFraction = 0.3
 
   var infoWidth = totalWidth;
@@ -85,24 +85,13 @@ Template.failedCourse.onRendered(function(){
     .text(courseName)
       .attr("font-family", "sans-serif")
       .attr("font-size", function(){
-        if (this.getComputedTextLength() > 2 * nameWidth) {
-          return littleFont;
-        }
-        else if (this.getComputedTextLength() > 1.5 * nameWidth){
-          return smallFont;
-        }
-        else if (this.getComputedTextLength() > nameWidth){
-          return mediumFont;
-        }
-        else{
-          return bigFont;
-        }
+        return smallFont;
       })
       .attr("color", "#777777")
-      .attr("text-anchor", "middle")
-      .attr("alignment-baseline", "central")
-      .attr("transform", "translate("+ 0.5*nameWidth +","+ 10 + ")")
-      .call(wrap, nameWidth)
+      .attr("text-anchor", "start")
+      .attr("alignment-baseline", "middle")
+      .attr("transform", "translate("+ 0.05*nameWidth +","+ (0.5*nameHeight) + ")")
+      .style("text-overflow", "hidden")
     ;
 
     
@@ -194,20 +183,22 @@ Template.failedCourse.onRendered(function(){
       return "["+credits +"stp]";
     return "";
   }
-
-  function colorStatus(status){
-    switch(status){
-      case "failed":
-        color = "#FD6869";
-        break;
-      case "tolerable":
-        color = "#E1B32D";
-        break;
-      case "passed":
-        color = "#A5DC89";
-        break;
-      default:
-        color = "#777777";
+  
+  function colorOfGrade(grade){
+    var color = "#777777";
+    if(grade < 8)
+    {
+      color = "#FD6869";
+    }
+    else if(grade > 9)
+    {
+      color = "#A5DC89";
+    }
+    else if(grade >= 8 && grade <= 9){
+      color =  "#E1B32D";
+    }
+    else {
+      color =  "#FD6869";
     }
     return color;
   }
@@ -256,6 +247,44 @@ Template.failedCourse.onRendered(function(){
       ;
     return svg;
   }
+
+  function zoom(instance, scale, click){
+    if (clicked || scale === 1){
+      instance
+        .style("transform" , "scale(1,1)")
+        .style("background", "none")
+        .style("z-index", "auto")
+        .style("box-shadow", "none")
+        ;
+      if (click){
+        clicked = false;
+      }
+    }
+    else{
+      instance
+        .style("transform" , "scale(" + scale + "," + scale )
+        .style("background", "white")
+        .style("z-index", Number.MAX_SAFE_INTEGER)
+        .style("box-shadow", "5px 5px 5px #888888")
+        ;
+      if (click){
+        clicked = true;
+      }    
+    }
+  }
+
+  var clicked = false;
+  container.on("mouseover", function(){
+    if (clicked === false){
+      zoom(d3.select(this), 1.5, false);
+    }
+    
+  })
+  container.on("mouseout", function(){
+    if (clicked === false){
+      zoom(d3.select(this), 1, false);
+    }
+  }) 
 
 
 
