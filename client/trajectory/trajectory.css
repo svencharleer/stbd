@@ -35,6 +35,7 @@
   display: flex;
   justify-content: space-between;
   cursor: pointer;
+  position: relative;
 }
 
 #trajectory h2:hover {

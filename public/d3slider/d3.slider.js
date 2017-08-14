@@ -4,8 +4,8 @@ d3.slider = function module() {
   var div, min = 0, max = 100, svg, svgGroup, value, classPrefix, axis,
   height=30, rect,
   rectHeight = 8,
-  tickSize = 6,
-  margin = {top: 25, right: 5, bottom: 5, left: 10},
+  tickSize = 8,
+  margin = {top: 32, right: 5, bottom: 5, left: 10},
   ticks = 0, tickValues, scale, tickFormat, dragger, width,
   range = false,
   callbackFn, stepValues, focus;
@@ -89,21 +89,21 @@ d3.slider = function module() {
 
       dragger.append("text")
       .attr("x", 0)
-      .attr("y", -15)
+      .attr("y", -10)
       .attr("text-anchor", "middle")
       .attr("class", "draggertext")
       .text(displayValue);
 
       dragger.append("circle")
       .attr("class", "dragger-outer")
-      .attr("r", 4)
+      .attr("r", 8)
       .attr("transform", function(d) {
         return "translate(0,4)";
       });
 
       dragger.append("circle")
       .attr("class", "dragger-inner")
-      .attr("r", 4)
+      .attr("r", 8)
       .attr("transform", function(d) {
         return "translate(0,4)";
       });

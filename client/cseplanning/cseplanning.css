@@ -7,14 +7,21 @@
 }
 
 circle.dragger-outer{
-  fill:#f27eea;
-  stroke:none;
+  fill:  rgb(253, 170, 248);
+  stroke: rgb(242, 126, 234);
+  stroke-width: 2px;
 }
 
 circle.dragger-inner {
-  fill:#f27eea;
+  fill: rgb(253, 170, 248);
+}
 
+circle.dragger-outer:hover{
+  fill: rgb(242, 126, 234);
+}
 
+circle.dragger-inner:hover{
+  fill: rgb(242, 126, 234);
 }
 
 rect.d3slider-rect-range
@@ -43,16 +50,15 @@ rect.d3slider-rect-value
 .slideflex > span {
   width: 30px;
   justify-content: space-around;
-
-  font-size:10px;
-  color:#777777;
-
+  font-size: 12px;
+  color: #777777;
+  display: flex;
 }
+
 .slideflex > svg {
-
   justify-content: space-around;
-
 }
+
 #slidetotal {
   width: 150px;
   justify-content: space-around;

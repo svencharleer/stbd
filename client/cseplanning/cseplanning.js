@@ -26,13 +26,6 @@ Template.cseplanning.rendered = function(){
   }
   Session.set("CSE_Planning", {"cse1": cse, "cse2": cse2, "cse3": cse3, "cse4":cse4, "cse5":cse5})
 
-
-
-
-
-
-
-
   var cses = Session.get("CSE_Planning");
   slider1.setValue(cses.cse1);
   slider2.setValue(cses.cse2);

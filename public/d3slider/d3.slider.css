@@ -18,6 +18,7 @@
   position: relative;
   z-index: 1;
   cursor: pointer;
+  overflow: visible;
 }
 
 .d3slider-axis path {
@@ -35,6 +36,7 @@
 
 .d3slider text {
   font: 10px sans-serif;
+  fill: #777777;
 }
 
 .tick.minor text {
@@ -80,5 +82,3 @@
   pointer-events: all;
   z-index: 1;
 }
-
-

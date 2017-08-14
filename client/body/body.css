@@ -99,35 +99,34 @@ body {
   font-weight: 500;
   text-transform: lowercase;
   font-size:0.8em;
-  overflow:hidden;
   color: #8e8e8e;
 }
 
 .flex-column .top {
   position: relative;
-  height: 50px;
+  min-height: 67px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
   border-bottom: 1px dotted #ececec;
   padding: 8px;
-  padding-top: 12px;
+  padding-top: 4px;
   cursor: default;
 }
 
 .flex-column .top .fa {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    text-decoration: none;
-    color: grey;
-    font-size: 14px;
-    cursor: pointer;
+  position: relative;
+  text-decoration: none;
+  color: grey;
+  font-size: 14px;
+  cursor: pointer;
+  align-self: flex-end;
+  border-radius: 50%;
 }
 
 .flex-column .top .fa:hover {
-    color:#f27eea;
+  color:#f27eea;
 }
 
 .flex-column .column-title {
@@ -135,9 +134,9 @@ body {
   font-weight: 300;
   text-transform: lowercase;
   font-size:1em;
-  overflow:hidden;
   width: 100%;
   color: #424242;
+  min-height: 21px;
 }
 
 #bachelor
@@ -205,7 +204,7 @@ body {
 }
 
 .bottomheader{
-    text-align:center;
+  text-align:center;
 
 }
 
