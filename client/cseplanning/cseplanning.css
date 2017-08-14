@@ -11,7 +11,6 @@ circle.dragger-outer{
 }
 
 circle.dragger-inner {
-
   fill: rgb(242, 126, 234);
 }
 
@@ -21,6 +20,14 @@ rect.d3slider-rect-range {
 
 rect.d3slider-rect-value {
   fill:#f27eea;
+}
+
+circle.dragger-outer:hover{
+  fill: rgb(212, 97, 204);
+}
+
+circle.dragger-inner:hover {
+  fill: rgb(212, 97, 204);
 }
 
 #cseplanning {
@@ -89,6 +96,7 @@ rect.d3slider-rect-value {
   width: 90%;
   justify-content: flex-end;
   align-items: baseline;
+  cursor: default;
 }
 
 .slidetotal span {
