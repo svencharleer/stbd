@@ -13,6 +13,10 @@ Template.resultGraph.onRendered(function(){
     Name = 0.8 of width and 0.3 of height
     Grade = 0.25 of width
   */
+
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // !! all these variables are alse defined in course.js!!
+  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   var totalCourseWidth = window.innerWidth / 8.5;
   var totalCourseHeight = 50;
 
@@ -372,7 +376,6 @@ Template.resultGraph.onRendered(function(){
   instance.autorun(function(){
     var totalwidth = svgHistogramWidth;
     var totalHeight = svgHistogramHeight;
-    console.log(instance)
     //Session.get("student")
     var handler = instance.subscribe("generic_courses",function(){});
     var handler2 = instance.subscribe("generic_grades",Session.get("student"));
