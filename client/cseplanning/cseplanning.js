@@ -115,9 +115,9 @@ Template.cseplanning.events({
 
 Template.cseplanning.helpers({
   'totalCSE': function() {
-    let cses = Session.get("CSE_Planning");
-    if(cses != undefined) return Session.get("cse1") + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
-    return 0;
+    let cse  = Session.get("cse1") + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
+    if (cse > 180) cse = 180;
+    return cse;
   },
   'jaar1': function(){
     return Session.get("cse1");
