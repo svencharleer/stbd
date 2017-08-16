@@ -1,0 +1,9 @@
+
+.course {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.course svg {
+  transition: all 0.3s ease-out;
+}

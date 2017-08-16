@@ -63,7 +63,7 @@ Template.course.onRendered(function(){
       if(semester == 3 && instance.data.try1 != undefined)
       {
         if(instance.data.try1 >= instance.data.try2 || instance.data.try2 == "NA")
-          semester = 2;
+        semester = 2;
       }
 
       Meteor.call(method, [courseId, Session.get("Year"), semester], function(err,data){
@@ -72,30 +72,30 @@ Template.course.onRendered(function(){
 
         graph.data(data.numberPerGrades)
         graph.transition()
-                          .attr("height",function(d){
-                              //wider if it's a grade that past
-                              //if(d.count == 0) console.log(d.count)
-                              // return d.count/(data.max) * height;
-                              var heightUnit = (1.0/ data.max) * 0.9*histogramHeight;
-                              return d.count * heightUnit;
-                          })
-                          .attr("fill", function(d){
-                              if(d.grade == studentGrade)
-                                  return barSelect;
-                              else
-                                  return bar;
-                          })
-                          .attr("transform",function(d,i){
-                            var space = 0.1 * histogramHeight;
-                            var maxBarHeight = 0.9*histogramHeight;
-                            var heightUnit = (1.0/ data.max) * maxBarHeight ;
-                            return "translate(" + ((margin + d.grade * widthEachScore)).toString() + ","+ (space+ maxBarHeight - (d.count * heightUnit))  +  ")";
-                              // var spacing = 10.0;
+        .attr("height",function(d){
+          //wider if it's a grade that past
+          //if(d.count == 0) console.log(d.count)
+          // return d.count/(data.max) * height;
+          var heightUnit = (1.0/ data.max) * 0.9*histogramHeight;
+          return d.count * heightUnit;
+        })
+        .attr("fill", function(d){
+          if(d.grade == studentGrade)
+          return barSelect;
+          else
+          return bar;
+        })
+        .attr("transform",function(d,i){
+          var space = 0.1 * histogramHeight;
+          var maxBarHeight = 0.9*histogramHeight;
+          var heightUnit = (1.0/ data.max) * maxBarHeight ;
+          return "translate(" + ((margin + d.grade * widthEachScore)).toString() + ","+ (space+ maxBarHeight - (d.count * heightUnit))  +  ")";
+          // var spacing = 10.0;
 
 
-                              // return "translate(" + ((d.grade / 20.0) * spacing +   (d.grade / 20.0) * totalHeight).toString() + ","+ (1.0 - d.count/(data.max- 0)) * height+ ")";
+          // return "translate(" + ((d.grade / 20.0) * spacing +   (d.grade / 20.0) * totalHeight).toString() + ","+ (1.0 - d.count/(data.max- 0)) * height+ ")";
 
-                          });
+        });
 
 
       });
