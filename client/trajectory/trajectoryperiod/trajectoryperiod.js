@@ -45,14 +45,15 @@ Template.trajectoryperiod.onRendered(function(){
         return "trace trace" + d.bucket;
       })
       .attr("fill", function(d){
-        //console.log(d.bucket +"---" + cse + "---" + period);
-        if(_.isNaN(cse)) cse = 1;
-        if(_.isUndefined(cse)) cse = 1;
-        if(cse == 0) cse = 1;
+        console.log(d.bucket +"---" + cse + "---" + period);
         let current = d.bucket * 10;
-        let next = current + 11;
-        if((current < cse) && (cse < next))
-        return "#E8F3F8"; else return "white";
+        let next  = current + 11;
+        let color = "white";
+        // if(_.isNaN(cse)) color = "white";
+        // if(_.isUndefined(cse)) color = "white";
+        if(cse == 0) cse = 1;
+        if((current < cse) && (cse < next)) color = "#E8F3F8";
+        return color;
       })
       .attr("width", "100%")
       .attr("height",8)
