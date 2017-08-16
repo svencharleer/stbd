@@ -18,10 +18,10 @@ Template.failedCourse.onRendered(function(){
 
   // layout variables
   var totalWidth = window.innerWidth / 8.5;
-  var totalHeight = 50;
+  var totalHeight = 75;
 
   var nameWidthFraction = 1;
-  var infoHeightFraction = 0.3;
+  var infoHeightFraction = 0.4;
   var tryWidthFraction = 0.3
 
   var infoWidth = totalWidth;
@@ -68,6 +68,31 @@ Template.failedCourse.onRendered(function(){
   var svgGradeTry2 = appendSvg(svgGrade, "try2", try2Width, try2Height,try1Width, 0 );
   var svgCredits = appendSvg(svgGrade, "credits", creditsWidth, creditsHeight, (try1Width + try2Width) ,0);
 
+  function wrap(text, width) {
+    text.each(function() {
+        var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0, //<-- 0!
+        lineHeight = 1.2, // ems
+        x = text.attr("x"), //<-- include the x!
+        y = text.attr("y"),
+        dy = text.attr("dy") ? text.attr("dy") : 0; //<-- null check
+        tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+        }
+    });
+  }
+
   // A rounded border around everything
   var borderPath = topLayer.append("rect")
     .attr("x", 0)
@@ -88,10 +113,11 @@ Template.failedCourse.onRendered(function(){
         return smallFont;
       })
       .attr("color", "#777777")
-      .attr("text-anchor", "start")
+      .attr("text-anchor", "middle")
       .attr("alignment-baseline", "middle")
-      .attr("transform", "translate("+ 0.05*nameWidth +","+ (0.5*nameHeight) + ")")
+      .attr("transform", "translate("+ 0.5*nameWidth +","+ (0.5*nameHeight) + ")")
       .style("text-overflow", "hidden")
+      .call(wrap, 0.9 * nameWidth)
     ;
 
     

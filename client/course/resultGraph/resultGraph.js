@@ -18,10 +18,10 @@ Template.resultGraph.onRendered(function(){
   // !! all these variables are alse defined in course.js!!
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   var totalCourseWidth = window.innerWidth / 8.5;
-  var totalCourseHeight = 50;
+  var totalCourseHeight = 75;
 
   var fractionNameWidth  = 0.8;
-  var fractionNameHeight = 0.3;
+  var fractionNameHeight = 0.4;
   var fractionGradeWidth = 0.25;
   var courseInfoWidth = totalCourseWidth ;
   var courseInfoHeight = fractionNameHeight * totalCourseHeight;
@@ -108,7 +108,31 @@ Template.resultGraph.onRendered(function(){
         self.text(text + '...');
         textLength = self.node().getComputedTextLength();
     }
-} 
+  }
+  function wrap(text, width) {
+    text.each(function() {
+        var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0, //<-- 0!
+        lineHeight = 1.2, // ems
+        x = text.attr("x"), //<-- include the x!
+        y = text.attr("y"),
+        dy = text.attr("dy") ? text.attr("dy") : 0; //<-- null check
+        tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+            }
+        }
+    });
+  }
 
 
   function leftbottomRoundedRect(x, y, width, height, radius) {
@@ -192,10 +216,12 @@ Template.resultGraph.onRendered(function(){
             return "8px"
         })
         .attr("color", "#777777")
-        .attr("x", 0.05 * courseNameWidth)
+        .attr("x", 0.5 * courseInfoWidth)
         .attr("y", courseNameHeight/2)
         .attr("alignment-baseline", "central")
-      .each(wrapCourseName)  
+        .attr("text-anchor", "middle")
+      // .each(wrapCourseName)  
+      .call(wrap, 0.6 * courseInfoWidth)
       
     ;
 
@@ -209,6 +235,8 @@ Template.resultGraph.onRendered(function(){
       .attr("text-anchor", "end")
       .attr("alignment-baseline", "central")
       .attr("transform", "translate("+ 0.9*courseCreditsWidth +","+ 0.5 * courseCreditsHeight + ")")
+      .call(wrap, 0.9 * courseCreditsWidth)
+      ;
 
   function createHistogramDict(min, max){
     /**
@@ -364,83 +392,6 @@ Template.resultGraph.onRendered(function(){
     }
   }) 
 
-  instance.autorun(function(){
-    var totalwidth = svgHistogramWidth;
-    var totalHeight = svgHistogramHeight;
-    //Session.get("student")
-    var handler = instance.subscribe("generic_courses",function(){});
-    var handler2 = instance.subscribe("generic_grades",Session.get("student"));
-    var handler3 = instance.subscribe("ijkingstoets", Session.get("student"));
-
-    if(handler.ready() && handler2.ready() && handler3.ready())
-    {
-
-      var studentGrade = instance.data.grade;
-
-      var method = instance.data.method;
-      var semester = instance.data.semester;
-      var svg = d3.select(instance.find("svg"));
-
-      var graph = svg.select("g").selectAll("rect");
-      var courseId = instance.data.id;
-
-      var totalwidth = svgHistogramWidth;
-      var totalHeight = svgHistogramHeight;
-
-      if(method == undefined) method = "getCoursePointDistribution";
-      if(semester == undefined) semester = 2;
-      //ugly hack: if 3, is 2e zit. we want to show histogram depending on the period
-      //you received the highest grade. 3 means you'll show grade_try2, so
-      //if they got a higher score in try1, we force it to semester=2 (or 1, doesn't matter)
-
-      if(semester == 3 && instance.data.try1 != undefined)
-      {
-        if(instance.data.try1 >= instance.data.try2 || instance.data.try2 == "NA")
-          semester = 2;
-      }
-
-      Meteor.call(method, [courseId, Session.get("Year"), semester], function(err,data){
-        //if(courseId == "H01A4A") console.log(courseId, studentGrade, Session.get("student"));
-        //console.log("getCoursePointDistribution");
-        var totalwidth = svgHistogramWidth;
-        var totalHeight = svgHistogramHeight;        
-        var bar = "#CBCBCB";
-        var barSelect = "#020202";
-        var colorScale = chroma.scale(["#0099FF","#F566FF"]);
-        var margin = 0.01 * totalCourseWidth;
-        var widthEachScore = totalWidth / 21;
-        var barFraction = 0.95
-        var barWidth = barFraction  * widthEachScore;
-        var spaceWidth = (1- barFraction) * widthEachScore;
-        var legendFraction = 0.2
-        var histogramHeight = (1- legendFraction ) * totalHeight;
-        var heightUnit = 0.01 * data.max * histogramHeight;
-
-
-        graph.data(data.numberPerGrades)
-        graph.transition()
-                          .attr("height",function(d){
-                              return d.count * heightUnit;
-                          })
-                          .attr("fill", function(d){
-                              if(d.grade == studentGrade)
-                                  return barSelect;
-                              else
-                                  return bar;
-                          })
-                          .attr("transform",function(d,i){
-                              // var spacing = 10.0;
-
-
-                              // return "translate(" + ((d.grade / 20.0) * spacing +   (d.grade / 20.0) * totalHeight).toString() + ","+ (1.0 - d.count/(data.max- 0)) * height+ ")";
-                              return "translate(" + (d.grade * widthEachScore).toString() + ","+ (1.0 - d.count/(st.max- 0)) * totalHeight+ ")";
-                              
-
-                          });
-
-
-      });
-    }
-  })
+  
 
 });

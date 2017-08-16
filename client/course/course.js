@@ -3,10 +3,10 @@ Template.course.onRendered(function(){
   var instance = this;
 
   var totalCourseWidth = window.innerWidth / 8.5;
-  var totalCourseHeight = 50;
+  var totalCourseHeight = 75;
 
   var fractionNameWidth  = 0.8;
-  var fractionNameHeight = 0.3;
+  var fractionNameHeight = 0.4;
   var fractionGradeWidth = 0.25;
   var courseInfoWidth = totalCourseWidth ;
   var courseInfoHeight = fractionNameHeight * totalCourseHeight;
