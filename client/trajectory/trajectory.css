@@ -6,6 +6,7 @@
   border-top:    solid 1px  #ececec;
   position:absolute;
   z-index: -1;
+  display: none;
 
 }
 
@@ -36,6 +37,7 @@
   justify-content: space-between;
   cursor: pointer;
   position: relative;
+  border-bottom: 1px solid gainsboro;
 }
 
 #trajectory h2:hover {
@@ -75,10 +77,26 @@
 }
 
 #trajectory .rowtraject {
-  position:relative;
-  max-height: 100px;
-  min-height: 100px;
-  transition: all 0.75s ease-out;
+  display: flex;
+  position: relative;
   overflow: hidden;
-  /*border-bottom: solid 1px  #ececec;*/
+  max-height: 104px;
+  min-height: 104px;
+  transition: all 0.75s ease-out;
+  justify-content: space-between;
+}
+
+.traject-legend {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.traject-legend span {
+  font-size: 9px;
+  color: #828282;
+  cursor: pointer;
+  min-height: 10px;
 }

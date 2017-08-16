@@ -1,0 +1,11 @@
+.distribution {
+  width: 100%;
+  display:inline-block;
+  margin-bottom: 2px;
+  margin-top: 1px;
+  cursor: pointer;
+}
+
+.trace:hover {
+  fill: #e9e9e9;
+}
