@@ -99,29 +99,16 @@ Template.resultGraph.onRendered(function(){
     return "";
   }
 
-  function wrap(text, width) {
-    text.each(function() {
-      var text = d3.select(this),
-          words = text.text().split(/\s+/).reverse(),
-          word,
-          line = [],
-          lineNumber = 0,
-          lineHeight = 1.1, // ems
-          y = text.attr("y"),
-          dy = parseFloat(text.attr("dy")) || 0,
-          tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-      while (word = words.pop()) {
-        line.push(word);
-        tspan.text(line.join(" "));
-        if (tspan.node().getComputedTextLength() > width) {
-          line.pop();
-          tspan.text(line.join(" "));
-          line = [word];
-          tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
-        }
-      }
-    });
-  }
+  function wrapCourseName() {
+    var self = d3.select(this),
+        textLength = self.node().getComputedTextLength(),
+        text = self.text();
+    while (textLength > (0.9 * courseNameWidth) && text.length > 0) {
+        text = text.slice(0, -1);
+        self.text(text + '...');
+        textLength = self.node().getComputedTextLength();
+    }
+} 
 
 
   function leftbottomRoundedRect(x, y, width, height, radius) {
@@ -198,15 +185,18 @@ Template.resultGraph.onRendered(function(){
   // The course name
   svgCourseName
     .append("text")
-    .text(courseName)
-      .attr("font-family", "sans-serif")
-      .attr("font-size", function(){
-          return "8px"
-      })
-      .attr("color", "#777777")
-      .attr("text-anchor", "start")
-      .attr("alignment-baseline", "central")
-      .attr("transform", "translate("+ 0.05*courseNameWidth +","+ (0.5*courseNameHeight) + ")")
+    .append('tspan')
+      .text(courseName)
+        .attr("font-family", "sans-serif")
+        .attr("font-size", function(){
+            return "8px"
+        })
+        .attr("color", "#777777")
+        .attr("x", 0.05 * courseNameWidth)
+        .attr("y", courseNameHeight/2)
+        .attr("alignment-baseline", "central")
+      .each(wrapCourseName)  
+      
     ;
 
     // The credits of the course
