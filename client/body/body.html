@@ -116,7 +116,7 @@
             {{/with}}
           </div>
         </div>
-        <div class="botom">
+        <div class="bottom">
           {{#if Template.subscriptionsReady}}
           {{#each studentCourses 2}}
           <div class="flex-item">
@@ -142,21 +142,21 @@
           </div>
         </div>
         <div class="bottom">
-        {{#if Template.subscriptionsReady}}
-        {{#each studentCourses 1 false 2}}
-        <div class="flex-item">
-          {{> course}}
-        </div>
-        {{/each}}
-        <!-- <div class="courseseparator"></div> -->
-        {{#each studentCourses 2 false 2}}
-        <div class="flex-item">
-          {{> course}}
-        </div>
-        {{/each}}
-        {{else}}
-        <div class="loading"><paper-spinner alt="Loading" active></paper-spinner></div>
-        {{/if}}
+          {{#if Template.subscriptionsReady}}
+          {{#each studentCourses 1 false 2}}
+          <div class="flex-item">
+            {{> course}}
+          </div>
+          {{/each}}
+          <!-- <div class="courseseparator"></div> -->
+          {{#each studentCourses 2 false 2}}
+          <div class="flex-item">
+            {{> course}}
+          </div>
+          {{/each}}
+          {{else}}
+          <div class="loading"><paper-spinner alt="Loading" active></paper-spinner></div>
+          {{/if}}
         </div>
       </div>
 
@@ -174,21 +174,21 @@
           </div>
         </div>
         <div class="bottom">
-        {{#if Template.subscriptionsReady}}
-        {{#each coursesLeft 1}}
-        <div class="flex-item">
-          {{> failedCourse}}
-        </div>
-        {{/each}}
-        <!-- <div class="courseseparator"></div> -->
-        {{#each coursesLeft 2}}
-        <div class="flex-item">
-          {{> failedCourse}}
-        </div>
-        {{/each}}
-        {{else}}
-        <div class="loading"><paper-spinner alt="Loading" active></paper-spinner></div>
-        {{/if}}
+          {{#if Template.subscriptionsReady}}
+          {{#each coursesLeft 1}}
+          <div class="flex-item">
+            {{> failedCourse}}
+          </div>
+          {{/each}}
+          <!-- <div class="courseseparator"></div> -->
+          {{#each coursesLeft 2}}
+          <div class="flex-item">
+            {{> failedCourse}}
+          </div>
+          {{/each}}
+          {{else}}
+          <div class="loading"><paper-spinner alt="Loading" active></paper-spinner></div>
+          {{/if}}
         </div>
       </div>
 
