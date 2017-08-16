@@ -45,7 +45,7 @@ Template.trajectoryperiod.onRendered(function(){
         return "trace trace" + d.bucket;
       })
       .attr("fill", function(d){
-        console.log(d.bucket +"---" + cse + "---" + period);
+        //console.log(d.bucket +"---" + cse + "---" + period);
         let current = d.bucket * 10;
         let next  = current + 11;
         let color = "white";
