@@ -69,7 +69,9 @@ body {
   width: 95%;
   justify-content: space-around;
   height:80px;
+  cursor: pointer;
 }
+
 .flex-3columns{
   width:584px;
 }
