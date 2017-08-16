@@ -14,15 +14,16 @@ Template.failedCourse.onRendered(function(){
   var colorTry1 = colorOfGrade(gradeTry1);
   var colorTry2 = colorOfGrade(gradeTry2);
   var courseColor = colorCourse(gradeStatusTry1, gradeStatusTry2);
+  var courseLabel = courseLabel(gradeStatusTry1, gradeStatusTry2);
 
 
   // layout variables
   var totalWidth = window.innerWidth / 8.5;
   var totalHeight = 75;
 
-  var nameWidthFraction = 1;
+  var nameWidthFraction = 0.8;
   var infoHeightFraction = 0.4;
-  var tryWidthFraction = 0.3
+  var tryWidthFraction = 1/3;
 
   var infoWidth = totalWidth;
   var infoHeight = infoHeightFraction * totalHeight;
@@ -30,8 +31,14 @@ Template.failedCourse.onRendered(function(){
   var nameWidth = nameWidthFraction * totalWidth;
   var nameHeight = infoHeight;
 
+  var creditsWidth = (1-nameWidthFraction) * totalWidth;  
+  var creditsHeight = infoHeight; 
+
   var gradeWidth = totalWidth;
   var gradeHeight = (1-infoHeightFraction) * totalHeight;
+
+  var labelWidth = tryWidthFraction * gradeWidth;
+  var labelHeight = gradeHeight;
 
   var try1Width = tryWidthFraction * gradeWidth;
   var try1Height = gradeHeight;
@@ -39,8 +46,7 @@ Template.failedCourse.onRendered(function(){
   var try2Width = tryWidthFraction * gradeWidth;
   var try2Height = gradeHeight;
 
-  var creditsWidth = (1-(2*tryWidthFraction)) * gradeWidth;  
-  var creditsHeight = gradeHeight;  
+   
   
   var radius = 0;
   var border = 2;
@@ -50,6 +56,8 @@ Template.failedCourse.onRendered(function(){
   var mediumFont = "10px";
   var bigFont = "12px";
 
+
+
   // svg variables
   var container = d3.select("#"+courseId +"_failed").append("svg");
   container
@@ -57,16 +65,18 @@ Template.failedCourse.onRendered(function(){
     .attr("height", totalHeight)
     .style("position", "relative")
     ;
+    
   var bottomLayer = appendSvg(container, "bottomlayer", totalWidth, totalHeight, 0,0);
   var topLayer = appendSvg(container, "toplayer", totalWidth, totalHeight, 0,0);
 
   var svgInfo = appendSvg(bottomLayer, "info", infoWidth, infoHeight, 0,0);
   var svgName = appendSvg(svgInfo, "name", nameWidth, nameHeight, 0,0);
+  var svgCredits = appendSvg(svgInfo, "credits", creditsWidth, creditsHeight, nameWidth, 0)
   
   var svgGrade = appendSvg(bottomLayer, "grade", gradeWidth, gradeHeight, 0, infoHeight);
-  var svgGradeTry1 = appendSvg(svgGrade, "try1", try1Width, try1Height,0, 0);
-  var svgGradeTry2 = appendSvg(svgGrade, "try2", try2Width, try2Height,try1Width, 0 );
-  var svgCredits = appendSvg(svgGrade, "credits", creditsWidth, creditsHeight, (try1Width + try2Width) ,0);
+  var svgLabel = appendSvg(svgGrade, "label", labelWidth, labelHeight, 0 ,0);  
+  var svgGradeTry1 = appendSvg(svgGrade, "try1", try1Width, try1Height,labelWidth, 0);
+  var svgGradeTry2 = appendSvg(svgGrade, "try2", try2Width, try2Height,(labelWidth + try1Width), 0 );
 
   function wrap(text, width) {
     text.each(function() {
@@ -107,6 +117,7 @@ Template.failedCourse.onRendered(function(){
   // The course name
   svgName
     .append("text")
+    .append('tspan')
     .text(courseName)
       .attr("font-family", "sans-serif")
       .attr("font-size", function(){
@@ -114,11 +125,29 @@ Template.failedCourse.onRendered(function(){
       })
       .attr("color", "#777777")
       .attr("text-anchor", "middle")
-      .attr("alignment-baseline", "middle")
-      .attr("transform", "translate("+ 0.5*nameWidth +","+ (0.5*nameHeight) + ")")
+      .attr("alignment-baseline", "central")
+      .attr("x", 0.5*infoWidth)
+      .attr("y", nameHeight/2)
       .style("text-overflow", "hidden")
-      .call(wrap, 0.9 * nameWidth)
+      .call(wrap, 0.6 * infoWidth)
     ;
+
+   
+
+
+  // The credits of the course
+  svgCredits
+  .append("text")
+  .text(formattedCredits(courseCredits))
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "8px")
+    .style("color", "#ffffff")
+    .attr("text-anchor", "end")
+    .attr("alignment-baseline", "central")
+    .attr("transform", "translate("+ 0.9 * creditsWidth +","+ creditsHeight/2.0 + ")")
+    .call(wrap, 0.9 * creditsWidth)
+    ;
+
 
     
              
@@ -132,22 +161,35 @@ Template.failedCourse.onRendered(function(){
     ;
 
   // The rectangle where we place the grade
+  svgLabel
+    .append("path")
+    .attr("d", leftbottomRoundedRect(0,0,labelWidth, labelHeight, radius))
+    .attr("fill", courseColor)
+  ;
+
+
   svgGradeTry1
     .append("path")
-      .attr("d", leftbottomRoundedRect(0,0,try1Width, try1Height, radius))
-      .attr("fill", colorTry1)
+      .attr("d", leftbottomRoundedRect(0,0,try1Width, try1Height, 0))
+      .attr("fill", "white")
     ;
   svgGradeTry2
     .append("path")
       .attr("d", rightbottomRoundedRect(0,0,try2Width, try2Height, radius))
-      .attr("fill", colorTry2)
+      .attr("fill", 'white')
     ;
   
-  svgCredits
-    .append("path")
-      .attr("d", rightbottomRoundedRect(0,0,creditsWidth, creditsHeight, radius))
-      .attr("fill", courseColor)
-    ;
+  //The label
+  svgLabel
+  .append("text")
+  .text(courseLabel)
+    .attr("font-family", "sans-serif")
+    .attr("font-size", "20px")
+    .attr("fill", "white")
+    .attr("text-anchor", "middle")
+    .attr("alignment-baseline", "central")
+    .attr("transform", "translate("+ labelWidth/2.0 +","+ labelHeight/2.0 + ")")
+  ;
 
   // The grade
   svgGradeTry1
@@ -155,7 +197,7 @@ Template.failedCourse.onRendered(function(){
     .text(gradeTry1)
       .attr("font-family", "sans-serif")
       .attr("font-size", "20px")
-      .attr("fill", "white")
+      .attr("fill", colorTry1)
       .attr("text-anchor", "middle")
       .attr("alignment-baseline", "central")
       .attr("transform", "translate("+ try1Width/2.0 +","+ try1Height/2.0 + ")")
@@ -166,22 +208,22 @@ Template.failedCourse.onRendered(function(){
     .text(gradeTry2)
       .attr("font-family", "sans-serif")
       .attr("font-size", "20px")
-      .attr("fill", "white")
+      .attr("fill", colorTry2)
       .attr("text-anchor", "middle")
       .attr("alignment-baseline", "central")
       .attr("transform", "translate("+ try1Width/2.0 +","+ try1Height/2.00 + ")")
     ;
 
-    // The credits of the course
-  svgCredits
-    .append("text")
-    .text(formattedCredits(courseCredits))
-      .attr("font-family", "sans-serif")
-      .attr("font-size", "15px")
-      .style("fill", "#ffffff")
-      .attr("text-anchor", "middle")
-      .attr("alignment-baseline", "central")
-      .attr("transform", "translate("+ creditsWidth/2.0 +","+ creditsHeight/2.0 + ")")
+    //A line between the grades
+  var gradeSeparator = topLayer.append("line")
+  .attr("x1", (labelWidth + try1Width))
+  .attr("x2", (labelWidth + try1Width))
+  .attr("y1", infoHeight)
+  .attr("y2", totalHeight)
+  .style("stroke", courseColor)
+  ;
+
+  
   
   
   
@@ -243,6 +285,22 @@ Template.failedCourse.onRendered(function(){
 
     return color;
   }
+
+  function courseLabel(status1, status2){
+    var label  = "NT";
+    if (status1 === "passed" || status2 === "passed"){
+      label = "G";
+    }
+    else if (status1 === "tolerable" || status2 === "tolerable"){
+      label =  "T";
+    }
+    else{
+      label = "NT";
+    }
+
+    return label;
+  };
+  
 
   function leftbottomRoundedRect(x, y, width, height, radius) {
     return "M" + x + "," + y
