@@ -68,10 +68,10 @@ body {
 .flex-item {
   width: 175px;
   justify-content: space-around;
-
+  margin-top:10px;
   margin-right:10px;
   margin-left:10px;
-  height:65px;
+  height:80px;
 }
 .flex-3columns{
   width:584px;
