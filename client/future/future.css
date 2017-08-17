@@ -1,0 +1,26 @@
+.profile{
+    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+
+    text-align:center;
+    font-weight: 300;
+    text-transform: lowercase;
+    font-size:1em;
+    width: 100%;
+    color: #424242;
+    min-height: 21px;
+}
+
+.box {
+    background: blue;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    text-align: center;
+    line-height: 100px;
+    color: white;
+    font-size: 24px;
+    font-family: sans-serif;
+    margin: 5px;
+  }

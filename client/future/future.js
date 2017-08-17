@@ -1,8 +1,18 @@
 Template.future.onRendered(function(){
 
+  var instance = this;
+  
+  // append student's profile
+
   //server function needs this guy's grades.
 
-  var instance = this;
+  
+
+
+
+
+
+
   this.autorun(function(){
 
     $("#bachelor").empty();
