@@ -1,3 +1,18 @@
 <template name="resultGraph">
-  <div id="{{id}}_{{semester}}" class="course"></div>
+  <div id="{{id}}_{{semester}}" class="course" style="border-color: {{color}}">
+    <div class="course-top">
+      <div class="name">{{name}}</div>
+      <div class="top-bar" style="background: {{color}}">
+      <div class="grade">{{grade}}</div>
+      <div class="credits">
+        <!-- <div class="bracket">[</div> -->
+        {{credits}}<span>stp</span>
+        <!-- <div class="bracket">]</div> -->
+      </div>
+      </div>
+    </div>
+    <div class="course-bottom">
+      <svg class="histogram"></svg>
+    </div>
+  </div>
 </template>

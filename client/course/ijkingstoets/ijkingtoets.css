@@ -1,0 +1,7 @@
+.ijkingstoets svg {
+  display: none;
+}
+
+.ijkingstoets .course {
+  min-height: 50px !important;
+}

@@ -1,7 +1,14 @@
 body {
   /* Need to fix this.. to a standard size */
-  max-width: 1470px;
-  min-width: 1470px;
+  max-width: 100%;
+  min-width: 1450px;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .loading-screen {
@@ -68,8 +75,6 @@ body {
 .flex-item {
   width: 95%;
   justify-content: space-around;
-  height:80px;
-  cursor: pointer;
 }
 
 .flex-3columns{
@@ -117,8 +122,9 @@ body {
 .flex-column .bottom {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  height: 100%;
 }
 
 .flex-column .top .fa {
@@ -132,7 +138,7 @@ body {
 }
 
 .flex-column .top .fa:hover {
-  color:#f27eea;
+  color:#81A8B8;
 }
 
 .flex-column .column-title {
@@ -206,7 +212,7 @@ body {
 }
 
 .hider:hover{
-  color:#f27eea;
+  color:#81A8B8;
 }
 
 .bottomheader{
@@ -219,5 +225,5 @@ body {
   max-width: 100px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }

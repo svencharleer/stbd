@@ -1,3 +1,17 @@
 <template name="failedCourse">
-  <div id="{{id}}_failed" class="course"></div>
+  <div id="{{id}}_failed" class="course failed-course" style="border-color: {{color}}; min-height: 50px;">
+    <div class="course-top">
+      <div class="name">{{name}}</div>
+      <div class="top-bar" style="background: {{color}}">
+        <div class="label">{{courseLabel}}</div>
+        <div class="grade">{{try1}} - {{try2}}</div>
+        <div class="credits">
+          {{credits}}<span>stp</span>
+        </div>
+      </div>
+    </div>
+    <div class="course-bottom">
+      <!-- <svg class="histogram"></svg> -->
+    </div>
+  </div>
 </template>

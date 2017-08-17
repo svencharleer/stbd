@@ -4,7 +4,15 @@
   font-size:.7em;
   min-height: 16px;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   width: 100%;
   justify-content: space-between;
+}
+
+paper-progress {
+  border: 0 !important;
+}
+
+paper-progress #primaryProgress {
+  background: #81a8b8 !important;
 }

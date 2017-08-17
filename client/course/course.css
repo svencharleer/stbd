@@ -1,9 +1,110 @@
+.course:hover {
+  /*zoom: 1.5;
+  transform: scale(1.5);*/
+  /*z-index: 1000;*/
+  transition: all 0.4s ease;
+  box-shadow: 1px 1px 5px #a1a1a1;
+}
 
 .course {
-    margin-top: 8px;
-    margin-bottom: 8px;
+  position:relative;
+  border: 1px solid #d1d1d1;
+  background: white !important;
+  border-radius: 4px;
+  z-index: 1;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  /*justify-content: space-between;*/
+  margin-top: 8px;
+  margin-bottom: 8px;
+  cursor: default;
+  transition: all 0.4s ease;
+}
+
+.course .course-top {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: flex-start;
+  color: #818181;
+  align-items: baseline;
+}
+
+.course .course-top .top-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  width: 100%;
+  background: #f7f7f7;
+}
+
+.course .name{
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  line-height: 110%;
+  /* margin-left: 4px; */
+  /* margin-bottom: 2px; */
+  width: 100%;
+  margin: 4px;
+  min-height: 28px;
+  color: #424242;
+  margin-bottom: 0;
+}
+
+.course .label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #424242;
+}
+
+.course .course-top .credits {
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: baseline;
+  color: #424242;
+}
+
+.credits span {
+  font-size: 10px;
+  color: #424242;
+}
+
+.course .course-top .credits .bracket {
+  font-size: 10px;
+  color: #424242;
 }
 
 .course svg {
+  /*display: none;*/
   transition: all 0.3s ease-out;
+  overflow: visible;
+  margin: 4px;
+}
+
+.course .course-bottom {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.course .course-bottom .grade {
+  font-weight: 100;
+  font-size: 22px;
+  min-width:  32px;
+  min-height: 39px;
+  text-align: center;
+  color: #424242;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  border-bottom: 2px solid grey;
+}
+
+.course .grade {
+  font-size: 13px;
+  font-weight: 500;
+  color: #424242;
 }

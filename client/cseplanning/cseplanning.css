@@ -7,11 +7,11 @@
 }
 
 circle.dragger-outer{
-  fill: rgb(242, 126, 234);
+  fill: #81A8B8;
 }
 
 circle.dragger-inner {
-  fill: rgb(242, 126, 234);
+  fill: #81A8B8;
 }
 
 rect.d3slider-rect-range {
@@ -19,15 +19,15 @@ rect.d3slider-rect-range {
 }
 
 rect.d3slider-rect-value {
-  fill:#f27eea;
+  fill:#81A8B8;
 }
 
 circle.dragger-outer:hover{
-  fill: rgb(212, 97, 204);
+  fill: #537988;
 }
 
 circle.dragger-inner:hover {
-  fill: rgb(212, 97, 204);
+  fill: #537988;
 }
 
 #cseplanning {
