@@ -1,21 +1,85 @@
 Template.future.onRendered(function(){
 
   var instance = this;
+  var profileColor = "green"
+  // append student's profile background color
+  $("#profilebox").css("background",profileColor);
+
+
+  /** 
+  * @param {svg} svg you want to add the profilefield
+  * @param {string} backgroundColor of the background
+  * @param {[int]} integers representing percentage of students who did their bachelor in 3-4 & 5 years
+  */
+  function makeProfileField(svg, backgroundColor, data){
+    svg.append('rect')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('fill', backgroundColor)
+      .attr('class', 'backgroundProfile')
+    ;
+    var width = 150;
+    var height = 150;
+    var margin = 3;
+    var nb3 = data[0];
+    var nb4 = data[1];
+    var nb5 = data[2];
+    var nbNot = 100 - nb3 - nb4 - nb5;
+    // var data = Array.apply(null, Array(100)).map(function (_, i) {return i;});
+    
+    var x = d3.scale.linear()
+      .domain([0,9])
+      .range([0,width]);
+
+    var y = d3.scale.linear()
+      .domain([0,10])
+      .range([0,height]);
+
+    function calculateClass(x){
+      var profileClass = 'unknown';
+      if (x < nb3){
+        profileClass = 'topstudentbox';
+      }
+      else if ( x < nb3 + nb4){
+        profileClass = 'middlestudentbox';
+      }
+      else if ( x < nb3 + nb4 + nb5){
+        profileClass = 'lowstudentbox';
+      }
+      else {
+        profileClass = 'badstudentbox';
+      }      
+      return profileClass;
+    }    
+    svg.selectAll('rect.profilebox')
+      .data(d3.range(100))
+      .enter()
+      .append('rect')
+      .attr('class', function(d){
+        return calculateClass(d);
+      })
+      .attr('x', function (d){
+        return x(d % 10) + margin;
+      })
+      .attr('y', function(d){
+        return y(Math.floor( d / 10)) + margin;
+      })
+
+  }
+
+  var topsvg = d3.select('#best');
+  var middlesvg = d3.select('#middle')
+  var lowsvg = d3.select('#low')
   
-  // append student's profile
+  makeProfileField( topsvg, 'white', [20,30,40]);
+  makeProfileField( middlesvg, 'grey' , [20,30,40]);
+  makeProfileField( lowsvg, 'purple' , [20,30,40]);
+  
 
   //server function needs this guy's grades.
-
-  
-
-
-
-
-
-
   this.autorun(function(){
 
-    $("#bachelor").empty();
+    // $("#bachelor").empty();
     Meteor.call("getHistoricalData", Session.get("student"),function(err,data){
 
       var bachelor = {};
