@@ -26,36 +26,37 @@
 }
 
 .topstudentbox {
-    fill: green;
-    width: 8%;
-    height: 8%;
+    fill: #b2dfdb;
+    width: 8px;
+    height: 8px;
 
 }
 
 .middlestudentbox {
-    fill: orange;    
-    width: 8%;
-    height: 8%;
+    fill: #90caf9;    
+    width: 8px;
+    height: 8px;
 }
 
 .lowstudentbox {
-    fill: red;    
-    width: 8%;
-    height: 8%;
+    fill: #9fa8da
+    ;    
+    width: 8px;
+    height: 8px;
 
 }
 
 .badstudentbox {
-    fill: black;    
-    width: 8%;
-    height: 8%;
+    fill: #e1bee7;    
+    width: 8px;
+    height: 8px;
 
 }
 
 .unknown {
     fill: grey;    
-    width: 8%;
-    height: 8%;
+    width: 8px;
+    height: 8px;
 
 }
 .backgroundProfile {

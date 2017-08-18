@@ -20,7 +20,7 @@ Template.future.onRendered(function(){
     ;
     var width = 150;
     var height = 150;
-    var margin = 3;
+    var margin = 0;
     var nb3 = data[0];
     var nb4 = data[1];
     var nb5 = data[2];
@@ -78,10 +78,29 @@ Template.future.onRendered(function(){
 
   //server function needs this guy's grades.
   this.autorun(function(){
+    Meteor.call("getCSEProfile", Session.get('student','semester'), function(err,color){
+      profileColor = color;
+      console.log(profileColor);
+      
+      // append student's profile background color
+      $("#profilebox").css("background",profileColor);
+    }),
+
+    Meteor.call("getCSEDistribution", Session.get('semester'), function(err,listDicts){
+      [topDict, middleDict, lowDict] = listDicts;
+      topCSEDistribution = [topDict['+0'], topDict['+1'], topDict['+2']]
+      middleCSEDistribution = [middleDict['+0'], middleDict['+1'], middleDict['+2']]
+      lowCSEDistribution = [lowDict['+0'], lowDict['+1'], lowDict['+2']]
+      
+      makeProfileField( topsvg, 'white', topCSEDistribution);
+      makeProfileField( middlesvg, 'white' , middleCSEDistribution);
+      makeProfileField( lowsvg, 'white' , lowCSEDistribution);
+    }),
+
 
     // $("#bachelor").empty();
     Meteor.call("getHistoricalData", Session.get("student"),function(err,data){
-
+      
       var bachelor = {};
       var total = 0;
       bachelor = {"+0":0,"+1":0,"+2":0,"B":0,"D":0}
@@ -91,55 +110,55 @@ Template.future.onRendered(function(){
       })
       //console.log(bachelor);
 
-      var svg = d3.select("#bachelor");
-      var height = 500;
-      svg.attr("height",height);
-      svg.attr("width", 100)
+      // var svg = d3.select("#bachelor");
+      // var height = 500;
+      // svg.attr("height",height);
+      // svg.attr("width", 100)
 
-      svg.append("rect")
-      .attr("fill","#b2daea")
-      .attr("width",20 )
-      .attr("height",height * bachelor["+0"]/total )
-      .attr("transform","translate(0,0)");
+      // svg.append("rect")
+      // .attr("fill","#b2daea")
+      // .attr("width",20 )
+      // .attr("height",height * bachelor["+0"]/total )
+      // .attr("transform","translate(0,0)");
 
-      svg.append("text")
-      .attr("fill","#b2daea")
-      .attr("transform","translate(22,"+ (5 + height/2 * bachelor["+0"]/total) +")")
-      .text("3J/" + Math.round(100* bachelor["+0"]/total) + "%");
+      // svg.append("text")
+      // .attr("fill","#b2daea")
+      // .attr("transform","translate(22,"+ (5 + height/2 * bachelor["+0"]/total) +")")
+      // .text("3J/" + Math.round(100* bachelor["+0"]/total) + "%");
 
 
-      svg.append("rect")
-      .attr("fill","#81a8b8")
-      .attr("width",20)
-      .attr("height",height * bachelor["+1"]/total )
-      .attr("transform","translate(0,"+ height * bachelor["+0"]/total +")");
+      // svg.append("rect")
+      // .attr("fill","#81a8b8")
+      // .attr("width",20)
+      // .attr("height",height * bachelor["+1"]/total )
+      // .attr("transform","translate(0,"+ height * bachelor["+0"]/total +")");
 
-      svg.append("text")
-      .attr("fill","#81a8b8")
-      .attr("transform","translate(22,"+ (5+ height * (bachelor["+0"]/total+(bachelor["+1"]/total)/2))+")")
-      .text("4J/" + Math.round(100* bachelor["+1"]/total) + "%");
+      // svg.append("text")
+      // .attr("fill","#81a8b8")
+      // .attr("transform","translate(22,"+ (5+ height * (bachelor["+0"]/total+(bachelor["+1"]/total)/2))+")")
+      // .text("4J/" + Math.round(100* bachelor["+1"]/total) + "%");
 
-      svg.append("rect")
-      .attr("fill","#537988")
-      .attr("width",20)
-      .attr("height",height * bachelor["+2"]/total )
-      .attr("transform","translate(0,"+ height * (bachelor["+0"]/total+bachelor["+1"]/total) +")");
+      // svg.append("rect")
+      // .attr("fill","#537988")
+      // .attr("width",20)
+      // .attr("height",height * bachelor["+2"]/total )
+      // .attr("transform","translate(0,"+ height * (bachelor["+0"]/total+bachelor["+1"]/total) +")");
 
-      svg.append("text")
-      .attr("fill","#537988")
-      .attr("transform","translate(22,"+ (5 + height * (bachelor["+0"]/total+bachelor["+1"]/total+(bachelor["+2"]/total)/2))+")")
-      .text("5J/" + Math.round(100* bachelor["+2"]/total) + "%");
+      // svg.append("text")
+      // .attr("fill","#537988")
+      // .attr("transform","translate(22,"+ (5 + height * (bachelor["+0"]/total+bachelor["+1"]/total+(bachelor["+2"]/total)/2))+")")
+      // .text("5J/" + Math.round(100* bachelor["+2"]/total) + "%");
 
-      svg.append("rect")
-      .attr("fill","black")
-      .attr("width",20)
-      .attr("height",height * (bachelor["B"]+bachelor["D"])/total )
-      .attr("transform","translate(0,"+ height * (bachelor["+0"]/total+bachelor["+1"]/total+bachelor["+2"]/total) +")");
+      // svg.append("rect")
+      // .attr("fill","black")
+      // .attr("width",20)
+      // .attr("height",height * (bachelor["B"]+bachelor["D"])/total )
+      // .attr("transform","translate(0,"+ height * (bachelor["+0"]/total+bachelor["+1"]/total+bachelor["+2"]/total) +")");
 
-      svg.append("text")
-      .attr("fill","black")
-      .attr("transform","translate(22,"+ (5 + height * (bachelor["+0"]/total+bachelor["+1"]/total+bachelor["+2"]/total+((bachelor["B"]+bachelor["D"])/total)/2))+")")
-      .text("NIET/" + Math.round(100* (bachelor["B"]+bachelor["D"])/total) + "%");
+      // svg.append("text")
+      // .attr("fill","black")
+      // .attr("transform","translate(22,"+ (5 + height * (bachelor["+0"]/total+bachelor["+1"]/total+bachelor["+2"]/total+((bachelor["B"]+bachelor["D"])/total)/2))+")")
+      // .text("NIET/" + Math.round(100* (bachelor["B"]+bachelor["D"])/total) + "%");
 
     });
   })
