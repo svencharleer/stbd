@@ -19,11 +19,8 @@ function(){
     }
 );
 
-
-
 /*Router.route('/:student',
  function(){
-
       Session.set("studentName", "");
       Session.set("student", parseInt(Router.current().params.student));
       Session.set("Year","2014-2015");
