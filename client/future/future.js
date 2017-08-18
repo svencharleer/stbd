@@ -12,21 +12,16 @@ Template.future.onRendered(function(){
   * @param {[int]} integers representing percentage of students who did their bachelor in 3-4 & 5 years
   */
   function makeProfileField(svg, backgroundColor, data){
-    svg.append('rect')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('fill', backgroundColor)
-      .attr('class', 'backgroundProfile')
-    ;
+    console.log("make field")
     var width = 150;
-    var height = 150;
-    var margin = 0;
+    var height = 140;
+    var margin = 7;
     var nb3 = data[0];
     var nb4 = data[1];
     var nb5 = data[2];
     var nbNot = 100 - nb3 - nb4 - nb5;
     // var data = Array.apply(null, Array(100)).map(function (_, i) {return i;});
-    
+    var data = d3.range(100)
     var x = d3.scale.linear()
       .domain([0,9])
       .range([0,width]);
@@ -52,7 +47,7 @@ Template.future.onRendered(function(){
       return profileClass;
     }    
     svg.selectAll('rect.profilebox')
-      .data(d3.range(100))
+      .data(data)
       .enter()
       .append('rect')
       .attr('class', function(d){
@@ -65,13 +60,22 @@ Template.future.onRendered(function(){
         return y(Math.floor( d / 10)) + margin;
       })
 
+      
+    ;
+
+    svg.append('path')
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('fill', "none")
+    .attr('class', 'backgroundProfile')
+    .style('fill', backgroundColor)
   }
 
   var topsvg = d3.select('#best');
   var middlesvg = d3.select('#middle')
   var lowsvg = d3.select('#low')
   
-  makeProfileField( topsvg, 'white', [20,30,40]);
+  makeProfileField( topsvg, 'black', [20,30,40]);
   makeProfileField( middlesvg, 'grey' , [20,30,40]);
   makeProfileField( lowsvg, 'purple' , [20,30,40]);
   
