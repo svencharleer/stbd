@@ -3,25 +3,22 @@
 Template.ijkingstoets.onCreated(function(){
 
 
-  var instance = this;
-  var bar = "#CBCBCB";
-  var barSelect = "#020202";
+  let instance = this;
+  let bar = "#CBCBCB";
+  let barSelect = "#020202";
 
   instance.autorun(function(){
     Session.get("student");
 
-    var handler = instance.subscribe("generic_courses",function(){});
-    var handler2 = instance.subscribe("generic_grades",Session.get("student"));;
+    let handler = instance.subscribe("generic_courses",function(){});
+    let handler2 = instance.subscribe("generic_grades",Session.get("student"));;
     if(handler.ready() && handler2.ready()){
-      var period  = instance.data.id;
-      var studentGrade = instance.data.grade;
-      var svg = d3.select("." + period + " svg");
+      let period  = instance.data.id;
+      let studentGrade = instance.data.grade;
+      let svg = d3.select("#"+period+"_");
+      let graph = svg.select("g").selectAll("rect");
+      let courseId = period;
 
-      var graph = svg.select("g").selectAll("rect");
-      var courseId = period;
-
-      var height = 20;
-      var totalHeight = 100;
       Meteor.call("getIjkingstoetsPointDistribution", [Session.get("StartYear")], function(err,data){
 
         if(courseId == "ijkingstoets_juli")
@@ -33,8 +30,7 @@ Template.ijkingstoets.onCreated(function(){
         graph.data(data.numberPerGrades)
         graph.transition()
         .attr("height",function(d){
-          //wider if it's a grade that past
-          return d.count/(data.max- 0) * height;
+          return d.count/(data.max) * 40;
         })
         .attr("fill", function(d){
           if(d.grade == studentGrade)

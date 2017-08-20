@@ -88,7 +88,7 @@ Template.course.onRendered(function(){
           // let space = 0.1 * histogramHeight;
           // let maxBarHeight = 0.9 * histogramHeight;
           // let heightUnit = (1.0/ data.max) * maxBarHeight ;
-          return "translate(" + (d.grade * 7.8) + ","+ (40 - ((d.count * 40)/data.max))  +  ")";
+          return "translate(" + (d.grade * 6.8) + ","+ (40 - ((d.count * 40)/data.max))  +  ")";
           // var spacing = 10.0;
           // return "translate(" + ((d.grade / 20.0) * spacing +   (d.grade / 20.0) * totalHeight).toString() + ","+ (1.0 - d.count/(data.max- 0)) * height+ ")";
         });

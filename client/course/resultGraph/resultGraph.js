@@ -1,30 +1,13 @@
 Template.resultGraph.helpers({
   color: function(){
-    let color = "#ef9a9a";
-    if(this.grade < 8) color = "#ff8a80"; //failed
-    else if(this.grade > 9) color = "#a5d6a7"; //passed
-    else if(this.grade >= 8 && this.grade <= 9) color = "#ffcc80"; //tolerable
-    else color = "#ff8a80"; //failed
+    let color = "white"; //"#ef9a9a";
+    if(this.grade < 8) color = "failed" //"#ff8a80"; //failed
+    else if(this.grade > 9) color = "passed" //"#a5d6a7"; //passed
+    else if(this.grade >= 8 && this.grade <= 9) color = "tolerable"; // "#ffcc80"; //tolerable
+    else color = "failed"; // "#ff8a80"; //failed
     return color;
   }
 });
-
-// container.on("click", function(){
-//   zoom(d3.select(this), 1.5, true);
-// });
-// container.on("dblclick", function(){
-//   zoom(d3.select(this), 2, true)
-// });
-// container.on("mouseover", function(){
-//   if (clicked === false){
-//     zoom(d3.select(this), 1.5, false);
-//   }
-// });
-// container.on("mouseout", function(){
-//   if (clicked === false){
-//     zoom(d3.select(this), 1, false);
-//   }
-// });
 
 Template.resultGraph.onRendered(function(){
   // TODO: let width depend on screen
@@ -81,7 +64,7 @@ Template.resultGraph.onRendered(function(){
   let container = d3.select("#"+courseId +"_"+semesterCourse);
   let svgHistogram = container.select(".histogram")
   .attr("class","histogram")
-  .attr("width", 160)
+  .attr("width", 140)
   .attr("height", 40)
   .attr("x", 0)
   .attr("y", 0)
@@ -279,24 +262,24 @@ Template.resultGraph.onRendered(function(){
     // let margin = 10;
     // let barWidth = (0.9*legendWidth) / 21;
     // let space = 0.05 * legendWidth;
-    // 1 -> 7.6 pixels
+    // 1 -> 7 pixels
     svg.append("rect") // < 8 Failed
     .attr("stroke","#ff8a80")
-    .attr("width", 60.8)
+    .attr("width", 56)
     .attr("height",1)
     .attr("transform", "translate(0,40)");
 
     svg.append("rect") // 8-9 Tolerated
     .attr("stroke","#ffcc80")
-    .attr("width", 15.2)
+    .attr("width", 14)
     .attr("height", 1)
-    .attr("transform","translate(60.8,40)"); // 40% of histogram width.
+    .attr("transform","translate(56,40)"); // 40% of histogram width.
 
     svg.append("rect") // > 9 Pass 45% of histogram width.
     .attr("stroke","#a5d6a7")
-    .attr("width", 84)
+    .attr("width", 70)
     .attr("height",1)
-    .attr("transform","translate(76,40)");
+    .attr("transform","translate(70,40)");
   }
 
   function createHistogram(svg, totalWidth, totalHeight){
@@ -312,8 +295,8 @@ Template.resultGraph.onRendered(function(){
     // let barFraction = 0.95
     // let barWidth = barFraction  * widthEachScore;
     // let spaceWidth = (1- barFraction) * widthEachScore;
-    let legendFraction = 0.2
-    let histogramHeight = (1- legendFraction ) * totalHeight;
+    // let legendFraction = 0.2
+    // let histogramHeight = (1- legendFraction ) * totalHeight;
     // create basic graph without data
     // real data inputted in course.js
     // Create dict to count nb occurences each score
@@ -335,7 +318,7 @@ Template.resultGraph.onRendered(function(){
     //   return "translate(" + (d.grade * widthEachScore) + ","+ (1.0 - d.count/(startValues.max- 0)) * totalHeight+ ")";
     // });
     // if all of this gets overwritted then why bother???
-    createLegend(svg, 160, 40);
+    createLegend(svg, 140, 40);
   }
 
   createHistogram(svgHistogram, svgHistogramWidth, svgHistogramHeight);
@@ -366,14 +349,14 @@ Template.resultGraph.onRendered(function(){
   container.on("click", function(){
     zoom(d3.select(this), 1.5, true);
   });
-  container.on("dblclick", function(){
-    zoom(d3.select(this), 2, true)
-  });
-  container.on("mouseover", function(){
-    if (clicked === false){
-      zoom(d3.select(this), 1.5, false);
-    }
-  });
+  // container.on("dblclick", function(){
+  //   zoom(d3.select(this), 2, true)
+  // });
+  // container.on("mouseover", function(){
+  //   if (clicked === false){
+  //     zoom(d3.select(this), 1.5, false);
+  //   }
+  // });
   container.on("mouseout", function(){
     if (clicked === false){
       zoom(d3.select(this), 1, false);
