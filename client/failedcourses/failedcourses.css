@@ -1,0 +1,6 @@
+.failed-course .grade {
+  display: flex;
+}
+
+.bold {font-weight: 500;}
+.notbold {font-weight: 300;}

@@ -2,9 +2,11 @@
   <div id="{{id}}_failed" class="course failed-course" style="border-color: {{color}}; min-height: 50px;">
     <div class="course-top">
       <div class="name">{{name}}</div>
-      <div class="top-bar" style="background: {{color}}">
-        <div class="label">{{courseLabel}}</div>
-        <div class="grade">{{try1}} - {{try2}}</div>
+      <div class="top-bar" style="background: {{color}}; cursor: default;">
+        <div class="grade">
+          <div class="try1 {{try1.bold}}">{{try1.grade}}</div> -
+          <div class="try2 {{try2.bold}}">{{try2.grade}}</div>
+        </div>
         <div class="credits">
           {{credits}}<span>stp</span>
         </div>
