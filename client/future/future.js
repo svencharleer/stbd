@@ -4,7 +4,9 @@ Template.future.helpers({
   }  ,
 
   limit2: function(){
-    return Session.get('limit2');  }  
+    return Session.get('limit2');  
+  }  
+
 });
 
 
@@ -12,7 +14,6 @@ Template.future.helpers({
 Template.future.onRendered(function(){
 
   var instance = this;
-  console.log(this.data)
   var profileColor = "green"
   var highProfile = false;
   var middleProfile = false;
@@ -84,17 +85,22 @@ Template.future.onRendered(function(){
       .attr("y", 0)
       .attr("height", '100%')
       .attr("width", '100%')
-      .style("stroke", 'blue')
+      // .style("stroke", 'blue')
       .style("fill", "none")
-      .style("stroke-width", 5);
+      // .style("stroke-width", 5)
+      ;
     }
+    else(
+      svg.attr('opacity', 0.4)
+    )
     
 
   };
 
   function makeLegend(svg){
-
   }
+
+  
 
   var legendsvg = d3.select('#profile');
   var topsvg = d3.select('#best');

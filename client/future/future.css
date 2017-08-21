@@ -26,24 +26,25 @@
 }
 
 .topstudentbox {
-    fill: #b2dfdb;
+    fill: #a5d6a7;
     width: 8px;
     height: 8px;
 
 }
 .legend3 {
-    background-color: #b2dfdb;
+    background-color: #a5d6a7;
     width: 25%;
     text-align: center;
 }
 
 .middlestudentbox {
-    fill: #90caf9;    
+    fill: #80deea;    
     width: 8px;
     height: 8px;
 }
+
 .legend4 {
-    background-color: #90caf9;  
+    background-color: #80deea;  
     width: 25%;
     text-align: center;
     
@@ -64,13 +65,13 @@
 
 
 .badstudentbox {
-    fill: #e1bee7;    
+    fill: #ffc1e3;    
     width: 8px;
     height: 8px;
 
 }
 .legendnot {
-    background-color: #e1bee7;    
+    background-color: #ffc1e3;    
     width: 25%;
     text-align: center;
     
@@ -115,6 +116,11 @@
     text-align: center;
     font-weight: 300;
 
+}
+
+.fieldborder {
+    stroke: #58a5f0;
+    stroke-width: 5;
 }
 
 
