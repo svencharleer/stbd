@@ -1,6 +1,18 @@
+Template.future.helpers({
+  limit1: function(){    
+    return Session.get('limit1');
+  }  ,
+
+  limit2: function(){
+    return Session.get('limit2');  }  
+});
+
+
+
 Template.future.onRendered(function(){
 
   var instance = this;
+  console.log(this.data)
   var profileColor = "green"
   var highProfile = false;
   var middleProfile = false;
