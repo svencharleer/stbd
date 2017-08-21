@@ -60,96 +60,7 @@ Meteor.publish("TTT_algebra", function(who){
 })*/
 
 Meteor.methods({
-  /*getTTTTotalDistribution: function(args)
-  {
-    //we will get 2 courses. find out which, and match them to the ECTS
-    var ECTS ={ TTT_analyse: 6,
-      TTT_mechanica: 5,
-      TTT_scheikunde: 7,
-      TTT_algebra: 5
-    };
-    var courseNames = ["TTT_analyse","TTT_mechanica","TTT_scheikunde","TTT_algebra"];
-    var courses = Courses.find({semester:0});
-    var studentScore = 0;
-    var studentECTS = 0;
-    var courses = args[0];
-    var student = args[1];
-    var scores = {};
-    if(courses == undefined || courses.length == 0)  return {distribution:[], studentScore:0};;
-    if(courses.indexOf("TTT_analyse") >= 0)
-      scores["TTT_analyse"] =  TTT_analyse.find({grade:{$ne:"NA"}}).fetch();
-    if(courses.indexOf("TTT_mechanica") >= 0)
-      scores["TTT_mechanica"] = TTT_mechanica.find({grade:{$ne:"NA"}}).fetch();
-    if(courses.indexOf("TTT_scheikunde") >= 0)
-      scores["TTT_scheikunde"] = TTT_scheikunde.find({grade:{$ne:"NA"}}).fetch();
-      if(courses.indexOf("TTT_algebra") >= 0)
-        scores["TTT_algebra"] = TTT_algebra.find({grade:{$ne:"NA"}}).fetch();
-    var studentGrades = {};
-    //multiply them with ECTS each, then divide by total ECTS
-    var totalECTS = 0;
-    var modifier = 5
-    courseNames.forEach(function(c){
-      modifier = 1;
-      if(scores[c] == undefined) return;
-      if(c == "TTT_scheikunde") modifier = 5;
-      var ects = ECTS[c];
-      scores[c].forEach(function(s){
-        if(studentGrades[s.student] == undefined){
-          studentGrades[s.student] = [];
-        }
-        //if it's the student, gather his info so we can return his total score
-        if(s.student == student)
-        {
-          studentECTS += ects;
-          studentScore += parseInt(s.grade/modifier)*ects;
-        }
-        studentGrades[s.student].push(parseInt(s.grade/modifier)*ects);
-      })
-      totalECTS += ects;
-
-    });
-    //console.log(studentGrades)
-    if(totalECTS == 0){
-      //console.log("0 total ECTS, that's a bidt weird");
-       return {distribution:[], studentScore:0};
-     }
-     studentScore /= studentECTS;
-     //divide student's personal score
-
-    //divide
-    var scores = [];
-    Object.keys(studentGrades).forEach(function(st){
-      var s = studentGrades[st];
-      if(s.length < courses.length) return; //only get the students who have these two courses as TTT, otherwie they have other combo and we can't compare.
-      var t = 0;
-      for(var i=0;i< courses.length;i++) t+=s[i];
-      scores.push(parseInt(t/totalECTS));
-
-    });
-    //console.log(JSON.stringify(scores));
-
-    var buckets = {};
-    for(var i=0;i<10;i++)
-    {
-      buckets[i] = 0;
-    }
-    //get highest score
-
-    scores.forEach(function(s){
-
-      var bucketId = parseInt(s/2);
-      if(bucketId == 10) bucketId = 9; //think about this. it's because we only have 10 buckets, not 11, which would include 20 as seperate
-
-      buckets[bucketId]++;
-
-    })
-    var distribution = [];
-    Object.keys(buckets).forEach(function(b){
-      distribution.push({bucket:parseInt(b), count:buckets[b]})
-    })
-    //console.log("TTT" + JSON.stringify(distribution))
-    return {distribution: distribution , studentScore:studentScore*5};
-  },*/
+  
 
   getIjkingstoetsTotalDistribution: function(args)
   {
@@ -331,34 +242,50 @@ Meteor.methods({
 
   },
   
+  /**
+   * @param {studentid} who : studentid
+   * @param {integer} semester : 1-2 or default 3
+   */
   getCSEProfile: function(who, semester){
     var CSE_student = CSEs.findOne({studentid:who});
     var CSE_entry = helper_getCSEEntry(semester);
+    var CSE_score = CSE_student[CSE_entry]
 
-    var limit1 = 100; var limit2 = 0;
+    var limit1 = 100; var limit2 = 50;
     if(Meteor.settings.public.cselimit1 != undefined && Meteor.settings.public.cselimit2 != undefined){
       limit1 = Meteor.settings.public.cselimit1;
       limit2 = Meteor.settings.public.cselimit2;   
     }
-    console.log("CSE limits: " + limit1 + ' ' + limit2)
+    console.log("CSE limits: " + limit1 + ' ' + limit2);
+    console.log('score student: ' + CSE_score + ' in semester: ' + semester)
+    var top = false;
+    var middle = false;
+    var low = false;
 
-    if(CSE_student[CSE_entry] >= limit1)
+    if(CSE_score >= limit1)
     {
       status = "green";
+      top = true;
     }
-    else if(CSE_student[CSE_entry] <limit1 && CSE_student[CSE_entry] >= limit2)
+    else if(CSE_score <limit1 && CSE_score >= limit2)
     {
       status = "orange";
+      middle = true;
     }
     else {
       status = "red";
+      low = true;
     }
-    return status;
+    // return status;
+    return [top, middle, low]
 
   },
 
+  /**
+   * @param {integer} semester : 1 - 2  or default 3
+   */
   getCSEDistribution: function(semester){
-    var CSE_entry = helper_getCSEEntry(semester);
+    var CSE_entry = helper_getCSEEntryStudent(semester);
     var students = Historical.find({})
     var topDict = {"+0":0,"+1":0,"+2":0,"B":0,"D":0};
     var middleDict = {"+0":0,"+1":0,"+2":0,"B":0,"D":0};
@@ -662,6 +589,22 @@ var helper_GetDistribution = function(search, collection,gradeField)
 }
 
 var helper_getCSEEntry =  function(semester){
+  var cse_entry = 'cse3';
+  switch(semester){
+    case 1:
+      cse_entry = 'cse1';
+      break;
+    case 2:
+      cse_entry = 'cse2';
+      break;
+    default:
+      cse_entry = 'cse3';
+  }
+  return cse_entry;
+
+};
+
+var helper_getCSEEntryStudent =  function(semester){
   var cse_entry = 'cse_sep';
   switch(semester){
     case 1:
@@ -671,7 +614,7 @@ var helper_getCSEEntry =  function(semester){
       cse_entry = 'cse_jun';
       break;
     default:
-      cse_entry = 'cse_sep';
+      cse_entry = 'cse_jun';
   }
   return cse_entry;
 

@@ -2,8 +2,11 @@ Template.future.onRendered(function(){
 
   var instance = this;
   var profileColor = "green"
+  var highProfile = false;
+  var middleProfile = false;
+  var lowProfile = false;
   // append student's profile background color
-  $("#profilebox").css("background",profileColor);
+  // $("#profilebox").css("background",profileColor);
 
 
   /** 
@@ -11,8 +14,7 @@ Template.future.onRendered(function(){
   * @param {string} backgroundColor of the background
   * @param {[int]} integers representing percentage of students who did their bachelor in 3-4 & 5 years
   */
-  function makeProfileField(svg, backgroundColor, data){
-    console.log("make field")
+  function makeProfileField(svg, data, border){
     var width = 150;
     var height = 140;
     var margin = 7;
@@ -45,7 +47,8 @@ Template.future.onRendered(function(){
         profileClass = 'badstudentbox';
       }      
       return profileClass;
-    }    
+    }   
+     
     svg.selectAll('rect.profilebox')
       .data(data)
       .enter()
@@ -62,32 +65,37 @@ Template.future.onRendered(function(){
 
       
     ;
+    if (border){
+      var borderPath = svg.append("rect")
+      .attr('class', 'fieldborder')
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("height", '100%')
+      .attr("width", '100%')
+      .style("stroke", 'blue')
+      .style("fill", "none")
+      .style("stroke-width", 5);
+    }
+    
 
-    svg.append('path')
-    .attr('x', 0)
-    .attr('y', 0)
-    .attr('fill', "none")
-    .attr('class', 'backgroundProfile')
-    .style('fill', backgroundColor)
+  };
+
+  function makeLegend(svg){
+
   }
 
+  var legendsvg = d3.select('#profile');
   var topsvg = d3.select('#best');
   var middlesvg = d3.select('#middle')
   var lowsvg = d3.select('#low')
+
   
-  makeProfileField( topsvg, 'black', [20,30,40]);
-  makeProfileField( middlesvg, 'grey' , [20,30,40]);
-  makeProfileField( lowsvg, 'purple' , [20,30,40]);
   
 
   //server function needs this guy's grades.
   this.autorun(function(){
-    Meteor.call("getCSEProfile", Session.get('student','semester'), function(err,color){
-      profileColor = color;
-      console.log(profileColor);
-      
-      // append student's profile background color
-      $("#profilebox").css("background",profileColor);
+    Meteor.call("getCSEProfile", Session.get('student'), Session.get('semester'), function(err, profile){
+      [highProfile, middleProfile, lowProfile] = profile;      
     }),
 
     Meteor.call("getCSEDistribution", Session.get('semester'), function(err,listDicts){
@@ -96,9 +104,9 @@ Template.future.onRendered(function(){
       middleCSEDistribution = [middleDict['+0'], middleDict['+1'], middleDict['+2']]
       lowCSEDistribution = [lowDict['+0'], lowDict['+1'], lowDict['+2']]
       
-      makeProfileField( topsvg, 'white', topCSEDistribution);
-      makeProfileField( middlesvg, 'white' , middleCSEDistribution);
-      makeProfileField( lowsvg, 'white' , lowCSEDistribution);
+      makeProfileField( topsvg,  topCSEDistribution, highProfile);
+      makeProfileField( middlesvg,  middleCSEDistribution, middleProfile);
+      makeProfileField( lowsvg,  lowCSEDistribution, lowProfile);
     }),
 
 
@@ -112,58 +120,6 @@ Template.future.onRendered(function(){
         bachelor[d._id] = d.Count;
         if(d._id != "") total+= d.Count;
       })
-      //console.log(bachelor);
-
-      // var svg = d3.select("#bachelor");
-      // var height = 500;
-      // svg.attr("height",height);
-      // svg.attr("width", 100)
-
-      // svg.append("rect")
-      // .attr("fill","#b2daea")
-      // .attr("width",20 )
-      // .attr("height",height * bachelor["+0"]/total )
-      // .attr("transform","translate(0,0)");
-
-      // svg.append("text")
-      // .attr("fill","#b2daea")
-      // .attr("transform","translate(22,"+ (5 + height/2 * bachelor["+0"]/total) +")")
-      // .text("3J/" + Math.round(100* bachelor["+0"]/total) + "%");
-
-
-      // svg.append("rect")
-      // .attr("fill","#81a8b8")
-      // .attr("width",20)
-      // .attr("height",height * bachelor["+1"]/total )
-      // .attr("transform","translate(0,"+ height * bachelor["+0"]/total +")");
-
-      // svg.append("text")
-      // .attr("fill","#81a8b8")
-      // .attr("transform","translate(22,"+ (5+ height * (bachelor["+0"]/total+(bachelor["+1"]/total)/2))+")")
-      // .text("4J/" + Math.round(100* bachelor["+1"]/total) + "%");
-
-      // svg.append("rect")
-      // .attr("fill","#537988")
-      // .attr("width",20)
-      // .attr("height",height * bachelor["+2"]/total )
-      // .attr("transform","translate(0,"+ height * (bachelor["+0"]/total+bachelor["+1"]/total) +")");
-
-      // svg.append("text")
-      // .attr("fill","#537988")
-      // .attr("transform","translate(22,"+ (5 + height * (bachelor["+0"]/total+bachelor["+1"]/total+(bachelor["+2"]/total)/2))+")")
-      // .text("5J/" + Math.round(100* bachelor["+2"]/total) + "%");
-
-      // svg.append("rect")
-      // .attr("fill","black")
-      // .attr("width",20)
-      // .attr("height",height * (bachelor["B"]+bachelor["D"])/total )
-      // .attr("transform","translate(0,"+ height * (bachelor["+0"]/total+bachelor["+1"]/total+bachelor["+2"]/total) +")");
-
-      // svg.append("text")
-      // .attr("fill","black")
-      // .attr("transform","translate(22,"+ (5 + height * (bachelor["+0"]/total+bachelor["+1"]/total+bachelor["+2"]/total+((bachelor["B"]+bachelor["D"])/total)/2))+")")
-      // .text("NIET/" + Math.round(100* (bachelor["B"]+bachelor["D"])/total) + "%");
-
     });
   })
 
