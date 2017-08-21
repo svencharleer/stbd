@@ -61,23 +61,24 @@ Template.future.onRendered(function(){
       }      
       return profileClass;
     }   
-     
-    svg.selectAll('rect.profilebox')
-      .data(data)
-      .enter()
-      .append('rect')
-      .attr('class', function(d){
-        return calculateClass(d);
-      })
-      .attr('x', function (d){
-        return x(d % 10) + margin;
-      })
-      .attr('y', function(d){
-        return y(Math.floor( d / 10)) + margin;
-      })
 
-      
-    ;
+    function calculateTooltip(x){
+      var text = ' ';
+      if (x < nb3){
+        text = nb3 + '%';
+      }
+      else if ( x < nb3 + nb4){
+        text = nb4 + '%';
+      }
+      else if ( x < nb3 + nb4 + nb5){
+        text = nb5 + '%';
+      }
+      else {
+        text = nbNot + '%';
+      }      
+      return text;
+    }
+
     if (border){
       var borderPath = svg.append("rect")
       .attr('class', 'fieldborder')
@@ -93,6 +94,30 @@ Template.future.onRendered(function(){
     else(
       svg.attr('opacity', 0.4)
     )
+     
+    svg.selectAll('rect.profilebox')
+      .data(data)
+      .enter()
+      .append('rect')
+      .attr('class', function(d){
+        return calculateClass(d);
+      })
+      .attr('x', function (d){
+        return x(d % 10) + margin;
+      })
+      .attr('y', function(d){
+        return y(Math.floor( d / 10)) + margin;
+      })
+      .on('mouseover', function(d){
+        d3.select(this).append('div')
+          .attr('value' , 20)
+          .attr('class', 'tooltip')
+      })
+
+
+      
+    ;
+    
     
 
   };

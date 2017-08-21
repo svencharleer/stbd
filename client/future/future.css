@@ -31,6 +31,13 @@
     height: 8px;
 
 }
+
+.topstudentbox:hover {
+    fill: black;
+    width: 8px;
+    height: 8px;
+}
+
 .legend3 {
     background-color: #a5d6a7;
     width: 25%;
@@ -54,8 +61,10 @@
     fill: #9fa8da;    
     width: 8px;
     height: 8px;
-
 }
+
+
+
 .legend5 {
     background-color: #9fa8da ;
     width: 25%;
@@ -118,10 +127,14 @@
 
 }
 
+
+    
+
 .fieldborder {
     stroke: #58a5f0;
     stroke-width: 5;
 }
+
 
 
 
