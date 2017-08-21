@@ -1,3 +1,9 @@
+import { ReactiveVar } from 'meteor/reactive-var'
+
+Template.resultGraph.onCreated(function(){
+  this.show = new ReactiveVar(false);
+});
+
 Template.resultGraph.helpers({
   color: function(){
     let color = "white"; //"#ef9a9a";
@@ -8,6 +14,21 @@ Template.resultGraph.helpers({
     return color;
   }
 });
+
+Template.resultGraph.events({
+  "click .top-bar": function(event,template){
+    if(!template.show.get()) {
+      template.$(".course-bottom").css("max-height", "48px");
+      template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
+      template.show.set(true);
+    } else {
+      template.$(".course-bottom").css("max-height", "0px");
+      template.$(".top-bar").css("box-shadow", "0px 0px 0px gainsboro");
+      template.show.set(false);
+    }
+  }
+});
+
 
 Template.resultGraph.onRendered(function(){
   // TODO: let width depend on screen
@@ -346,9 +367,9 @@ Template.resultGraph.onRendered(function(){
     }
   }
 
-  container.on("click", function(){
-    zoom(d3.select(this), 1.5, true);
-  });
+  // container.on("click", function(){
+  //   zoom(d3.select(this), 1.5, true);
+  // });
   // container.on("dblclick", function(){
   //   zoom(d3.select(this), 2, true)
   // });
@@ -357,11 +378,11 @@ Template.resultGraph.onRendered(function(){
   //     zoom(d3.select(this), 1.5, false);
   //   }
   // });
-  container.on("mouseout", function(){
-    if (clicked === false){
-      zoom(d3.select(this), 1, false);
-    }
-  });
+  // container.on("mouseout", function(){
+  //   if (clicked === false){
+  //     zoom(d3.select(this), 1, false);
+  //   }
+  // });
 
 
 

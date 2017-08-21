@@ -12,10 +12,8 @@
   background: white !important;
   border-radius: 4px;
   z-index: 1;
-  min-height: 100px;
   display: flex;
   flex-direction: column;
-  /*justify-content: space-between;*/
   margin-top: 8px;
   margin-bottom: 8px;
   cursor: default;
@@ -89,6 +87,10 @@
   justify-content: space-around;
   align-items: flex-end;
   width: 100%;
+  min-width: 0px;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
 }
 
 .course .course-bottom .grade {
