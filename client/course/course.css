@@ -108,6 +108,10 @@
   border-bottom: 2px solid grey;
 }
 
+.course .course-bottom paper-ripple {
+  color: #c1c1c1;
+}
+
 .course .grade {
   font-size: 13px;
   font-weight: 500;

@@ -2,6 +2,7 @@ import { ReactiveVar } from 'meteor/reactive-var'
 
 Template.resultGraph.onCreated(function(){
   this.show = new ReactiveVar(false);
+  this.zoom = new ReactiveVar(false);
 });
 
 Template.resultGraph.helpers({
@@ -24,7 +25,20 @@ Template.resultGraph.events({
     } else {
       template.$(".course-bottom").css("max-height", "0px");
       template.$(".top-bar").css("box-shadow", "0px 0px 0px gainsboro");
+      template.$(".course").css("transform", "scale(1)");
+      template.$(".course").css("z-index", "0");
       template.show.set(false);
+    }
+  },
+  "click .course-bottom": function(event, template) {
+    if(!template.zoom.get()) {
+      template.$(".course").css("transform", "scale(1.5)");
+      template.$(".course").css("z-index", "1000");
+      template.zoom.set(true);
+    } else {
+      template.$(".course").css("transform", "scale(1)");
+      template.$(".course").css("z-index", "0");
+      template.zoom.set(false);
     }
   }
 });
@@ -344,7 +358,7 @@ Template.resultGraph.onRendered(function(){
 
   createHistogram(svgHistogram, svgHistogramWidth, svgHistogramHeight);
 
-  function zoom(instance, scale, click){
+  function zoom(instance, scale, click) {
     if (clicked || scale === 1){
       instance
       .style("transform" , "scale(1,1)")
@@ -355,7 +369,7 @@ Template.resultGraph.onRendered(function(){
         clicked = false;
       }
     }
-    else{
+    else {
       instance
       .style("transform" , "scale(" + scale + "," + scale )
       .style("background", "white")
