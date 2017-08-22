@@ -1,3 +1,10 @@
+import { ReactiveVar } from 'meteor/reactive-var'
+
+Template.failedCourse.onCreated(function(){
+  this.showTolerance = new ReactiveVar(false);
+  // this.zoom = new ReactiveVar(false);
+});
+
 
 Template.failedCourse.helpers({
   color: function(){
@@ -27,13 +34,37 @@ Template.failedCourse.helpers({
   }
 });
 
+Template.failedCourse.events({
+  "click .top-bar": function(event,template){
+    if(!template.showTolerance.get()) {
+      template.$(".course-bottom").css("max-height", "48px");
+      template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
+      template.showTolerance.set(true);
+    } else {
+      template.$(".course-bottom").css("max-height", "0px");
+      template.$(".top-bar").css("box-shadow", "0px 0px 0px gainsboro");
+      template.$(".course").css("box-shadow", "0px 0px 0px gainsboro");
+      template.$(".course").css("transform", "scale(1)");
+      template.$(".course").css("z-index", "0");
+      template.showTolerance.set(false);
+    }
+  },
+  // "click .course-bottom": function(event, template) {
+  //   if(!template.zoom.get()) {
+  //     template.$(".course").css("transform", "scale(1.5)");
+  //     template.$(".course").css("z-index", "1000");
+  //     template.$(".course").css("box-shadow", "1px 1px 5px gainsboro");
+  //     template.zoom.set(true);
+  //   } else {
+  //     template.$(".course").css("transform", "scale(1)");
+  //     template.$(".course").css("z-index", "0");
+  //     template.$(".course").css("box-shadow", "0px 0px 0px gainsboro");
+  //     template.zoom.set(false);
+  //   }
+  // }
+});
+
 Template.failedCourse.onRendered(function(){
-  // variables about data
-  var instance = this;
-  var data = this.data;
-  var courseId = data.id;
-  var courseName = data.name;
-  var gradeTry1 = data.try1;
-  var gradeTry2 = data.try2;
+  
   
 });
