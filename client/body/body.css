@@ -166,6 +166,12 @@ body {
   border-right:solid 1px #CBCBCB;
 }
 
+.future-column
+{
+  border-left:dotted 1px #CBCBCB;
+  border-right:solid 1px #CBCBCB;
+}
+
 .flex-september{
   border-left: solid 1px #CBCBCB;
   border-top: solid 1px #CBCBCB;
@@ -219,11 +225,11 @@ body {
   text-align:center;
 
 }
-
+/* 
 .colhistory {
   border: 0px;
   max-width: 100px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-}
+} */

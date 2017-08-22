@@ -31,6 +31,18 @@ Template.body.onCreated(function(){
       }
       //console.log("student now is " + studentName.voornaam + " " + studentName.familienaam)
       Session.set("studentName",studentName.givenname + " " + studentName.surname );
+      var semester = 1;
+      if (Meteor.settings.public.showJuni){
+        semester = 2;
+      }
+      if (Meteor.settings.public.showSeptember){
+        semester = 3;
+      }
+      Session.set('semester', semester);
+      Session.set('limit1', Meteor.settings.public.cselimit1);
+      Session.set('limit2', Meteor.settings.public.cselimit2);
+      
+
 
       //get the CSE for the student
       var year = Session.get("Year");

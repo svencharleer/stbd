@@ -1,13 +1,179 @@
+Template.future.helpers({
+  limit1: function(){    
+    return Session.get('limit1');
+  }  ,
+
+  limit2: function(){
+    return Session.get('limit2');  
+  }  
+
+});
+
+
+
 Template.future.onRendered(function(){
 
-  //server function needs this guy's grades.
-
   var instance = this;
+  var profileColor = "green"
+  var highProfile = false;
+  var middleProfile = false;
+  var lowProfile = false;
+  // append student's profile background color
+  // $("#profilebox").css("background",profileColor);
+
+
+  /** 
+  * @param {svg} svg you want to add the profilefield
+  * @param {string} backgroundColor of the background
+  * @param {[int]} integers representing percentage of students who did their bachelor in 3-4 & 5 years
+  */
+  function makeProfileField(svg, data, border){
+    var width = 150;
+    var height = 140;
+    var margin = 7;
+    var nb3 = data[0];
+    var nb4 = data[1];
+    var nb5 = data[2];
+    var nbNot = 100 - nb3 - nb4 - nb5;
+    // var data = Array.apply(null, Array(100)).map(function (_, i) {return i;});
+    var data = d3.range(100)
+    var x = d3.scale.linear()
+      .domain([0,9])
+      .range([0,width]);
+
+    var y = d3.scale.linear()
+      .domain([0,10])
+      .range([0,height]);
+
+    function calculateClass(x){
+      var profileClass = 'unknown';
+      if (x < nb3){
+        profileClass = 'topstudentbox';
+      }
+      else if ( x < nb3 + nb4){
+        profileClass = 'middlestudentbox';
+      }
+      else if ( x < nb3 + nb4 + nb5){
+        profileClass = 'lowstudentbox';
+      }
+      else {
+        profileClass = 'badstudentbox';
+      }      
+      return profileClass;
+    }   
+
+    function calculateTooltip(x){
+      var text = ' ';
+      if (x < nb3){
+        text = nb3 + '%';
+      }
+      else if ( x < nb3 + nb4){
+        text = nb4 + '%';
+      }
+      else if ( x < nb3 + nb4 + nb5){
+        text = nb5 + '%';
+      }
+      else {
+        text = nbNot + '%';
+      }      
+      return text;
+    }
+
+    if (border){
+      var borderPath = svg.append("rect")
+      .attr('class', 'fieldborder')
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("height", '100%')
+      .attr("width", '100%')
+      // .style("stroke", 'blue')
+      .style("fill", "none")
+      // .style("stroke-width", 5)
+      ;
+    }
+    else(
+      svg.attr('opacity', 0.4)
+    )
+     
+    svg.selectAll('rect.profilebox')
+      .data(data)
+      .enter()
+      .append('rect')
+      .attr('class', function(d){
+        return calculateClass(d);
+      })
+      .attr('x', function (d){
+        return x(d % 10) + margin;
+      })
+      .attr('y', function(d){
+        return y(Math.floor( d / 10)) + margin;
+      })
+      .on('mouseover', function(d){
+        var text = calculateTooltip(d);
+        var cssClass = '.' + calculateClass(d);
+        var color = $(cssClass).css('fill')
+        console.log(color);
+        
+        tooltipLayer.transition()		
+            .duration(100)		
+            .style("opacity", .9);		
+        tooltipLayer.html(text)	
+            .style("left", (d3.event.pageX) + "px")		
+            .style("top", (d3.event.pageY - 28) + "px")
+            .style('background-color', color)
+            ;
+      })
+      .on("mouseout", function(d) {		
+        tooltipLayer.transition()		
+            .duration(300)		
+            .style("opacity", 0);	
+      })
+
+
+      
+    ;
+    
+    
+
+  };
+
+  function makeLegend(svg){
+  }
+
+  
+
+  var legendsvg = d3.select('#profile');
+  var topsvg = d3.select('#best');
+  var middlesvg = d3.select('#middle')
+  var lowsvg = d3.select('#low')
+  // Define the div for the tooltip
+  var tooltipLayer = d3.select("body").append("div")	
+    .attr("class", "tooltip")				
+    .style("opacity", 0);
+  
+  
+
+  //server function needs this guy's grades.
   this.autorun(function(){
+    Meteor.call("getCSEProfile", Session.get('student'), Session.get('semester'), function(err, profile){
+      [highProfile, middleProfile, lowProfile] = profile;      
+    }),
 
-    $("#bachelor").empty();
+    Meteor.call("getCSEDistribution", Session.get('semester'), function(err,listDicts){
+      [topDict, middleDict, lowDict] = listDicts;
+      topCSEDistribution = [topDict['+0'], topDict['+1'], topDict['+2']]
+      middleCSEDistribution = [middleDict['+0'], middleDict['+1'], middleDict['+2']]
+      lowCSEDistribution = [lowDict['+0'], lowDict['+1'], lowDict['+2']]
+      
+      makeProfileField( topsvg,  topCSEDistribution, highProfile);
+      makeProfileField( middlesvg,  middleCSEDistribution, middleProfile);
+      makeProfileField( lowsvg,  lowCSEDistribution, lowProfile);
+    }),
+
+
+    // $("#bachelor").empty();
     Meteor.call("getHistoricalData", Session.get("student"),function(err,data){
-
+      
       var bachelor = {};
       var total = 0;
       bachelor = {"+0":0,"+1":0,"+2":0,"B":0,"D":0}
@@ -15,58 +181,6 @@ Template.future.onRendered(function(){
         bachelor[d._id] = d.Count;
         if(d._id != "") total+= d.Count;
       })
-      //console.log(bachelor);
-
-      var svg = d3.select("#bachelor");
-      var height = 500;
-      svg.attr("height",height);
-      svg.attr("width", 100)
-
-      svg.append("rect")
-      .attr("fill","#b2daea")
-      .attr("width",20 )
-      .attr("height",height * bachelor["+0"]/total )
-      .attr("transform","translate(0,0)");
-
-      svg.append("text")
-      .attr("fill","#b2daea")
-      .attr("transform","translate(22,"+ (5 + height/2 * bachelor["+0"]/total) +")")
-      .text("3J/" + Math.round(100* bachelor["+0"]/total) + "%");
-
-
-      svg.append("rect")
-      .attr("fill","#81a8b8")
-      .attr("width",20)
-      .attr("height",height * bachelor["+1"]/total )
-      .attr("transform","translate(0,"+ height * bachelor["+0"]/total +")");
-
-      svg.append("text")
-      .attr("fill","#81a8b8")
-      .attr("transform","translate(22,"+ (5+ height * (bachelor["+0"]/total+(bachelor["+1"]/total)/2))+")")
-      .text("4J/" + Math.round(100* bachelor["+1"]/total) + "%");
-
-      svg.append("rect")
-      .attr("fill","#537988")
-      .attr("width",20)
-      .attr("height",height * bachelor["+2"]/total )
-      .attr("transform","translate(0,"+ height * (bachelor["+0"]/total+bachelor["+1"]/total) +")");
-
-      svg.append("text")
-      .attr("fill","#537988")
-      .attr("transform","translate(22,"+ (5 + height * (bachelor["+0"]/total+bachelor["+1"]/total+(bachelor["+2"]/total)/2))+")")
-      .text("5J/" + Math.round(100* bachelor["+2"]/total) + "%");
-
-      svg.append("rect")
-      .attr("fill","black")
-      .attr("width",20)
-      .attr("height",height * (bachelor["B"]+bachelor["D"])/total )
-      .attr("transform","translate(0,"+ height * (bachelor["+0"]/total+bachelor["+1"]/total+bachelor["+2"]/total) +")");
-
-      svg.append("text")
-      .attr("fill","black")
-      .attr("transform","translate(22,"+ (5 + height * (bachelor["+0"]/total+bachelor["+1"]/total+bachelor["+2"]/total+((bachelor["B"]+bachelor["D"])/total)/2))+")")
-      .text("NIET/" + Math.round(100* (bachelor["B"]+bachelor["D"])/total) + "%");
-
     });
   })
 

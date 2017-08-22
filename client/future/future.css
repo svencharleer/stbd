@@ -1,0 +1,164 @@
+.profile{
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+
+    text-align:center;
+    font-weight: 300;
+    text-transform: lowercase;
+    font-size:1em;
+    width: 100%;
+    color: #424242;
+    min-height: 21px;
+}
+
+.box {
+    /* background: blue; */
+    width: 16px;
+    height: 16px;
+    position: relative;
+    text-align: center;
+    line-height: 100px;
+    color: white;
+    font-size: 24px;
+    font-family: sans-serif;
+    margin-left: 5px;
+}
+
+/* Students getting bachelor in 3 years */
+.topstudentbox {
+    fill: #a5d6a7;
+    width: 8px;
+    height: 8px;
+
+}
+
+.topstudentbox:hover {
+    fill: black;
+}
+
+.legend3 {
+    background-color: #a5d6a7;
+    width: 25%;
+    text-align: center;
+}
+
+/* Students getting bachelor in 4 years */
+.middlestudentbox {
+    fill: #80deea;    
+    width: 8px;
+    height: 8px;
+}
+.middlestudentbox:hover {
+    fill: black;
+}
+
+.legend4 {
+    background-color: #80deea;  
+    width: 25%;
+    text-align: center;
+    
+}
+
+
+/* Students getting bachelor in 5 years */
+.lowstudentbox {
+    fill: #9fa8da;    
+    width: 8px;
+    height: 8px;
+}
+.lowstudentbox:hover {
+    fill: black;
+}
+.legend5 {
+    background-color: #9fa8da ;
+    width: 25%;
+    text-align: center;
+    
+}
+
+/* Students not getting bachelor */
+.badstudentbox {
+    fill: #ffc1e3;    
+    width: 8px;
+    height: 8px;
+
+}
+.badstudentbox:hover {
+    fill: black;
+}
+.legendnot {
+    background-color: #ffc1e3;    
+    width: 25%;
+    text-align: center;
+    
+}
+
+/*  */
+.unknown {
+    fill: grey;    
+    width: 8px;
+    height: 8px;
+
+}
+.backgroundProfile {
+    width: 95%;
+    height: 95%;
+    stroke-width: 2px;
+}
+
+.fields {
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 10;
+
+}
+
+
+.legend {
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    font-weight: 300;
+
+}
+
+.fieldlegend {
+    text-align: center;
+    font-weight: 300;
+
+}  
+
+.fieldborder {
+    stroke: #58a5f0;
+    stroke-width: 5;
+}
+
+/* Tooltip layout */
+div.tooltip {	
+    position: absolute;			
+    text-align: center;			
+    width: 60px;					
+    height: 16px;					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    /* background: rgb(232, 243, 248);	 */
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
+}
+
+
+
+
+/* .best{
+    border: 2 solid black;
+} */
+

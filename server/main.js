@@ -60,96 +60,7 @@ Meteor.publish("TTT_algebra", function(who){
 })*/
 
 Meteor.methods({
-  /*getTTTTotalDistribution: function(args)
-  {
-    //we will get 2 courses. find out which, and match them to the ECTS
-    var ECTS ={ TTT_analyse: 6,
-      TTT_mechanica: 5,
-      TTT_scheikunde: 7,
-      TTT_algebra: 5
-    };
-    var courseNames = ["TTT_analyse","TTT_mechanica","TTT_scheikunde","TTT_algebra"];
-    var courses = Courses.find({semester:0});
-    var studentScore = 0;
-    var studentECTS = 0;
-    var courses = args[0];
-    var student = args[1];
-    var scores = {};
-    if(courses == undefined || courses.length == 0)  return {distribution:[], studentScore:0};;
-    if(courses.indexOf("TTT_analyse") >= 0)
-      scores["TTT_analyse"] =  TTT_analyse.find({grade:{$ne:"NA"}}).fetch();
-    if(courses.indexOf("TTT_mechanica") >= 0)
-      scores["TTT_mechanica"] = TTT_mechanica.find({grade:{$ne:"NA"}}).fetch();
-    if(courses.indexOf("TTT_scheikunde") >= 0)
-      scores["TTT_scheikunde"] = TTT_scheikunde.find({grade:{$ne:"NA"}}).fetch();
-      if(courses.indexOf("TTT_algebra") >= 0)
-        scores["TTT_algebra"] = TTT_algebra.find({grade:{$ne:"NA"}}).fetch();
-    var studentGrades = {};
-    //multiply them with ECTS each, then divide by total ECTS
-    var totalECTS = 0;
-    var modifier = 5
-    courseNames.forEach(function(c){
-      modifier = 1;
-      if(scores[c] == undefined) return;
-      if(c == "TTT_scheikunde") modifier = 5;
-      var ects = ECTS[c];
-      scores[c].forEach(function(s){
-        if(studentGrades[s.student] == undefined){
-          studentGrades[s.student] = [];
-        }
-        //if it's the student, gather his info so we can return his total score
-        if(s.student == student)
-        {
-          studentECTS += ects;
-          studentScore += parseInt(s.grade/modifier)*ects;
-        }
-        studentGrades[s.student].push(parseInt(s.grade/modifier)*ects);
-      })
-      totalECTS += ects;
-
-    });
-    //console.log(studentGrades)
-    if(totalECTS == 0){
-      //console.log("0 total ECTS, that's a bidt weird");
-       return {distribution:[], studentScore:0};
-     }
-     studentScore /= studentECTS;
-     //divide student's personal score
-
-    //divide
-    var scores = [];
-    Object.keys(studentGrades).forEach(function(st){
-      var s = studentGrades[st];
-      if(s.length < courses.length) return; //only get the students who have these two courses as TTT, otherwie they have other combo and we can't compare.
-      var t = 0;
-      for(var i=0;i< courses.length;i++) t+=s[i];
-      scores.push(parseInt(t/totalECTS));
-
-    });
-    //console.log(JSON.stringify(scores));
-
-    var buckets = {};
-    for(var i=0;i<10;i++)
-    {
-      buckets[i] = 0;
-    }
-    //get highest score
-
-    scores.forEach(function(s){
-
-      var bucketId = parseInt(s/2);
-      if(bucketId == 10) bucketId = 9; //think about this. it's because we only have 10 buckets, not 11, which would include 20 as seperate
-
-      buckets[bucketId]++;
-
-    })
-    var distribution = [];
-    Object.keys(buckets).forEach(function(b){
-      distribution.push({bucket:parseInt(b), count:buckets[b]})
-    })
-    //console.log("TTT" + JSON.stringify(distribution))
-    return {distribution: distribution , studentScore:studentScore*5};
-  },*/
+  
 
   getIjkingstoetsTotalDistribution: function(args)
   {
@@ -186,42 +97,42 @@ Meteor.methods({
     var distribution = [];
     Object.keys(buckets).forEach(function(b){
       distribution.push({bucket:parseInt(b), count:buckets[b]})
-    })
+      })
     return {distribution: distribution};
   },
   getSemesterDistribution: function(args){
-    var search = {};
-    var distribution = [];
-    var cse = "";
-    if(args[0] == "januari"){
-      cse = "cse1";
+      var search = {};
+      var distribution = [];
+      var cse = "";
+      if(args[0] == "januari"){
+        cse = "cse1";
 
-    }
-    else if(args[0] == "juni")
-    {
-      cse = "cse2";
-    }
-    else {
-      cse = "cse3";
-      search["cse2"] = {$lt:100};
-    }
-    search["year"] = args[1];
-    search["$and"] = [];
-    var and1 = {}; var and2 = {};
-    for(var i=0;i < 10; i++)
-    {
+      }
+      else if(args[0] == "juni")
+      {
+        cse = "cse2";
+      }
+      else {
+        cse = "cse3";
+        search["cse2"] = {$lt:100};
+      }
+      search["year"] = args[1];
+      search["$and"] = [];
+      var and1 = {}; var and2 = {};
+      for(var i=0;i < 10; i++)
+      {
 
-      and1[cse] = {$lt: (10 + i * 10)};
-      and2[cse] = {$gte: 0 + i * 10};
-      if(i == 9)
-        and1[cse] = {$lte: (10 + i * 10)};
-      search["$and"] = [and1, and2];
-      //console.log(JSON.stringify(search));
+        and1[cse] = {$lt: (10 + i * 10)};
+        and2[cse] = {$gte: 0 + i * 10};
+        if(i == 9)
+          and1[cse] = {$lte: (10 + i * 10)};
+        search["$and"] = [and1, and2];
+        //console.log(JSON.stringify(search));
 
-      var count = CSEs.distinct("studentid",search).length
-      distribution.push({bucket:i, count:count});
-    }
-    return {distribution: distribution};
+        var count = CSEs.distinct("studentid",search).length
+        distribution.push({bucket:i, count:count});
+      }
+      return {distribution: distribution};
   },
   getTotalPointDistribution: function(args){ //this function is like semester, but not CSE, focused on scores alone
     var courses = Courses.find({semester:args[0]}).fetch();
@@ -317,19 +228,99 @@ Meteor.methods({
   getTTT_AnalysePointDistribution: function(args){
       return helper_GetDistribution({}, TTT_analyse,"grade");
 
-},
+  },
   getTTT_MechanicaPointDistribution: function(args){
     return helper_GetDistribution({}, TTT_mechanica,"grade");
 
-},
-getTTT_ScheikundePointDistribution: function(args){
-  return helper_GetDistributionFrom100({}, TTT_scheikunde,"grade");
+  },
+  getTTT_ScheikundePointDistribution: function(args){
+    return helper_GetDistributionFrom100({}, TTT_scheikunde,"grade");
 
-},
-getTTT_AlgebraPointDistribution: function(args){
-  return helper_GetDistribution({}, TTT_algebra,"grade");
+  },
+  getTTT_AlgebraPointDistribution: function(args){
+    return helper_GetDistribution({}, TTT_algebra,"grade");
 
-},
+  },
+  
+  /**
+   * @param {studentid} who : studentid
+   * @param {integer} semester : 1-2 or default 3
+   */
+  getCSEProfile: function(who, semester){
+    var CSE_student = CSEs.findOne({studentid:who});
+    var CSE_entry = helper_getCSEEntry(semester);
+    var CSE_score = CSE_student[CSE_entry]
+
+    var limit1 = 100; var limit2 = 50;
+    if(Meteor.settings.public.cselimit1 != undefined && Meteor.settings.public.cselimit2 != undefined){
+      limit1 = Meteor.settings.public.cselimit1;
+      limit2 = Meteor.settings.public.cselimit2;   
+    }
+    console.log("CSE limits: " + limit1 + ' ' + limit2);
+    console.log('score student: ' + CSE_score + ' in semester: ' + semester)
+    var top = false;
+    var middle = false;
+    var low = false;
+
+    if(CSE_score >= limit1)
+    {
+      status = "green";
+      top = true;
+    }
+    else if(CSE_score <limit1 && CSE_score >= limit2)
+    {
+      status = "orange";
+      middle = true;
+    }
+    else {
+      status = "red";
+      low = true;
+    }
+    // return status;
+    return [top, middle, low]
+
+  },
+
+  /**
+   * @param {integer} semester : 1 - 2  or default 3
+   */
+  getCSEDistribution: function(semester){
+    var CSE_entry = helper_getCSEEntryStudent(semester);
+    var students = Historical.find({})
+    var topDict = {"+0":0,"+1":0,"+2":0,"B":0,"D":0};
+    var middleDict = {"+0":0,"+1":0,"+2":0,"B":0,"D":0};
+    var lowDict = {"+0":0,"+1":0,"+2":0,"B":0,"D":0};
+    
+    students.forEach(function(student){
+      var cseStudent = student[CSE_entry];
+      var trajectStudent = student["traject"];
+
+      var limit1 = 100; var limit2 = 0;
+      if(Meteor.settings.public.cselimit1 != undefined && Meteor.settings.public.cselimit2 != undefined){
+        limit1 = Meteor.settings.public.cselimit1;
+        limit2 = Meteor.settings.public.cselimit2;   
+      }
+      if(cseStudent >= limit1)
+        {
+          topDict[trajectStudent] += 1;
+        }
+        else if(cseStudent <limit1 && cseStudent >= limit2)
+        {
+          middleDict[trajectStudent] += 1;
+        }
+        else {
+          lowDict[trajectStudent] += 1;
+        }
+
+    })
+    topDict = helper_relativateDict(topDict);
+    middleDict = helper_relativateDict(middleDict);
+    lowDict = helper_relativateDict(lowDict);
+    return [topDict, middleDict, lowDict];
+    
+
+  },
+  
 
   getHistoricalData: function(who){
 
@@ -370,166 +361,166 @@ getTTT_AlgebraPointDistribution: function(args){
       match = {"cse_jun": {$lt:limit2}};
     }
 
-   console.log(status);
-   //match = {failed:f, tolerable:t};
-   //now compare with DB
-   console.log(JSON.stringify(match));
+    // console.log(status);
+    //match = {failed:f, tolerable:t};
+    //now compare with DB
+    // console.log(JSON.stringify(match));
 
-   var result = Historical.aggregate([
-      {$match : match},
-     //{ $project : { bachelor :  "$bachelor" , tolerable : "$tolerable"} },
-      {$group : { _id : "$traject" , "Count" : { $sum : 1}}}
-    ]
-  );
-  console.log(result);
-    return result;
+    var result = Historical.aggregate([
+        {$match : match},
+      //{ $project : { bachelor :  "$bachelor" , tolerable : "$tolerable"} },
+        {$group : { _id : "$traject" , "Count" : { $sum : 1}}}
+      ]
+      );
+      console.log(result);
+      return result;
 
   },
   getHistoricalData_old: function(who){
-    //count how many tolerable, failed etc
+      //count how many tolerable, failed etc
 
-    var f = Grades.find({studentid:who, finalscore:{$lt:8}}).count();
-    f += Grades.find({studentid:who, finalscore:"NA"}).count();
-    var t = Grades.find({studentid:who, $and: [{finalscore:{$gte:8}}, {finalscore:{$lte:9}}]}).count();
-    var p = Grades.find({studentid:who, finalscore:{$gte:10}}).count();
-    console.log("ftp",f,t,p);
+      var f = Grades.find({studentid:who, finalscore:{$lt:8}}).count();
+      f += Grades.find({studentid:who, finalscore:"NA"}).count();
+      var t = Grades.find({studentid:who, $and: [{finalscore:{$gte:8}}, {finalscore:{$lte:9}}]}).count();
+      var p = Grades.find({studentid:who, finalscore:{$gte:10}}).count();
+      // console.log("ftp",f,t,p);
 
-   //green
-   var status = "";
-   if(f == 0 && t <= 2)
-   {
-    status = "green";
-    match = {failed:0, tolerable: {$lte:2}};
-   }
-   else if((f > 0 && f <=4) || (t > 2 && f == 0))
-   {
-    status = "orange";
-    match = {$or: [
-                    {
-                      $and:
-                        [
-                          {failed:{$gt:0}},
-                          {failed:{$lte:3}}
-                        ]
-                  },
-                    {
-                      $and:
-                        [
-                          {tolerable:{$gt:2}}, {failed:0}
-                        ]}
-                      ]
-                  };
-   }
-   else {
-     status = "red";
-     match = {failed:{$gt:3}};
-   }
-   //console.log(status);
-   //match = {failed:f, tolerable:t};
-   //now compare with DB
-   //console.log(JSON.stringify(match));
-   var result = Bachelor.aggregate([
-      {$match : match},
-     //{ $project : { bachelor :  "$bachelor" , tolerable : "$tolerable"} },
-      {$group : { _id : "$status" , "Count" : { $sum : 1}}}
-    ]
-  );
-    return result;
-
-  },
-  //number of courses passed, and % chance to pass all courses
-  getSeptemberSucces(nrOfCourses)
-  {
-    var result = {averageCoursesPassed:0, percentAllPassed:0};
-    var ret = September.aggregate([
-      {$match:{taken:nrOfCourses[0]}},
-      {$group:
-        { _id: null, passed_avg: {$avg: "$passed"}},
-
-      }
-    ])[0];
-    if(ret == undefined) return {averageCoursesPassed:0, percentAllPassed:0};
-
-    result.averageCoursesPassed = ret.passed_avg;
-
-
-    var all = September.find({taken:nrOfCourses[0]}).count();
-
-    var passed = September.find({taken:nrOfCourses[0], passed:nrOfCourses[0]}).count();
-    result.percentAllPassed = passed/all;
-
-    return result;
-
-  },
-  getSeptemberSuccess(nrOfCourses)
-  {
-
-    var result = {averageCoursesPassed:0, percentAllPassed:0};
-    if(nrOfCourses == 0) return {averageCoursesPassed:0, percentAllPassed:1};;
-    //find all students that took courses in september, and get the number of courses they took
-    var total = Exams.aggregate([
-      {$match:{grade_try2:{$gte:0}}}, {$group:{ _id: "$studentid", "c":{$sum: 1}}}
-    ]);
-    //console.log("in sept", total);
-    //find all students that took courses in september, passed them, and how many
-    var passed = Exams.aggregate([
-      {$match:{grade_try2:{$gte:10}}}, {$group:{ _id: "$studentid", "c":{$sum: 1}}}
-    ]);
-    //get all students that took exactly the same number of courses as nrOfCourses
-    var studentsThatMatch = {};
-    total.forEach(function(t){
-      if(t.c != nrOfCourses) return;
-      studentsThatMatch[t._id] = {"t":t.c};
-    })
-      //console.log("studentsmatch",nrOfCourses, studentsThatMatch);
-    //see how many of these students passed all their exams
-    var nrPassed = 0;
-    passed.forEach(function(p){
-      if(studentsThatMatch[p._id] == undefined) return; //only students with exact amount of nrOfCourses
-      if(p.c != nrOfCourses) return;
-
-      nrPassed++;
-    })
-    console.log("match",Object.keys(studentsThatMatch).length);
-    console.log("passed",nrPassed);
-    if(Object.keys(studentsThatMatch).length == 0)
-      result.percentAllPassed = 0;
-    else
-      result.percentAllPassed = nrPassed/Object.keys(studentsThatMatch).length;
-    return result;
-  },
-  getFailedCourses(who)
-  {
-
-    var allCourses = Courses.find({$or:[{semester:1},{semester:2}]}).fetch();
-    var indices = [];
-    allCourses.forEach(function(c){
-      indices.push(c.courseid);
-    })
-    var result = [];
-    var courses = Grades.find({
-      studentid:who,
-      courseid:{$in:indices},
-    }).fetch();
-  //  console.log("in failed courses", courses, who, indices, allCourses)
-    courses.forEach(function(c){
-      if(c.finalscore > 9) return;
-      result.push(c);
-    })
-    return result;
-  },
-  getRootRoute(){
-    if(process.env.ROOTROUTE != undefined)
+    //green
+    var status = "";
+    if(f == 0 && t <= 2)
     {
-      console.log(process.env.ROOTROUTE);
-      return process.env.ROOTROUTE;
+      status = "green";
+      match = {failed:0, tolerable: {$lte:2}};
+    }
+    else if((f > 0 && f <=4) || (t > 2 && f == 0))
+    {
+      status = "orange";
+      match = {$or: [
+                      {
+                        $and:
+                          [
+                            {failed:{$gt:0}},
+                            {failed:{$lte:3}}
+                          ]
+                    },
+                      {
+                        $and:
+                          [
+                            {tolerable:{$gt:2}}, {failed:0}
+                          ]}
+                        ]
+                    };
     }
     else {
-      return "dev";
+      status = "red";
+      match = {failed:{$gt:3}};
     }
-  }
+    //console.log(status);
+    //match = {failed:f, tolerable:t};
+    //now compare with DB
+    //console.log(JSON.stringify(match));
+    var result = Bachelor.aggregate([
+        {$match : match},
+      //{ $project : { bachelor :  "$bachelor" , tolerable : "$tolerable"} },
+        {$group : { _id : "$status" , "Count" : { $sum : 1}}}
+      ]
+    );
+      return result;
 
-});
+    },
+    //number of courses passed, and % chance to pass all courses
+  getSeptemberSucces(nrOfCourses)
+    {
+      var result = {averageCoursesPassed:0, percentAllPassed:0};
+      var ret = September.aggregate([
+        {$match:{taken:nrOfCourses[0]}},
+        {$group:
+          { _id: null, passed_avg: {$avg: "$passed"}},
+
+        }
+      ])[0];
+      if(ret == undefined) return {averageCoursesPassed:0, percentAllPassed:0};
+
+      result.averageCoursesPassed = ret.passed_avg;
+
+
+      var all = September.find({taken:nrOfCourses[0]}).count();
+
+      var passed = September.find({taken:nrOfCourses[0], passed:nrOfCourses[0]}).count();
+      result.percentAllPassed = passed/all;
+
+      return result;
+
+    },
+  getSeptemberSuccess(nrOfCourses)
+    {
+
+      var result = {averageCoursesPassed:0, percentAllPassed:0};
+      if(nrOfCourses == 0) return {averageCoursesPassed:0, percentAllPassed:1};;
+      //find all students that took courses in september, and get the number of courses they took
+      var total = Exams.aggregate([
+        {$match:{grade_try2:{$gte:0}}}, {$group:{ _id: "$studentid", "c":{$sum: 1}}}
+      ]);
+      //console.log("in sept", total);
+      //find all students that took courses in september, passed them, and how many
+      var passed = Exams.aggregate([
+        {$match:{grade_try2:{$gte:10}}}, {$group:{ _id: "$studentid", "c":{$sum: 1}}}
+      ]);
+      //get all students that took exactly the same number of courses as nrOfCourses
+      var studentsThatMatch = {};
+      total.forEach(function(t){
+        if(t.c != nrOfCourses) return;
+        studentsThatMatch[t._id] = {"t":t.c};
+      })
+        //console.log("studentsmatch",nrOfCourses, studentsThatMatch);
+      //see how many of these students passed all their exams
+      var nrPassed = 0;
+      passed.forEach(function(p){
+        if(studentsThatMatch[p._id] == undefined) return; //only students with exact amount of nrOfCourses
+        if(p.c != nrOfCourses) return;
+
+        nrPassed++;
+      })
+      console.log("match",Object.keys(studentsThatMatch).length);
+      console.log("passed",nrPassed);
+      if(Object.keys(studentsThatMatch).length == 0)
+        result.percentAllPassed = 0;
+      else
+        result.percentAllPassed = nrPassed/Object.keys(studentsThatMatch).length;
+      return result;
+    },
+  getFailedCourses(who)
+    {
+      var allCourses = Courses.find({$or:[{semester:1},{semester:2}]}).fetch();
+      var indices = [];
+      allCourses.forEach(function(c){
+        indices.push(c.courseid);
+      })
+      var result = [];
+      var courses = Grades.find({
+        studentid:who,
+        courseid:{$in:indices},
+      }).fetch();
+    //  console.log("in failed courses", courses, who, indices, allCourses)
+      courses.forEach(function(c){
+        if(c.finalscore > 9) return;
+        result.push(c);
+      })
+      return result;
+  },
+  getRootRoute(){
+      if(process.env.ROOTROUTE != undefined)
+      {
+        console.log(process.env.ROOTROUTE);
+        return process.env.ROOTROUTE;
+      }
+      else {
+        return "dev";
+      }
+  },
+
+
+  });
 
 Meteor.startup(() => {
   if(process.env.KEY != undefined)
@@ -595,6 +586,59 @@ var helper_GetDistribution = function(search, collection,gradeField)
     return numberPerGrades[key];
   });
   return {numberPerGrades: numberPerGrades, min:min, max:max, total:total};
+}
+
+var helper_getCSEEntry =  function(semester){
+  var cse_entry = 'cse3';
+  switch(semester){
+    case 1:
+      cse_entry = 'cse1';
+      break;
+    case 2:
+      cse_entry = 'cse2';
+      break;
+    default:
+      cse_entry = 'cse3';
+  }
+  return cse_entry;
+
+};
+
+var helper_getCSEEntryStudent =  function(semester){
+  var cse_entry = 'cse_sep';
+  switch(semester){
+    case 1:
+      cse_entry = 'cse_jan';
+      break;
+    case 2:
+      cse_entry = 'cse_jun';
+      break;
+    default:
+      cse_entry = 'cse_jun';
+  }
+  return cse_entry;
+
+};
+
+var helper_relativateDict = function(dict){
+  var resultDict =  {"+0":0,"+1":0,"+2":0,"N":0};
+  var sum = helper_sumDict(dict);
+  for (var key in dict){
+    var counter = dict[key];
+    dict[key] = Math.round((counter / sum ) * 100)
+  }
+  return dict;
+}
+
+var helper_sumDict = function( obj ) {
+  var sum = 0;
+  for( var el in obj ) {
+    if( obj.hasOwnProperty( el ) ) {
+      sum += parseFloat( obj[el] );
+    }
+  }
+  console.log(sum)
+  return sum;
 }
 
 var helper_GetDistributionFrom100 = function(search, collection,gradeField)
