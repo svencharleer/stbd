@@ -59,19 +59,10 @@ Template.course.onRendered(function(){
       }
 
       Meteor.call(method, [courseId, Session.get("Year"), semester], function(err,data){
-        //if(courseId == "H01A4A") console.log(courseId, studentGrade, Session.get("student"));
-        //console.log("getCoursePointDistribution");
-        //console.log(instance.data.name);
-        //console.log(data);
         let graph = svg.select("g").selectAll("rect");
         graph.data(data.numberPerGrades)
         graph.transition()
         .attr("height",function(d){
-          //wider if it's a grade that past
-          //if(d.count == 0) console.log(d.count)
-          // return d.count/(data.max) * height;
-          let heightUnit = (1.0/ data.max) * 0.9 * histogramHeight;
-          //return d.count * heightUnit;
           return (d.count * 40)/data.max;
         })
         .attr("fill", function(d){
@@ -85,12 +76,7 @@ Template.course.onRendered(function(){
           return color;
         })
         .attr("transform",function(d,i){
-          // let space = 0.1 * histogramHeight;
-          // let maxBarHeight = 0.9 * histogramHeight;
-          // let heightUnit = (1.0/ data.max) * maxBarHeight ;
           return "translate(" + (d.grade * 6.8) + ","+ (40 - ((d.count * 40)/data.max))  +  ")";
-          // var spacing = 10.0;
-          // return "translate(" + ((d.grade / 20.0) * spacing +   (d.grade / 20.0) * totalHeight).toString() + ","+ (1.0 - d.count/(data.max- 0)) * height+ ")";
         });
 
 
