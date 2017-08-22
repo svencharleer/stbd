@@ -27,34 +27,34 @@
 
 /* Students getting bachelor in 3 years */
 .topstudentbox {
-    fill: #a5d6a7;
+    fill: rgb(250, 204, 246);
     width: 8px;
     height: 8px;
 
 }
 
 .selected.topstudentbox {
-    fill: #6AD16E;
+    fill: rgb(250, 204, 246);;
 }
 
 .legend3 {
-    background-color: #a5d6a7;
+    background-color: rgb(250, 204, 246);
     width: 25%;
     text-align: center;
 }
 
 /* Students getting bachelor in 4 years */
 .middlestudentbox {
-    fill: #80deea;    
+    fill: rgb(253, 170, 248);    
     width: 8px;
     height: 8px;
 }
 .selected.middlestudentbox {
-    fill: #3BC5D7;
+    fill: rgb(253, 170, 248);
 }
 
 .legend4 {
-    background-color: #80deea;  
+    background-color: rgb(253, 170, 248);
     width: 25%;
     text-align: center;
     
@@ -63,15 +63,15 @@
 
 /* Students getting bachelor in 5 years */
 .lowstudentbox {
-    fill: #9fa8da;    
+    fill: rgb(242, 126, 234);
     width: 8px;
     height: 8px;
 }
 .selected.lowstudentbox {
-    fill: #7483D7;
+    fill: rgb(242, 126, 234);
 }
 .legend5 {
-    background-color: #9fa8da ;
+    background-color: rgb(242, 126, 234);
     width: 25%;
     text-align: center;
     
@@ -79,16 +79,16 @@
 
 /* Students not getting bachelor */
 .badstudentbox {
-    fill: #ffc1e3;    
+    fill: black;    
     width: 8px;
     height: 8px;
 
 }
 .selected.badstudentbox{
-    fill:#FB79C0;
+    fill:grey;
 }
 .legendnot {
-    background-color: #ffc1e3;    
+    background-color:black;    
     width: 25%;
     text-align: center;
     
