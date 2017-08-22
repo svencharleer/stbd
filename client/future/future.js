@@ -109,9 +109,24 @@ Template.future.onRendered(function(){
         return y(Math.floor( d / 10)) + margin;
       })
       .on('mouseover', function(d){
-        d3.select(this).append('div')
-          .attr('value' , 20)
-          .attr('class', 'tooltip')
+        var text = calculateTooltip(d);
+        var cssClass = '.' + calculateClass(d);
+        var color = $(cssClass).css('fill')
+        console.log(color);
+        
+        tooltipLayer.transition()		
+            .duration(100)		
+            .style("opacity", .9);		
+        tooltipLayer.html(text)	
+            .style("left", (d3.event.pageX) + "px")		
+            .style("top", (d3.event.pageY - 28) + "px")
+            .style('background-color', color)
+            ;
+      })
+      .on("mouseout", function(d) {		
+        tooltipLayer.transition()		
+            .duration(300)		
+            .style("opacity", 0);	
       })
 
 
@@ -131,7 +146,10 @@ Template.future.onRendered(function(){
   var topsvg = d3.select('#best');
   var middlesvg = d3.select('#middle')
   var lowsvg = d3.select('#low')
-
+  // Define the div for the tooltip
+  var tooltipLayer = d3.select("body").append("div")	
+    .attr("class", "tooltip")				
+    .style("opacity", 0);
   
   
 

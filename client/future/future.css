@@ -25,6 +25,7 @@
     margin-left: 5px;
 }
 
+/* Students getting bachelor in 3 years */
 .topstudentbox {
     fill: #a5d6a7;
     width: 8px;
@@ -34,8 +35,6 @@
 
 .topstudentbox:hover {
     fill: black;
-    width: 8px;
-    height: 8px;
 }
 
 .legend3 {
@@ -44,10 +43,14 @@
     text-align: center;
 }
 
+/* Students getting bachelor in 4 years */
 .middlestudentbox {
     fill: #80deea;    
     width: 8px;
     height: 8px;
+}
+.middlestudentbox:hover {
+    fill: black;
 }
 
 .legend4 {
@@ -57,14 +60,16 @@
     
 }
 
+
+/* Students getting bachelor in 5 years */
 .lowstudentbox {
     fill: #9fa8da;    
     width: 8px;
     height: 8px;
 }
-
-
-
+.lowstudentbox:hover {
+    fill: black;
+}
 .legend5 {
     background-color: #9fa8da ;
     width: 25%;
@@ -72,12 +77,15 @@
     
 }
 
-
+/* Students not getting bachelor */
 .badstudentbox {
     fill: #ffc1e3;    
     width: 8px;
     height: 8px;
 
+}
+.badstudentbox:hover {
+    fill: black;
 }
 .legendnot {
     background-color: #ffc1e3;    
@@ -86,6 +94,7 @@
     
 }
 
+/*  */
 .unknown {
     fill: grey;    
     width: 8px;
@@ -125,17 +134,26 @@
     text-align: center;
     font-weight: 300;
 
-}
-
-
-    
+}  
 
 .fieldborder {
     stroke: #58a5f0;
     stroke-width: 5;
 }
 
-
+/* Tooltip layout */
+div.tooltip {	
+    position: absolute;			
+    text-align: center;			
+    width: 60px;					
+    height: 16px;					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    /* background: rgb(232, 243, 248);	 */
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
+}
 
 
 
