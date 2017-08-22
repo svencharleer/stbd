@@ -25,6 +25,7 @@ Template.resultGraph.events({
     } else {
       template.$(".course-bottom").css("max-height", "0px");
       template.$(".top-bar").css("box-shadow", "0px 0px 0px gainsboro");
+      template.$(".course").css("box-shadow", "0px 0px 0px gainsboro");
       template.$(".course").css("transform", "scale(1)");
       template.$(".course").css("z-index", "0");
       template.show.set(false);
@@ -34,12 +35,12 @@ Template.resultGraph.events({
     if(!template.zoom.get()) {
       template.$(".course").css("transform", "scale(1.5)");
       template.$(".course").css("z-index", "1000");
-      template.$(".course").css("box-shadow", "1px 1px 5px #a1a1a1");
+      template.$(".course").css("box-shadow", "1px 1px 5px gainsboro");
       template.zoom.set(true);
     } else {
       template.$(".course").css("transform", "scale(1)");
       template.$(".course").css("z-index", "0");
-      template.$(".course").css("box-shadow", "none");
+      template.$(".course").css("box-shadow", "0px 0px 0px gainsboro");
       template.zoom.set(false);
     }
   }
