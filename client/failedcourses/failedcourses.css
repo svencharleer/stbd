@@ -4,3 +4,11 @@
 
 .bold {font-weight: 500;}
 .notbold {font-weight: 300;}
+
+.tolerate{
+  display: flex;
+}
+
+.toleranceredits{
+  display: flex;
+}

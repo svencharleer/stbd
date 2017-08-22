@@ -49,19 +49,13 @@ Template.failedCourse.events({
       template.showTolerance.set(false);
     }
   },
-  // "click .course-bottom": function(event, template) {
-  //   if(!template.zoom.get()) {
-  //     template.$(".course").css("transform", "scale(1.5)");
-  //     template.$(".course").css("z-index", "1000");
-  //     template.$(".course").css("box-shadow", "1px 1px 5px gainsboro");
-  //     template.zoom.set(true);
-  //   } else {
-  //     template.$(".course").css("transform", "scale(1)");
-  //     template.$(".course").css("z-index", "0");
-  //     template.$(".course").css("box-shadow", "0px 0px 0px gainsboro");
-  //     template.zoom.set(false);
-  //   }
-  // }
+
+  "click .tolerate": function(event, template){
+    var toleranceCredits = template.$("#tolerancecredits");
+    toleranceCredits[0].innerHTML -= this.credits;
+    console.log(this)
+    console.log(toleranceCredits);
+  }
 });
 
 Template.failedCourse.onRendered(function(){
