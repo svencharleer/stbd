@@ -34,7 +34,7 @@
 }
 
 .selected.topstudentbox {
-    fill: #1E7922;
+    fill: #6AD16E;
 }
 
 .legend3 {
@@ -50,7 +50,7 @@
     height: 8px;
 }
 .selected.middlestudentbox {
-    fill: #128291;
+    fill: #3BC5D7;
 }
 
 .legend4 {
@@ -68,7 +68,7 @@
     height: 8px;
 }
 .selected.lowstudentbox {
-    fill: #09155B;
+    fill: #7483D7;
 }
 .legend5 {
     background-color: #9fa8da ;
@@ -85,7 +85,7 @@
 
 }
 .selected.badstudentbox{
-    fill: #941E1E;
+    fill:#FB79C0;
 }
 .legendnot {
     background-color: #ffc1e3;    
