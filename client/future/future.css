@@ -33,8 +33,8 @@
 
 }
 
-.topstudentbox:hover {
-    fill: black;
+.selected.topstudentbox {
+    fill: #1E7922;
 }
 
 .legend3 {
@@ -49,8 +49,8 @@
     width: 8px;
     height: 8px;
 }
-.middlestudentbox:hover {
-    fill: black;
+.selected.middlestudentbox {
+    fill: #128291;
 }
 
 .legend4 {
@@ -67,8 +67,8 @@
     width: 8px;
     height: 8px;
 }
-.lowstudentbox:hover {
-    fill: black;
+.selected.lowstudentbox {
+    fill: #09155B;
 }
 .legend5 {
     background-color: #9fa8da ;
@@ -84,8 +84,8 @@
     height: 8px;
 
 }
-.badstudentbox:hover {
-    fill: black;
+.selected.badstudentbox{
+    fill: #941E1E;
 }
 .legendnot {
     background-color: #ffc1e3;    
@@ -108,10 +108,10 @@
 }
 
 .fields {
-    height: 70%;
+    height: 80%;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-evenly;
     align-items: center;
     margin-top: 10;
@@ -124,7 +124,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     font-weight: 300;
 
@@ -149,10 +149,11 @@ div.tooltip {
     height: 16px;					
     padding: 2px;				
     font: 12px sans-serif;		
-    /* background: rgb(232, 243, 248);	 */
     border: 0px;		
     border-radius: 8px;			
-    pointer-events: none;			
+    pointer-events: none;	
+    box-shadow: 5px 5px 5px #888888;
+    
 }
 
 

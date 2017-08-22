@@ -108,22 +108,37 @@ Template.future.onRendered(function(){
       .attr('y', function(d){
         return y(Math.floor( d / 10)) + margin;
       })
+      .attr('id', function(d){return d})
       .on('mouseover', function(d){
         var text = calculateTooltip(d);
-        var cssClass = '.' + calculateClass(d);
-        var color = $(cssClass).css('fill')
-        console.log(color);
-        
+        var cssClass = calculateClass(d) ;
+        var tooltipColor = $("."+ cssClass).css('fill')
+        // Highlight all 
+        svg.selectAll('.'+ cssClass)
+          .attr('class', function(){
+            var instance = d3.select(this);
+            var currentClass = instance.attr('class');
+            currentClass += ' selected';
+            return currentClass;
+          });        
+        //add tooltip
         tooltipLayer.transition()		
             .duration(100)		
             .style("opacity", .9);		
         tooltipLayer.html(text)	
             .style("left", (d3.event.pageX) + "px")		
             .style("top", (d3.event.pageY - 28) + "px")
-            .style('background-color', color)
+            .style('background-color', tooltipColor)
             ;
       })
-      .on("mouseout", function(d) {		
+      .on("mouseout", function(d) {	
+        var cssClass = calculateClass(d) ;
+        var color = $('.'+cssClass).css('fill');
+        var tooltipColor = $('.' + cssClass).css('fill')
+        
+        svg.selectAll('.'+ cssClass + '.selected')
+          .attr('class', cssClass);      
+
         tooltipLayer.transition()		
             .duration(300)		
             .style("opacity", 0);	
