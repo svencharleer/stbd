@@ -90,11 +90,28 @@ body {
 }
 
 .flex-column {
-  width: 180px;
+  min-width: 180px;
+  max-width: 180px;
   min-height: 700px;
-  border-right: 1px solid #ececec;
+  border-right:  1px solid #ececec;
   border-bottom: 1px solid #ececec;
-  border-top: 1px solid #ececec
+  border-top: 1px solid #ececec;
+  transition: all 0.7s ease-out;
+  position: relative;
+}
+
+.flex-column .vertical-title {
+  display: none;
+  position: absolute;
+  transform: rotateZ(-90deg);
+  right: -85px;
+  top: 120px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #424242;
+  width: 200px;
+  text-align: end;
+  text-transform: lowercase;
 }
 
 .flex-column .periode {
@@ -107,6 +124,7 @@ body {
 }
 
 .flex-column .top {
+  overflow: hidden;
   position: relative;
   min-height: 67px;
   display: flex;
@@ -225,11 +243,11 @@ body {
   text-align:center;
 
 }
-/* 
+/*
 .colhistory {
-  border: 0px;
-  max-width: 100px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+border: 0px;
+max-width: 100px;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
 } */
