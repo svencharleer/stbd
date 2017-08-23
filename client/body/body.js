@@ -1,3 +1,11 @@
+Template.body.helpers({
+  
+
+
+
+})
+
+
 Template.body.onCreated(function(){
   var instance = this;
   var handler = instance.subscribe("generic_courses",function(){});

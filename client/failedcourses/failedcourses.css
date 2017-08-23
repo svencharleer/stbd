@@ -2,13 +2,49 @@
   display: flex;
 }
 
+.course-bottom.tolerate {
+  justify-content: flex-start;
+}
+
 .bold {font-weight: 500;}
 .notbold {font-weight: 300;}
 
-.tolerate{
+
+/* Flex container */
+.options-container{
   display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  
+
 }
 
-.toleranceredits{
+.stay-failed, .tolerate-course{
+  align-self: auto;
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+
+.check-fail{
+  width: 32px;
+  height: 16px; 
+  background-color: #eabd79;
+  align-self: flex-start;
+  text-align: center;
+  color: white;
+}
+
+.check-tolerate{
+  width: 32px;
+  height: 16px; 
+  background-color: #9fcca1;
+  align-self: flex-start;
+  text-align: center;
+  color: transparent;
 }

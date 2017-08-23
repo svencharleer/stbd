@@ -2,7 +2,7 @@ import { ReactiveVar } from 'meteor/reactive-var'
 
 Template.failedCourse.onCreated(function(){
   this.showTolerance = new ReactiveVar(false);
-  // this.zoom = new ReactiveVar(false);
+  this.checkFail = new ReactiveVar(true);
 });
 
 
@@ -35,7 +35,7 @@ Template.failedCourse.helpers({
 });
 
 Template.failedCourse.events({
-  "click .top-bar": function(event,template){
+  "click .top-bar.tolerable": function(event,template){
     if(!template.showTolerance.get()) {
       template.$(".course-bottom").css("max-height", "48px");
       template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
@@ -50,15 +50,31 @@ Template.failedCourse.events({
     }
   },
 
-  "click .tolerate": function(event, template){
-    var toleranceCredits = template.$("#tolerancecredits");
-    toleranceCredits[0].innerHTML -= this.credits;
-    console.log(this)
-    console.log(toleranceCredits);
+  "click .stay-failed": function(event, template){
+    console.log("fail");
+    // if already clicked => do nothing
+    if(!template.checkFail.get()){
+      template.$(".check-fail").css("color", "white");
+      template.$(".check-tolerate").css("color", "transparent")
+      template.checkFail.set(true);
+    }
+  },
+
+  "click .tolerate-course": function(event, template){
+    console.log("tolerate");
+    // not tolerate is checked
+    if(template.checkFail.get()){
+      template.$(".check-fail").css("color", "transparent");
+      template.$(".check-tolerate").css("color", "white")
+      let creditsLeft = $('#tolerantiepunten').find("paper-progress").attr('value');
+      let afterToleration = creditsLeft - this.credit;
+      if (afterToleration > 0){
+        $('#tolerantiepunten').find("paper-progress").attr('value', afterToleration);
+      }
+      template.checkFail.set(false);
+    }
   }
 });
 
 Template.failedCourse.onRendered(function(){
-  
-  
 });
