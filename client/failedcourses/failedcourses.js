@@ -67,7 +67,8 @@ Template.failedCourse.events({
       template.$(".check-fail").css("color", "transparent");
       template.$(".check-tolerate").css("color", "white")
       let creditsLeft = $('#tolerantiepunten').find("paper-progress").attr('value');
-      let afterToleration = creditsLeft - this.credit;
+      let afterToleration = creditsLeft - this.credits;
+      console.log(afterToleration)
       if (afterToleration > 0){
         $('#tolerantiepunten').find("paper-progress").attr('value', afterToleration);
       }
