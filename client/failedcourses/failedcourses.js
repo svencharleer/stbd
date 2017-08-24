@@ -75,7 +75,8 @@ Template.failedCourse.events({
         template.$(".check-tolerate").css("color", "transparent")
         // template.$(".check-tolerate").css("background-color", "rgb(194, 203, 206)")  
         template.$(".tolerate-course").css("opacity", "0.5") ;     
-        template.$(".top-bar").css("background-color", "#eabd79")                          
+        template.$(".top-bar").css("background-color", "#eabd79");
+        template.$(".course").css("border-color", "#eabd79")  ;                        
         template.checkFail.set(true);
       }
     }
@@ -106,7 +107,8 @@ Template.failedCourse.events({
         template.$(".tolerate-course").css("opacity", "1") ;                       
         $('#tolerantiepunten').find("paper-progress").attr('value', afterToleration);
         $('#tolerantiepunten').find("i").text(afterToleration);        
-        template.$(".top-bar").css("background-color", "#9fcca1")                                  
+        template.$(".top-bar").css("background-color", "#9fcca1")  ;
+        template.$(".course").css("border-color", "#9fcca1")  ;                           
         template.checkFail.set(false);
       }
       
