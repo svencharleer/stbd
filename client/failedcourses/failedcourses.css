@@ -14,10 +14,8 @@
 .options-container{
   display: flex;
   flex-direction: column;
-  flex-wrap: nowrap;
   justify-content: flex-start;
-  
-
+  width: 100%;
 }
 
 .stay-failed{
@@ -30,32 +28,41 @@
   font-weight: 300;
 }
 
-.tolerate-course{
-  align-self: auto;
+.tolerate-checkbox {
+  width: 100%;
   display: flex;
-  flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
+  position: relative;
+}
+
+.tolerate-course{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   font-size: 13px;
   font-weight: 300;
   opacity: 0.5;
 }
 
-
-.check-fail{
-  width: 32px;
-  height: 16px; 
-  background-color: #ffcc80;
+.checkdot{
+  min-width: 16px;
+  min-height: 16px;
   align-self: flex-start;
   text-align: center;
   color: white;
+  border-radius: 50%;
+  margin: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.check-fail{
+  background-color: #eabd79;
 }
 
 .check-tolerate{
-  width: 32px;
-  height: 16px; 
   background-color: #9fcca1;
-  align-self: flex-start;
-  text-align: center;
   color: transparent;
 }

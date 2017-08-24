@@ -65,7 +65,7 @@ var grade = function(grade){
 }
 
 Template.failedCourse.events({
-  "click .course-top.tolerable.canTolerate": function(event,template){
+  "click .course-top": function(event,template){
     if(!template.showTolerance.get()) {
       template.$(".course-bottom").css("max-height", "48px");
       template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
@@ -91,7 +91,7 @@ Template.failedCourse.events({
      *  give credits back
      *  update boolean checkFail
      */
-    
+
     if(!template.checkFail.get()){
       let creditsLeft = $('#tolerantiepunten').find("paper-progress").attr('value');
       let cancelToleration = parseInt(creditsLeft) + parseInt(this.credits);
@@ -100,8 +100,8 @@ Template.failedCourse.events({
         $('#tolerantiepunten').find("paper-progress").attr('value', cancelToleration);
         $('#tolerantiepunten').find("i").text(cancelToleration);
         template.$(".check-fail").css("color", "white");
-        template.$(".check-fail").css("background-color", "#eabd79")  
-        template.$(".stay-failed").css("opacity", "1") ;                       
+        template.$(".check-fail").css("background-color", "#eabd79")
+        template.$(".stay-failed").css("opacity", "1") ;
         template.$(".check-tolerate").css("color", "transparent")
         // template.$(".check-tolerate").css("background-color", "rgb(194, 203, 206)")  
         template.$(".tolerate-course").css("opacity", "0.5") ;     
@@ -120,28 +120,28 @@ Template.failedCourse.events({
      * else
      *  check if you have enough credits
      *  update layout ( click tolerate, uncheck failed)
-     *  take credits 
+     *  take credits
      *  update boolean checkFail
-     */    
+     */
     if(template.checkFail.get()){
-      
+
       let creditsLeft = $('#tolerantiepunten').find("paper-progress").attr('value');
       let afterToleration = creditsLeft - this.credits;
       console.log(afterToleration)
       if (afterToleration >= 0){
         template.$(".check-fail").css("color", "transparent");
-        // template.$(".check-fail").css("background-color", "rgb(194, 203, 206)") ;  
-        template.$(".stay-failed").css("opacity", "0.5") ;               
+        // template.$(".check-fail").css("background-color", "rgb(194, 203, 206)") ;
+        template.$(".stay-failed").css("opacity", "0.5") ;
         template.$(".check-tolerate").css("color", "white");
-        template.$(".check-tolerate").css("background-color", "#9fcca1")  ;  
-        template.$(".tolerate-course").css("opacity", "1") ;                       
+        template.$(".check-tolerate").css("background-color", "#9fcca1")  ;
+        template.$(".tolerate-course").css("opacity", "1") ;
         $('#tolerantiepunten').find("paper-progress").attr('value', afterToleration);
-        $('#tolerantiepunten').find("i").text(afterToleration);        
+        $('#tolerantiepunten').find("i").text(afterToleration);
         template.$(".top-bar").css("background-color", "#9fcca1")  ;
-        template.$(".course").css("border-color", "#9fcca1")  ;                           
+        template.$(".course").css("border-color", "#9fcca1")  ;
         template.checkFail.set(false);
       }
-      
+
     }
   }
 });
