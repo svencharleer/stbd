@@ -320,6 +320,30 @@ Meteor.methods({
     
 
   },
+
+  getCreditsTaken: function(who, semester){
+    let credits = 0;
+    // get all courseIds of student
+    var studentGrades = Grades.find({studentid:who});
+    var studentCourseIds = [];
+    studentGrades.forEach(function(g){
+      studentCourseIds.push(g.courseid);
+    })
+
+    // Find all courses of the student
+    var coursesStudent = Courses.find({
+      courseid:{$in:studentCourseIds},
+    }).fetch();
+
+    coursesStudent.forEach(function(c){
+      credits += c.credits
+    });
+    console.log(credits
+    )
+    return credits;
+
+
+  },
   
 
   getHistoricalData: function(who){
@@ -492,16 +516,16 @@ Meteor.methods({
   getFailedCourses(who)
     {
       var allCourses = Courses.find({$or:[{semester:1},{semester:2}]}).fetch();
-      var indices = [];
+      var courseIds = [];
       allCourses.forEach(function(c){
-        indices.push(c.courseid);
+        courseIds.push(c.courseid);
       })
       var result = [];
       var courses = Grades.find({
         studentid:who,
-        courseid:{$in:indices},
+        courseid:{$in:courseIds},
       }).fetch();
-    //  console.log("in failed courses", courses, who, indices, allCourses)
+    //  console.log("in failed courses", courses, who, courseIds, allCourses)
       courses.forEach(function(c){
         if(c.finalscore > 9) return;
         result.push(c);

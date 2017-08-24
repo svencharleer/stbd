@@ -1,7 +1,7 @@
 /**
  * Calculate the CSE of a student
  * @param {Integer} semester //0 1 2
- * @param {?} year //TODO: can be 2016-2017 or just 2016
+ * @param {?} year //2016-2017
  * @param {Integer} pure : return fraction or not
  */
 Helpers_CalculateCSE = function(semester,year, pure) //1 2 3 (sept) 0 = TTT

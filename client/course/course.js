@@ -2,36 +2,7 @@
 Template.course.onRendered(function(){
   let instance = this;
 
-  let totalCourseWidth = window.innerWidth / 8.5;
-  let totalCourseHeight = 75;
-
-  let fractionNameWidth  = 0.8;
-  let fractionNameHeight = 0.4;
-  let fractionGradeWidth = 0.25;
-  let courseInfoWidth = totalCourseWidth ;
-  let courseInfoHeight = fractionNameHeight * totalCourseHeight;
-  let courseNameWidth = fractionNameWidth * courseInfoWidth;
-  let courseNameHeight = courseInfoHeight;
-  let courseCreditsWidth = (1-fractionNameWidth) * courseInfoWidth;
-  let courseCreditsHeight = courseInfoHeight;
-
-  let gradeWidth = fractionGradeWidth * totalCourseWidth ;
-  let gradeHeight = (1-fractionNameHeight) * totalCourseHeight;
-  let svgHistogramWidth = (1-fractionGradeWidth) * totalCourseWidth;
-  let svgHistogramHeight = gradeHeight;
-
-  let totalWidth = svgHistogramWidth;
-  let totalHeight = svgHistogramHeight;
-  let bar = "#CBCBCB";
-  let barSelect = "#020202";
-  let colorScale = chroma.scale(["#0099FF","#F566FF"]);
-  let margin  = 0.05 * totalWidth;
-  let widthEachScore = 0.9 * totalWidth / 21;
-  let barFraction = 0.95
-  let barWidth = barFraction  * widthEachScore;
-  let spaceWidth = (1- barFraction) * widthEachScore;
-  let legendFraction = 0.2
-  let histogramHeight = (1- legendFraction ) * totalHeight;
+  
 
   instance.autorun(function(){
     //Session.get("student")
