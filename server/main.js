@@ -251,7 +251,7 @@ Meteor.methods({
     var CSE_entry = helper_getCSEEntry(semester);
     var CSE_score = CSE_student[CSE_entry]
 
-    var limit1 = 100; var limit2 = 50;
+    var limit1 = 90; var limit2 = 50;
     if(Meteor.settings.public.cselimit1 != undefined && Meteor.settings.public.cselimit2 != undefined){
       limit1 = Meteor.settings.public.cselimit1;
       limit2 = Meteor.settings.public.cselimit2;   
@@ -262,12 +262,12 @@ Meteor.methods({
     var middle = false;
     var low = false;
 
-    if(CSE_score >= limit1)
+    if(CSE_score > limit1)
     {
       status = "green";
       top = true;
     }
-    else if(CSE_score <limit1 && CSE_score >= limit2)
+    else if(CSE_score <=limit1 && CSE_score >= limit2)
     {
       status = "orange";
       middle = true;

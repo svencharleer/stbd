@@ -1,7 +1,7 @@
 {
      "public":{
             "rootroute":"dev",
-            "cselimit1": 100,
+            "cselimit1": 90,
             "cselimit2": 60,
             "ijkingstoets_juli" : true,
             "ijkingstoets_september" : true,
