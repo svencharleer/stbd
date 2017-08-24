@@ -24,15 +24,25 @@ Template.failedCourse.helpers({
   },
   try1: function(){
     let bold  = "bold";
-    if(this.try1 < this.try2) bold = "notbold";
+    if(grade(this.try1) < grade(this.try2)) bold = "notbold";
     return {"grade":this.try1, "bold": bold};
   },
   try2: function() {
     let bold  = "bold";
-    if(this.try1 > this.try2) bold = "notbold";
+    if(grade(this.try1) > grade(this.try2)) bold = "notbold";
     return {"grade":this.try2, "bold": bold};
-  }
+  },
+  
 });
+
+var grade = function(grade){
+  if(typeof(grade) != 'number') {
+    return 0
+  }
+  else{
+    return grade
+  }
+}
 
 Template.failedCourse.events({
   "click .top-bar.tolerable": function(event,template){
