@@ -24,18 +24,48 @@ Template.failedCourse.helpers({
   },
   try1: function(){
     let bold  = "bold";
-    if(this.try1 < this.try2) bold = "notbold";
+    if(grade(this.try1) < grade(this.try2)) bold = "notbold";
     return {"grade":this.try1, "bold": bold};
   },
   try2: function() {
     let bold  = "bold";
-    if(this.try1 > this.try2) bold = "notbold";
+    if(grade(this.try1) > grade(this.try2)) bold = "notbold";
     return {"grade":this.try2, "bold": bold};
+  },
+  /**
+   * Check if current CSE >= 50
+   * otherwise you cannot tolerate
+   * @return {String} : "cannotTolerate" of "canTolerate"
+   */
+  canTolerate: function() {
+    let semester = Session.get('semester');
+    let CSE_september = Session.get('CSE_september');
+    let CSE_juni = Session.get('CSE_juni');
+    let CSE_januari = Session.get('CSE_januari');
+    let CSE_list = [CSE_januari, CSE_juni, CSE_september];
+    let currentCSE = CSE_list[semester-1]
+    console.log(currentCSE);
+    if (currentCSE < 50){
+      return "cannotTolerate"
+    }  
+    else{
+      return "canTolerate";
+    }
   }
+  
 });
 
+var grade = function(grade){
+  if(typeof(grade) != 'number') {
+    return 0
+  }
+  else{
+    return grade
+  }
+}
+
 Template.failedCourse.events({
-  "click .top-bar.tolerable": function(event,template){
+  "click .course-top.tolerable.canTolerate": function(event,template){
     if(!template.showTolerance.get()) {
       template.$(".course-bottom").css("max-height", "48px");
       template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
@@ -75,8 +105,8 @@ Template.failedCourse.events({
         template.$(".check-tolerate").css("color", "transparent")
         // template.$(".check-tolerate").css("background-color", "rgb(194, 203, 206)")  
         template.$(".tolerate-course").css("opacity", "0.5") ;     
-        template.$(".top-bar").css("background-color", "#eabd79");
-        template.$(".course").css("border-color", "#eabd79")  ;                        
+        template.$(".top-bar").css("background-color", "#ffcc80");
+        template.$(".course").css("border-color", "#ffcc80")  ;                        
         template.checkFail.set(true);
       }
     }
