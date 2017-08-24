@@ -42,8 +42,9 @@
     <!-- Lower row -->
     <div class="flex-row">
       <div class="flex-column column-even colijkingstoets">
+        <div class="vertical-title">IJkingstoets</div>
         <div class="top">
-          <div class="fa fa-compress"><paper-ripple></paper-ripple></div>
+          <div class="fa compress-colijkingstoets fa-compress"><paper-ripple></paper-ripple></div>
           <div class="column-title">IJkingstoets</div>
           <div class="CSE"></div>
         </div>
@@ -61,8 +62,9 @@
       </div>
 
       <div class="flex-column colttt">
+        <div class="vertical-title">Tussentijdse Toetsen</div>
         <div class="top">
-          <div class="fa fa-compress"><paper-ripple></paper-ripple></div>
+          <div class="fa compress-colttt fa-compress"><paper-ripple></paper-ripple></div>
           <div class="column-title">Tussentijdse Toetsen</div>
           <div class="CSE"></div>
         </div>
@@ -80,8 +82,9 @@
         </div>
       </div>
       <div class="flex-column column-even coljan">
+        <div class="vertical-title">Januari</div>
         <div class="top">
-          <div class="fa fa-compress"><paper-ripple></paper-ripple></div>
+          <div class="fa compress-coljan fa-compress"><paper-ripple></paper-ripple></div>
           <div class="column-title">Januari</div>
           <div class="periode">1e examenperiode</div>
           <div class="CSE">
@@ -104,8 +107,9 @@
       </div>
       {{#if ShowJuni}}
       <div class="flex-column coljun">
+        <div class="vertical-title">Juni</div>
         <div class="top">
-          <div class="fa fa-compress"><paper-ripple></paper-ripple></div>
+          <div class="fa compress-coljun fa-compress"><paper-ripple></paper-ripple></div>
           <div class="column-title">Juni</div>
           <div class="periode">2e examenperiode</div>
           <div class="CSE">
@@ -129,8 +133,9 @@
       {{/if}}
       {{#if ShowSeptember}}
       <div class="flex-column column-even colsept">
+        <div class="vertical-title">Augustus</div>
         <div class="top">
-          <div class="fa fa-compress"><paper-ripple></paper-ripple></div>
+          <div class="fa compress-colsept fa-compress"><paper-ripple></paper-ripple></div>
           <div class="column-title">Augustus</div>
           <div class="periode">3e examenperiode</div>
           <div class="CSE">
@@ -159,9 +164,10 @@
       </div>
 
       {{/if}}
-      <div class="flex-column   colfail">
+      <div class="flex-column colfail">
+        <div class="vertical-title">Onsuccesvolle vakken</div>
         <div class="top">
-          <div class="fa fa-compress"><paper-ripple></paper-ripple></div>
+          <div class="fa compress-colfail fa-compress"><paper-ripple></paper-ripple></div>
           <div class="column-title">Onsuccesvolle vakken</div>
           <div class="periode">Tolerantiepunten</div>
           <div id='tolerantiepunten' class="tolerantiepunten"><paper-progress value=12 max="12" min="0"></paper-progress><i>12</i><b>/12</b></div>
@@ -186,9 +192,10 @@
       </div>
 
       {{#if ShowSeptember}}
-      <div class="flex-column column-even colsept">
+      <div class="flex-column column-even planning">
+        <div class="vertical-title">Studiebelastingplanning</div>
         <div class="top">
-          <div class="fa fa-compress"><paper-ripple></paper-ripple></div>
+          <div class="fa compress-planning fa-compress"><paper-ripple></paper-ripple></div>
           <div class="column-title">Studiebelastingplanning</div>
           <div class="CSE"></div>
         </div>
@@ -224,16 +231,17 @@
       {{/unless}}
 
       <div class="flex-column colfuture">
-          <div class="top">
-            <div class="fa fa-compress"><paper-ripple></paper-ripple></div>
-            <div class="column-title">bachelor</div>
-            <div class="CSE"></div>
-          </div>
-          <div class="bottom">
-              {{> future}}
-          </div>
+        <div class="vertical-title">bachelor</div>
+        <div class="top">
+          <div class="fa compress-colfuture fa-compress"><paper-ripple></paper-ripple></div>
+          <div class="column-title">bachelor</div>
+          <div class="CSE"></div>
         </div>
-      
+        <div class="bottom">
+          {{> future}}
+        </div>
+      </div>
+
 
       <div class="flex-row" style="display: none;">
         <div class="flex-item bottomheader"><a  class="hider" href="#" onclick="if($('.colijkingstoets').css('visibility') == 'visible'){$('.colijkingstoets').css('visibility','hidden');}else{$('.colijkingstoets').css('visibility','visible');}">.x.</a></div>

@@ -49,6 +49,7 @@
   color: #424242;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
 .course .label {
