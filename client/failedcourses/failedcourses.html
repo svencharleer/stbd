@@ -1,8 +1,8 @@
 <template name="failedCourse">
   <div id="{{id}}_failed" class="course failed-course {{color}}" style="border-color: {{color}}; min-height: 50px;">
-    <div class="course-top">
+    <div class="course-top {{color}} {{canTolerate}}">
       <div class="name">{{name}}</div>
-      <div class="top-bar {{color}}">
+      <div class="top-bar {{color}} ">
         <div class="grade">
           <div class="try1 {{try1.bold}}">{{try1.grade}}</div> -
           <div class="try2 {{try2.bold}}">{{try2.grade}}</div>
@@ -13,6 +13,7 @@
         </div>
       <paper-ripple></paper-ripple>         
       </div>
+      <paper-ripple></paper-ripple>
     </div>
     <div class="course-bottom tolerate">
       <div class='options-container'>
