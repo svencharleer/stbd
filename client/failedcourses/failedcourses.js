@@ -75,8 +75,8 @@ Template.failedCourse.events({
         template.$(".check-tolerate").css("color", "transparent")
         // template.$(".check-tolerate").css("background-color", "rgb(194, 203, 206)")  
         template.$(".tolerate-course").css("opacity", "0.5") ;     
-        template.$(".top-bar").css("background-color", "#eabd79");
-        template.$(".course").css("border-color", "#eabd79")  ;                        
+        template.$(".top-bar").css("background-color", "#ffcc80");
+        template.$(".course").css("border-color", "#ffcc80")  ;                        
         template.checkFail.set(true);
       }
     }
