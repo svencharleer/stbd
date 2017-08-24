@@ -54,8 +54,20 @@
 .check-tolerate{
   width: 32px;
   height: 16px; 
-  background-color: #9fcca1;
+  background-color: #81A8B8;
   align-self: flex-start;
   text-align: center;
   color: transparent;
+}
+
+.getolereerd{
+  display: none;
+}
+
+.try{
+  display: flex;
+}
+
+.top-bar{
+  transition: background-color 0.5s ease;
 }
