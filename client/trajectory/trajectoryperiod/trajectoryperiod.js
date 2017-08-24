@@ -84,17 +84,16 @@ Template.trajectoryperiod.onRendered(function(){
         return (width/2);
       })
       .attr("cy", function(d,i){
-        return 98 - ((d3.select(this.parentNode).datum().bucket *10) + 3);
+        return 98 - ((d3.select(this.parentNode).datum().bucket *10) + 2);
       })
       .transition()
       .duration(1000)
       .ease("exp")
       .attr("cx", function(d,i){
         let parent = d3.select(this.parentNode).datum().count;
-        let start  = (Math.round(((100 * parent)/total)) * 10) + 4;
-        return ((width/2) + (i*10)) - start/2;
+        let start  = (Math.round(((100 * parent)/total)) * 5) + 2;
+        return ((width/2) + (i*5)) - start/2;
       });
-
 
       // svg.selectAll("rect").data(data.distribution)
       // .transition()
