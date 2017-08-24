@@ -36,7 +36,7 @@ Template.trajectoryperiod.onRendered(function(){
       Visualisation of Square Plot (50);
       */
       let total = count;
-      let width = 190;
+      let width = 180;
       let container = svg.selectAll(".figures")
       .data(data.distribution).enter();
 
@@ -65,7 +65,7 @@ Template.trajectoryperiod.onRendered(function(){
       let circles = container.append("g")
       .attr("class","row")
       .selectAll("circle")
-      .data(function(d){return d3.range(Math.round(((50 * d.count)/total)))})
+      .data(function(d){return d3.range(Math.round(((100 * d.count)/total)))})
       .enter()
       .append("circle")
       .attr("fill", function(d){
@@ -79,7 +79,7 @@ Template.trajectoryperiod.onRendered(function(){
         return "#81A8B8"; else return "#C2CBCE";
       })
       .attr("stroke","none")
-      .attr("r", 3)
+      .attr("r", 2)
       .attr("cx", function(d){
         return (width/2);
       })
@@ -91,7 +91,7 @@ Template.trajectoryperiod.onRendered(function(){
       .ease("exp")
       .attr("cx", function(d,i){
         let parent = d3.select(this.parentNode).datum().count;
-        let start  = (Math.round(((50 * parent)/total)) * 10) + 4;
+        let start  = (Math.round(((100 * parent)/total)) * 10) + 4;
         return ((width/2) + (i*10)) - start/2;
       });
 

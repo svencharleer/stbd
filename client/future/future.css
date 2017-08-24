@@ -142,7 +142,7 @@
 }
 
 .legend-item {
-  height: 22px;
+  height: 20px;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -183,7 +183,8 @@ div.tooltip {
   width: 160px;
 }
 
-
+.legend3{border-radius: 4px 0px 0px 4px;}
+.legendnot{border-radius: 0px 4px 4px 0px;}
 /* .best{
 border: 2 solid black;
 } */

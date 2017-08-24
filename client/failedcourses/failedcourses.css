@@ -62,9 +62,7 @@
   background-color: #eabd79;
 }
 
-.check-tolerate{
-  width: 32px;
-  height: 16px; 
+.check-tolerate{ 
   background-color: #81A8B8;
   align-self: flex-start;
   text-align: center;
