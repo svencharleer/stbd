@@ -151,10 +151,6 @@ Template.future.onRendered(function(){
     
 
   };
-
-  function makeLegend(svg){
-  }
-
   
 
   var legendsvg = d3.select('#profile');

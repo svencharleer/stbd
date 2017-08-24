@@ -1,19 +1,24 @@
 <template name="failedCourse">
-  <div id="{{id}}_failed" class="course failed-course" style="border-color: {{color}}; min-height: 50px;">
+  <div id="{{id}}_failed" class="course failed-course {{color}}" style="border-color: {{color}}; min-height: 50px;">
     <div class="course-top">
       <div class="name">{{name}}</div>
-      <div class="top-bar" style="background: {{color}}; cursor: default;">
+      <div class="top-bar {{color}}">
         <div class="grade">
           <div class="try1 {{try1.bold}}">{{try1.grade}}</div> -
           <div class="try2 {{try2.bold}}">{{try2.grade}}</div>
         </div>
+               
         <div class="credits">
           {{credits}}<span>stp</span>
         </div>
+      <paper-ripple></paper-ripple>         
       </div>
     </div>
-    <div class="course-bottom">
-      <!-- <svg class="histogram"></svg> -->
+    <div class="course-bottom tolerate">
+      <div class='options-container'>
+        <div id="stay-failed" class='stay-failed'><div class='check-fail'>&#x2714;</div>Opnieuw afleggen</div>
+        <div id="tolerate-course" class='tolerate-course'><div class='check-tolerate'>&#x2714;</div>Tolereren</div>
+      </div>
     </div>
   </div>
 </template>

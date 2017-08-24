@@ -1,3 +1,4 @@
+
 Template.body.events({
   /* To fix this we need to put the column in one template
      I don't know because <body> is harcoded to september and june dashboards.
