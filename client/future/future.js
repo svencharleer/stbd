@@ -1,11 +1,11 @@
 Template.future.helpers({
-  limit1: function(){    
+  limit1: function(){
     return Session.get('limit1');
   }  ,
 
   limit2: function(){
-    return Session.get('limit2');  
-  }  
+    return Session.get('limit2');
+  }
 
 });
 
@@ -22,15 +22,15 @@ Template.future.onRendered(function(){
   // $("#profilebox").css("background",profileColor);
 
 
-  /** 
+  /**
   * @param {svg} svg you want to add the profilefield
   * @param {string} backgroundColor of the background
   * @param {[int]} integers representing percentage of students who did their bachelor in 3-4 & 5 years
   */
   function makeProfileField(svg, data, border){
-    var width = 150;
-    var height = 140;
-    var margin = 7;
+    var width  = 150;
+    var height = 150;
+    var margin = 0;
     var nb3 = data[0];
     var nb4 = data[1];
     var nb5 = data[2];
@@ -38,12 +38,12 @@ Template.future.onRendered(function(){
     // var data = Array.apply(null, Array(100)).map(function (_, i) {return i;});
     var data = d3.range(100)
     var x = d3.scale.linear()
-      .domain([0,9])
-      .range([0,width]);
+    .domain([0,9])
+    .range([0,width]);
 
     var y = d3.scale.linear()
-      .domain([0,10])
-      .range([0,height]);
+    .domain([0,10])
+    .range([0,height]);
 
     function calculateClass(x){
       var profileClass = 'unknown';
@@ -58,9 +58,9 @@ Template.future.onRendered(function(){
       }
       else {
         profileClass = 'badstudentbox';
-      }      
+      }
       return profileClass;
-    }   
+    }
 
     function calculateTooltip(x){
       var text = ' ';
@@ -75,99 +75,85 @@ Template.future.onRendered(function(){
       }
       else {
         text = nbNot + '%';
-      }      
+      }
       return text;
     }
 
+    svg.attr("width",  "160px").attr("height", "145px");
+
     if (border){
-      var borderPath = svg.append("rect")
-      .attr('class', 'fieldborder')
-      .attr("x", 0)
-      .attr("y", 0)
-      .attr("height", '100%')
-      .attr("width", '100%')
-      // .style("stroke", 'blue')
-      .style("fill", "none")
-      // .style("stroke-width", 5)
-      ;
+      svg.attr('class', 'fieldborder');
     }
     else(
-      svg.attr('opacity', 0.4)
+      svg.attr('opacity', 0.6)
     )
-     
+
     svg.selectAll('rect.profilebox')
-      .data(data)
-      .enter()
-      .append('rect')
-      .attr('class', function(d){
-        return calculateClass(d);
-      })
-      .attr('x', function (d){
-        return x(d % 10) + margin;
-      })
-      .attr('y', function(d){
-        return y(Math.floor( d / 10)) + margin;
-      })
-      .attr('id', function(d){return d})
-      .on('mouseover', function(d){
-        var text = calculateTooltip(d);
-        var cssClass = calculateClass(d) ;
-        var tooltipColor = $("."+ cssClass).css('fill')
-        // Highlight all 
-        svg.selectAll('.'+ cssClass)
-          .attr('class', function(){
-            var instance = d3.select(this);
-            var currentClass = instance.attr('class');
-            currentClass += ' selected';
-            return currentClass;
-          });        
-        //add tooltip
-        tooltipLayer.transition()		
-            .duration(100)		
-            .style("opacity", .9);		
-        tooltipLayer.html(text)	
-            .style("left", (d3.event.pageX) + "px")		
-            .style("top", (d3.event.pageY - 28) + "px")
-            .style('background-color', tooltipColor)
-            ;
-      })
-      .on("mouseout", function(d) {	
-        var cssClass = calculateClass(d) ;
-        var color = $('.'+cssClass).css('fill');
-        var tooltipColor = $('.' + cssClass).css('fill')
-        
-        svg.selectAll('.'+ cssClass + '.selected')
-          .attr('class', cssClass);      
+    .data(data)
+    .enter()
+    .append('rect')
+    .attr('class', function(d){
+      return calculateClass(d);
+    })
+    .attr('x', function (d){
+      return x(d % 10);
+    })
+    .attr('y', function(d){
+      return y(Math.floor( d / 10));
+    })
+    .attr('id', function(d){return d})
+    .on('mouseover', function(d){
+      var text = calculateTooltip(d);
+      var cssClass = calculateClass(d) ;
+      var tooltipColor = $("."+ cssClass).css('fill')
+      // Highlight all
+      svg.selectAll('.'+ cssClass)
+      .attr('class', function(){
+        var instance = d3.select(this);
+        var currentClass = instance.attr('class');
+        currentClass += ' selected';
+        return currentClass;
+      });
+      //add tooltip
+      tooltipLayer.transition()
+      .duration(100)
+      .style("opacity", .9);
+      tooltipLayer.html(text)
+      .style("left", (d3.event.pageX) + "px")
+      .style("top", (d3.event.pageY - 28) + "px")
+      .style('background-color', tooltipColor)
+      ;
+    })
+    .on("mouseout", function(d) {
+      var cssClass = calculateClass(d) ;
+      var color = $('.'+cssClass).css('fill');
+      var tooltipColor = $('.' + cssClass).css('fill')
 
-        tooltipLayer.transition()		
-            .duration(300)		
-            .style("opacity", 0);	
-      })
+      svg.selectAll('.'+ cssClass + '.selected')
+      .attr('class', cssClass);
 
-
-      
-    ;
-    
-    
-
+      tooltipLayer.transition()
+      .duration(300)
+      .style("opacity", 0);
+    });
   };
-  
 
-  var legendsvg = d3.select('#profile');
-  var topsvg = d3.select('#best');
-  var middlesvg = d3.select('#middle')
-  var lowsvg = d3.select('#low')
+
+  let legendsvg = d3.select('#profile');
+  let topsvg = d3.select('#best');
+  let middlesvg = d3.select('#middle')
+  let lowsvg = d3.select('#low')
   // Define the div for the tooltip
-  var tooltipLayer = d3.select("body").append("div")	
-    .attr("class", "tooltip")				
-    .style("opacity", 0);
-  
-  
+  let tooltipLayer = d3.select("body").append("div")
+  .attr("class", "tooltip")
+  .style("opacity", 0);
+
+
 
   //server function needs this guy's grades.
   this.autorun(function(){
     Meteor.call("getCSEProfile", Session.get('student'), Session.get('semester'), function(err, profile){
-      [highProfile, middleProfile, lowProfile] = profile;      
+      [highProfile, middleProfile, lowProfile] = profile;
     }),
 
     Meteor.call("getCSEDistribution", Session.get('semester'), function(err,listDicts){
@@ -175,7 +161,7 @@ Template.future.onRendered(function(){
       topCSEDistribution = [topDict['+0'], topDict['+1'], topDict['+2']]
       middleCSEDistribution = [middleDict['+0'], middleDict['+1'], middleDict['+2']]
       lowCSEDistribution = [lowDict['+0'], lowDict['+1'], lowDict['+2']]
-      
+
       makeProfileField( topsvg,  topCSEDistribution, highProfile);
       makeProfileField( middlesvg,  middleCSEDistribution, middleProfile);
       makeProfileField( lowsvg,  lowCSEDistribution, lowProfile);
@@ -184,7 +170,7 @@ Template.future.onRendered(function(){
 
     // $("#bachelor").empty();
     Meteor.call("getHistoricalData", Session.get("student"),function(err,data){
-      
+
       var bachelor = {};
       var total = 0;
       bachelor = {"+0":0,"+1":0,"+2":0,"B":0,"D":0}

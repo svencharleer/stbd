@@ -17,7 +17,7 @@ Template.resultGraph.helpers({
 });
 
 Template.resultGraph.events({
-  "click .top-bar": function(event,template){
+  "click .course-top": function(event,template){
     if(!template.show.get()) {
       template.$(".course-bottom").css("max-height", "48px");
       template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");

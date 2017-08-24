@@ -1,24 +1,19 @@
 <template name="future">
   <!-- <div id="profile" class="profile"> Jouw profiel: <div id="profilebox" class="box"></div></div> -->
-
-  <div id="legend" class="legend">
-    <div id="3y" class="legend3">3j</div>
-    <div id="4y" class="legend4">4j</div>
-    <div id="5y" class="legend5">5j</div>
-    <div id="not" class="legendnot">Niet</div>
+  <div class="fields">
+    <div class="group flex-item">
+      <div id="legendbest" class="fieldlegend" > CSE >= {{limit1}} </div>
+      <svg id="best" class="best" ></svg>
+    </div>
+    <div class="group flex-item">
+      <div id="legendbest" class="fieldlegend" > {{limit2}} &#60;= CSE &#60;{{limit1}}</div>
+      <svg id="middle" class="middle"></svg>
+    </div>
+    <div class="group flex-item">
+      <div id="legendbest" class="fieldlegend" > CSE &#60; {{limit2}} </div>
+      <svg id="low" class="low"></svg>
+    </div>
   </div>
-
-  <div id="fields" class='fields'> 
-    <div id='legendbest' class='flex-item fieldlegend' > CSE >= {{limit1}} </div>
-    <svg id="best" class="flex-item best" ></svg>
-    <div id='legendbest' class='flex-item fieldlegend' > {{limit2}} &#60;= CSE &#60;{{limit1}}</div>
-    <svg id="middle" class="flex-item middle"></svg>
-    <div id='legendbest' class='flex-item fieldlegend' > CSE &#60; {{limit2}} </div>
-    <svg id="low" class="flex-item low"></svg>
-</div>
-  
-  
-  
   <!-- <svg id="bachelor" class="colfuture" height="200" width="20"></svg> -->
-  
+
 </template>
