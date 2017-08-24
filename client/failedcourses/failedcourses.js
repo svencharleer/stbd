@@ -44,7 +44,6 @@ Template.failedCourse.helpers({
     let CSE_januari = Session.get('CSE_januari');
     let CSE_list = [CSE_januari, CSE_juni, CSE_september];
     let currentCSE = CSE_list[semester-1]
-    console.log(currentCSE);
     if (currentCSE < 50){
       return "cannotTolerate"
     }  
@@ -81,7 +80,6 @@ Template.failedCourse.events({
   },
 
   "click .stay-failed": function(event, template){
-    console.log("fail");
     /**
      * if failed is checked
      * then do nothing
@@ -95,25 +93,25 @@ Template.failedCourse.events({
     if(!template.checkFail.get()){
       let creditsLeft = $('#tolerantiepunten').find("paper-progress").attr('value');
       let cancelToleration = parseInt(creditsLeft) + parseInt(this.credits);
-      console.log(cancelToleration)
       if (cancelToleration <= 12){
         $('#tolerantiepunten').find("paper-progress").attr('value', cancelToleration);
         $('#tolerantiepunten').find("i").text(cancelToleration);
         template.$(".check-fail").css("color", "white");
-        template.$(".check-fail").css("background-color", "#eabd79")
-        template.$(".stay-failed").css("opacity", "1") ;
+        template.$(".check-fail").css("background-color", "#ffcc80")  
+        template.$(".stay-failed").css("opacity", "1") ;                       
         template.$(".check-tolerate").css("color", "transparent")
-        // template.$(".check-tolerate").css("background-color", "rgb(194, 203, 206)")  
         template.$(".tolerate-course").css("opacity", "0.5") ;     
         template.$(".top-bar").css("background-color", "#ffcc80");
-        template.$(".course").css("border-color", "#ffcc80")  ;                        
+        template.$(".course").css("border-color", "#ffcc80")  ;  
+        template.$(".getolereerd").css("display", "none");
+        template.$(".try").css("display", "flex");  
+
         template.checkFail.set(true);
       }
     }
   },
 
   "click .tolerate-course": function(event, template){
-    console.log("tolerate");
     /**
      * if tolerated is checked
      * then do nothing
@@ -127,18 +125,22 @@ Template.failedCourse.events({
 
       let creditsLeft = $('#tolerantiepunten').find("paper-progress").attr('value');
       let afterToleration = creditsLeft - this.credits;
-      console.log(afterToleration)
       if (afterToleration >= 0){
         template.$(".check-fail").css("color", "transparent");
         // template.$(".check-fail").css("background-color", "rgb(194, 203, 206)") ;
         template.$(".stay-failed").css("opacity", "0.5") ;
         template.$(".check-tolerate").css("color", "white");
-        template.$(".check-tolerate").css("background-color", "#9fcca1")  ;
-        template.$(".tolerate-course").css("opacity", "1") ;
+
+        template.$(".check-tolerate").css("background-color", "#81A8B8")  ;  
+        template.$(".tolerate-course").css("opacity", "1") ;                       
         $('#tolerantiepunten').find("paper-progress").attr('value', afterToleration);
-        $('#tolerantiepunten').find("i").text(afterToleration);
-        template.$(".top-bar").css("background-color", "#9fcca1")  ;
-        template.$(".course").css("border-color", "#9fcca1")  ;
+        $('#tolerantiepunten').find("i").text(afterToleration);        
+        template.$(".top-bar").css("background-color", "#81A8B8")  ;
+        template.$(".course").css("border-color", "#81A8B8")  ;    
+        template.$(".course").css("order", -1)  ;  
+        template.$(".getolereerd").css("display", "flex");  
+        template.$(".try").css("display", "none"); 
+          
         template.checkFail.set(false);
       }
 
