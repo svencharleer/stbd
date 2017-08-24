@@ -20,7 +20,7 @@
 
 }
 
-.stay-failed, .tolerate-course{
+.stay-failed{
   align-self: auto;
   display: flex;
   flex-direction: row;
@@ -28,6 +28,17 @@
   align-items: flex-start;
   font-size: 13px;
   font-weight: 300;
+}
+
+.tolerate-course{
+  align-self: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  font-size: 13px;
+  font-weight: 300;
+  opacity: 0.5;
 }
 
 
