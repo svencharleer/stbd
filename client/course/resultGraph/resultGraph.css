@@ -9,8 +9,8 @@
 .course .top-bar.passed { background: #a5d6a7; }
 .course .top-bar.tolerable { background: #ffcc80; }
 
-.course .top-bar.failed:hover    { background: #ec877e; }
+/*.course .top-bar.failed:hover    { background: #ec877e; }
 .course .top-bar.passed:hover    { background: #9fcca1; }
-.course .top-bar.tolerable:hover { background: #eabd79; }
+.course .top-bar.tolerable:hover { background: #eabd79; }*/
 
 .course .top-bar {cursor: pointer;}

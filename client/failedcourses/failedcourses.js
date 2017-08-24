@@ -64,7 +64,7 @@ var grade = function(grade){
 }
 
 Template.failedCourse.events({
-  "click .course-top.tolerable.canTolerate": function(event,template){
+  "click .course-top": function(event,template){
     if(!template.showTolerance.get()) {
       template.$(".course-bottom").css("max-height", "48px");
       template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
@@ -89,7 +89,7 @@ Template.failedCourse.events({
      *  give credits back
      *  update boolean checkFail
      */
-    
+
     if(!template.checkFail.get()){
       let creditsLeft = $('#tolerantiepunten').find("paper-progress").attr('value');
       let cancelToleration = parseInt(creditsLeft) + parseInt(this.credits);
@@ -118,18 +118,19 @@ Template.failedCourse.events({
      * else
      *  check if you have enough credits
      *  update layout ( click tolerate, uncheck failed)
-     *  take credits 
+     *  take credits
      *  update boolean checkFail
-     */    
+     */
     if(template.checkFail.get()){
-      
+
       let creditsLeft = $('#tolerantiepunten').find("paper-progress").attr('value');
       let afterToleration = creditsLeft - this.credits;
       if (afterToleration >= 0){
         template.$(".check-fail").css("color", "transparent");
-        // template.$(".check-fail").css("background-color", "rgb(194, 203, 206)") ;  
-        template.$(".stay-failed").css("opacity", "0.5") ;               
+        // template.$(".check-fail").css("background-color", "rgb(194, 203, 206)") ;
+        template.$(".stay-failed").css("opacity", "0.5") ;
         template.$(".check-tolerate").css("color", "white");
+
         template.$(".check-tolerate").css("background-color", "#81A8B8")  ;  
         template.$(".tolerate-course").css("opacity", "1") ;                       
         $('#tolerantiepunten').find("paper-progress").attr('value', afterToleration);
@@ -140,11 +141,9 @@ Template.failedCourse.events({
         template.$(".getolereerd").css("display", "flex");  
         template.$(".try").css("display", "none"); 
           
-        
-        
         template.checkFail.set(false);
       }
-      
+
     }
   }
 });
