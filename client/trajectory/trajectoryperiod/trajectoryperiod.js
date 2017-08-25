@@ -55,10 +55,10 @@ Template.trajectoryperiod.onRendered(function(){
       })
       .attr("width", "100%")
       .on("mouseover", function(d){
-        svg.select(".tooltip"+d.bucket).style("display", "inline");
+        svg.selectAll(".tooltip"+d.bucket).style("display", "inline");
       })
       .on("mouseout", function(d){
-        svg.select(".tooltip"+d.bucket).style("display", "none");
+        svg.selectAll(".tooltip"+d.bucket).style("display", "none");
       })
       .attr("height",10)
       .attr("x", "0")
@@ -110,20 +110,18 @@ Template.trajectoryperiod.onRendered(function(){
       });
 
       /** Tooltip **/
-      let text = container.append("g").attr("class", function(d){
+      let text = container.append("text")
+      .attr("class", function(d){
           return "tooltip tooltip" + d.bucket;
-      });
-      text.append("text")
+      })
       .style("z-index", 1000)
       .attr("x", 180)
       .attr("text-anchor","end")
       .attr("y", function(d,i){ return (100-(d.bucket *10)); })
-      .attr("class",function(d){return "percent" + d.bucket;})
       .text(function(d) { return ((Math.round((50 * d.count)/total)*2)) + "%"; })
       .attr("width",180)
       .attr("height",4)
       .attr("font-size",10);
-
     })
   })
 });
