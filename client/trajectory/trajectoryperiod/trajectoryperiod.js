@@ -25,6 +25,7 @@ Template.trajectoryperiod.onRendered(function(){
       var min = Number.MAX_VALUE;
       var max = Number.MIN_VALUE;
       var count = 0;
+
       data.distribution.forEach(function(d){
         if(d.count > max)
         max = d.count;
@@ -40,34 +41,47 @@ Template.trajectoryperiod.onRendered(function(){
       let container = svg.selectAll(".figures")
       .data(data.distribution).enter();
 
-      let trace = container.append("rect")
+      container.append("rect") //Trace element
       .attr("class",function(d){
         return "trace trace" + d.bucket;
       })
       .attr("fill", function(d){
-        //console.log(d.bucket +"---" + cse + "---" + period);
         let current = d.bucket * 10;
         let next  = current + 11;
         let color = "white";
-        // if(_.isNaN(cse)) color = "white";
-        // if(_.isUndefined(cse)) color = "white";
         if(cse == 0) cse = 1;
         if((current < cse) && (cse < next)) color = "#E8F3F8";
         return color;
       })
       .attr("width", "100%")
-      .attr("height",8)
+      .on("mouseover", function(d){
+        svg.select(".tooltip"+d.bucket).style("display", "inline");
+      })
+      .on("mouseout", function(d){
+        svg.select(".tooltip"+d.bucket).style("display", "none");
+      })
+      .attr("height",10)
       .attr("x", "0")
       .attr("y", function(d,i){
         return 98 - ((d.bucket *10) + 6);
       });
 
-      let circles = container.append("g")
+      let circles = container.append("g") // Dotplot Dots
       .attr("class","row")
       .selectAll("circle")
-      .data(function(d){return d3.range(Math.round(((100 * d.count)/total)))})
+      .data(function(d){
+        let dots = Math.round(((50 * d.count)/total));
+        if(dots > 30) dots = 0;
+        return d3.range(dots);
+      })
       .enter()
       .append("circle")
+      .on("mouseover", function(d){
+        svg.select(".tooltip"+d.bucket).style("display", "inline");
+      })
+      .on("mouseout", function(d){
+        svg.select(".tooltip"+d.bucket).style("display", "none");
+      })
       .attr("fill", function(d){
         if(_.isNaN(cse)) cse = 1;
         if(_.isUndefined(cse)) cse = 1;
@@ -79,43 +93,37 @@ Template.trajectoryperiod.onRendered(function(){
         return "#81A8B8"; else return "#C2CBCE";
       })
       .attr("stroke","none")
-      .attr("r", 2.5)
+      .attr("r", 3)
       .attr("cx", function(d){
         return (width/2);
       })
       .attr("cy", function(d,i){
-        return 98 - ((d3.select(this.parentNode).datum().bucket *10) + 2);
+        return 98 - ((d3.select(this.parentNode).datum().bucket *10) + 1.4);
       })
       .transition()
       .duration(1000)
       .ease("exp")
       .attr("cx", function(d,i){
         let parent = d3.select(this.parentNode).datum().count;
-        let start  = (Math.round(((100 * parent)/total)) * 6) + 2;
-        return ((width/2) + (i*6)) - start/2;
+        let start  = (Math.round(((50 * parent)/total)) * 8) + 2;
+        return ((width/2) + (i*8)) - start/2;
       });
 
-      // svg.selectAll("rect").data(data.distribution)
-      // .transition()
-      // .delay(500)
-      // .attr("fill",function(d){
-      //   if(d.bucket == 9) {
-      //     if(cse >= d.bucket * 10 && cse <= (d.bucket+1) * 10)
-      //     return "#212121"; // Dark Color
-      //     else
-      //     return "#b3e5fc";
-      //   }
-      //   if(cse >= d.bucket * 10 && cse < (d.bucket+1) * 10)
-      //   return "#212121"; // Dark Color
-      //   else
-      //   return "#b3e5fc";
-      // })
-      // .attr("x", function(d){
-      //   return (-.5)*(d.count/(max-min)) * width/3;
-      // })
-      // .attr("width", function(d){
-      //   return (d.count/(max-min)) * width/3;
-      // });
+      /** Tooltip **/
+      let text = container.append("g").attr("class", function(d){
+          return "tooltip tooltip" + d.bucket;
+      });
+
+      text.append("text")
+      .style("z-index", 1000)
+      .attr("x", 180)
+      .attr("text-anchor","end")
+      .attr("y", function(d,i){ return (100-(d.bucket *10)); })
+      .attr("class",function(d){return "percent" + d.bucket;})
+      .text(function(d) { return ((Math.round((50 * d.count)/total)*2)) + "%"; })
+      .attr("width",180)
+      .attr("height",4)
+      .attr("font-size",10);
 
     })
   })

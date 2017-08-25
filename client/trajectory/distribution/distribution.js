@@ -22,4 +22,4 @@ Template.distribution.onRendered(function(){
   // .enter()
   // .append("circle")
   // .attr("class","dot")
-})
+});
