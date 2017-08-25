@@ -1,7 +1,7 @@
 import { ReactiveVar } from 'meteor/reactive-var'
 
 Template.failedCourse.onCreated(function(){
-  this.showTolerance = new ReactiveVar(true);
+  this.showTolerance = new ReactiveVar(false);
   this.checkFail = new ReactiveVar(true);
 });
 
