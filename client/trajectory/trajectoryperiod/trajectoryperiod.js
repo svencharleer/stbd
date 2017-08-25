@@ -113,7 +113,6 @@ Template.trajectoryperiod.onRendered(function(){
       let text = container.append("g").attr("class", function(d){
           return "tooltip tooltip" + d.bucket;
       });
-
       text.append("text")
       .style("z-index", 1000)
       .attr("x", 180)
