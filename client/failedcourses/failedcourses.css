@@ -6,6 +6,10 @@
   justify-content: flex-start;
 }
 
+.course-bottom.tolerate.tolerable {
+  max-height: 48px;
+}
+
 .bold {font-weight: 500;}
 .notbold {font-weight: 300;}
 
