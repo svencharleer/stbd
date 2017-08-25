@@ -81,12 +81,12 @@ circle.dragger-inner:hover {
 }
 
 #slidetotal {
-  font-weight: 300;
+  font-weight: 400;
 }
 
 #slidetotal span {
   color: #777777;
-  font-weight: 400;
+  font-weight: 300;
   font-size: 16px;
   margin-right: 0px;
 }

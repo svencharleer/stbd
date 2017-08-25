@@ -79,7 +79,7 @@ Template.trajectoryperiod.onRendered(function(){
         return "#81A8B8"; else return "#C2CBCE";
       })
       .attr("stroke","none")
-      .attr("r", 2)
+      .attr("r", 2.5)
       .attr("cx", function(d){
         return (width/2);
       })
@@ -91,8 +91,8 @@ Template.trajectoryperiod.onRendered(function(){
       .ease("exp")
       .attr("cx", function(d,i){
         let parent = d3.select(this.parentNode).datum().count;
-        let start  = (Math.round(((100 * parent)/total)) * 5) + 2;
-        return ((width/2) + (i*5)) - start/2;
+        let start  = (Math.round(((100 * parent)/total)) * 6) + 2;
+        return ((width/2) + (i*6)) - start/2;
       });
 
       // svg.selectAll("rect").data(data.distribution)

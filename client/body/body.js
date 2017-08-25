@@ -1,12 +1,5 @@
 
 Template.body.events({
-  /* To fix this we need to put the column in one template
-     I don't know because <body> is harcoded to september and june dashboards.
-     we need to check with Sven first.
-
-     My guess is this code will be ok, to avoid searching upsidedown in the
-     DOM for the target elements.
-  */
   "click .fa-compress" : function(event,template){
     let element = $(event.target).attr('class').split(' ')[1];
     let column  = element.replace(/.*-/,'');
