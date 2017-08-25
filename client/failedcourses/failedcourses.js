@@ -95,7 +95,7 @@ Template.failedCourse.events({
       let cancelToleration = parseInt(creditsLeft) + parseInt(this.credits);
       if (cancelToleration <= 12){
         $('#tolerantiepunten').find("paper-progress").attr('value', cancelToleration);
-        $('#tolerantiepunten').find("span").text(cancelToleration);
+        $('#tolerantiepunten').find("i").text(cancelToleration);
         template.$(".check-fail").css("color", "white");
         template.$(".check-fail").css("background-color", "#ffcc80")
         template.$(".stay-failed").css("opacity", "1") ;
@@ -125,6 +125,7 @@ Template.failedCourse.events({
 
       let creditsLeft = $('#tolerantiepunten').find("paper-progress").attr('value');
       let afterToleration = creditsLeft - this.credits;
+      console.log(afterToleration)
       if (afterToleration >= 0){
         template.$(".check-fail").css("color", "transparent");
         // template.$(".check-fail").css("background-color", "rgb(194, 203, 206)") ;
@@ -134,7 +135,7 @@ Template.failedCourse.events({
         template.$(".check-tolerate").css("background-color", "#81A8B8")  ;
         template.$(".tolerate-course").css("opacity", "1") ;
         $('#tolerantiepunten').find("paper-progress").attr('value', afterToleration);
-        $('#tolerantiepunten').find("span").text(afterToleration);
+        $('#tolerantiepunten').find("i").text(afterToleration);
         template.$(".top-bar").css("background-color", "#81A8B8")  ;
         template.$(".course").css("border-color", "#81A8B8")  ;
         template.$(".course").css("order", -1)  ;
