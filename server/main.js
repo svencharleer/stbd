@@ -320,6 +320,14 @@ Meteor.methods({
     
 
   },
+
+  getCreditsTaken: function(who){
+    let creditsFirst = helper_GetCreditsTakenSemester(who, 1);
+    let creditsSecond = helper_GetCreditsTakenSemester(who, 2);
+    return [creditsFirst, creditsSecond];
+
+
+  },
   
 
   getHistoricalData: function(who){
@@ -372,7 +380,6 @@ Meteor.methods({
         {$group : { _id : "$traject" , "Count" : { $sum : 1}}}
       ]
       );
-      console.log(result);
       return result;
 
   },
@@ -383,7 +390,6 @@ Meteor.methods({
       f += Grades.find({studentid:who, finalscore:"NA"}).count();
       var t = Grades.find({studentid:who, $and: [{finalscore:{$gte:8}}, {finalscore:{$lte:9}}]}).count();
       var p = Grades.find({studentid:who, finalscore:{$gte:10}}).count();
-      // console.log("ftp",f,t,p);
 
     //green
     var status = "";
@@ -492,16 +498,16 @@ Meteor.methods({
   getFailedCourses(who)
     {
       var allCourses = Courses.find({$or:[{semester:1},{semester:2}]}).fetch();
-      var indices = [];
+      var courseIds = [];
       allCourses.forEach(function(c){
-        indices.push(c.courseid);
+        courseIds.push(c.courseid);
       })
       var result = [];
       var courses = Grades.find({
         studentid:who,
-        courseid:{$in:indices},
+        courseid:{$in:courseIds},
       }).fetch();
-    //  console.log("in failed courses", courses, who, indices, allCourses)
+    //  console.log("in failed courses", courses, who, courseIds, allCourses)
       courses.forEach(function(c){
         if(c.finalscore > 9) return;
         result.push(c);
@@ -637,7 +643,6 @@ var helper_sumDict = function( obj ) {
       sum += parseFloat( obj[el] );
     }
   }
-  console.log(sum)
   return sum;
 }
 
@@ -680,3 +685,26 @@ var helper_GetDistributionFrom100 = function(search, collection,gradeField)
   });
   return {numberPerGrades: numberPerGrades, min:min, max:max, total:total};
 }
+
+var helper_GetCreditsTakenSemester =  function(who, semester){
+  let credits = 0;
+  // get all courseIds of student
+  var studentGrades = Grades.find({studentid:who});
+  var studentCourseIds = [];
+  studentGrades.forEach(function(g){
+    studentCourseIds.push(g.courseid);
+  })
+
+  // Find all courses of the student
+  var coursesStudent = Courses.find({
+    courseid:{$in:studentCourseIds},
+    semester: semester
+  }).fetch();
+
+  coursesStudent.forEach(function(c){
+    credits += c.credits
+  });
+  return credits;
+
+
+};

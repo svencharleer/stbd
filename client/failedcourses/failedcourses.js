@@ -149,4 +149,5 @@ Template.failedCourse.events({
 });
 
 Template.failedCourse.onRendered(function(){
+  $('#tolerantiepunten').find("paper-progress").css('width', '80%');
 });
