@@ -17,6 +17,7 @@ Template.body.events({
     template.$("."+column+" .top").css("border-bottom","0px dotted #ececec");
     template.$("."+column+" .top .column-title").css("visibility","hidden");
     template.$("."+column+" .top .CSE").css("visibility","hidden");
+    template.$("."+column+" .top .tolerantiepunten").css("visibility","hidden");    
     template.$("."+column+" .top .periode").css("visibility","hidden");
     template.$("."+column+"").css("min-width","27px");
     template.$("."+column+"").css("max-width","27px");
@@ -31,6 +32,7 @@ Template.body.events({
     template.$("."+column+" .top").css("border-bottom","1px dotted #ececec");
     template.$("."+column+" .top .column-title").css("visibility","visible");
     template.$("."+column+" .top .CSE").css("visibility","visible");
+    template.$("."+column+" .top .tolerantiepunten").css("visibility","visible");        
     template.$("."+column+" .top .periode").css("visibility","visible");
     template.$("."+column+"").css("max-width","180px");
     template.$("."+column+"").css("min-width","180px");
@@ -51,6 +53,7 @@ Template.body.onCreated(function(){
     Session.set("CSE_september", 0);
     Session.set("selectedCourses", undefined);
     Session.set("studentName","");
+    Session.set("creditsTaken", 0)
     //console.log("student now is " + Session.get("student"))
     var handler2 = instance.subscribe("generic_grades",Session.get("student"));
     var handler3 = instance.subscribe("ijkingstoets", Session.get("student"));
@@ -163,6 +166,10 @@ Meteor.call("getFailedCourses", Session.get("student"), function(err, data){
   //console.log("fails set to " + Session.get("Fails"));
 
   if($(".loading-screen")) $(".loading-screen").hide();
+});
+
+Meteor.call("getCreditsTaken", Session.get('student'), 1, function(err, credits){
+  Session.set('creditsTaken', credits)
 });
 }
 })
@@ -353,22 +360,22 @@ failedCourses() {
     })
 
     return courses;
+},
+CSE_januari() { return {percent: Session.get("CSE_januari"), raw:  Session.get("CSE_januari_pure") , credits: Session.get("creditsTaken")[0]} },
+CSE_juni() { return {percent: Session.get("CSE_juni"), raw:  Session.get("CSE_juni_pure")  , credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1]} },
+CSE_september() { return {percent: Session.get("CSE_september"), raw:  Session.get("CSE_september_pure"), credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1]} },
+
+Fails() {
+  //console.log("fail fetch of " + Session.get("Fails"))
+  return Session.get("Fails");},
+  ShowJuni(){
+    return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showJuni : false;
+
   },
-  CSE_januari() { return {percent: Session.get("CSE_januari"), raw:  Session.get("CSE_januari_pure") } },
-  CSE_juni() { return {percent: Session.get("CSE_juni"), raw:  Session.get("CSE_juni_pure")} },
-  CSE_september() { return {percent: Session.get("CSE_september"), raw:  Session.get("CSE_september_pure")} },
+  ShowSeptember(){
+    return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showSeptember : false;
 
-  Fails() {
-    //console.log("fail fetch of " + Session.get("Fails"))
-    return Session.get("Fails");},
-    ShowJuni(){
-      return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showJuni : false;
-
-    },
-    ShowSeptember(){
-      return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showSeptember : false;
-
-    }
+  }
 
 
 
