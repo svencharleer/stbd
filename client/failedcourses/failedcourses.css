@@ -6,7 +6,7 @@
   justify-content: flex-start;
 }
 
-.course-bottom.tolerate.tolerable {
+.course-bottom.tolerate.tolerable.canTolerate {
   max-height: 48px;
 }
 
