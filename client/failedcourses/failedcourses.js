@@ -64,7 +64,7 @@ var grade = function(grade){
 }
 
 Template.failedCourse.events({
-  "click .course-top": function(event,template){
+  "click .course-top.tolerable": function(event,template){
     if(!template.showTolerance.get()) {
       template.$(".course-bottom").css("max-height", "48px");
       template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
