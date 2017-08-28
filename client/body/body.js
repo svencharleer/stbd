@@ -81,6 +81,7 @@ Template.body.onCreated(function(){
 
       //get the CSE for the student
       var year = Session.get("Year");
+      //Helpers_GetCSE comes from imports/helpers/CSE.js
       Session.set("CSE_januari", Helpers_GetCSE(studentID, 1, year));
       Session.set("CSE_juni", Helpers_GetCSE(studentID, 2,year));
       Session.set("CSE_september", Helpers_GetCSE(studentID, 3,year));
@@ -106,66 +107,32 @@ Template.body.onCreated(function(){
       Session.set("CSE_ijkingstoets", iscore);
 
 
-      ///TTT
-      /*var ECTS ={ TTT_analyse: 6,
-      TTT_mechanica: 5,
-      TTT_scheikunde: 7,
-      TTT_algebra: 5
-    };
-    var totalECTS = 0;
-    var totalTTTScore = 0
-    var analyse = TTT_analyse.findOne();
-    var TTTs = [];
-    if(analyse != undefined && analyse.grade != "NA"){
-    totalTTTScore += analyse.grade * 6;
-    totalECTS+=6;
-    TTTs.push("TTT_analyse");
-  }
-  var mechanica = TTT_mechanica.findOne();
-  if(mechanica != undefined && mechanica.grade != "NA") {
-  totalTTTScore += mechanica.grade * 5;
-  totalECTS+=5;
-  TTTs.push("TTT_mechanica")
-}
-var scheikunde = TTT_scheikunde.findOne();
-if(scheikunde != undefined && scheikunde.grade != "NA") {
-totalTTTScore +=  parseInt(scheikunde.grade/5) * 7;
-totalECTS+=7;
-TTTs.push("TTT_scheikunde")
-}
-var algebra = TTT_algebra.findOne();
-if(algebra != undefined && algebra.grade != "NA") {
-totalTTTScore += algebra.grade * 5;
-totalECTS+=5;
-TTTs.push("TTT_algebra")
-}
-Session.set("CSE_TTT",5*totalTTTScore/totalECTS);
-Session.set("TTTs",TTTs);*/
+      
 
 
 
-//get failed courses
+      //get failed courses
 
-////console.log(failedCourses);
-Meteor.call("getFailedCourses", Session.get("student"), function(err, data){
-  Session.set("FailedCourses", data);
-  //set them up for selection
-  var selectedCourses = {};
-  data.forEach(function(f){
-    selectedCourses[f.courseid] = {id:f.courseid, course:f, checked:true};
+      ////console.log(failedCourses);
+      Meteor.call("getFailedCourses", Session.get("student"), function(err, data){
+        Session.set("FailedCourses", data);
+        //set them up for selection
+        var selectedCourses = {};
+        data.forEach(function(f){
+          selectedCourses[f.courseid] = {id:f.courseid, course:f, checked:true};
+        })
+        Session.set("selectedCourses", selectedCourses);
+        Session.set("Fails", data.length > 0 ? true:false);
+        //console.log("fails set to " + Session.get("Fails"));
+
+        if($(".loading-screen")) $(".loading-screen").hide();
+      });
+
+      Meteor.call("getCreditsTaken", Session.get('student'), 1, function(err, credits){
+        Session.set('creditsTaken', credits)
+      });
+    }
   })
-  Session.set("selectedCourses", selectedCourses);
-  Session.set("Fails", data.length > 0 ? true:false);
-  //console.log("fails set to " + Session.get("Fails"));
-
-  if($(".loading-screen")) $(".loading-screen").hide();
-});
-
-Meteor.call("getCreditsTaken", Session.get('student'), 1, function(err, credits){
-  Session.set('creditsTaken', credits)
-});
-}
-})
 })
 
 
@@ -304,71 +271,44 @@ Template.body.helpers({
 
       return results;
     },
-    /*TTTs()
-    {
-    var results = [];
-    var analyse = TTT_analyse.findOne();
+    totalCSE() {
+      let cse  = Session.get("cse1") + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
+      if (cse > 180) cse = 180;
+      return cse;
+    },
+    
 
-    if(analyse != undefined)
-    {
-    if(analyse.student != Session.get("student")) return [];
-    if(analyse.grade != "NA")
-    results.push({id:"TTT_analyse", name:"Analyse Deel 1", grade: analyse.grade, realGrade: analyse.grade, method:"getTTT_AnalysePointDistribution"});
-  }
-  var mechanica = TTT_mechanica.findOne();
-  if(mechanica != undefined)
-  {
-  if(mechanica.student != Session.get("student")) return [];
-  if(mechanica.grade != "NA")
-  results.push({id:"TTT_mechanica", name:"Toegepaste Mechanica Deel 1", grade: mechanica.grade, realGrade:mechanica.grade, method:"getTTT_MechanicaPointDistribution"});
-}
-var scheikunde = TTT_scheikunde.findOne();
-if(scheikunde != undefined)
-{
-if(scheikunde.student != Session.get("student")) return [];
-if(scheikunde.grade != "NA")
-results.push({id:"TTT_scheikunde", name:"Algemene en Technische Scheikunde", grade: parseInt(scheikunde.grade/5), realGrade: scheikunde.grade, method:"getTTT_ScheikundePointDistribution"});
-}
-var algebra = TTT_algebra.findOne();
-if(algebra != undefined)
-{
-if(algebra.student != Session.get("student")) return [];
-if(algebra.grade != "NA")
-results.push({id:"TTT_algebra", name:"Toegepaste Algebra", grade: parseInt(algebra.grade), realGrade: algebra.grade, method:"getTTT_AlgebraPointDistribution"});
-}
-return results;
-},*/
+    failedCourses() {
+      var courses = [];
+      var selectedCourses = Session.get("selectedCourses");
+      if(selectedCourses == undefined) return courses;
+      Object.keys(selectedCourses).forEach(function(i){
 
-failedCourses() {
-  var courses = [];
-  var selectedCourses = Session.get("selectedCourses");
-  if(selectedCourses == undefined) return courses;
-  Object.keys(selectedCourses).forEach(function(i){
+        courses.push({
+          id: selectedCourses[i].course.idopleidingsond,
+          name: Courses.findOne({_id:selectedCourses[i].course.idopleidingsond}).name,
+          grade: selectedCourses[i].course.scorenajuni,
+          realGrade: selectedCourses[i].course.scorenajuni});
+        })
 
-    courses.push({
-      id: selectedCourses[i].course.idopleidingsond,
-      name: Courses.findOne({_id:selectedCourses[i].course.idopleidingsond}).name,
-      grade: selectedCourses[i].course.scorenajuni,
-      realGrade: selectedCourses[i].course.scorenajuni});
-    })
+        return courses;
+    },
+    CSE_januari() { return {percent: Session.get("CSE_januari"), raw:  Session.get("CSE_januari_pure") , credits: Session.get("creditsTaken")[0]} },
+    CSE_juni() { return {percent: Session.get("CSE_juni"), raw:  Session.get("CSE_juni_pure")  , credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1]} },
+    CSE_september() { return {percent: Session.get("CSE_september"), raw:  Session.get("CSE_september_pure"), credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1]} },
 
-    return courses;
-},
-CSE_januari() { return {percent: Session.get("CSE_januari"), raw:  Session.get("CSE_januari_pure") , credits: Session.get("creditsTaken")[0]} },
-CSE_juni() { return {percent: Session.get("CSE_juni"), raw:  Session.get("CSE_juni_pure")  , credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1]} },
-CSE_september() { return {percent: Session.get("CSE_september"), raw:  Session.get("CSE_september_pure"), credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1]} },
+    Fails() {
+      //console.log("fail fetch of " + Session.get("Fails"))
+      return Session.get("Fails");
+    },
+    ShowJuni(){
+      return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showJuni : false;
 
-Fails() {
-  //console.log("fail fetch of " + Session.get("Fails"))
-  return Session.get("Fails");},
-  ShowJuni(){
-    return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showJuni : false;
+    },
+    ShowSeptember(){
+      return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showSeptember : false;
 
-  },
-  ShowSeptember(){
-    return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showSeptember : false;
-
-  }
+    }
 
 
 

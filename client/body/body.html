@@ -201,8 +201,8 @@
           <div class="fa compress-planning fa-compress"><paper-ripple></paper-ripple></div>
           <div class="column-title">Studiebelastingplanning</div>
           <div id='creditsplanned' class="creditsplanned">
-            <paper-progress value=0 max="180" min="0"></paper-progress>
-            <span>0 </span><b> /180</b>
+            <paper-progress value={{totalCSE}} max="180" min="0"></paper-progress>
+            <span> {{totalCSE}} </span><b> /180</b>
           </div>
         </div>
         {{#if Template.subscriptionsReady}}
