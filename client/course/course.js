@@ -2,7 +2,7 @@
 Template.course.onRendered(function(){
   let instance = this;
 
-  
+
 
   instance.autorun(function(){
     //Session.get("student")
@@ -30,26 +30,94 @@ Template.course.onRendered(function(){
       }
 
       Meteor.call(method, [courseId, Session.get("Year"), semester], function(err,data){
-        let graph = svg.select("g").selectAll("rect");
-        graph.data(data.numberPerGrades)
-        graph.transition()
-        .attr("height",function(d){
-          return (d.count * 40)/data.max;
-        })
-        .attr("fill", function(d){
-          let color = "#e1e1e1";
-          if(d.grade == studentGrade) {
-            if(d.grade < 8) color = "#ff8a80"; //failed
-            else if(d.grade > 9) color = "#a5d6a7"; //passed
-            else if(d.grade >= 8 && d.grade <= 9) color = "#ffcc80"; //tolerable
-            else color = "#ff8a80"; //failed
+        let grades = data.numberPerGrades;
+        let total = 0;
+        for(let i = 0; i < grades.length; i++)  total += grades[i].count;
+
+        let width = 140;
+        let height = 60;
+
+        let graph = svg.selectAll(".dots-container");
+
+        graph.selectAll(".dot")
+        .data(function(d,i){
+          let count = 0;
+          let grade = 0;
+
+          if (grades[i] != undefined) count = grades[i].count;
+          if (grades[i] != undefined) grade = grades[i].grade;
+
+          let dots = Math.round(((50 * count)/total));
+          if(dots > 10) dots = 9;
+          let list = [];
+          for (let a = 0; a<=dots; a++) {
+            list.push({"grade": grade});
           }
-          return color;
+          return list;
         })
-        .attr("transform",function(d,i){
-          return "translate(" + (d.grade * 6.8) + ","+ (40 - ((d.count * 40)/data.max))  +  ")";
+        .enter()
+        .append("circle")
+        .attr("class","dot")
+        .attr("r", 2)
+        .attr("cx",function(d,i){
+          return d.grade * 7;
+        })
+        .attr("cy",function(d,i){
+          return (height-3) - (i*5);
+        })
+        .attr("fill", function(d,i){
+            let color = "#c2cbce";
+            if(d.grade == studentGrade) {
+              if(d.grade < 8) color = "#81a8b8"; //failed
+              else if(d.grade > 9) color = "#81a8b8"; //passed
+              else if(d.grade >= 8 && d.grade <= 9) color = "#81a8b8"; //tolerable
+              else color = "#81a8b8"; //failed
+            }
+            return color;
         });
 
+        // 1 -> 7 pixels
+        svg.selectAll(".redbars").data(function(){
+          return d3.range(8);
+        })
+        .enter()
+        .append("rect") // < 8 Failed
+        .attr("stroke","#ff8a80")
+        .attr("fill","#ff8a80")
+        .attr("width",4)
+        .attr("height",1)
+        .attr("transform", function(d,i){
+          return "translate("+((i*7)-2)+","+height+")";  // Starts from 0, always.
+        })
+        .attr("class","redbars");
+
+        svg.selectAll(".yellowbars").data(function(){
+            return d3.range(2);
+        })
+        .enter()
+        .append("rect") // 8-9 Tolerated
+        .attr("stroke","#ffcc80")
+        .attr("fill","#ffcc80")
+        .attr("width", 4) // between 8 and 9 is 10% of total width.
+        .attr("height", 1)
+        .attr("transform", function(d,i){
+          return "translate("+(((7+i)*7)-2)+","+height+")";  // Starts from 0, always.
+        })
+        .attr("class","yellowbars")
+
+        svg.selectAll(".greenbars").data(function(){
+            return d3.range(12);
+        })
+        .enter()
+        .append("rect") // > 9 Pass 45% of histogram width.
+        .attr("stroke","#a5d6a7")
+        .attr("fill","#a5d6a7")
+        .attr("width", 4)
+        .attr("height",1)
+        .attr("transform", function(d,i){
+          return "translate("+(((i+9)*7)-2)+","+height+")";  // Starts from 0, always.
+        })
+        .attr("class","greenbars");
 
       });
     }
