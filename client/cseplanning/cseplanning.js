@@ -4,7 +4,7 @@ var slider3 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
 var slider4 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
 var slider5 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
 
-Template.cseplanning.rendered = function(){
+Template.cseplanning.onRendered(function(){
   $('#creditsplanned').find("paper-progress").css('width', '75%');
   
   //Bind sliders to div
@@ -27,29 +27,23 @@ Template.cseplanning.rendered = function(){
     return cse;
   }
 
-  function updateProgressBar(cseTotal){
-    $('#creditsplanned').find("paper-progress").attr('value', cseTotal);
-    $('#creditsplanned').find("span").text(cseTotal);
-    
-  }
-  
   function calculateStartValues(cse){
     var cse_remaining = 180 - cse;
     var cse2 = Math.floor(cse_remaining/4);
     var cse3 = Math.floor(cse_remaining/3);
-    var cse4 = cse_remaining - cse3 - cse2;
+    // var cse4 = cse_remaining - cse3 - cse2;
+    let cse4 = 0;
     var cse5 = 0;
-    if(cse4 > 60) {
-      cse5 = cse4 - 60;
-      cse4 = 60;
-    }
+    // if(cse4 > 60) {
+    //   cse5 = cse4 - 60;
+    //   cse4 = 60;
+    // }
     return [cse, cse2, cse3, cse4, cse5]
   }
   //Define the default starting values
   [cse, cse2, cse3, cse4, cse5] = calculateStartValues(cse);
-  //Put them in the sessions as 'global variables'
+  //Put them in the sessions as a dict
   Session.set("CSE_Planning", {"cse1": cse, "cse2": cse2, "cse3": cse3, "cse4":cse4, "cse5":cse5})
-  // updateProgressBar(totalCSE());
   
 
   var cses = Session.get("CSE_Planning");
@@ -58,7 +52,8 @@ Template.cseplanning.rendered = function(){
   slider3.setValue(Math.floor(cses.cse3));
   slider4.setValue(Math.floor(cses.cse4));
   slider5.setValue(Math.floor(cses.cse5));
-
+  //Put each of them separated in the sessions
+  //TODO: why?
   Session.set("cse1",Math.floor(cses.cse1));
   Session.set("cse2",Math.floor(cses.cse2));
   Session.set("cse3",Math.floor(cses.cse3));
@@ -66,6 +61,9 @@ Template.cseplanning.rendered = function(){
   Session.set("cse5",Math.floor(cses.cse5));
 
 
+  /**
+   * automatically rerun templates and other computations whenever Session variables, database queries, and other data sources change.
+   */
   Tracker.autorun(function(){
 
     var cse = Session.get("CSE_september_pure");
@@ -101,10 +99,12 @@ Template.cseplanning.rendered = function(){
   slider3.callback(function(slider) {Session.set("cse3",Math.floor(slider.value()));})
   slider4.callback(function(slider) {Session.set("cse4",Math.floor(slider.value()));})
   slider5.callback(function(slider) {Session.set("cse5",Math.floor(slider.value()));})
-}
+})
 
 function slide_update(){
   var cses = Session.get("CSE_Planning");
+  console.log(Session);
+  
   if(cses == undefined) return;
   //find updated slider (only one can be updated at a time)
   var updatedSlider = undefined;
@@ -114,7 +114,7 @@ function slide_update(){
   updatedSlider = cses.cse4 != Math.floor(slider4.value()) ? {id:4,s:slider4,v:cses.cse4, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse5]} : updatedSlider;
   updatedSlider = cses.cse5 != Math.floor(slider5.value()) ? {id:5,s:slider5,v:cses.cse5, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse4]} : updatedSlider;
 
-  //nr 1 can not go below original CSE
+  //nr 1 is fixed
   if(updatedSlider != undefined && updatedSlider.id == 1){
     updatedSlider.s.setValue(Session.get("CSE_september_pure"));
   }

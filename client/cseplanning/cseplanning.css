@@ -30,6 +30,10 @@ circle.dragger-inner:hover {
   fill: #537988;
 }
 
+.cseslider_y1 rect{
+  fill: #53885C;
+}
+
 #cseplanning {
   overflow: hidden;
   display: flex;
