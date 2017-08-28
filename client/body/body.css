@@ -254,13 +254,10 @@ body {
   align-items: baseline;
   width: 100%;
   justify-content: space-between;
-
-  
-  
 }
 
 .flickering{
-  -webkit-animation: blinker 2s linear infinite;
+  -webkit-animation: blinker 1s linear infinite;
   /* -webkit-animation: flicker 0.5s infinite; */
   animation-play-state: paused;  
 }
@@ -297,6 +294,17 @@ paper-progress {
 
 paper-progress #primaryProgress {
   background: #81a8b8 !important;
+}
+
+.creditsplanned {
+  color: #777777;
+  text-align: center;
+  font-size:.7em;
+  min-height: 16px;
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .colhistory {

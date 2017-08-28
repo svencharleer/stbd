@@ -1,10 +1,12 @@
-var slider1 = d3.slider().min(0).max(60).ticks(0).showRange(true).value(0);
+var slider1 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
 var slider2 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
 var slider3 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
 var slider4 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
 var slider5 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
 
 Template.cseplanning.rendered = function(){
+  $('#creditsplanned').find("paper-progress").css('width', '80%');
+  
 
   d3.select("#cseslider_y1").call(slider1);
   d3.select("#cseslider_y2").call(slider2);
