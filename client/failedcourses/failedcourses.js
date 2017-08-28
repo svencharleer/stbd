@@ -95,7 +95,7 @@ Template.failedCourse.events({
       let cancelToleration = parseInt(creditsLeft) + parseInt(this.credits);
       if (cancelToleration <= 12){
         $('#tolerantiepunten').find("paper-progress").attr('value', cancelToleration);
-        $('#tolerantiepunten').find("i").text(cancelToleration);
+        $('#tolerantiepunten').find("span").text(cancelToleration);
         template.$(".check-fail").css("color", "white");
         template.$(".check-fail").css("background-color", "#ffcc80")
         template.$(".stay-failed").css("opacity", "1") ;
@@ -122,28 +122,33 @@ Template.failedCourse.events({
      *  update boolean checkFail
      */
     if(template.checkFail.get()){
-
+      
+      
       let creditsLeft = $('#tolerantiepunten').find("paper-progress").attr('value');
       let afterToleration = creditsLeft - this.credits;
-      console.log(afterToleration)
       if (afterToleration >= 0){
         template.$(".check-fail").css("color", "transparent");
         // template.$(".check-fail").css("background-color", "rgb(194, 203, 206)") ;
         template.$(".stay-failed").css("opacity", "0.5") ;
         template.$(".check-tolerate").css("color", "white");
-
         template.$(".check-tolerate").css("background-color", "#81A8B8")  ;
         template.$(".tolerate-course").css("opacity", "1") ;
         $('#tolerantiepunten').find("paper-progress").attr('value', afterToleration);
-        $('#tolerantiepunten').find("i").text(afterToleration);
+        $('#tolerantiepunten').find("span").text(afterToleration);
         template.$(".top-bar").css("background-color", "#81A8B8")  ;
         template.$(".course").css("border-color", "#81A8B8")  ;
         template.$(".course").css("order", -1)  ;
         template.$(".getolereerd").css("display", "flex");
         template.$(".try").css("display", "none");
-
         template.checkFail.set(false);
+        
       }
+      else{
+        $('#tolerantiepunten').css("animation-play-state", "running");
+        let x = document.getElementById('tolerantiepunten');
+        x.addEventListener("webkitAnimationIteration", function(){
+          $('#tolerantiepunten').css("animation-play-state", "paused");        
+        });      }
 
     }
   }

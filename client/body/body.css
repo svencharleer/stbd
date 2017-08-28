@@ -254,6 +254,41 @@ body {
   align-items: baseline;
   width: 100%;
   justify-content: space-between;
+
+  
+  
+}
+
+.flickering{
+  -webkit-animation: blinker 2s linear infinite;
+  /* -webkit-animation: flicker 0.5s infinite; */
+  animation-play-state: paused;  
+}
+
+@keyframes blinker {  
+  0% { opacity: 1; }  
+  25% { opacity: 0; }    
+  50% { opacity: 1; }
+  75% { opacity: 0; }  
+  100% { opacity: 1; }  
+  
+}
+
+@-webkit-keyframes flicker
+{
+0% {opacity:1;}
+1% {opacity:0;}
+10% {opacity:0;}
+11% {opacity:1;}
+19% {opacity:1;}
+20% {opacity:0;}
+39% {opacity:0;}
+40% {opacity:1;}
+59% {opacity:1;}
+60% {opacity:0;}
+79% {opacity:0;}
+80% {opacity:1;}
+100% {opacity:1;}
 }
 
 paper-progress {
