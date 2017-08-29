@@ -270,7 +270,7 @@ Template.body.helpers({
     return results;
   },
   totalCSE() {
-    let cse  = Session.get("cse1") + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
+    let cse  = Session.get("CSE_Planning").cse1 + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
     if (cse > 180) cse = 180;
     return cse;
   },

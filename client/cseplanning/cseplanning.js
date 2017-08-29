@@ -102,43 +102,43 @@ function slide_update(){
   if(cses == undefined) return;
 
   //find updated slider (only one can be updated at a time)
-  // store id, slider, new value, values of the other sliders
+  // store id, slider, old value, values of the other sliders
   var updatedSlider = undefined;
-  updatedSlider = cses.cse1 != Math.floor(slider1.value()) ? {id:1, s:slider1,v:cses.cse1, r: [cses.cse2,cses.cse3,cses.cse4,cses.cse5]} : updatedSlider;
-  updatedSlider = cses.cse2 != Math.floor(slider2.value()) ? {id:2,s:slider2,v:cses.cse2, r: [cses.cse1,cses.cse3,cses.cse4,cses.cse5]} : updatedSlider;
-  updatedSlider = cses.cse3 != Math.floor(slider3.value()) ? {id:3,s:slider3,v:cses.cse3, r: [cses.cse1,cses.cse2,cses.cse4,cses.cse5]} : updatedSlider;
-  updatedSlider = cses.cse4 != Math.floor(slider4.value()) ? {id:4,s:slider4,v:cses.cse4, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse5]} : updatedSlider;
-  updatedSlider = cses.cse5 != Math.floor(slider5.value()) ? {id:5,s:slider5,v:cses.cse5, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse4]} : updatedSlider;
-  console.log(updatedSlider.id)
+  updatedSlider = cses.cse1 != Math.round(slider1.value()) ? {id:1, s:slider1, v:cses.cse1, r: [cses.cse2,cses.cse3,cses.cse4,cses.cse5]} : updatedSlider;
+  updatedSlider = cses.cse2 != Math.floor(slider2.value()) ? {id:2, s:slider2, v:cses.cse2, r: [cses.cse1,cses.cse3,cses.cse4,cses.cse5]} : updatedSlider;
+  updatedSlider = cses.cse3 != Math.floor(slider3.value()) ? {id:3, s:slider3, v:cses.cse3, r: [cses.cse1,cses.cse2,cses.cse4,cses.cse5]} : updatedSlider;
+  updatedSlider = cses.cse4 != Math.floor(slider4.value()) ? {id:4, s:slider4, v:cses.cse4, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse5]} : updatedSlider;
+  updatedSlider = cses.cse5 != Math.floor(slider5.value()) ? {id:5, s:slider5, v:cses.cse5, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse4]} : updatedSlider;
+  values = [cses.cse1, cses.cse2, cses.cse3, cses.cse4, cses.cse5];
   //nr 1 is fixed
   if(updatedSlider != undefined && updatedSlider.id == 1){
     updatedSlider.s.setValue(cses.cse1);
-    console.log(Session.get('cse1'))
   }
   //else update, and check that we don't go above 180 credits
   else if(updatedSlider != undefined) {
-    //Bereken hoeveel er gepland is
+    let list = [Math.round(slider1.value()), Math.floor(slider2.value()),Math.floor(slider3.value()),Math.floor(slider4.value()),Math.floor(slider5.value())]
+    //BCalculate number of credits planned without updated slider
     var rest = 0;
     for(var i=0;i<4;i++){
       rest += updatedSlider.r[i];
     } 
-    //Bereken verschil met 180
-    let diff =  180 - (Math.floor(updatedSlider.s.value()) + rest)
-    //Als je boven 180 stp zit
-    if(diff < 0) {
-      console.log(Math.abs(diff))
-      
-      if (updatedSlider.id === 5 ){
-        // updatedSlider.v = 180 - rest;
-        updatedSlider.s.setValue(180 - rest);
-      }
-      else{
-        console.log(Math.abs(diff))
-      }
-      
+
+    //Calculate total number of credits and difference with 180
+    let newValue = Math.round(updatedSlider.s.value());
+    let totalCredits = newValue + rest;
+    let diff =  180 - totalCredits;
+    //If you planned too much credits
+    if(diff < 0) {      
+      values[updatedSlider.id-1] = newValue;
+      let nbCredits = Math.abs(diff);
+      values = removeLatestCredits(values, nbCredits);
+      updateSliders(values);
+        
     }
-    Session.set("CSE_Planning", {"cse1": Math.floor(slider1.value()), "cse2": Math.floor(slider2.value()),
-    "cse3": Math.floor(slider3.value()), "cse4":Math.floor(slider4.value()), "cse5":Math.floor(slider5.value())})
+    else{
+      values[updatedSlider.id-1] = newValue;  
+    }    
+    Session.set("CSE_Planning", {"cse1": cses.cse1, "cse2": values[1], "cse3": values[2], "cse4": values[3], "cse5": values[4]})
   }  
 }
 
@@ -182,4 +182,25 @@ Template.cseplanning.helpers({
     return Session.get("cse5");
   }
 });
+
+function removeLatestCredits(values, nbCredits){
+  // console.log('Before ' + values + ' ' + nbCredits);
+  
+  if (values[4] >= nbCredits){
+    values[4] -= nbCredits;
+  }
+  else if ((values[3] + values[4]) > nbCredits){
+    values[3] -= (nbCredits - values[4]);    
+    values[4] = 0;
+  }
+  // console.log('After '+ values);
+  return values;
+}
+
+function updateSliders(values){
+  slider2.setValue(values[1]);
+  slider3.setValue(values[2] );
+  slider4.setValue(values[3] );
+  slider5.setValue(values[4] );
+}
 
