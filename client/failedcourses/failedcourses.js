@@ -79,6 +79,15 @@ Template.failedCourse.events({
     }
   },
 
+  "click .course-top.tolerable.cannotTolerate": function(event,template){
+    $('#CSE_sept').css("animation-play-state", "running");
+    let x = document.getElementById('CSE_sept');
+    x.addEventListener("webkitAnimationIteration", function(){
+      $('#CSE_sept').css("animation-play-state", "paused");        
+    });     
+    
+  },
+
   "click .stay-failed": function(event, template){
     /**
      * if failed is checked
@@ -148,7 +157,9 @@ Template.failedCourse.events({
         let x = document.getElementById('tolerantiepunten');
         x.addEventListener("webkitAnimationIteration", function(){
           $('#tolerantiepunten').css("animation-play-state", "paused");        
-        });      }
+        });     
+      }
+
 
     }
   }
