@@ -161,12 +161,16 @@ Template.cseplanning.events({
 
 Template.cseplanning.helpers({
   'totalCSE': function() {
-    let cse  = Session.get("cse1") + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
-    if (cse > 180) cse = 180;
+    let cse = 0;
+    if (Session.get("CSE_Planning") != undefined){
+      cse  = Session.get("CSE_Planning").cse1 + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
+      if (cse > 180) cse = 180;
+    }
     return cse;
   },
   'jaar1': function(){
-    let cses = Session.get("CSE_Planning")
+    var cses = Session.get("CSE_Planning");
+    if(cses == undefined) return;
     return cses.cse1;
   },
   'jaar2': function(){
