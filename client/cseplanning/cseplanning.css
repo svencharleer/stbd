@@ -6,29 +6,87 @@
   width:100%;
 }
 
-circle.dragger-outer{
+/* dragger outer */
+circle.dragger-outer.default{
   fill: #81A8B8;
 }
 
-circle.dragger-inner {
-  fill: #81A8B8;
+circle.dragger-outer.yearOne, circle.dragger-outer.yearTwo, circle.dragger-outer.yearThree{
+  fill: var(--TopStudent);
 }
 
-rect.d3slider-rect-range {
+circle.dragger-outer.yearFour{
+  fill: var(--MiddleStudent);
+}
+
+circle.dragger-outer.yearFive{
+  fill: var(--LowStudent);
+}
+
+/* dragger inner */
+circle.dragger-inner.default {
+  fill: #81A8B8;
+}
+circle.dragger-inner.yearOne, circle.dragger-inner.yearTwo, circle.dragger-inner.yearThree {
+  fill: var(--TopStudent);
+}
+
+circle.dragger-inner.yearFour {
+  fill: var(--MiddleStudent);
+}
+
+circle.dragger-inner.yearFive {
+  fill: var(--LowStudent);
+}
+/* slider background */
+rect[class^=d3slider-rect-range] {
   fill:#e0e0e0;
 }
-
-rect.d3slider-rect-value {
-  fill:#81A8B8;
+/* slider value */
+rect.d3slider-rect-value.yearOne, rect.d3slider-rect-value.yearTwo, rect.d3slider-rect-value.yearThree {
+  fill: var(--TopStudent);
 }
 
-circle.dragger-outer:hover{
+rect.d3slider-rect-value.yearFour {
+  fill: var(--MiddleStudent);
+}
+
+rect.d3slider-rect-value.yearFive {
+  fill: var(--LowStudent);
+}
+/* dragger-outer hover */
+circle.dragger-outer.yearOne:hover, circle.dragger-outer.yearTwo:hover, circle.dragger-outer.yearThree:hover{
+  fill: var(--TopSelected);
+}
+
+circle.dragger-outer.yearFour:hover{
+  fill: var(--MiddleSelected);
+}
+
+circle.dragger-outer.yearFive:hover{
+  fill: var(--LowSelected);
+}
+
+/* dragger-inner hover */
+circle.dragger-inner.default:hover {
   fill: #537988;
 }
 
-circle.dragger-inner:hover {
-  fill: #537988;
+circle.dragger-inner.yearOne:hover, circle.dragger-inner.yearTwo:hover, circle.dragger-inner.yearThree:hover{
+  fill: var(--TopSelected);
 }
+
+circle.dragger-inner.yearFour:hover{
+  fill: var(--MiddleSelected);
+}
+
+circle.dragger-inner.yearFive:hover{
+  fill: var(--LowSelected);
+}
+
+
+
+
 
 #cseplanning {
   overflow: hidden;
