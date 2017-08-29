@@ -6,9 +6,6 @@ var slider5 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssCl
 
 Template.cseplanning.onRendered(function(){
   $('#creditsplanned').find("paper-progress").css('width', '75%');
-  let sliders = [slider1, slider2, slider3, slider4, slider5]
-  console.log(sliders)
-  Session.set('sliders', sliders);
 
   //Bind sliders to div
   d3.select("#cseslider_y1").call(slider1);
@@ -65,10 +62,6 @@ Template.cseplanning.onRendered(function(){
    * TODO: check if duplication of code is necessary
    */
   Tracker.autorun(function(){
-    let sliders = [slider1, slider2, slider3, slider4, slider5]
-    console.log(sliders)
-    Session.set('slider', slider1);
-    console.log(Session)
     
     var cse1 = Session.get("CSE_september_pure");
     if(cse1 == undefined) return;
@@ -116,34 +109,54 @@ function slide_update(){
   updatedSlider = cses.cse3 != Math.floor(slider3.value()) ? {id:3,s:slider3,v:cses.cse3, r: [cses.cse1,cses.cse2,cses.cse4,cses.cse5]} : updatedSlider;
   updatedSlider = cses.cse4 != Math.floor(slider4.value()) ? {id:4,s:slider4,v:cses.cse4, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse5]} : updatedSlider;
   updatedSlider = cses.cse5 != Math.floor(slider5.value()) ? {id:5,s:slider5,v:cses.cse5, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse4]} : updatedSlider;
-  console.log(updatedSlider.s)
+  console.log(updatedSlider.id)
   //nr 1 is fixed
   if(updatedSlider != undefined && updatedSlider.id == 1){
     updatedSlider.s.setValue(cses.cse1);
+    console.log(Session.get('cse1'))
   }
   //else update, and check that we don't go above 180 credits
   else if(updatedSlider != undefined) {
+    //Bereken hoeveel er gepland is
     var rest = 0;
-    for(var i=0;i<4;i++) rest += updatedSlider.r[i];
-    //console.log(rest,updatedSlider.s.value())
-    if(Math.floor(updatedSlider.s.value()) + rest > 180) {
-      updatedSlider.v =180 - rest;
-      updatedSlider.s.setValue(updatedSlider.v);
+    for(var i=0;i<4;i++){
+      rest += updatedSlider.r[i];
+    } 
+    //Bereken verschil met 180
+    let diff =  180 - (Math.floor(updatedSlider.s.value()) + rest)
+    //Als je boven 180 stp zit
+    if(diff < 0) {
+      console.log(Math.abs(diff))
+      
+      if (updatedSlider.id === 5 ){
+        // updatedSlider.v = 180 - rest;
+        updatedSlider.s.setValue(180 - rest);
+      }
+      else{
+        console.log(Math.abs(diff))
+      }
+      
     }
     Session.set("CSE_Planning", {"cse1": Math.floor(slider1.value()), "cse2": Math.floor(slider2.value()),
     "cse3": Math.floor(slider3.value()), "cse4":Math.floor(slider4.value()), "cse5":Math.floor(slider5.value())})
-  }
-  // updateProgressBar(totalCSE());
-  
+  }  
 }
 
+/**
+ * All are needed because you can leave slider in 2 ways
+ * click
+ * or leeave the area
+ */
 Template.cseplanning.events({
-  'click' (event, template) {
+  'click .slideflex' (event, template) {
     slide_update()
   },
-  // 'mouseleave' (event,template) {
-  //   slide_update();
-  // }
+  'mouseout .slideflex' (event,template) {
+    slide_update();
+  },
+  'mouseout .bottom' (event,template) {
+    slide_update();
+  }
 });
 
 Template.cseplanning.helpers({
@@ -153,7 +166,8 @@ Template.cseplanning.helpers({
     return cse;
   },
   'jaar1': function(){
-    return Session.get("cse1");
+    let cses = Session.get("CSE_Planning")
+    return cses.cse1;
   },
   'jaar2': function(){
     return Session.get("cse2");

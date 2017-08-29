@@ -177,9 +177,7 @@ function updateSession(tolerate, credits){
   Session.set("CSE_Planning", {"cse1": currentCSE, "cse2": cses.cse2,
   "cse3": cses.cse3, "cse4":cses.cse4, "cse5":cses.cse5})
   //update slider
-  Session.set('cse1', currentCSE);
-  console.log(Session);
-  
+  Session.set('cse1', currentCSE);  
 }
 
 Template.failedCourse.onRendered(function(){
