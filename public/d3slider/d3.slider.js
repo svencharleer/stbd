@@ -8,7 +8,7 @@ d3.slider = function module() {
   margin = {top: 0, right: 0, bottom: 0, left: 0},
   ticks = 0, tickValues, scale, tickFormat, dragger, width,
   range = true,
-  callbackFn, stepValues, focus;
+  callbackFn, stepValues, focus, cssClass = "default";
 
   function slider(selection) {
     selection.each(function() {
@@ -31,16 +31,18 @@ d3.slider = function module() {
 
         // Range rect
         svg.append("rect")
-        .attr("class", "d3slider-rect-range")
+        .attr("class", "d3slider-rect-range " +cssClass)
         .attr("width", width)
-        .attr("height", rectHeight);
+        .attr("height", rectHeight)
+        ;
 
         // Range rect
         if (range) {
           svg.append("rect")
-          .attr("class", "d3slider-rect-value")
+          .attr("class", "d3slider-rect-value " + cssClass)
           .attr("width", scale(value))
-          .attr("height", rectHeight);
+          .attr("height", rectHeight)
+          ;
         }
 
         // Axis
@@ -95,14 +97,14 @@ d3.slider = function module() {
         .text(displayValue);
 
         dragger.append("circle")
-        .attr("class", "dragger-outer")
+        .attr("class", "dragger-outer " + cssClass)
         .attr("r", 6)
         .attr("transform", function(d) {
           return "translate(0,1)";
         });
 
         dragger.append("circle")
-        .attr("class", "dragger-inner")
+        .attr("class", "dragger-inner " + cssClass)
         .attr("r", 6)
         .attr("transform", function(d) {
           return "translate(0,1)";
@@ -254,6 +256,12 @@ d3.slider = function module() {
     slider.setValue = function(newValue) {
       var pos = scale(newValue) + margin.left;
       slider.move(pos);
+    }
+
+    slider.cssClass = function(_){
+      if (!arguments.length) return cssClass;
+      cssClass = _;
+      return slider;
     }
 
     slider.mousemove = function() {

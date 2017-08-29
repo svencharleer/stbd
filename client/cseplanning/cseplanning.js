@@ -1,8 +1,8 @@
-var slider1 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
-var slider2 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
-var slider3 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
-var slider4 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
-var slider5 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0);
+var slider1 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearOne');
+var slider2 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearTwo');
+var slider3 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearThree');
+var slider4 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearFour');
+var slider5 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearFive');
 
 Template.cseplanning.onRendered(function(){
   $('#creditsplanned').find("paper-progress").css('width', '75%');
@@ -103,7 +103,6 @@ Template.cseplanning.onRendered(function(){
 
 function slide_update(){
   var cses = Session.get("CSE_Planning");
-  console.log(Session);
   
   if(cses == undefined) return;
   //find updated slider (only one can be updated at a time)
