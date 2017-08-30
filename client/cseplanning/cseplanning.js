@@ -1,5 +1,7 @@
 var slider1 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearOne');
 var slider2 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearTwo');
+var slider2a = d3.slider().min(0).max(40).ticks(0).showRange(true).value(0).cssClass('yearTwoa');
+var slider2b = d3.slider().min(0).max(40).ticks(0).showRange(true).value(0).cssClass('yearTwob');
 var slider3 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearThree');
 var slider4 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearFour');
 var slider5 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearFive');
@@ -12,14 +14,16 @@ Template.cseplanning.onRendered(function(){
   //Bind sliders to div
   d3.select("#cseslider_y1").call(slider1);  
   d3.select("#cseslider_y2").call(slider2);
+  d3.select("#cseslider_y2a").call(slider2a);
+  d3.select("#cseslider_y2b").call(slider2b);
   d3.select("#cseslider_y3").call(slider3);
   d3.select("#cseslider_y4").call(slider4);
   d3.select("#cseslider_y5").call(slider5);
 
   //You only show the planning in september
   //You need the raw/pure credits
-  var cse = Session.get("CSE_september_pure");  
-  if(cse == undefined) return;
+  var cse1 = Session.get("CSE_september_pure");  
+  if(cse1 == undefined) return;
 
   function totalCSE() {
     let cse  = Session.get("cse1") + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
@@ -30,6 +34,8 @@ Template.cseplanning.onRendered(function(){
   function calculateStartValues(cse1){
     let cse_remaining = 180 - cse1;
     let cse2 = Math.floor(cse_remaining/4);
+    let cse2a = Math.floor(cse2 /2);
+    let cse2b = cse2 - cse2a;
     let cse3 = Math.floor(cse_remaining/3);
     let cse4 = cse_remaining - cse3 - cse2;
     var cse5 = 0;
@@ -37,15 +43,17 @@ Template.cseplanning.onRendered(function(){
       cse5 = cse4 - 60;
       cse4 = 60;
     }
-    return [cse1, cse2, cse3, cse4, cse5]
+    return [cse1, cse2, cse2a, cse2b, cse3, cse4, cse5]
   }
   //Define the default starting values
-  [cse1, cse2, cse3, cse4, cse5] = calculateStartValues(cse);
+  [cse1, cse2, cse2a, cse2b, cse3, cse4, cse5] = calculateStartValues(cse1);
   //Put them in the sessions as a dict as final values
   Session.set("CSE_Planning", {"cse1": cse1, "cse2": cse2, "cse3": cse3, "cse4":cse4, "cse5":cse5})
   //Initialize the sliders
   slider1.setValue(Math.floor(cse1));
   slider2.setValue(Math.floor(cse2));
+  slider2a.setValue(Math.floor(cse2a));
+  slider2b.setValue(Math.floor(cse2b));
   slider3.setValue(Math.floor(cse3));
   slider4.setValue(Math.floor(cse4));
   slider5.setValue(Math.floor(cse5));
@@ -54,6 +62,8 @@ Template.cseplanning.onRendered(function(){
   //Needed to check which one is updated 
   Session.set("cse1",Math.floor(cse1));
   Session.set("cse2",Math.floor(cse2));
+  Session.set("cse2a",Math.floor(cse2a));
+  Session.set("cse2b",Math.floor(cse2b));  
   Session.set("cse3",Math.floor(cse3));
   Session.set("cse4",Math.floor(cse4));
   Session.set("cse5",Math.floor(cse5));
@@ -65,6 +75,7 @@ Template.cseplanning.onRendered(function(){
   Tracker.autorun(function(){
     let cses = Session.get("CSE_Planning")
     if(cses == undefined) return;
+    Session.set("CSE_Planning", {"cse1": cses.cse1, "cse2": Session.get('cse2a') + Session.get('cse2b'), "cse3": cses.cse3, "cse4": cses.cse4, "cse5":cses.cse5})    
     slide_update();
     
   });
@@ -73,6 +84,8 @@ Template.cseplanning.onRendered(function(){
   //They change the temporary variables in session (cse1-5)
   slider1.callback(function(slider) {})
   slider2.callback(function(slider) {Session.set("cse2",Math.floor(slider.value()));})
+  slider2a.callback(function(slider) {Session.set("cse2a",Math.floor(slider.value()));})
+  slider2b.callback(function(slider) {Session.set("cse2b",Math.floor(slider.value()));}) 
   slider3.callback(function(slider) {Session.set("cse3",Math.floor(slider.value()));})
   slider4.callback(function(slider) {Session.set("cse4",Math.floor(slider.value()));})
   slider5.callback(function(slider) {Session.set("cse5",Math.floor(slider.value()));})
@@ -86,7 +99,6 @@ function slide_update(){
   //get the 'old' values
   var cses = Session.get("CSE_Planning");
   if(cses == undefined) return;
-
   //find updated slider (only one can be updated at a time)
   // store id, slider, old value, values of the other sliders
   var updatedSlider = undefined;
@@ -117,10 +129,7 @@ function slide_update(){
     }
     //else update, and check that we don't go above 180 credits
     else if(updatedSlider != undefined) {
-      let list = [Math.round(slider1.value()), Math.floor(slider2.value()),Math.floor(slider3.value()),Math.floor(slider4.value()),Math.floor(slider5.value())]
-      //BCalculate number of credits planned without updated slider
-      
-  
+      // let list = [Math.round(slider1.value()), Math.floor(slider2.value()),Math.floor(slider3.value()),Math.floor(slider4.value()),Math.floor(slider5.value())];
       //Calculate total number of credits and difference with 180
       let newValue = Math.round(updatedSlider.s.value());
       let totalCredits = newValue + rest;

@@ -1,10 +1,19 @@
+div.d3slider.yearTwoa{
+  width:50%;
+}
+
+div.d3slider.yearTwob{
+  width:50%;
+}
+
 .d3slider {
   width:100%;
 }
 
-.d3-slider {
-  width:100%;
-}
+
+
+
+
 
 /* dragger outer */
 circle.dragger-outer.default{
