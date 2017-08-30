@@ -10,7 +10,8 @@ Template.body.events({
     template.$("."+column+" .top").css("border-bottom","0px dotted #ececec");
     template.$("."+column+" .top .column-title").css("visibility","hidden");
     template.$("."+column+" .top .CSE").css("visibility","hidden");
-    template.$("."+column+" .top .tolerantiepunten").css("visibility","hidden");    
+    template.$("."+column+" .top .tolerantiepunten").css("visibility","hidden");  
+    template.$("."+column+" .top .creditsplanned").css("visibility","hidden");        
     template.$("."+column+" .top .periode").css("visibility","hidden");
     template.$("."+column+"").css("min-width","27px");
     template.$("."+column+"").css("max-width","27px");
@@ -25,7 +26,8 @@ Template.body.events({
     template.$("."+column+" .top").css("border-bottom","1px dotted #ececec");
     template.$("."+column+" .top .column-title").css("visibility","visible");
     template.$("."+column+" .top .CSE").css("visibility","visible");
-    template.$("."+column+" .top .tolerantiepunten").css("visibility","visible");        
+    template.$("."+column+" .top .tolerantiepunten").css("visibility","visible");  
+    template.$("."+column+" .top .creditsplanned").css("visibility","visible");            
     template.$("."+column+" .top .periode").css("visibility","visible");
     template.$("."+column+"").css("max-width","180px");
     template.$("."+column+"").css("min-width","180px");
