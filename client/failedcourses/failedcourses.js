@@ -114,7 +114,7 @@ Template.failedCourse.events({
         template.$(".course").css("border-color", "#ffcc80")  ;
         template.$(".getolereerd").css("display", "none");
         template.$(".try").css("display", "flex");
-
+        updateSession(false, this.credits)
         template.checkFail.set(true);
       }
     }
@@ -137,7 +137,6 @@ Template.failedCourse.events({
       let afterToleration = creditsLeft - this.credits;
       if (afterToleration >= 0){
         template.$(".check-fail").css("color", "transparent");
-        // template.$(".check-fail").css("background-color", "rgb(194, 203, 206)") ;
         template.$(".stay-failed").css("opacity", "0.5") ;
         template.$(".check-tolerate").css("color", "white");
         template.$(".check-tolerate").css("background-color", "#81A8B8")  ;
@@ -150,7 +149,7 @@ Template.failedCourse.events({
         template.$(".getolereerd").css("display", "flex");
         template.$(".try").css("display", "none");
         template.checkFail.set(false);
-        
+        updateSession(true, this.credits);
       }
       else{
         $('#tolerantiepunten').css("animation-play-state", "running");
@@ -164,6 +163,20 @@ Template.failedCourse.events({
     }
   }
 });
+
+function updateSession(tolerate, credits){
+  let cses = Session.get('CSE_Planning');
+  let currentCSE = cses.cse1;
+  if (tolerate){
+    currentCSE += credits;
+  }
+  else{
+    currentCSE -= credits;
+  }
+  //update cse-planning
+  Session.set("CSE_Planning", {"cse1": currentCSE, "cse2": cses.cse2,
+  "cse3": cses.cse3, "cse4":cses.cse4, "cse5":cses.cse5})
+}
 
 Template.failedCourse.onRendered(function(){
   $('#tolerantiepunten').find("paper-progress").css('width', '80%');
