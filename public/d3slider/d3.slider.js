@@ -238,6 +238,7 @@ d3.slider = function module() {
     slider.value = function(_) {
       if (!arguments.length) return value;
       value = _;
+      console.log(value)
       return slider;
     }
 

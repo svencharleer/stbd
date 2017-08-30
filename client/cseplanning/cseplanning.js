@@ -4,11 +4,13 @@ var slider3 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssCl
 var slider4 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearFour');
 var slider5 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearFive');
 
+
+
 Template.cseplanning.onRendered(function(){
   $('#creditsplanned').find("paper-progress").css('width', '75%');
   Session.set('slider', slider1);
   //Bind sliders to div
-  d3.select("#cseslider_y1").call(slider1);
+  d3.select("#cseslider_y1").call(slider1);  
   d3.select("#cseslider_y2").call(slider2);
   d3.select("#cseslider_y3").call(slider3);
   d3.select("#cseslider_y4").call(slider4);
@@ -59,33 +61,17 @@ Template.cseplanning.onRendered(function(){
 
   /**
    * automatically rerun templates and other computations whenever Session variables, database queries, and other data sources change.
-   * TODO: check if duplication of code is necessary
    */
   Tracker.autorun(function(){
+    let cses = Session.get("CSE_Planning")
+    if(cses == undefined) return;
+    slide_update();
     
-    var cse1 = Session.get("CSE_september_pure");
-    if(cse1 == undefined) return;
-    [cse1, cse2, cse3, cse4, cse5] = calculateStartValues(cse);    
-    Session.set("CSE_Planning", {"cse1": cse1, "cse2": cse2, "cse3": cse3, "cse4":cse4, "cse5":cse5})
-    //Initialize the sliders
-    slider1.setValue(Math.floor(cse1));
-    slider2.setValue(Math.floor(cse2));
-    slider3.setValue(Math.floor(cse3));
-    slider4.setValue(Math.floor(cse4));
-    slider5.setValue(Math.floor(cse5));
-    //Put each of them separated in the sessions
-    //These are temporary global variables
-    //Needed to check which one is updated 
-    Session.set("cse1",Math.floor(cse1));
-    Session.set("cse2",Math.floor(cse2));
-    Session.set("cse3",Math.floor(cse3));
-    Session.set("cse4",Math.floor(cse4));
-    Session.set("cse5",Math.floor(cse5));
   });
 
   // Set slider callback function
   //They change the temporary variables in session (cse1-5)
-  slider1.callback(function(slider) {Session.set("cse1",Math.floor(slider.value()));})
+  slider1.callback(function(slider) {})
   slider2.callback(function(slider) {Session.set("cse2",Math.floor(slider.value()));})
   slider3.callback(function(slider) {Session.set("cse3",Math.floor(slider.value()));})
   slider4.callback(function(slider) {Session.set("cse4",Math.floor(slider.value()));})
