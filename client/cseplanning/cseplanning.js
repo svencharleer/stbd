@@ -96,36 +96,51 @@ function slide_update(){
   updatedSlider = cses.cse4 != Math.floor(slider4.value()) ? {id:4, s:slider4, v:cses.cse4, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse5]} : updatedSlider;
   updatedSlider = cses.cse5 != Math.floor(slider5.value()) ? {id:5, s:slider5, v:cses.cse5, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse4]} : updatedSlider;
   values = [cses.cse1, cses.cse2, cses.cse3, cses.cse4, cses.cse5];
-  //nr 1 is fixed
-  if(updatedSlider != undefined && updatedSlider.id == 1){
-    updatedSlider.s.setValue(cses.cse1);
-  }
-  //else update, and check that we don't go above 180 credits
-  else if(updatedSlider != undefined) {
-    let list = [Math.round(slider1.value()), Math.floor(slider2.value()),Math.floor(slider3.value()),Math.floor(slider4.value()),Math.floor(slider5.value())]
-    //BCalculate number of credits planned without updated slider
+  //nr 1 is fixed unless you tolerate
+
+  if (updatedSlider != undefined){
     var rest = 0;
     for(var i=0;i<4;i++){
       rest += updatedSlider.r[i];
     } 
-
-    //Calculate total number of credits and difference with 180
-    let newValue = Math.round(updatedSlider.s.value());
-    let totalCredits = newValue + rest;
-    let diff =  180 - totalCredits;
-    //If you planned too much credits
-    if(diff < 0) {      
-      values[updatedSlider.id-1] = newValue;
-      let nbCredits = Math.abs(diff);
-      values = removeLatestCredits(values, nbCredits);
-      updateSliders(values);
-        
+    if(updatedSlider.id == 1){
+      let cse1 = Session.get('cse1');
+      let diff = cses.cse1 - cse1;
+      let totalCredits = cses.cse1 + rest;
+      // check if tolerated
+      if (diff > 0 && totalCredits > 180){
+        values = removeLatestCredits(values, diff);
+        updateSliders(values);
+      }
+      updatedSlider.s.setValue(cses.cse1);
+      Session.set('cse1' , cses.cse1);
     }
-    else{
-      values[updatedSlider.id-1] = newValue;  
-    }    
-    Session.set("CSE_Planning", {"cse1": cses.cse1, "cse2": values[1], "cse3": values[2], "cse4": values[3], "cse5": values[4]})
-  }  
+    //else update, and check that we don't go above 180 credits
+    else if(updatedSlider != undefined) {
+      let list = [Math.round(slider1.value()), Math.floor(slider2.value()),Math.floor(slider3.value()),Math.floor(slider4.value()),Math.floor(slider5.value())]
+      //BCalculate number of credits planned without updated slider
+      
+  
+      //Calculate total number of credits and difference with 180
+      let newValue = Math.round(updatedSlider.s.value());
+      let totalCredits = newValue + rest;
+      let diff =  180 - totalCredits;
+      //If you planned too much credits
+      if(diff < 0) {      
+        values[updatedSlider.id-1] = newValue;
+        let nbCredits = Math.abs(diff);
+        values = removeLatestCredits(values, nbCredits);
+        updateSliders(values);
+          
+      }
+      else{
+        values[updatedSlider.id-1] = newValue;  
+      }    
+      Session.set("CSE_Planning", {"cse1": cses.cse1, "cse2": values[1], "cse3": values[2], "cse4": values[3], "cse5": values[4]})
+    }  
+  }
+
+  
 }
 
 /**
