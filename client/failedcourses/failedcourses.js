@@ -178,6 +178,7 @@ function updateSession(tolerate, credits){
   "cse3": cses.cse3, "cse4":cses.cse4, "cse5":cses.cse5})
   //update slider
   Session.set('cse1', currentCSE);  
+  console.log(Session)
 }
 
 Template.failedCourse.onRendered(function(){

@@ -6,7 +6,7 @@ var slider5 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssCl
 
 Template.cseplanning.onRendered(function(){
   $('#creditsplanned').find("paper-progress").css('width', '75%');
-
+  Session.set('slider', slider1);
   //Bind sliders to div
   d3.select("#cseslider_y1").call(slider1);
   d3.select("#cseslider_y2").call(slider2);
