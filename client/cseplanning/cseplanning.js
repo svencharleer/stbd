@@ -88,16 +88,31 @@ Template.cseplanning.onRendered(function(){
     let cse2aOld = Session.get('cse2a');
     let cse2aNew = Math.floor(slider.value());
     let cse2Old = Session.get('cse2');
-    Session.set("cse2a", cse2aNew);
-    slider2.setValue(cse2Old + (cse2aNew - cse2aOld));
+    let cse2New = Math.floor(cse2Old + (cse2aNew - cse2aOld))
+    if (cse2New > 72) {
+      slider.setValue(cse2aOld);
+    }
+    else{
+      Session.set("cse2a", cse2aNew);
+      slider2.setValue(cse2New);
+    }
+    
   
   })
   slider2b.callback(function(slider) {
     let cse2bOld = Session.get('cse2b');
     let cse2bNew = Math.floor(slider.value());
     let cse2Old = Session.get('cse2');
-    Session.set("cse2b", cse2bNew);
-    slider2.setValue(cse2Old + (cse2bNew - cse2bOld));  
+    let cse2New = cse2Old + (cse2bNew - cse2bOld);
+    let cse2aOld = Session.get('cse2a');
+    console.log(cse2New)
+    if (cse2New > 72) {
+      slider.setValue(72-cse2aOld);
+    }
+    else{
+      Session.set("cse2b", cse2bNew);
+      slider2.setValue(cse2New);
+    }
   
   }) 
   slider3.callback(function(slider) {Session.set("cse3",Math.floor(slider.value()));})
@@ -143,7 +158,6 @@ function slide_update(){
     }
     //else update, and check that we don't go above 180 credits
     else if(updatedSlider != undefined) {
-      console.log("else if")
       //Calculate total number of credits and difference with 180
       let newValue = Math.round(updatedSlider.s.value());
       let totalCredits = newValue + rest;
@@ -226,6 +240,11 @@ function removeLatestCredits(values, nbCredits){
   }
   else if ((values[3] + values[4]) > nbCredits){
     values[3] -= (nbCredits - values[4]);    
+    values[4] = 0;
+  }
+  else if ((values[2] + values[3] + values[4] > nbCredits)){
+    values[2] -= (nbCredits - values[4] - values[3]);    
+    values[3] = 0;    
     values[4] = 0;
   }
   // console.log('After '+ values);
