@@ -14,18 +14,14 @@ Template.future.helpers({
 Template.future.onRendered(function(){
 
   var instance = this;
-  var profileColor = "green"
   var highProfile = false;
   var middleProfile = false;
   var lowProfile = false;
-  // append student's profile background color
-  // $("#profilebox").css("background",profileColor);
-
 
   /**
-  * @param {svg} svg you want to add the profilefield
-  * @param {string} backgroundColor of the background
-  * @param {[int]} integers representing percentage of students who did their bachelor in 3-4 & 5 years
+  * @param {svg} svg where you want to add the profilefield
+  * @param {[int]} data representing percentage of students who did their bachelor in 3-4 & 5 years
+  * @param {boolean} border true if it is the profile of the current student
   */
   function makeProfileField(svg, data, border){
     var width  = 150;
@@ -62,6 +58,21 @@ Template.future.onRendered(function(){
       return profileClass;
     }
 
+    function histogramTooltip(){
+      var svg = tooltipLayer.append('svg'),
+      margin = {top: 20, right: 20, bottom: 30, left: 40},
+      width = width - margin.left - margin.right,
+      height = height - margin.top - margin.bottom;
+      let xTooltip = d3.scale.linear().rangeRound([0,5]);
+      let yTooltip = d3.scale.linear().rangeRound([height, 0]);
+      let data = {'3': 10,'4': 11,'5': 20,'N': 19 }
+      xTooltip.domain([0,5]);
+      yTooltip.domain([0, d3.max(data, function(d) { return data[d]; })]);
+
+
+
+    }
+
     function calculateTooltip(x){
       var text = ' ';
       if (x < nb3){
@@ -79,8 +90,12 @@ Template.future.onRendered(function(){
       return text;
     }
 
-    svg.attr("width",  "160px").attr("height", "145px");
-
+    svg.attr("width",  width).attr("height", height)
+      .on('mouseover', function(){
+        console.log('svg mouseover');
+        histogramTooltip()
+      })
+  
     if (border){
       svg.attr('class', 'fieldborder');
     }
