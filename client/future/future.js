@@ -23,14 +23,15 @@ Template.future.onRendered(function(){
   * @param {[int]} data representing percentage of students who did their bachelor in 3-4 & 5 years
   * @param {boolean} border true if it is the profile of the current student
   */
-  function makeProfileField(svg, data, border){
+  function makeProfileField(svg, numbers, border){
     var width  = 150;
     var height = 150;
-    var margin = 0;
-    var nb3 = data[0];
-    var nb4 = data[1];
-    var nb5 = data[2];
+    var margin = 2;
+    var nb3 = numbers[0];
+    var nb4 = numbers[1];
+    var nb5 = numbers[2];
     var nbNot = 100 - nb3 - nb4 - nb5;
+    let yValues = [nb3, nb4, nb5, nbNot];
     // var data = Array.apply(null, Array(100)).map(function (_, i) {return i;});
     var data = d3.range(100)
     var x = d3.scale.linear()
@@ -44,42 +45,75 @@ Template.future.onRendered(function(){
     function calculateClass(x){
       var profileClass = 'unknown';
       if (x < nb3){
-        profileClass = 'topstudentbox';
+        profileClass = 'topstudent box';
       }
       else if ( x < nb3 + nb4){
-        profileClass = 'middlestudentbox';
+        profileClass = 'middlestudent box';
       }
       else if ( x < nb3 + nb4 + nb5){
-        profileClass = 'lowstudentbox';
+        profileClass = 'lowstudent box';
       }
       else {
-        profileClass = 'badstudentbox';
+        profileClass = 'badstudent box';
       }
       return profileClass;
     }
 
+    function tooltipClass(i){
+      var tooltipClass = 'unknown';
+      if (i == 0){
+        tooltipClass = "topstudent bar";
+      }
+      else if (i == 1){
+        tooltipClass = "middlestudent bar";
+      }
+      else if (i == 2){
+        tooltipClass = "lowstudent bar";
+      }
+      else if (i == 3){
+        tooltipClass = "badstudent bar";
+      }
+      return tooltipClass;
+    }
+
     function barchartTooltip(svg, yValues){
-      // svg.style('opacity', 0)
       let xValues = ['3 jaar', '4 jaar', '5 jaar', 'Niet']
-      let svgBarchart = svg.append('svg').style('opacity', 1);
+      // svg.style('opacity', 0)
+      let y = d3.scale.linear()
+        .range([height, 0]);
+      
+      let chart = svg.append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .attr('class', 'tooltip')
+        .style('opacity', 1)
+        ;
+      y.domain([0, 100]);
+      var barWidth = width / 4;
       let xPosition = 0;
-      svgBarchart.append("g").selectAll("rect")
+
+      let bar = chart.selectAll("g")
         .data(function(){
           let sample = [];
-          for(let i = 0;i <= 3; i++) sample.push({bachelor:xValues[i], count:yValues[i]});
+          for(let i = 0;i <= 3; i++) sample.push({bachelor:xValues[i], value:yValues[i]});
           return sample;
         })
         .enter()
-        .append("rect")
-          .attr("width", 10)
-          .attr('height', function(d){
-            return 20*d.count;
-          })
-          .attr('x', function(d){
-            xPosition += 1;
-            return 10*xPosition;
-          })
-          .attr('class', 'tooltipBar')
+        .append("g")
+          .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
+      
+      bar.append("rect")
+        .attr('class', function(d,i) {return tooltipClass(i)})
+        .attr("y", function(d) { return y(d.value); })
+        .attr("height", function(d) { return height - y(d.value); })
+        .attr("width", barWidth - 1);
+    
+      bar.append("text")
+          .attr("x", barWidth / 2)
+          .attr("y", function(d) { return y(d.value) - 10; })
+          .attr("dy", ".75em")
+          .attr('class', 'tooltipText')
+          .text(function(d) { return d.value + '%'; });
     }
 
     function calculateTooltip(x){
@@ -101,8 +135,12 @@ Template.future.onRendered(function(){
 
     svg.attr("width",  width).attr("height", height)
       .on('mouseover', function(){
-        console.log('svg mouseover');
-        barchartTooltip(svg, data)
+        svg.selectAll(".box").style('opacity', 0)
+        barchartTooltip(svg, yValues)
+      })
+      .on('mouseleave', function(){
+        svg.selectAll(".box").style('opacity', 1)
+        d3.selectAll('.tooltip').remove();
       })
   
     if (border){
@@ -120,46 +158,12 @@ Template.future.onRendered(function(){
       return calculateClass(d);
     })
     .attr('x', function (d){
-      return x(d % 10);
+      return x(d % 10) + margin;
     })
     .attr('y', function(d){
-      return y(Math.floor( d / 10));
+      return y(Math.floor( d / 10)) + margin;
     })
     .attr('id', function(d){return d})
-    // .on('mouseover', function(d){
-    //   var text = calculateTooltip(d);
-    //   var cssClass = calculateClass(d) ;
-    //   var tooltipColor = $("."+ cssClass).css('fill')
-    //   // Highlight all
-    //   svg.selectAll('.'+ cssClass)
-    //   .attr('class', function(){
-    //     var instance = d3.select(this);
-    //     var currentClass = instance.attr('class');
-    //     currentClass += ' selected';
-    //     return currentClass;
-    //   });
-    //   //add tooltip
-    //   tooltipLayer.transition()
-    //   .duration(100)
-    //   .style("opacity", .9);
-    //   tooltipLayer.html(text)
-    //   .style("left", (d3.event.pageX) + "px")
-    //   .style("top", (d3.event.pageY - 28) + "px")
-    //   .style('background-color', tooltipColor)
-    //   ;
-    // })
-    // .on("mouseout", function(d) {
-    //   var cssClass = calculateClass(d) ;
-    //   var color = $('.'+cssClass).css('fill');
-    //   var tooltipColor = $('.' + cssClass).css('fill')
-
-    //   svg.selectAll('.'+ cssClass + '.selected')
-    //   .attr('class', cssClass);
-
-    //   tooltipLayer.transition()
-    //   .duration(300)
-    //   .style("opacity", 0);
-    // });
   };
 
 
