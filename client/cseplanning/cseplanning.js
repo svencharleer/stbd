@@ -75,7 +75,7 @@ Template.cseplanning.onRendered(function(){
   Tracker.autorun(function(){
     let cses = Session.get("CSE_Planning")
     if(cses == undefined) return;
-    Session.set("CSE_Planning", {"cse1": cses.cse1, "cse2": Session.get('cse2a') + Session.get('cse2b'), "cse3": cses.cse3, "cse4": cses.cse4, "cse5":cses.cse5})    
+    Session.set("CSE_Planning", {"cse1": cses.cse1, "cse2": cses.cse2, "cse3": cses.cse3, "cse4": cses.cse4, "cse5":cses.cse5})    
     slide_update();
     
   });
@@ -84,8 +84,22 @@ Template.cseplanning.onRendered(function(){
   //They change the temporary variables in session (cse1-5)
   slider1.callback(function(slider) {})
   slider2.callback(function(slider) {Session.set("cse2",Math.floor(slider.value()));})
-  slider2a.callback(function(slider) {Session.set("cse2a",Math.floor(slider.value()));})
-  slider2b.callback(function(slider) {Session.set("cse2b",Math.floor(slider.value()));}) 
+  slider2a.callback(function(slider) {
+    let cse2aOld = Session.get('cse2a');
+    let cse2aNew = Math.floor(slider.value());
+    let cse2Old = Session.get('cse2');
+    Session.set("cse2a", cse2aNew);
+    slider2.setValue(cse2Old + (cse2aNew - cse2aOld));
+  
+  })
+  slider2b.callback(function(slider) {
+    let cse2bOld = Session.get('cse2b');
+    let cse2bNew = Math.floor(slider.value());
+    let cse2Old = Session.get('cse2');
+    Session.set("cse2b", cse2bNew);
+    slider2.setValue(cse2Old + (cse2bNew - cse2bOld));  
+  
+  }) 
   slider3.callback(function(slider) {Session.set("cse3",Math.floor(slider.value()));})
   slider4.callback(function(slider) {Session.set("cse4",Math.floor(slider.value()));})
   slider5.callback(function(slider) {Session.set("cse5",Math.floor(slider.value()));})
@@ -108,9 +122,9 @@ function slide_update(){
   updatedSlider = cses.cse4 != Math.floor(slider4.value()) ? {id:4, s:slider4, v:cses.cse4, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse5]} : updatedSlider;
   updatedSlider = cses.cse5 != Math.floor(slider5.value()) ? {id:5, s:slider5, v:cses.cse5, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse4]} : updatedSlider;
   values = [cses.cse1, cses.cse2, cses.cse3, cses.cse4, cses.cse5];
-  //nr 1 is fixed unless you tolerate
 
-  if (updatedSlider != undefined){
+  //nr 1 is fixed unless you tolerate
+  if (updatedSlider != undefined){    
     var rest = 0;
     for(var i=0;i<4;i++){
       rest += updatedSlider.r[i];
@@ -129,7 +143,7 @@ function slide_update(){
     }
     //else update, and check that we don't go above 180 credits
     else if(updatedSlider != undefined) {
-      // let list = [Math.round(slider1.value()), Math.floor(slider2.value()),Math.floor(slider3.value()),Math.floor(slider4.value()),Math.floor(slider5.value())];
+      console.log("else if")
       //Calculate total number of credits and difference with 180
       let newValue = Math.round(updatedSlider.s.value());
       let totalCredits = newValue + rest;
@@ -139,12 +153,13 @@ function slide_update(){
         values[updatedSlider.id-1] = newValue;
         let nbCredits = Math.abs(diff);
         values = removeLatestCredits(values, nbCredits);
-        updateSliders(values);
+
           
       }
       else{
         values[updatedSlider.id-1] = newValue;  
-      }    
+      }   
+      updateSliders(values); 
       Session.set("CSE_Planning", {"cse1": cses.cse1, "cse2": values[1], "cse3": values[2], "cse4": values[3], "cse5": values[4]})
     }  
   }
@@ -185,6 +200,12 @@ Template.cseplanning.helpers({
   },
   'jaar2': function(){
     return Session.get("cse2");
+  },
+  'jaar2a': function(){
+    return Session.get("cse2a");
+  },
+  'jaar2b': function(){
+    return Session.get("cse2b");
   },
   'jaar3': function(){
     return Session.get("cse3");
