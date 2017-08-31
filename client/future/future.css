@@ -145,8 +145,9 @@
 /* Tooltip layout */
 .tooltipText {
   text-anchor: middle;
-  font: 12px sans-serif;
-  color: #424242;
+  font-weight: 300 !important;
+  font-size: 13px !important;
+  color: #424242 !important;
 }
 
 
@@ -160,9 +161,7 @@
   width: 160px;
 }
 
-.tooltipBar{
-  fill: black;
-}
+
 
 .legend3{border-radius: 4px 0px 0px 4px;}
 .legendnot{border-radius: 0px 4px 4px 0px;}

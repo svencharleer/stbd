@@ -86,6 +86,7 @@ Template.future.onRendered(function(){
         .attr('width', width)
         .attr('height', height)
         .attr('class', 'tooltip')
+        .attr('id', 'tooltip')
         .style('opacity', 1)
         ;
       y.domain([0, 100]);
@@ -133,8 +134,9 @@ Template.future.onRendered(function(){
       return text;
     }
 
-    svg.attr("width",  width).attr("height", height)
-      .on('mouseover', function(){
+    svg.attr("width",  width)
+      .attr("height", height)
+      .on('mouseenter', function(){
         svg.selectAll(".box").style('opacity', 0)
         barchartTooltip(svg, yValues)
       })
