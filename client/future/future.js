@@ -58,19 +58,28 @@ Template.future.onRendered(function(){
       return profileClass;
     }
 
-    function histogramTooltip(){
-      var svg = tooltipLayer.append('svg'),
-      margin = {top: 20, right: 20, bottom: 30, left: 40},
-      width = width - margin.left - margin.right,
-      height = height - margin.top - margin.bottom;
-      let xTooltip = d3.scale.linear().rangeRound([0,5]);
-      let yTooltip = d3.scale.linear().rangeRound([height, 0]);
-      let data = {'3': 10,'4': 11,'5': 20,'N': 19 }
-      xTooltip.domain([0,5]);
-      yTooltip.domain([0, d3.max(data, function(d) { return data[d]; })]);
-
-
-
+    function barchartTooltip(svg, yValues){
+      // svg.style('opacity', 0)
+      let xValues = ['3 jaar', '4 jaar', '5 jaar', 'Niet']
+      let svgBarchart = svg.append('svg').style('opacity', 1);
+      let xPosition = 0;
+      svgBarchart.append("g").selectAll("rect")
+        .data(function(){
+          let sample = [];
+          for(let i = 0;i <= 3; i++) sample.push({bachelor:xValues[i], count:yValues[i]});
+          return sample;
+        })
+        .enter()
+        .append("rect")
+          .attr("width", 10)
+          .attr('height', function(d){
+            return 20*d.count;
+          })
+          .attr('x', function(d){
+            xPosition += 1;
+            return 10*xPosition;
+          })
+          .attr('class', 'tooltipBar')
     }
 
     function calculateTooltip(x){
@@ -93,7 +102,7 @@ Template.future.onRendered(function(){
     svg.attr("width",  width).attr("height", height)
       .on('mouseover', function(){
         console.log('svg mouseover');
-        histogramTooltip()
+        barchartTooltip(svg, data)
       })
   
     if (border){
@@ -117,40 +126,40 @@ Template.future.onRendered(function(){
       return y(Math.floor( d / 10));
     })
     .attr('id', function(d){return d})
-    .on('mouseover', function(d){
-      var text = calculateTooltip(d);
-      var cssClass = calculateClass(d) ;
-      var tooltipColor = $("."+ cssClass).css('fill')
-      // Highlight all
-      svg.selectAll('.'+ cssClass)
-      .attr('class', function(){
-        var instance = d3.select(this);
-        var currentClass = instance.attr('class');
-        currentClass += ' selected';
-        return currentClass;
-      });
-      //add tooltip
-      tooltipLayer.transition()
-      .duration(100)
-      .style("opacity", .9);
-      tooltipLayer.html(text)
-      .style("left", (d3.event.pageX) + "px")
-      .style("top", (d3.event.pageY - 28) + "px")
-      .style('background-color', tooltipColor)
-      ;
-    })
-    .on("mouseout", function(d) {
-      var cssClass = calculateClass(d) ;
-      var color = $('.'+cssClass).css('fill');
-      var tooltipColor = $('.' + cssClass).css('fill')
+    // .on('mouseover', function(d){
+    //   var text = calculateTooltip(d);
+    //   var cssClass = calculateClass(d) ;
+    //   var tooltipColor = $("."+ cssClass).css('fill')
+    //   // Highlight all
+    //   svg.selectAll('.'+ cssClass)
+    //   .attr('class', function(){
+    //     var instance = d3.select(this);
+    //     var currentClass = instance.attr('class');
+    //     currentClass += ' selected';
+    //     return currentClass;
+    //   });
+    //   //add tooltip
+    //   tooltipLayer.transition()
+    //   .duration(100)
+    //   .style("opacity", .9);
+    //   tooltipLayer.html(text)
+    //   .style("left", (d3.event.pageX) + "px")
+    //   .style("top", (d3.event.pageY - 28) + "px")
+    //   .style('background-color', tooltipColor)
+    //   ;
+    // })
+    // .on("mouseout", function(d) {
+    //   var cssClass = calculateClass(d) ;
+    //   var color = $('.'+cssClass).css('fill');
+    //   var tooltipColor = $('.' + cssClass).css('fill')
 
-      svg.selectAll('.'+ cssClass + '.selected')
-      .attr('class', cssClass);
+    //   svg.selectAll('.'+ cssClass + '.selected')
+    //   .attr('class', cssClass);
 
-      tooltipLayer.transition()
-      .duration(300)
-      .style("opacity", 0);
-    });
+    //   tooltipLayer.transition()
+    //   .duration(300)
+    //   .style("opacity", 0);
+    // });
   };
 
 
@@ -158,10 +167,8 @@ Template.future.onRendered(function(){
   let topsvg = d3.select('#best');
   let middlesvg = d3.select('#middle')
   let lowsvg = d3.select('#low')
-  // Define the div for the tooltip
-  let tooltipLayer = d3.select("body").append("div")
-  .attr("class", "tooltip")
-  .style("opacity", 0);
+  
+  
 
 
 
