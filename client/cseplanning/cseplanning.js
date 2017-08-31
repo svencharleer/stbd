@@ -96,8 +96,6 @@ Template.cseplanning.onRendered(function(){
       Session.set("cse2a", cse2aNew);
       slider2.setValue(cse2New);
     }
-    
-  
   })
   slider2b.callback(function(slider) {
     let cse2bOld = Session.get('cse2b');
@@ -105,7 +103,6 @@ Template.cseplanning.onRendered(function(){
     let cse2Old = Session.get('cse2');
     let cse2New = cse2Old + (cse2bNew - cse2bOld);
     let cse2aOld = Session.get('cse2a');
-    console.log(cse2New)
     if (cse2New > 72) {
       slider.setValue(72-cse2aOld);
     }
@@ -113,7 +110,6 @@ Template.cseplanning.onRendered(function(){
       Session.set("cse2b", cse2bNew);
       slider2.setValue(cse2New);
     }
-  
   }) 
   slider3.callback(function(slider) {Session.set("cse3",Math.floor(slider.value()));})
   slider4.callback(function(slider) {Session.set("cse4",Math.floor(slider.value()));})
@@ -122,7 +118,7 @@ Template.cseplanning.onRendered(function(){
 
 /**
  * Update sliders
- * Check if values are 
+ * Check if values are withing 180
  */
 function slide_update(){
   //get the 'old' values
@@ -136,14 +132,15 @@ function slide_update(){
   updatedSlider = cses.cse3 != Math.floor(slider3.value()) ? {id:3, s:slider3, v:cses.cse3, r: [cses.cse1,cses.cse2,cses.cse4,cses.cse5]} : updatedSlider;
   updatedSlider = cses.cse4 != Math.floor(slider4.value()) ? {id:4, s:slider4, v:cses.cse4, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse5]} : updatedSlider;
   updatedSlider = cses.cse5 != Math.floor(slider5.value()) ? {id:5, s:slider5, v:cses.cse5, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse4]} : updatedSlider;
-  values = [cses.cse1, cses.cse2, cses.cse3, cses.cse4, cses.cse5];
 
-  //nr 1 is fixed unless you tolerate
-  if (updatedSlider != undefined){    
+  if (updatedSlider != undefined){   
+    values = [cses.cse1, cses.cse2, cses.cse3, cses.cse4, cses.cse5];    
     var rest = 0;
     for(var i=0;i<4;i++){
       rest += updatedSlider.r[i];
     } 
+    //The first slider cannot be moved
+    //unless you tolerate
     if(updatedSlider.id == 1){
       let cse1 = Session.get('cse1');
       let diff = cses.cse1 - cse1;
@@ -166,9 +163,7 @@ function slide_update(){
       if(diff < 0) {      
         values[updatedSlider.id-1] = newValue;
         let nbCredits = Math.abs(diff);
-        values = removeLatestCredits(values, nbCredits);
-
-          
+        values = removeLatestCredits(values, nbCredits);  
       }
       else{
         values[updatedSlider.id-1] = newValue;  
@@ -233,8 +228,6 @@ Template.cseplanning.helpers({
 });
 
 function removeLatestCredits(values, nbCredits){
-  // console.log('Before ' + values + ' ' + nbCredits);
-  
   if (values[4] >= nbCredits){
     values[4] -= nbCredits;
   }
@@ -247,7 +240,6 @@ function removeLatestCredits(values, nbCredits){
     values[3] = 0;    
     values[4] = 0;
   }
-  // console.log('After '+ values);
   return values;
 }
 

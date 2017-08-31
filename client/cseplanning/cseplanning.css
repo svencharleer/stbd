@@ -24,7 +24,7 @@ circle.dragger-outer.yearOne, circle.dragger-outer.yearTwo, circle.dragger-outer
   fill: var(--TopStudent);
 }
 
-circle.dragger-outer.yearTwo{
+circle.dragger-outer.yearOne, circle.dragger-outer.yearTwo{
   display: none;
 }
 
@@ -44,7 +44,7 @@ circle.dragger-inner.yearOne, circle.dragger-inner.yearTwo, circle.dragger-inner
   fill: var(--TopStudent);
 }
 
-circle.dragger-inner.yearTwo{
+circle.dragger-inner.yearOne, circle.dragger-inner.yearTwo{
   display: none;
 }
 
