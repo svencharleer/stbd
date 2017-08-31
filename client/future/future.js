@@ -26,7 +26,7 @@ Template.future.onRendered(function(){
   function makeProfileField(svg, numbers, border){
     var width  = 150;
     var height = 150;
-    var margin = 2;
+    var margin = 3;
     var nb3 = numbers[0];
     var nb4 = numbers[1];
     var nb5 = numbers[2];
