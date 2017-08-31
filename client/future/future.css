@@ -26,26 +26,16 @@
 }
 
 .box {
-  width: 16px;
-  height: 16px;
-  position: relative;
-  text-align: center;
-  line-height: 100px;
-  color: white;
-  font-size: 24px;
-  font-family: sans-serif;
-  margin-left: 5px;
+  width: 8px;
+  height: 8px;
 }
 
 /* Students getting bachelor in 3 years */
-.topstudentbox {
+.topstudent{
   fill: var(--TopStudent);
-  width: 8px;
-  height: 8px;
-
 }
 
-.selected.topstudentbox {
+.selected.topstudent.box {
   fill: var(--TopSelected);
 }
 
@@ -56,12 +46,10 @@
 }
 
 /* Students getting bachelor in 4 years */
-.middlestudentbox {
+.middlestudent {
   fill: var(--MiddleStudent);
-  width: 8px;
-  height: 8px;
 }
-.selected.middlestudentbox {
+.selected.middlestudent.box {
   fill: var(--MiddleSelected);
 }
 
@@ -74,12 +62,10 @@
 
 
 /* Students getting bachelor in 5 years */
-.lowstudentbox {
+.lowstudent {
   fill: var(--LowStudent);
-  width: 8px;
-  height: 8px;
 }
-.selected.lowstudentbox {
+.selected.lowstudent.box {
   fill:var(--LowSelected);
 }
 .legend5 {
@@ -90,13 +76,10 @@
 }
 
 /* Students not getting bachelor */
-.badstudentbox {
+.badstudent {
   fill: var(--BadStudent);
-  width: 8px;
-  height: 8px;
-
 }
-.selected.badstudentbox{
+.selected.badstudent.box{
   fill:var(--BadSelected);
 }
 
@@ -160,19 +143,14 @@
 }
 
 /* Tooltip layout */
-div.tooltip {
-  position: absolute;
-  text-align: center;
-  width: 48px;
-  height: 16px;
-  padding: 2px;
-  font: 12px sans-serif;
-  border: 0px;
-  border-radius: 8px;
-  pointer-events: none;
-  box-shadow: 0px 2px 5px #888888;
-  color: #424242;
+.tooltipText {
+  text-anchor: middle;
+  font-weight: 300 !important;
+  font-size: 13px !important;
+  color: #424242 !important;
 }
+
+
 
 .fields .group {
   margin-top: 16px;
@@ -182,6 +160,8 @@ div.tooltip {
   align-items: center;
   width: 160px;
 }
+
+
 
 .legend3{border-radius: 4px 0px 0px 4px;}
 .legendnot{border-radius: 0px 4px 4px 0px;}
