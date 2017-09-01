@@ -37,9 +37,22 @@ Template.body.events({
 Template.body.onCreated(function(){
   var instance = this;
   var handler = instance.subscribe("generic_courses",function(){});
+  console.log("body ")
 
+  // autorun to initialize the sliders
+  // instance.autorun(function(){
+  //   // Session.get('CSE_september_pure')
+  //   let cses = Session.get('CSE_Planning')
+  //   if (cses != undefined){
+  //     Session.set('cse2a', Math.floor(cses.cse2 /2))
+  //   }
+  //   else{
+  //     Session.set('cse2a', 0)      
+  //   }
+  // })
+  
   instance.autorun(function(){
-
+    console.log("body autorun")
     $(".nostudent").hide();
     if(!$(".loading-screen").is(":visible")) $(".loading-screen").show();
 
@@ -49,6 +62,8 @@ Template.body.onCreated(function(){
     Session.set("selectedCourses", undefined);
     Session.set("studentName","");
     Session.set("creditsTaken", 0)
+    
+    
     //console.log("student now is " + Session.get("student"))
     var handler2 = instance.subscribe("generic_grades",Session.get("student"));
     var handler3 = instance.subscribe("ijkingstoets", Session.get("student"));
@@ -91,6 +106,12 @@ Template.body.onCreated(function(){
       Session.set("CSE_januari_pure", Helpers_CalculateCSE(1,year,true));
       Session.set("CSE_juni_pure", Helpers_CalculateCSE(2,year,true));
       Session.set("CSE_september_pure", Helpers_CalculateCSE(3,year,true));
+      Session.set("CSE_Planning", Helpers_CalculateStartValues(Session.get('CSE_september_pure')));
+      // Helpers_initSliderValues(Session.get("CSE_Planning"));
+      Session.set('cse2a', Math.floor(Helpers_CalculateStartValues(Session.get('CSE_september_pure')).cse2 / 2));
+      Session.set('cse2a', Math.floor(Helpers_CalculateStartValues(Session.get('CSE_september_pure')).cse2 -  (Math.floor(Helpers_CalculateStartValues(Session.get('CSE_september_pure')).cse2/ 2))));
+      
+      
 
       Session.set("CSE_TTT", Helpers_GetTotalPointForPeriod(0,year));
       var score = Ijkingstoets.findOne();
@@ -311,7 +332,8 @@ Template.body.helpers({
   ShowSeptember(){
     return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showSeptember : false;
 
-  }
+  },
+  
 
 
 

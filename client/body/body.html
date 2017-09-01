@@ -39,6 +39,7 @@
       </div>
       {{/unless}}
     </div>
+
     <!-- Lower row -->
     <div class="flex-row">
       <div class="flex-column column-even colijkingstoets">
@@ -249,7 +250,9 @@
           </div>
         </div>
         <div class="bottom">
+          {{#if Template.subscriptionsReady}}
           {{> future}}
+          {{/if}}
         </div>
       </div>
 

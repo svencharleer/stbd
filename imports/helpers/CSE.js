@@ -104,3 +104,23 @@ Helpers_GetCSE = function(studentID, semester, year)
     return 0;
   }
 }
+
+/**
+ * Initialize the cse planning
+ * needed in the body-autorun to update when a new student is inputted
+ * @param {integer} cse1 nb of credits earned september
+ */
+Helpers_CalculateStartValues= function(cse1){
+  let cse_remaining = 180 - cse1;
+  let cse2 = Math.floor(cse_remaining/4);
+  let cse3 = Math.floor(cse_remaining/3);
+  let cse4 = cse_remaining - cse3 - cse2;
+  var cse5 = 0;
+  if(cse4 > 60) {
+    cse5 = cse4 - 60;
+    cse4 = 60;
+  }
+  return {"cse1": cse1, "cse2": cse2, "cse3": cse3, "cse4":cse4, "cse5":cse5}
+}
+
+
