@@ -110,7 +110,7 @@ Helpers_GetCSE = function(studentID, semester, year)
  * needed in the body-autorun to update when a new student is inputted
  * @param {integer} cse1 nb of credits earned september
  */
-Helpers_CalculateStartValues= function(cse1){
+Helpers_CalculateStartValues = function(cse1){
   let cse_remaining = 180 - cse1;
   let cse2 = Math.floor(cse_remaining/4);
   let cse3 = Math.floor(cse_remaining/3);

@@ -109,7 +109,7 @@ Template.body.onCreated(function(){
       Session.set("CSE_Planning", Helpers_CalculateStartValues(Session.get('CSE_september_pure')));
       // Helpers_initSliderValues(Session.get("CSE_Planning"));
       Session.set('cse2a', Math.floor(Helpers_CalculateStartValues(Session.get('CSE_september_pure')).cse2 / 2));
-      Session.set('cse2a', Math.floor(Helpers_CalculateStartValues(Session.get('CSE_september_pure')).cse2 -  (Math.floor(Helpers_CalculateStartValues(Session.get('CSE_september_pure')).cse2/ 2))));
+      Session.set('cse2b', Math.floor(Helpers_CalculateStartValues(Session.get('CSE_september_pure')).cse2 -  (Math.floor(Helpers_CalculateStartValues(Session.get('CSE_september_pure')).cse2/ 2))));
       
       
 
