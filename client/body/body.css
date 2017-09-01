@@ -317,5 +317,12 @@ justify-content: flex-start;
 
 .colijkingstoets * {
 transform-origin: 0% 0%;
-  
+}
+
+.colijkingstoets .course .course-top .credits{
+  display: none;
+}
+
+.colttt .course .course-top .credits{
+  display: none;
 }
