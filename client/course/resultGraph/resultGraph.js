@@ -33,7 +33,6 @@ Template.resultGraph.events({
   },
   "click .course-bottom": function(event, template) {
     if(!template.zoom.get()) {
-      // template.$(".course").css("transform-origin", "0% 0%");      
       template.$(".course").css("transform", "scale(1.5)"); 
       template.$(".course").css("z-index", "1000");
       template.$(".course").css("box-shadow", "1px 1px 5px gainsboro");

@@ -16,11 +16,11 @@ div.d3slider.yearTwob{
 
 
 /* dragger outer */
-circle.dragger-outer.default{
+.default{
   fill: #81A8B8;
 }
 
-circle.dragger-outer.yearOne, circle.dragger-outer.yearTwo, circle.dragger-outer.yearTwoa, circle.dragger-outer.yearTwob, circle.dragger-outer.yearThree{
+.yearOne, .yearTwo, .yearTwoa, .yearTwob, .yearThree{
   fill: var(--TopStudent);
 }
 
@@ -28,79 +28,40 @@ circle.dragger-outer.yearOne, circle.dragger-outer.yearTwo{
   display: none;
 }
 
-circle.dragger-outer.yearFour{
+.yearFour{
   fill: var(--MiddleStudent);
 }
 
-circle.dragger-outer.yearFive{
+.yearFive{
   fill: var(--LowStudent);
-}
-
-/* dragger inner */
-circle.dragger-inner.default {
-  fill: #81A8B8;
-}
-circle.dragger-inner.yearOne, circle.dragger-inner.yearTwo, circle.dragger-inner.yearTwoa, circle.dragger-inner.yearTwob ,circle.dragger-inner.yearThree {
-  fill: var(--TopStudent);
 }
 
 circle.dragger-inner.yearOne, circle.dragger-inner.yearTwo{
   display: none;
 }
 
-circle.dragger-inner.yearFour {
-  fill: var(--MiddleStudent);
-}
-
-circle.dragger-inner.yearFive {
-  fill: var(--LowStudent);
-}
-
 /* slider background */
 rect[class^=d3slider-rect-range] {
   fill:#e0e0e0;
 }
-/* slider value */
-rect.d3slider-rect-value.yearOne, rect.d3slider-rect-value.yearTwo, rect.d3slider-rect-value.yearTwoa, rect.d3slider-rect-value.yearTwob, rect.d3slider-rect-value.yearThree {
-  fill: var(--TopStudent);
-}
 
-rect.d3slider-rect-value.yearFour {
-  fill: var(--MiddleStudent);
-}
-
-rect.d3slider-rect-value.yearFive {
-  fill: var(--LowStudent);
-}
-/* dragger-outer hover */
-circle.dragger-outer.yearOne:hover, circle.dragger-outer.yearTwo:hover, circle.dragger-outer.yearTwoa:hover, circle.dragger-outer.yearTwob:hover, circle.dragger-outer.yearThree:hover{
-  fill: var(--TopSelected);
-}
-
-circle.dragger-outer.yearFour:hover{
-  fill: var(--MiddleSelected);
-}
-
-circle.dragger-outer.yearFive:hover{
-  fill: var(--LowSelected);
-}
-
-/* dragger-inner hover */
-circle.dragger-inner.default:hover {
+/* hover */
+.default{
   fill: #537988;
 }
-
-circle.dragger-inner.yearOne:hover, circle.dragger-inner.yearTwo:hover, circle.dragger-inner.yearTwoa:hover, circle.dragger-inner.yearTwob:hover, circle.dragger-inner.yearThree:hover{
+.yearOne:hover, .yearTwo:hover, .yearTwoa:hover, .yearTwob:hover, .yearThree:hover{
   fill: var(--TopSelected);
 }
 
-circle.dragger-inner.yearFour:hover{
+.yearFour:hover{
   fill: var(--MiddleSelected);
 }
 
-circle.dragger-inner.yearFive:hover{
+.yearFive:hover{
   fill: var(--LowSelected);
 }
+
+
 
 
 
@@ -141,8 +102,12 @@ circle.dragger-inner.yearFive:hover{
   color: #777777;
 }
 
-.slideflex .draggertext {
+.semester span {
+  font-size: 12px;
+  font-weight: 300;
+  margin-left: 15px;
 }
+
 
 .slideflex > span {
   width: 30px;

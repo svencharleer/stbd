@@ -5,12 +5,12 @@
 }
 
 .d3slider-rect-range {
-  fill: #777;
+  /* fill: #777; */
   stroke: none;
 }
 
 .d3slider-rect-value {
-  fill: #006EE3;
+  /* fill: #006EE3; */
   stroke: none;
 }
 
