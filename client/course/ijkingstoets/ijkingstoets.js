@@ -40,7 +40,7 @@ Template.ijkingstoets.onCreated(function(){
           if (grades[i] != undefined) grade = grades[i].grade;
 
           let dots = Math.round(((50 * count)/total));
-          if(dots > 10) dots = 0;
+          //if(dots > 10) dots = 0;
           let list = [];
           for (let a = 0; a<=dots; a++) {
             list.push({"grade": grade});
@@ -48,14 +48,15 @@ Template.ijkingstoets.onCreated(function(){
           return list;
         })
         .enter()
-        .append("circle")
+        .append("rect")
         .attr("class","dot")
-        .attr("r", 2)
-        .attr("cx",function(d,i){
+        .attr("width", 4)
+        .attr("height", 4)
+        .attr("x",function(d,i){
           return d.grade * 7;
         })
-        .attr("cy",function(d,i){
-          return (height-3) - (i*5);
+        .attr("y",function(d,i){
+          return (height-5) - (i*3);
         })
         .attr("fill", function(d,i){
             let color = "#c2cbce";
@@ -69,42 +70,36 @@ Template.ijkingstoets.onCreated(function(){
         });
 
         // 1 -> 7 pixels
-        svg.selectAll(".redbars").data(function(){
-          return d3.range(8);
-        })
+        svg.selectAll(".redbars").data(function(){return d3.range(8);})
         .enter()
         .append("rect") // < 8 Failed
         .attr("stroke","#ff8a80")
         .attr("fill","#ff8a80")
-        .attr("width",4)
+        .attr("width",6)
         .attr("height",1)
         .attr("transform", function(d,i){
           return "translate("+((i*7)-2)+","+height+")";  // Starts from 0, always.
         })
         .attr("class","redbars");
 
-        svg.selectAll(".yellowbars").data(function(){
-            return d3.range(2);
-        })
+        svg.selectAll(".yellowbars").data(function(){return d3.range(2);})
         .enter()
         .append("rect") // 8-9 Tolerated
         .attr("stroke","#ffcc80")
         .attr("fill","#ffcc80")
-        .attr("width", 4) // between 8 and 9 is 10% of total width.
+        .attr("width", 6) // between 8 and 9 is 10% of total width.
         .attr("height", 1)
         .attr("transform", function(d,i){
           return "translate("+(((7+i)*7)-2)+","+height+")";  // Starts from 0, always.
         })
         .attr("class","yellowbars")
 
-        svg.selectAll(".greenbars").data(function(){
-            return d3.range(12);
-        })
+        svg.selectAll(".greenbars").data(function(){ return d3.range(12);})
         .enter()
         .append("rect") // > 9 Pass 45% of histogram width.
         .attr("stroke","#a5d6a7")
         .attr("fill","#a5d6a7")
-        .attr("width", 4)
+        .attr("width", 6)
         .attr("height",1)
         .attr("transform", function(d,i){
           return "translate("+(((i+9)*7)-2)+","+height+")";  // Starts from 0, always.
