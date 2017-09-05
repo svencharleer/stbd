@@ -61,51 +61,49 @@ Template.ijkingstoets.onCreated(function(){
         .attr("fill", function(d,i){
             let color = "#c2cbce";
             if(d.grade == studentGrade) {
-              if(d.grade < 8) color = "#81a8b8"; //failed
-              else if(d.grade > 9) color = "#81a8b8"; //passed
-              else if(d.grade >= 8 && d.grade <= 9) color = "#81a8b8"; //tolerable
-              else color = "#81a8b8"; //failed
+              if(d.grade < 8) color = "#ff8a80"; //failed
+              else if(d.grade > 9) color = "#a5d6a7"; //passed
+              else if(d.grade >= 8 && d.grade <= 9) color = "#ffcc80"; //tolerable
+              else color = "#ff8a80"; //failed
             }
             return color;
         });
 
         // 1 -> 7 pixels
-        svg.selectAll(".redbars").data(function(){return d3.range(8);})
+        svg.selectAll(".redbars").data(function(){return d3.range(1);}) // 8
         .enter()
         .append("rect") // < 8 Failed
-        .attr("stroke","#ff8a80")
         .attr("fill","#ff8a80")
-        .attr("width",6)
-        .attr("height",1)
+        .attr("width",6*10)
+        .attr("height",2)
         .attr("transform", function(d,i){
           return "translate("+((i*7)-2)+","+height+")";  // Starts from 0, always.
         })
         .attr("class","redbars");
 
-        svg.selectAll(".yellowbars").data(function(){return d3.range(2);})
+        svg.selectAll(".yellowbars").data(function(){return d3.range(1);}) // 2
         .enter()
         .append("rect") // 8-9 Tolerated
         .attr("stroke","#ffcc80")
         .attr("fill","#ffcc80")
-        .attr("width", 6) // between 8 and 9 is 10% of total width.
-        .attr("height", 1)
+        .attr("width", 6*3) // between 8 and 9 is 10% of total width.
+        .attr("height", 2)
         .attr("transform", function(d,i){
-          return "translate("+(((7+i)*7)-2)+","+height+")";  // Starts from 0, always.
+          return "translate("+(((8+i)*7)-2)+","+height+")";  // Starts from 0, always.
         })
         .attr("class","yellowbars")
 
-        svg.selectAll(".greenbars").data(function(){ return d3.range(12);})
+        svg.selectAll(".greenbars").data(function(){ return d3.range(1);}) // 12
         .enter()
         .append("rect") // > 9 Pass 45% of histogram width.
         .attr("stroke","#a5d6a7")
         .attr("fill","#a5d6a7")
-        .attr("width", 6)
-        .attr("height",1)
+        .attr("width", 6*13)
+        .attr("height",2)
         .attr("transform", function(d,i){
-          return "translate("+(((i+9)*7)-2)+","+height+")";  // Starts from 0, always.
+          return "translate("+(((i+10)*7)-2)+","+height+")";  // Starts from 0, always.
         })
         .attr("class","greenbars");
-
       });
     }
   })
