@@ -6,11 +6,10 @@ var slider3 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssCl
 var slider4 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearFour');
 var slider5 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearFive');
 
-
+Template.cseplanning.csePlanning = function(){return Session.get("CSE_Planning");}
 
 Template.cseplanning.onRendered(function(){
   $('#creditsplanned').find("paper-progress").css('width', '75%');
-  Session.set('slider', slider1);
   //Bind sliders to div
   d3.select("#cseslider_y1").call(slider1);  
   d3.select("#cseslider_y2").call(slider2);
@@ -20,10 +19,8 @@ Template.cseplanning.onRendered(function(){
   d3.select("#cseslider_y4").call(slider4);
   d3.select("#cseslider_y5").call(slider5);
 
-  //You only show the planning in september
-  //You need the raw/pure credits
-  var cse1 = Session.get("CSE_september_pure");  
-  if(cse1 == undefined) return;
+  console.log(Template.cseplanning.csePlanning());
+  
 
   function totalCSE() {
     let cse  = Session.get("cse1") + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
@@ -31,49 +28,35 @@ Template.cseplanning.onRendered(function(){
     return cse;
   }
 
-  function calculateStartValues(cse1){
-    let cse_remaining = 180 - cse1;
-    let cse2 = Math.floor(cse_remaining/4);
-    let cse2a = Math.floor(cse2 /2);
-    let cse2b = cse2 - cse2a;
-    let cse3 = Math.floor(cse_remaining/3);
-    let cse4 = cse_remaining - cse3 - cse2;
-    var cse5 = 0;
-    if(cse4 > 60) {
-      cse5 = cse4 - 60;
-      cse4 = 60;
-    }
-    return [cse1, cse2, cse2a, cse2b, cse3, cse4, cse5]
-  }
-  //Define the default starting values
-  [cse1, cse2, cse2a, cse2b, cse3, cse4, cse5] = calculateStartValues(cse1);
+  
   //Put them in the sessions as a dict as final values
-  Session.set("CSE_Planning", {"cse1": cse1, "cse2": cse2, "cse3": cse3, "cse4":cse4, "cse5":cse5})
-  //Initialize the sliders
-  slider1.setValue(Math.floor(cse1));
-  slider2.setValue(Math.floor(cse2));
+  var cses = Template.cseplanning.csePlanning();
+  let cse2a = Math.floor(cses.cse2 /2);
+  let cse2b = cses.cse2 - cse2a;
+  slider1.setValue(Math.floor(cses.cse1));
+  slider2.setValue(Math.floor(cses.cse2));
   slider2a.setValue(Math.floor(cse2a));
   slider2b.setValue(Math.floor(cse2b));
-  slider3.setValue(Math.floor(cse3));
-  slider4.setValue(Math.floor(cse4));
-  slider5.setValue(Math.floor(cse5));
+  slider3.setValue(Math.floor(cses.cse3));
+  slider4.setValue(Math.floor(cses.cse4));
+  slider5.setValue(Math.floor(cses.cse5));
   //Put each of them separated in the sessions
   //These are temporary global variables
   //Needed to check which one is updated 
-  Session.set("cse1",Math.floor(cse1));
-  Session.set("cse2",Math.floor(cse2));
+  Session.set("cse1",Math.floor(cses.cse1));
+  Session.set("cse2",Math.floor(cses.cse2));
   Session.set("cse2a",Math.floor(cse2a));
   Session.set("cse2b",Math.floor(cse2b));  
-  Session.set("cse3",Math.floor(cse3));
-  Session.set("cse4",Math.floor(cse4));
-  Session.set("cse5",Math.floor(cse5));
+  Session.set("cse3",Math.floor(cses.cse3));
+  Session.set("cse4",Math.floor(cses.cse4));
+  Session.set("cse5",Math.floor(cses.cse5));
 
 
   /**
    * automatically rerun templates and other computations whenever Session variables, database queries, and other data sources change.
    */
   Tracker.autorun(function(){
-    let cses = Session.get("CSE_Planning")
+    let cses = Template.cseplanning.csePlanning();
     if(cses == undefined) return;
     Session.set("CSE_Planning", {"cse1": cses.cse1, "cse2": cses.cse2, "cse3": cses.cse3, "cse4": cses.cse4, "cse5":cses.cse5})    
     slide_update();
