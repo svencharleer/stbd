@@ -220,9 +220,10 @@ body {
 }
 .courseseparator{
   border-top:dotted 1px #DDDDDD;
-  margin-top:10px;
+  margin-top:0px;
   margin-left:30px;
   margin-right:30px;
+  width: 100%;
 }
 
 .hider{
