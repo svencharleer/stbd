@@ -56,15 +56,18 @@ Template.trajectoryperiod.onRendered(function(){
       .attr("width", "100%")
       .on("mouseover", function(d){
         svg.selectAll(".tooltip"+d.bucket).style("display", "inline");
-        element = $(instance).parent().parent().attr('id')
+        element = $(this).parent().parent().attr('id')
         clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': element + ' ' + d.bucket, 'time': Date.now() , 'action': 'hover_trajectory'} )                                                  
       })
       .on("mouseout", function(d){
         svg.selectAll(".tooltip"+d.bucket).style("display", "none");
+        element = $(this).parent().parent().attr('id')        
         clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': element + ' ' + d.bucket, 'time': Date.now() , 'action': 'leave_trajectory'} )                                                  
         
       })
       .on('click', function(d){
+        element = $(this).parent().parent().attr('id')    ;
+        console.log(element)    
         clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': element + ' ' + d.bucket, 'time': Date.now() , 'action': 'click_trajectory'} )                                                          
       })
       .attr("height",10)

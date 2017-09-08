@@ -17,10 +17,7 @@ Template.cseplanning.onRendered(function(){
   d3.select("#cseslider_y2b").call(slider2b);
   d3.select("#cseslider_y3").call(slider3);
   d3.select("#cseslider_y4").call(slider4);
-  d3.select("#cseslider_y5").call(slider5);
-
-  console.log(Template.cseplanning.csePlanning());
-  
+  d3.select("#cseslider_y5").call(slider5);  
 
   function totalCSE() {
     let cse  = Session.get("cse1") + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
