@@ -316,7 +316,7 @@ flex-direction: column;
 justify-content: flex-start;
 } 
 
-.colijkingstoets * {
+.colijkingstoets .bottom * {
 transform-origin: 0% 0%;
 }
 

@@ -46,18 +46,18 @@ rect[class^=d3slider-rect-range] {
 }
 
 /* hover */
-.default{
+.default:hover{
   fill: #537988;
 }
-.yearOne:hover, .yearTwo:hover, .yearTwoa:hover, .yearTwob:hover, .yearThree:hover{
+.dragger .yearOne:hover, .dragger .yearTwo:hover, .dragger .yearTwoa:hover, .dragger .yearTwob:hover, .dragger .yearThree:hover{
   fill: var(--TopSelected);
 }
 
-.yearFour:hover{
+.dragger .yearFour:hover{
   fill: var(--MiddleSelected);
 }
 
-.yearFive:hover{
+.dragger .yearFive:hover{
   fill: var(--LowSelected);
 }
 

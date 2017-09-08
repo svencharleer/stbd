@@ -116,6 +116,7 @@ function slide_update(){
   updatedSlider = cses.cse4 != Math.floor(slider4.value()) ? {id:4, s:slider4, v:cses.cse4, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse5]} : updatedSlider;
   updatedSlider = cses.cse5 != Math.floor(slider5.value()) ? {id:5, s:slider5, v:cses.cse5, r: [cses.cse1,cses.cse2,cses.cse3,cses.cse4]} : updatedSlider;
 
+
   if (updatedSlider != undefined){   
     values = [cses.cse1, cses.cse2, cses.cse3, cses.cse4, cses.cse5];    
     var rest = 0;
@@ -167,7 +168,9 @@ function slide_update(){
 Template.cseplanning.events({
   'click .slideflex' (event, template) {
     slide_update()
-  },
+    let value = d3.select(event.currentTarget).select('.value').select('span').text()
+    clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'slideflex_' + event.currentTarget.lastElementChild.id  , 'time': Date.now() , 'action': 'slide_' + value.substring(0,2)})
+  },    
   'mouseout .slideflex' (event,template) {
     slide_update();
   },

@@ -69,6 +69,7 @@ Template.failedCourse.events({
       template.$(".course-bottom").css("max-height", "48px");
       template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
       template.showTolerance.set(true);
+      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-top_' + this.id , 'time': Date.now() , 'action': 'visible'} )      
     } else {
       template.$(".course-bottom").css("max-height", "0px");
       template.$(".top-bar").css("box-shadow", "0px 0px 0px gainsboro");
@@ -76,6 +77,8 @@ Template.failedCourse.events({
       template.$(".course").css("transform", "scale(1)");
       template.$(".course").css("z-index", "0");
       template.showTolerance.set(false);
+      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-top_' + this.id , 'time': Date.now() , 'action': 'hide'} )
+      
     }
   },
 
@@ -84,9 +87,14 @@ Template.failedCourse.events({
     let x = document.getElementById('CSE_sept');
     x.addEventListener("webkitAnimationIteration", function(){
       $('#CSE_sept').css("animation-play-state", "paused");        
-    });     
-    
+    });   
+    clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-top_' + this.id , 'time': Date.now() , 'action': 'cannotTolerate'} )      
   },
+
+  "click .course-top.failed": function(event,template){
+    clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-top_' + this.id , 'time': Date.now() , 'action': 'failed'} )      
+  },
+
 
   "click .stay-failed": function(event, template){
     /**
@@ -116,7 +124,11 @@ Template.failedCourse.events({
         template.$(".try").css("display", "flex");
         updateSession(false, this.credits)
         template.checkFail.set(true);
+        clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'stay-failed ' + this.id , 'time': Date.now() , 'action': 'reset_tolerate'} )              
       }
+    }
+    else{
+      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'stay-failed ' + this.id, 'time': Date.now() , 'action': 'already_failed'} )                    
     }
   },
 
@@ -150,16 +162,24 @@ Template.failedCourse.events({
         template.$(".try").css("display", "none");
         template.checkFail.set(false);
         updateSession(true, this.credits);
+        clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'tolerate-course_' + this.id , 'time': Date.now() , 'action': 'tolerate'} )                    
+        
       }
       else{
         $('#tolerantiepunten').css("animation-play-state", "running");
         let x = document.getElementById('tolerantiepunten');
         x.addEventListener("webkitAnimationIteration", function(){
           $('#tolerantiepunten').css("animation-play-state", "paused");        
-        });     
+        });   
+        clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'tolerate-course_' + this.id , 'time': Date.now() , 'action': 'no_credits'} )                    
+        
       }
 
 
+    }
+    else{
+      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'tolerate-course_' + this.id , 'time': Date.now() , 'action': 'already_tolerated'} )                    
+      
     }
   }
 });

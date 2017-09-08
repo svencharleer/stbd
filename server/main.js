@@ -9,6 +9,8 @@ var Historical = new Meteor.Collection('generic_history_sept');
 //var September = new Meteor.Collection('september');
 var Ijkingstoets = new Meteor.Collection('ijkingstoets');
 var Exams = new Meteor.Collection('generic_examsuccess');
+let heatmap = new Mongo.Collection('heatmap');
+var clicks = new Mongo.Collection('clicks');
 //var TTT_analyse = new Meteor.Collection('TTT_analyse');
 //var TTT_mechanica = new Meteor.Collection('TTT_mechanica');
 //var TTT_scheikunde = new Meteor.Collection('TTT_scheikunde');
@@ -33,11 +35,19 @@ Meteor.publish('generic_students', function(who){
 Meteor.publish("ijkingstoets", function(who){
 
   return Ijkingstoets.find({student:who});
-})
+});
 
 Meteor.publish("generic_cse", function(who){
   return CSEs.find({studentid: who});
-})
+});
+
+Meteor.publish("heatmap", function(){
+  return heatmap.find({});
+});
+
+Meteor.publish("clicks", function(){
+  return clicks.find({});
+});
 
 /*Meteor.publish("TTT_analyse", function(who){
   //return TTT_analyse.find({student:620434});

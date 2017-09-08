@@ -80,10 +80,14 @@ Template.trajectory.events({
       template.$(".rowtraject").css("min-height", "0px");
       template.$(".rowtraject").css("max-height", "0px");
       template.$(".hider").removeClass("fa-chevron-up").addClass("fa-chevron-down");
+      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'h2', 'time': Date.now() , 'action': 'hide_trajectory'} )                                          
+      
     } else if(template.$(".hider").hasClass("fa-chevron-down")){
       template.$(".rowtraject").css("max-height", "104px");
       template.$(".rowtraject").css("min-height", "104px");
       template.$(".hider").removeClass("fa-chevron-down").addClass("fa-chevron-up");
+      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'h2', 'time': Date.now() , 'action': 'show_trajectory'} )                                          
+      
     }
   },
 });

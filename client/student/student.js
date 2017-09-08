@@ -13,6 +13,7 @@ Template.student.events = {
 
       //document.location.reload(true);
     }
+    clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'student '  + studentNr, 'time': Date.now() , 'action': 'student'} )                                          
   }
 };
 

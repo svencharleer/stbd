@@ -139,10 +139,16 @@ Template.future.onRendered(function(){
       .on('mouseenter', function(){
         svg.selectAll(".box").style('opacity', 0)
         barchartTooltip(svg, yValues)
+        clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': svg.attr('id') , 'time': Date.now() , 'action': 'bachelor_hover'} )                                    
       })
       .on('mouseleave', function(){
         svg.selectAll(".box").style('opacity', 1)
         d3.selectAll('.tooltip').remove();
+        clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': svg.attr('id') , 'time': Date.now() , 'action': 'bachelor_leave'} )                                    
+        
+      })
+      .on('click', function(){
+        clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': svg.attr('id') , 'time': Date.now() , 'action': 'bachelor_click'} )                            
       })
   
     if (border){

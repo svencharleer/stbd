@@ -15,6 +15,8 @@ Template.body.events({
     template.$("."+column+" .top .periode").css("visibility","hidden");
     template.$("."+column+"").css("min-width","27px");
     template.$("."+column+"").css("max-width","27px");
+    clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': element, 'time': Date.now() , 'action': 'hide_column'} )                                                  
+    
   },
   "click .fa-expand" : function(event,template){
     let element = $(event.target).attr('class').split(' ')[1];
@@ -31,31 +33,38 @@ Template.body.events({
     template.$("."+column+" .top .periode").css("visibility","visible");
     template.$("."+column+"").css("max-width","180px");
     template.$("."+column+"").css("min-width","180px");
+    clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': element, 'time': Date.now() , 'action': 'show_column'} )                                                  
+    
   }
 });
 
 Template.body.onCreated(function(){
   var instance = this;
   var handler = instance.subscribe("generic_courses",function(){});
-  console.log("body ")
+  Meteor.subscribe("heatmap");
+  Meteor.subscribe("clicks");
+  
 
-  // autorun to initialize the sliders
-  // instance.autorun(function(){
-  //   // Session.get('CSE_september_pure')
-  //   let cses = Session.get('CSE_Planning')
-  //   if (cses != undefined){
-  //     Session.set('cse2a', Math.floor(cses.cse2 /2))
-  //   }
-  //   else{
-  //     Session.set('cse2a', 0)      
-  //   }
-  // })
+  logging = function(interval) {
+    var m_pos_x,m_pos_y;
+    window.onmousemove = function(e) { m_pos_x = e.pageX;m_pos_y = e.pageY; }
+    let studentid = Session.get('student');
+    let time = Date.now();
+    setInterval( function() 
+      {heatmap.insert({"studentid" : studentid, "x": m_pos_x, "y" : m_pos_y, "time" : time })} ,
+      interval
+    );
+  };
+  logging(3000);
+
+  
+
   
   instance.autorun(function(){
     console.log("body autorun")
     $(".nostudent").hide();
     if(!$(".loading-screen").is(":visible")) $(".loading-screen").show();
-
+    Session.set('Id' , Meteor.default_connection._lastSessionId)
     Session.set("CSE_januari", 0);
     Session.set("CSE_juni", 0);
     Session.set("CSE_september", 0);
