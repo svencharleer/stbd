@@ -8,6 +8,11 @@ var slider5 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssCl
 
 Template.cseplanning.csePlanning = function(){return Session.get("CSE_Planning");}
 
+Template.cseplanning.onCreated(function(){
+
+
+})
+
 Template.cseplanning.onRendered(function(){
   $('#creditsplanned').find("paper-progress").css('width', '75%');
   //Bind sliders to div
@@ -19,21 +24,19 @@ Template.cseplanning.onRendered(function(){
   d3.select("#cseslider_y4").call(slider4);
   d3.select("#cseslider_y5").call(slider5);  
 
-  function totalCSE() {
-    let cse  = Session.get("cse1") + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
-    if (cse > 180) cse = 180;
-    return cse;
-  }
+  // function totalCSE() {
+  //   let cse  = Session.get("cse1") + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
+  //   if (cse > 180) cse = 180;
+  //   return cse;
+  // }
 
   
-  //Put them in the sessions as a dict as final values
-  var cses = Template.cseplanning.csePlanning();
-  let cse2a = Math.floor(cses.cse2 /2);
-  let cse2b = cses.cse2 - cse2a;
+  //Set sliders to initial values
+  let cses = Template.cseplanning.csePlanning();
   slider1.setValue(Math.floor(cses.cse1));
   slider2.setValue(Math.floor(cses.cse2));
-  slider2a.setValue(Math.floor(cse2a));
-  slider2b.setValue(Math.floor(cse2b));
+  slider2a.setValue(Math.floor(cses.cse2a));
+  slider2b.setValue(Math.floor(cses.cse2b));
   slider3.setValue(Math.floor(cses.cse3));
   slider4.setValue(Math.floor(cses.cse4));
   slider5.setValue(Math.floor(cses.cse5));
@@ -42,8 +45,8 @@ Template.cseplanning.onRendered(function(){
   //Needed to check which one is updated 
   Session.set("cse1",Math.floor(cses.cse1));
   Session.set("cse2",Math.floor(cses.cse2));
-  Session.set("cse2a",Math.floor(cse2a));
-  Session.set("cse2b",Math.floor(cse2b));  
+  Session.set("cse2a",Math.floor(cses.cse2a));
+  Session.set("cse2b",Math.floor(cses.cse2b));  
   Session.set("cse3",Math.floor(cses.cse3));
   Session.set("cse4",Math.floor(cses.cse4));
   Session.set("cse5",Math.floor(cses.cse5));
@@ -55,7 +58,7 @@ Template.cseplanning.onRendered(function(){
   Tracker.autorun(function(){
     let cses = Template.cseplanning.csePlanning();
     if(cses == undefined) return;
-    Session.set("CSE_Planning", {"cse1": cses.cse1, "cse2": cses.cse2, "cse3": cses.cse3, "cse4": cses.cse4, "cse5":cses.cse5})    
+    Session.set("CSE_Planning", {"cse1": cses.cse1, "cse2": cses.cse2, "cse2a": cses.cse2a, "cse2b": cses.cse2b, "cse3": cses.cse3, "cse4": cses.cse4, "cse5":cses.cse5})    
     slide_update();
     
   });
@@ -65,10 +68,13 @@ Template.cseplanning.onRendered(function(){
   slider1.callback(function(slider) {})
   slider2.callback(function(slider) {Session.set("cse2",Math.floor(slider.value()));})
   slider2a.callback(function(slider) {
+    //get the old values
     let cse2aOld = Session.get('cse2a');
-    let cse2aNew = Math.floor(slider.value());
+    let cse2bOld = Session.get('cse2b');
     let cse2Old = Session.get('cse2');
-    let cse2New = Math.floor(cse2Old + (cse2aNew - cse2aOld))
+    //calculate the new value
+    let cse2aNew = Math.floor(slider.value());
+    let cse2New = Math.floor(cse2aNew + cse2bOld);
     if (cse2New > 72) {
       slider.setValue(cse2aOld);
     }
@@ -78,13 +84,15 @@ Template.cseplanning.onRendered(function(){
     }
   })
   slider2b.callback(function(slider) {
-    let cse2bOld = Session.get('cse2b');
-    let cse2bNew = Math.floor(slider.value());
-    let cse2Old = Session.get('cse2');
-    let cse2New = cse2Old + (cse2bNew - cse2bOld);
+    //get the old values
     let cse2aOld = Session.get('cse2a');
+    let cse2bOld = Session.get('cse2b');
+    let cse2Old = Session.get('cse2');
+    //calculate the new value
+    let cse2bNew = Math.floor(slider.value());
+    let cse2New = Math.floor(cse2bNew + cse2aOld);
     if (cse2New > 72) {
-      slider.setValue(72-cse2aOld);
+      slider.setValue(cse2bOld);
     }
     else{
       Session.set("cse2b", cse2bNew);
@@ -115,7 +123,7 @@ function slide_update(){
 
 
   if (updatedSlider != undefined){   
-    values = [cses.cse1, cses.cse2, cses.cse3, cses.cse4, cses.cse5];    
+    values = [cses.cse1, cses.cse2, cses.cse2a, cses.cse2b, cses.cse3, cses.cse4, cses.cse5];    
     var rest = 0;
     for(var i=0;i<4;i++){
       rest += updatedSlider.r[i];
@@ -126,7 +134,6 @@ function slide_update(){
       let cse1 = Session.get('cse1');
       let diff = cses.cse1 - cse1;
       let totalCredits = cses.cse1 + rest;
-      // check if tolerated
       if (diff > 0 && totalCredits > 180){
         values = removeLatestCredits(values, diff);
         updateSliders(values);
@@ -140,17 +147,18 @@ function slide_update(){
       let newValue = Math.round(updatedSlider.s.value());
       let totalCredits = newValue + rest;
       let diff =  180 - totalCredits;
+      let index = calculateIndex(updatedSlider.id)
       //If you planned too much credits
       if(diff < 0) {      
-        values[updatedSlider.id-1] = newValue;
+        values[index] = newValue;
         let nbCredits = Math.abs(diff);
         values = removeLatestCredits(values, nbCredits);  
       }
       else{
-        values[updatedSlider.id-1] = newValue;  
+        values[index] = newValue;  
       }   
       updateSliders(values); 
-      Session.set("CSE_Planning", {"cse1": cses.cse1, "cse2": values[1], "cse3": values[2], "cse4": values[3], "cse5": values[4]})
+      Session.set("CSE_Planning", {"cse1": cses.cse1, "cse2": values[1], "cse2a": values[2],"cse2b": values[3],"cse3": values[4], "cse4": values[5], "cse5": values[6]})
     }  
   }
 
@@ -191,7 +199,7 @@ Template.cseplanning.helpers({
     return cses.cse1;
   },
   'jaar2': function(){
-    return Session.get("cse2");
+    return Session.get("cse2a") +  Session.get("cse2b");
   },
   'jaar2a': function(){
     return Session.get("cse2a");
@@ -210,26 +218,39 @@ Template.cseplanning.helpers({
   }
 });
 
+/**
+ * 
+ * @param {[int]} values list of values of all sliders 1,2,2a,2b,3,4,5
+ * @param {int} nbCredits nb of credits above 180
+ */
 function removeLatestCredits(values, nbCredits){
-  if (values[4] >= nbCredits){
-    values[4] -= nbCredits;
+  if (values[6] >= nbCredits){
+    values[6] -= nbCredits;
   }
-  else if ((values[3] + values[4]) > nbCredits){
-    values[3] -= (nbCredits - values[4]);    
-    values[4] = 0;
+  else if ((values[6] + values[5]) > nbCredits){
+    values[5] -= (nbCredits - values[6]);    
+    values[6] = 0;
   }
-  else if ((values[2] + values[3] + values[4] > nbCredits)){
-    values[2] -= (nbCredits - values[4] - values[3]);    
-    values[3] = 0;    
-    values[4] = 0;
+  else if ((values[4] + values[5] + values[6] > nbCredits)){
+    values[4] -= (nbCredits - values[5] - values[6]);    
+    values[5] = 0;    
+    values[6] = 0;
   }
   return values;
 }
 
 function updateSliders(values){
-  slider2.setValue(values[1]);
-  slider3.setValue(values[2] );
-  slider4.setValue(values[3] );
-  slider5.setValue(values[4] );
+  slider3.setValue(values[4] );
+  slider4.setValue(values[5] );
+  slider5.setValue(values[6] );
+}
+
+function calculateIndex(id){
+  if (id == 2){
+    return 1;
+  }
+  else{
+    return id+1;
+  }
 }
 

@@ -113,6 +113,8 @@ Helpers_GetCSE = function(studentID, semester, year)
 Helpers_CalculateStartValues = function(cse1){
   let cse_remaining = 180 - cse1;
   let cse2 = Math.floor(cse_remaining/4);
+  let cse2a = Math.floor(cse2 /2);
+  let cse2b = cse2 - cse2a;
   let cse3 = Math.floor(cse_remaining/3);
   let cse4 = cse_remaining - cse3 - cse2;
   var cse5 = 0;
@@ -120,7 +122,7 @@ Helpers_CalculateStartValues = function(cse1){
     cse5 = cse4 - 60;
     cse4 = 60;
   }
-  return {"cse1": cse1, "cse2": cse2, "cse3": cse3, "cse4":cse4, "cse5":cse5}
+  return {"cse1": cse1, "cse2": cse2, "cse2a" : cse2a, "cse2b": cse2b,  "cse3": cse3, "cse4":cse4, "cse5":cse5}
 }
 
 

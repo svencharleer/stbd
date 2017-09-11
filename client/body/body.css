@@ -329,16 +329,24 @@ transform-origin: 0% 0%;
 }
 
 .button {
-	/* box-shadow: 0px 0px 0px 0px var(--TopStudent); */
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0px;
+  line-height: 110%;
+  margin-left: 4px;
+  margin-bottom: 2px;
+  margin: 4px;
+  min-height: 32px;
+  color: #424242;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 	background-color:#E8F3F8;
 	border-radius:28px;
 	border:1px solid #424242;
-	display:flex;
 	cursor:pointer;
-	color:#424242;
 	padding:16px 31px;
-  /* text-decoration:none; */
-  height: 40px;
+  height: 45px;
   outline:0;
   margin: 10px; 
 }
