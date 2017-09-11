@@ -63,6 +63,8 @@ Template.resultGraph.onRendered(function(){
   .attr("x", 0)
   .attr("y", 0);
 
+  let template = Template.instance();
+
   svg.append("g") // Add the dots to the graph!
   .attr("class", "main-container")
   .selectAll(".dots-container")
@@ -76,4 +78,14 @@ Template.resultGraph.onRendered(function(){
   .append("g")
   .attr("class", "dots-container");
 
+  Meteor.call("getDynamicSetting", function(err, dynamic){
+    console.log(template);
+    if (!dynamic){
+      template.$(".course-bottom").css("max-height", "60px");
+      template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
+      template.show.set(true);
+    }
+  })
+
 });
+

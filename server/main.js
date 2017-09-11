@@ -251,6 +251,17 @@ Meteor.methods({
     return helper_GetDistribution({}, TTT_algebra,"grade");
 
   },
+  /**
+   * @return {boolean} dynamic: true if dashboard is dynamic
+   * 
+   */
+  getDynamicSetting: function(){
+    var dynamic = true;
+    if(Meteor.settings.public.dynamic != undefined ){
+      dynamic = Meteor.settings.public.dynamic;
+    }
+    return dynamic;
+  },
   
   /**
    * @param {studentid} who : studentid
