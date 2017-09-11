@@ -79,7 +79,6 @@ Template.resultGraph.onRendered(function(){
   .attr("class", "dots-container");
 
   Meteor.call("getDynamicSetting", function(err, dynamic){
-    console.log(template);
     if (!dynamic){
       template.$(".course-bottom").css("max-height", "60px");
       template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");

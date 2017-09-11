@@ -86,7 +86,7 @@ body {
 }
 
 .flex-5columns{
-  width: 100%;
+  width: auto;
 }
 
 .flex-column {
@@ -327,3 +327,28 @@ transform-origin: 0% 0%;
 .colttt .course .course-top .credits{
   display: none;
 }
+
+.button {
+	/* box-shadow: 0px 0px 0px 0px var(--TopStudent); */
+	background-color:#E8F3F8;
+	border-radius:28px;
+	border:1px solid #424242;
+	display:flex;
+	cursor:pointer;
+	color:#424242;
+	padding:16px 31px;
+  /* text-decoration:none; */
+  height: 40px;
+  outline:0;
+  margin: 10px; 
+}
+.button:hover {
+	background-color:var(--TopSelected);
+}
+.button:active {
+	position:relative;
+  top:1px;
+  outline:0;
+}
+
+

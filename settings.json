@@ -7,7 +7,7 @@
             "ijkingstoets_september" : true,
             "showJuni": true,
             "showSeptember" :true,
-            "dynamic": false
+            "dynamic": true
         }
 
 }

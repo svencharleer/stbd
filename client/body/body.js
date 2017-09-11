@@ -1,3 +1,6 @@
+import { ReactiveVar } from 'meteor/reactive-var'
+
+
 
 Template.body.events({
   "click .fa-compress" : function(event,template){
@@ -35,10 +38,27 @@ Template.body.events({
     template.$("."+column+"").css("min-width","180px");
     clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': element, 'time': Date.now() , 'action': 'show_column'} )                                                  
     
+  },
+
+  "click .button" : function(event, template){
+    let started = template.started.get();
+    if (started){
+      event.target.value = "Start session";
+      template.started.set(false);
+      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': "button", 'time': Date.now() , 'action': 'stop_session'} )                                                  
+      
+    }
+    else{
+      event.target.value = "Stop session";
+      template.started.set(true);
+      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': "button", 'time': Date.now() , 'action': 'start_session'} )                                                        
+    }
+    
   }
 });
 
 Template.body.onCreated(function(){
+  this.started = new ReactiveVar(false);
   var instance = this;
   var handler = instance.subscribe("generic_courses",function(){});
   Meteor.subscribe("heatmap");
@@ -345,5 +365,6 @@ Template.body.helpers({
   
 
 
-
 });
+
+
