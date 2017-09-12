@@ -61,26 +61,25 @@ Template.body.onCreated(function(){
   this.started = new ReactiveVar(false);
   var instance = this;
   var handler = instance.subscribe("generic_courses",function(){});
-  Meteor.subscribe("heatmap");
+  // Meteor.subscribe("heatmap");
   Meteor.subscribe("clicks");
 
-  logging = function(interval) {
-    var m_pos_x,m_pos_y;
-    window.onmousemove = function(e) { m_pos_x = e.pageX;m_pos_y = e.pageY; }
-    let studentid = Session.get('student');
-    let time = Date.now();
-    setInterval( function() 
-      {heatmap.insert({"studentid" : studentid, "x": m_pos_x, "y" : m_pos_y, "time" : time })} ,
-      interval
-    );
-  };
-  logging(3000);
+  // logging = function(interval) {
+  //   var m_pos_x,m_pos_y;
+  //   window.onmousemove = function(e) { m_pos_x = e.pageX;m_pos_y = e.pageY; }
+  //   let studentid = Session.get('student');
+  //   let time = Date.now();
+  //   setInterval( function() 
+  //     {heatmap.insert({"studentid" : studentid, "x": m_pos_x, "y" : m_pos_y, "time" : time })} ,
+  //     interval
+  //   );
+  // };
+  // logging(3000);
 
   
 
   
   instance.autorun(function(){
-    console.log("body autorun")
     $(".flex-container").css("display", 'flex');    
     $(".nostudent").hide();
     if(!$(".loading-screen").is(":visible")) $(".loading-screen").show();
@@ -92,8 +91,6 @@ Template.body.onCreated(function(){
     Session.set("studentName","");
     Session.set("creditsTaken", 0)
     
-    
-    //console.log("student now is " + Session.get("student"))
     var handler2 = instance.subscribe("generic_grades",Session.get("student"));
     var handler3 = instance.subscribe("ijkingstoets", Session.get("student"));
     var handler4 = instance.subscribe("generic_cse", Session.get("student"));
