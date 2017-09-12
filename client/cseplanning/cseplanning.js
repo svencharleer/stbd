@@ -33,6 +33,7 @@ Template.cseplanning.onRendered(function(){
   
   //Set sliders to initial values
   let cses = Template.cseplanning.csePlanning();
+  if (cses == undefined){return;}
   slider1.setValue(Math.floor(cses.cse1));
   slider2.setValue(Math.floor(cses.cse2));
   slider2a.setValue(Math.floor(cses.cse2a));

@@ -186,6 +186,7 @@ Template.future.onRendered(function(){
 
   //server function needs this guy's grades.
   this.autorun(function(){
+    if (Session.get('student') == undefined || Session.get('semester') == undefined){return;}
     Meteor.call("getCSEProfile", Session.get('student'), Session.get('semester'), function(err, profile){
       [highProfile, middleProfile, lowProfile] = profile;
     }),
@@ -204,7 +205,6 @@ Template.future.onRendered(function(){
 
     // $("#bachelor").empty();
     Meteor.call("getHistoricalData", Session.get("student"),function(err,data){
-
       var bachelor = {};
       var total = 0;
       bachelor = {"+0":0,"+1":0,"+2":0,"B":0,"D":0}

@@ -19,20 +19,20 @@ function(){
     }
 );
 
-/*Router.route('/:student',
+Router.route('/' + rootRoute + '/:_year/:_id',
  function(){
-      Session.set("studentName", "");
-      Session.set("student", parseInt(Router.current().params.student));
-      Session.set("Year","2014-2015");
+      Session.set("studentName", undefined);
+      Session.set("student", undefined);
+      Session.set("Year","2016-2017");
       this.render("main")
       //reset();
     }
-);*/
+);
 
 Grades = new Meteor.Collection('generic_grades');
 Ijkingstoets = new Meteor.Collection('ijkingstoets');
 Courses = new Meteor.Collection('generic_courses');
 Students = new Meteor.Collection('generic_students');
 CSEs = new Meteor.Collection('generic_cse');
-heatmap = new Mongo.Collection('heatmap');
-clicks = new Mongo.Collection('clicks');
+heatmap = new Meteor.Collection('heatmap');
+clicks = new Meteor.Collection('clicks');

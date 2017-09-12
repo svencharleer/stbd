@@ -1,16 +1,16 @@
 import { Meteor } from 'meteor/meteor';
 
 var Courses = new Meteor.Collection('generic_courses');
-var Grades = new Mongo.Collection('generic_grades');
-var CSEs = new Mongo.Collection('generic_cse');
+var Grades = new Meteor.Collection('generic_grades');
+var CSEs = new Meteor.Collection('generic_cse');
 var Students = new Mongo.Collection('generic_students');
 //var Bachelor = new Meteor.Collection('bachelor');
 var Historical = new Meteor.Collection('generic_history_sept');
 //var September = new Meteor.Collection('september');
 var Ijkingstoets = new Meteor.Collection('ijkingstoets');
 var Exams = new Meteor.Collection('generic_examsuccess');
-let heatmap = new Mongo.Collection('heatmap');
-var clicks = new Mongo.Collection('clicks');
+let heatmap = new Meteor.Collection('heatmap');
+let clicks = new Meteor.Collection('clicks');
 //var TTT_analyse = new Meteor.Collection('TTT_analyse');
 //var TTT_mechanica = new Meteor.Collection('TTT_mechanica');
 //var TTT_scheikunde = new Meteor.Collection('TTT_scheikunde');
