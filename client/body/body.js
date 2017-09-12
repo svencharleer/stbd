@@ -63,7 +63,6 @@ Template.body.onCreated(function(){
   var handler = instance.subscribe("generic_courses",function(){});
   Meteor.subscribe("heatmap");
   Meteor.subscribe("clicks");
-  
 
   logging = function(interval) {
     var m_pos_x,m_pos_y;
@@ -105,9 +104,10 @@ Template.body.onCreated(function(){
       var studentName = Students.findOne({studentid: studentID});
       console.log(studentName);
       if(studentName == undefined) {
-
         if($(".loading-screen")) $(".loading-screen").hide();
         $(".nostudent").show();
+        $(".flex-container").css("display", 'none');
+        
         return;
       }
       //console.log("student now is " + studentName.voornaam + " " + studentName.familienaam)
