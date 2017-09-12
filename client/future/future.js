@@ -143,7 +143,7 @@ Template.future.onRendered(function(){
       })
       .on('mouseleave', function(){
         svg.selectAll(".box").style('opacity', 1)
-        d3.selectAll('.tooltipHistogram').remove();
+        svg.selectAll('.tooltipHistogram').remove();
         clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': svg.attr('id') , 'time': Date.now() , 'action': 'bachelor_leave'} )                                    
         
       })
