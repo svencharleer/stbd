@@ -7,6 +7,8 @@
 # first argument = absolute path to data
 # second argument = test (1) or not (0)
 #
+# Result: data loaded in database
+#
 # Example
 # ./automated.sh /Users/name/Documents/Able/Data/ 1
 #

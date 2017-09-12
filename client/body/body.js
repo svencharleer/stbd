@@ -81,6 +81,7 @@ Template.body.onCreated(function(){
   
   instance.autorun(function(){
     console.log("body autorun")
+    $(".flex-container").css("display", 'flex');    
     $(".nostudent").hide();
     if(!$(".loading-screen").is(":visible")) $(".loading-screen").show();
     Session.set('Id' , Meteor.default_connection._lastSessionId)

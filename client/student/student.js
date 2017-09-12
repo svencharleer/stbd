@@ -3,11 +3,12 @@ Template.student.events = {
     if (evt.which === 13) {
       var studentNr = template.find("input").value;
 
+
       rootRoute = Meteor.settings.public.rootroute == undefined ? "dev" : Meteor.settings.public.rootroute;
 //      Meteor.subscribe("studentgrades",Session.get("student"));
 //      Meteor.subscribe("ijkingstoets", Session.get("student"));
       var year = Session.get("StartYear");
-      if(year == undefined) year = 2015;
+      if(year == undefined) year = 2016;
       Router.go("/" + rootRoute + "/" + year + "/" + studentNr);
 
 
