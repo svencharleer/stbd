@@ -1,10 +1,10 @@
 Template.future.helpers({
   limit1: function(){
-    return Session.get('limit1');
+    return Math.round(Session.get('limit1'));
   }  ,
 
   limit2: function(){
-    return Session.get('limit2');
+    return Math.round(Session.get('limit2'));
   }
 
 });
@@ -85,8 +85,8 @@ Template.future.onRendered(function(){
       let chart = svg.append('svg')
         .attr('width', width)
         .attr('height', height)
-        .attr('class', 'tooltip')
-        .attr('id', 'tooltip')
+        .attr('class', 'tooltipHistogram')
+        .attr('id', 'tooltipHistogram')
         .style('opacity', 1)
         ;
       y.domain([0, 100]);
@@ -143,7 +143,7 @@ Template.future.onRendered(function(){
       })
       .on('mouseleave', function(){
         svg.selectAll(".box").style('opacity', 1)
-        d3.selectAll('.tooltip').remove();
+        d3.selectAll('.tooltipHistogram').remove();
         clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': svg.attr('id') , 'time': Date.now() , 'action': 'bachelor_leave'} )                                    
         
       })
