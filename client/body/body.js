@@ -90,6 +90,7 @@ Template.body.onCreated(function(){
     Session.set("selectedCourses", undefined);
     Session.set("studentName","");
     Session.set("creditsTaken", 0)
+    Session.set("toleranceCredits", 12)
     
     var handler2 = instance.subscribe("generic_grades",Session.get("student"));
     var handler3 = instance.subscribe("ijkingstoets", Session.get("student"));
@@ -188,6 +189,9 @@ Template.body.onCreated(function(){
 
 
 Template.body.helpers({
+  toleranceCredits(){
+    return Session.get('toleranceCredits');
+  },
   courses() {
     return Courses.find({});
   },
