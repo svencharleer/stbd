@@ -34,5 +34,5 @@ Ijkingstoets = new Meteor.Collection('ijkingstoets');
 Courses = new Meteor.Collection('generic_courses');
 Students = new Meteor.Collection('generic_students');
 CSEs = new Meteor.Collection('generic_cse');
-// heatmap = new Meteor.Collection('heatmap');
+heatmap = new Meteor.Collection('heatmap');
 clicks = new Meteor.Collection('clicks');

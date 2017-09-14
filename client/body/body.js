@@ -54,18 +54,48 @@ Template.body.events({
       clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': "button", 'time': Date.now() , 'action': 'start_session'} )                                                        
     }
     
+  },
+
+  "mousemove .flex-container *" : function(event, template){
+    // console.log(event.clientX)
+    // Session.get('mouseX')
+    let currentX = Session.get('mouseX');
+    let currentY = Session.get('mouseY');  
+    let lastMove = Session.get('lastMove'); 
+    let diffX =  Math.abs(event.clientX - currentX);
+    let diffY =  Math.abs(event.clientY - currentY);
+    let diffTime = Math.abs(Date.now()-lastMove)
+    if ( (diffX > 20 || diffY > 20) && diffTime > 5000){
+      Session.set('mouseX', event.clientX);
+      Session.set('mouseY', event.clientY);
+      heatmap.insert({'session': Session.get('Id'), "studentid" : Session.get('student'), "x": event.clientX, "y" : event.clientY, "time" : Date.now() })  
+      Session.set('lastMove', Date.now())  
+      console.log("log")  
+    }
+    else if ( (diffX > 150 || diffY > 100)){
+      Session.set('mouseX', event.clientX);
+      Session.set('mouseY', event.clientY);
+      heatmap.insert({'session': Session.get('Id'), "studentid" : Session.get('student'), "x": event.clientX, "y" : event.clientY, "time" : Date.now() })  
+      Session.set('lastMove', Date.now())  
+      console.log("log")  
+    }
   }
+
 });
 
 Template.body.onCreated(function(){
   this.started = new ReactiveVar(false);
   var instance = this;
   var handler = instance.subscribe("generic_courses",function(){});
-  // Meteor.subscribe("heatmap");
+  
   Meteor.subscribe("clicks");
+  Session.set('mouseX', 0);
+  Session.set('mouseY', 0);
+  Session.set('lastMove', Date.now())
 
+  Meteor.subscribe("heatmap");
   // logging = function(interval) {
-  //   var m_pos_x,m_pos_y;
+  //      var m_pos_x,m_pos_y;
   //   window.onmousemove = function(e) { m_pos_x = e.pageX;m_pos_y = e.pageY; }
   //   let studentid = Session.get('student');
   //   let time = Date.now();
