@@ -25,4 +25,3 @@ session@1.1.7
 iron:router
 tarang:ssl
 dynamic-import
-gwendall:body-events
