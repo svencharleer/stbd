@@ -17,12 +17,12 @@ Template.resultGraph.helpers({
 });
 
 Template.resultGraph.events({
-  "click .course-top": function(event,template){
+  "click .course-top": function(event,template){    
     if(!template.show.get()) {
       template.$(".course-bottom").css("max-height", "60px");
       template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
       template.show.set(true);
-      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-top_' + this.id , 'time': Date.now() , 'action': 'visible'} )
+      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-top_' + this.id , 'time': Date.now() , 'action': 'visible' + this.credits} )
     } else {
       template.$(".course-bottom").css("max-height", "0px");
       template.$(".top-bar").css("box-shadow", "0px 0px 0px gainsboro");
@@ -30,7 +30,7 @@ Template.resultGraph.events({
       template.$(".course").css("transform", "scale(1)");
       template.$(".course").css("z-index", "0");
       template.show.set(false);
-      clicks.insert({'session': Session.get('Id') , 'studentid': Session.get('student') , 'element': 'course-top_' + this.id , 'time': Date.now() , 'action': 'hide'} )
+      clicks.insert({'session': Session.get('Id') , 'studentid': Session.get('student') , 'element': 'course-top_' + this.id , 'time': Date.now() , 'action': 'hide' + this.credits} )
       
     }
   },
@@ -40,13 +40,13 @@ Template.resultGraph.events({
       template.$(".course").css("z-index", "1000");
       template.$(".course").css("box-shadow", "1px 1px 5px gainsboro");
       template.zoom.set(true);
-      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-bottom_' + this.id , 'time': Date.now() , 'action': 'zoom'} )
+      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-bottom_' + this.id , 'time': Date.now() , 'action': 'zoom' + this.credits} )
     } else {
       template.$(".course").css("transform", "scale(1)");
       template.$(".course").css("z-index", "0");
       template.$(".course").css("box-shadow", "0px 0px 0px gainsboro");
       template.zoom.set(false);
-      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-bottom_' + this.id , 'time': Date.now() , 'action': 'reset_zoom'} )
+      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-bottom_' + this.id , 'time': Date.now() , 'action': 'reset_zoom' + this.credits} )
     }
     
   }

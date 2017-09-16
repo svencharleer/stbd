@@ -93,17 +93,6 @@ Template.body.onCreated(function(){
   Session.set('lastMove', Date.now())
 
   Meteor.subscribe("heatmap");
-  // logging = function(interval) {
-  //      var m_pos_x,m_pos_y;
-  //   window.onmousemove = function(e) { m_pos_x = e.pageX;m_pos_y = e.pageY; }
-  //   let studentid = Session.get('student');
-  //   let time = Date.now();
-  //   setInterval( function() 
-  //     {heatmap.insert({"studentid" : studentid, "x": m_pos_x, "y" : m_pos_y, "time" : time })} ,
-  //     interval
-  //   );
-  // };
-  // logging(3000);
 
   
 
