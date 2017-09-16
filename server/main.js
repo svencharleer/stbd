@@ -715,16 +715,28 @@ var helper_GetCreditsTakenSemester =  function(who, semester){
   studentGrades.forEach(function(g){
     studentCourseIds.push(g.courseid);
   })
-
+  
   // Find all courses of the student
   var coursesStudent = Courses.find({
     courseid:{$in:studentCourseIds},
     semester: semester
   }).fetch();
 
+  //Find all courses that taking a year
+  var yearcoursesStudent = Courses.find({
+    courseid:{$in:studentCourseIds},
+    semester: 0
+  }).fetch();
+
   coursesStudent.forEach(function(c){
     credits += c.credits
   });
+  if (semester == 2){
+    yearcoursesStudent.forEach(function(c){
+      credits += c.credits
+    });
+  }
+  
   return credits;
 
 

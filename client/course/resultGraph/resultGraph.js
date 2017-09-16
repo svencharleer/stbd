@@ -40,13 +40,13 @@ Template.resultGraph.events({
       template.$(".course").css("z-index", "1000");
       template.$(".course").css("box-shadow", "1px 1px 5px gainsboro");
       template.zoom.set(true);
-      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-top_' + this.id , 'time': Date.now() , 'action': 'zoom'} )
+      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-bottom_' + this.id , 'time': Date.now() , 'action': 'zoom'} )
     } else {
       template.$(".course").css("transform", "scale(1)");
       template.$(".course").css("z-index", "0");
       template.$(".course").css("box-shadow", "0px 0px 0px gainsboro");
       template.zoom.set(false);
-      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-top_' + this.id , 'time': Date.now() , 'action': 'reset_zoom'} )
+      clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'course-bottom_' + this.id , 'time': Date.now() , 'action': 'reset_zoom'} )
     }
     
   }

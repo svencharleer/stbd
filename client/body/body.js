@@ -6,7 +6,7 @@ Template.body.events({
   "click .fa-compress" : function(event,template){
     let element = $(event.target).attr('class').split(' ')[1];
     let column  = element.replace(/.*-/,'');
-
+    console.log(element)
     template.$("."+element).removeClass("fa-compress").addClass("fa-expand");
     template.$("."+column+" .vertical-title").fadeIn();
     template.$("."+column+" .bottom").css("visibility","hidden");
@@ -70,20 +70,19 @@ Template.body.events({
       Session.set('mouseY', event.clientY);
       heatmap.insert({'session': Session.get('Id'), "studentid" : Session.get('student'), "x": event.clientX, "y" : event.clientY, "time" : Date.now() })  
       Session.set('lastMove', Date.now())  
-      console.log("log")  
     }
     else if ( (diffX > 150 || diffY > 100)){
       Session.set('mouseX', event.clientX);
       Session.set('mouseY', event.clientY);
       heatmap.insert({'session': Session.get('Id'), "studentid" : Session.get('student'), "x": event.clientX, "y" : event.clientY, "time" : Date.now() })  
       Session.set('lastMove', Date.now())  
-      console.log("log")  
     }
   }
 
 });
 
 Template.body.onCreated(function(){
+  console.log("Body created")
   this.started = new ReactiveVar(false);
   var instance = this;
   var handler = instance.subscribe("generic_courses",function(){});
@@ -244,6 +243,9 @@ Template.body.helpers({
     var results = [];
     var searchTerm = {semester:semester};
     var courses = Courses.find(searchTerm, {sort:{semester:1, coursename:1}});
+    if (semester == 2){
+      courses = Courses.find({$or:[{semester:0},{semester:2}]},{sort:{semester:1, coursename:1}});
+    }
     var testStudent = Grades.findOne();
     if(testStudent == undefined || testStudent.studentid != Session.get("student"))
     {
@@ -273,9 +275,13 @@ Template.body.helpers({
       return results;
 
   },
+
   coursesLeft(sem){
     var results = [];
     var courses = Courses.find({semester:sem},{sort:{semester:1, coursename:1}});
+    if (sem == 2){
+      courses = Courses.find({$or:[{semester:0},{semester:2}]},{sort:{semester:1, coursename:1}});
+    }
     var testStudent = Grades.findOne();
     if(testStudent == undefined || testStudent.studentid != Session.get("student"))
     {
@@ -283,6 +289,7 @@ Template.body.helpers({
       return results;
     }
     courses.forEach(function(j){
+      // console.log(j)
       var search = {};
       var result = Grades.findOne({courseid:j.courseid});
       if(result == undefined) return;
@@ -307,6 +314,8 @@ Template.body.helpers({
       );
 
     })
+    // console.log('results')
+    // console.log(results)
     return results;
   },
 
