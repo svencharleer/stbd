@@ -6,7 +6,6 @@ Template.body.events({
   "click .fa-compress" : function(event,template){
     let element = $(event.target).attr('class').split(' ')[1];
     let column  = element.replace(/.*-/,'');
-    console.log(element)
     template.$("."+element).removeClass("fa-compress").addClass("fa-expand");
     template.$("."+column+" .vertical-title").fadeIn();
     template.$("."+column+" .bottom").css("visibility","hidden");
