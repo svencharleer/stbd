@@ -25,6 +25,12 @@ def parseLine(line):
 def writeToDict(startTime, endTime, name, resource):
     df.append(dict(Task=name + '_' + resource, Start= startTime, Finish= endTime, Resource=resource))
 
+def getEndTime(path):
+    f = open(path, 'r')
+    for line in f:
+        [time, value] = parseLine(line)
+    return time
+
 def visualiseSession(path, name, resource):
     # Open file
     f = open(path, 'r')
@@ -34,16 +40,20 @@ def visualiseSession(path, name, resource):
     begin = False
     # startTime in ms as int
     startTime = parseDate(startSessionTime)
+    endSessionTime = parseDate(getEndTime(path) - startSessionTime + 82800000)
+    totalSessionTime = endSessionTime - parseDate(82800000)
+    totalSessionTimeS = totalSessionTime.total_seconds()
+
     totalTime = 0;
     for line in f:
         [time, value] = parseLine(line)
         if value == 'dbb' and not begin:
             begin = True
-            startTime = time - startSessionTime + 82800000
-            startTime = parseDate(startTime)
+            startTime = (time - startSessionTime)/ totalSessionTimeS
+            startTime = parseDate(startTime*5000)
         elif value == 'dbe' and begin:
-            endTime = time - startSessionTime + 82800000
-            endTime = parseDate(endTime)
+            endTime = (time - startSessionTime) / totalSessionTimeS
+            endTime = parseDate(endTime*5000)
             elapsedTime = endTime - startTime
             diff = elapsedTime.total_seconds()
             totalTime += diff
@@ -51,16 +61,16 @@ def visualiseSession(path, name, resource):
             begin = False
     # if i forgot the last dbe
     if begin:
-        endTime = time - startSessionTime + 82800000
-        endTime = parseDate(endTime)
+        endTime = (time - startSessionTime) / totalSessionTimeS
+        endTime = parseDate(endTime*5000)
         writeToDict(startTime, endTime, name, resource)
-    endSessionTime = parseDate(time - startSessionTime + 82800000)
-    endStopbar = parseDate(time - startSessionTime + 10000 + 82800000)
-    df.append(dict(Task=name + '_' + resource, Start= endSessionTime, Finish= endStopbar, Resource="Stop"))
-    totalSessionTime = endSessionTime - parseDate(82800000)
-    totalSessionTimeS = totalSessionTime.total_seconds()
-    timeUse.append(totalTime)
-    percentageUse.append(round(totalTime/totalSessionTimeS,2))
+
+    # endStopbar = parseDate(time - startSessionTime + 10000 + 82800000)
+    # df.append(dict(Task=name + '_' + resource, Start= endSessionTime, Finish= endStopbar, Resource="Stop"))
+    # totalSessionTime = endSessionTime - parseDate(82800000)
+    # totalSessionTimeS = totalSessionTime.total_seconds()
+    # timeUse.append(totalTime)
+    # percentageUse.append(round(totalTime/totalSessionTimeS,2))
 
 df = []
 timeUse = []
