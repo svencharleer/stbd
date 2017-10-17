@@ -56,42 +56,50 @@ Template.body.events({
   },
 
   "mousemove .flex-container *" : function(event, template){
-    // console.log(event.clientX)
-    // Session.get('mouseX')
-    let currentX = Session.get('mouseX');
-    let currentY = Session.get('mouseY');  
-    let lastMove = Session.get('lastMove'); 
-    let diffX =  Math.abs(event.clientX - currentX);
-    let diffY =  Math.abs(event.clientY - currentY);
-    let diffTime = Math.abs(Date.now()-lastMove)
-    if ( (diffX > 20 || diffY > 20) && diffTime > 5000){
-      Session.set('mouseX', event.clientX);
-      Session.set('mouseY', event.clientY);
-      heatmap.insert({'session': Session.get('Id'), "studentid" : Session.get('student'), "x": event.clientX, "y" : event.clientY, "time" : Date.now() })  
-      Session.set('lastMove', Date.now())  
+    if (Meteor.settings.public.logging){
+      // console.log(event.clientX)
+      // Session.get('mouseX')
+      let currentX = Session.get('mouseX');
+      let currentY = Session.get('mouseY');  
+      let lastMove = Session.get('lastMove'); 
+      let diffX =  Math.abs(event.clientX - currentX);
+      let diffY =  Math.abs(event.clientY - currentY);
+      let diffTime = Math.abs(Date.now()-lastMove)
+      if ( (diffX > 20 || diffY > 20) && diffTime > 5000){
+        Session.set('mouseX', event.clientX);
+        Session.set('mouseY', event.clientY);
+        heatmap.insert({'session': Session.get('Id'), "studentid" : Session.get('student'), "x": event.clientX, "y" : event.clientY, "time" : Date.now() })  
+        Session.set('lastMove', Date.now())  
+      }
+      else if ( (diffX > 150 || diffY > 100)){
+        Session.set('mouseX', event.clientX);
+        Session.set('mouseY', event.clientY);
+        heatmap.insert({'session': Session.get('Id'), "studentid" : Session.get('student'), "x": event.clientX, "y" : event.clientY, "time" : Date.now() })  
+        Session.set('lastMove', Date.now())  
+      }
     }
-    else if ( (diffX > 150 || diffY > 100)){
-      Session.set('mouseX', event.clientX);
-      Session.set('mouseY', event.clientY);
-      heatmap.insert({'session': Session.get('Id'), "studentid" : Session.get('student'), "x": event.clientX, "y" : event.clientY, "time" : Date.now() })  
-      Session.set('lastMove', Date.now())  
-    }
+    
   }
 
 });
 
 Template.body.onCreated(function(){
-  console.log("Body created")
   this.started = new ReactiveVar(false);
   var instance = this;
-  var handler = instance.subscribe("generic_courses",function(){});
-  
-  Meteor.subscribe("clicks");
-  Session.set('mouseX', 0);
-  Session.set('mouseY', 0);
-  Session.set('lastMove', Date.now())
 
-  Meteor.subscribe("heatmap");
+  console.log(Meteor.settings.public.logging)
+
+  var handler = instance.subscribe("generic_courses",function(){});
+  Meteor.subscribe("clicks");
+  
+  if (Meteor.settings.public.logging){
+    $(".button").css("display", 'flex');        
+    Session.set('mouseX', 0);
+    Session.set('mouseY', 0);
+    Session.set('lastMove', Date.now())
+    Meteor.subscribe("heatmap");
+  }
+  
 
   
 
@@ -115,10 +123,8 @@ Template.body.onCreated(function(){
     var handler8 = instance.subscribe("generic_students");
     if(handler2.ready() && handler3.ready() && handler8.ready() && handler4.ready())
     {
-      console.log(Session.get("student"));
       var studentID = Session.get("student");
       var studentName = Students.findOne({studentid: studentID});
-      console.log(studentName);
       if(studentName == undefined) {
         if($(".loading-screen")) $(".loading-screen").hide();
         $(".nostudent").show();
@@ -126,7 +132,6 @@ Template.body.onCreated(function(){
         
         return;
       }
-      //console.log("student now is " + studentName.voornaam + " " + studentName.familienaam)
       Session.set("studentName",studentName.givenname + " " + studentName.surname );
       var semester = 1;
       if (Meteor.settings.public.showJuni){
@@ -152,10 +157,6 @@ Template.body.onCreated(function(){
       Session.set("CSE_juni_pure", Helpers_CalculateCSE(2,year,true));
       Session.set("CSE_september_pure", Helpers_CalculateCSE(3,year,true));
       Session.set("CSE_Planning", Helpers_CalculateStartValues(Session.get('CSE_september_pure')));
-      
-      
-      
-
       Session.set("CSE_TTT", Helpers_GetTotalPointForPeriod(0,year));
       var score = Ijkingstoets.findOne();
       var iscore = 0;
@@ -378,9 +379,9 @@ Template.body.helpers({
   CSE_september() { return {percent: Session.get("CSE_september"), raw:  Session.get("CSE_september_pure"), credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1]} },
 
   Fails() {
-    //console.log("fail fetch of " + Session.get("Fails"))
     return Session.get("Fails");
   },
+
   ShowJuni(){
     return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showJuni : false;
 
@@ -389,6 +390,7 @@ Template.body.helpers({
     return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showSeptember : false;
 
   },
+  
   
 
 

@@ -1,44 +1,56 @@
 <body>
   <div class="loading-screen">
-    <div style="display: flex; flex-direction: column; align-items: center;">
+    <div>
       <paper-spinner alt="Loading Dashboard" active></paper-spinner>
-      <h1 style="color:#7c7c7c; font-size: 16px;">Loading Dashboard</h1>
+      <h1>Loading Dashboard</h1>
     </div>
   </div>
+  
   <div class="nostudent">
-    <div style="display: flex; flex-direction: column; align-items: center;">
-      <h1 style="color:#7c7c7c; font-size: 16px;">Geen student gevonden</h1>
+    <div>
+      <h1>Geen student gevonden</h1>
     </div>
   </div>
   {{> student}}
-  <div class="flex-container" >
-    <div class="flex-row">
-      {{#unless ShowSeptember}}
-      <div class="flex-5columns">
-        {{> trajectory}}
-        {{#if Fails}}
-        {{/if}}       
-      </div>
-      <div class="flex-column flex-september colfail">
-        {{> september}}
-      </div>
-      {{/unless}}
-      {{#if ShowSeptember}}
-      <div class="flex-5columns">
-        {{> trajectory}}
-        {{#if Fails}}
-        {{/if}}
-      </div>
-      {{/if}}
 
-      {{#unless ShowSeptember}}
-      <div class="flex-column flex-planning colfail2">
-        {{#if Template.subscriptionsReady}}
-        {{> planning}}
+
+  <div class="flex-container" >
+    <!--Upper row-->
+    <div class="flex-row">
+      {{#if ShowSeptember}}
+        {{#if Fails}}
+          <div class="flex-5columns">
+            {{> trajectory}}
+          </div>
+        {{else}}
+          <div class="flex-5columns">
+            {{> trajectory}}
+          </div>
         {{/if}}
-      </div>
-      {{/unless}}
-      <input type="button" value="Start session" class="button"  id="startButton">
+      {{else if ShowJuni}}
+        {{#if Fails}}
+            <div class="flex-4columns">
+              {{> trajectory}}
+            </div>
+            <div class="flex-column flex-september colfail">
+              {{> september}}
+            </div>
+        {{else}}
+          <div class="flex-4columns">
+            {{> trajectory}}
+          </div>
+        {{/if}}          
+      {{else}}
+        {{#if Fails}}
+          <div class="flex-3columns">
+              {{> trajectory}}
+          </div>
+        {{else}}
+          <div class="flex-3columns">
+              {{> trajectory}}
+          </div>
+        {{/if}}
+      {{/if}}
     </div>
 
     <!-- Lower row -->

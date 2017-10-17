@@ -12,6 +12,9 @@ body {
 }
 
 .loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: #424242;
   position: absolute;
   width: 100%;
@@ -21,6 +24,26 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.nostudent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #424242;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* background: white; */
+    z-index: 1000;
+
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.h1{
+    color:#7c7c7c;
+    font-size: 16px;
 }
 
 .flex-container {
@@ -205,19 +228,7 @@ body {
   text-align: center;
 }
 
-.nostudent{
-  color: #424242;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  /* background: white; */
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 5%;
-  display:none;
-}
+
 .courseseparator{
   border-top:dotted 1px #DDDDDD;
   margin-top:0px;
@@ -338,23 +349,23 @@ transform-origin: 0% 0%;
   margin: 4px;
   min-height: 32px;
   color: #424242;
-  display: flex;
+  display: none;
   align-items: center;
   overflow: hidden;
-	background-color:#E8F3F8;
-	border-radius:28px;
-	border:1px solid #424242;
-	cursor:pointer;
-	padding:16px 31px;
+    background-color:#E8F3F8;
+    border-radius:28px;
+    border:1px solid #424242;
+    cursor:pointer;
+    padding:16px 31px;
   height: 45px;
   outline:0;
   margin: 10px; 
 }
 .button:hover {
-	background-color:var(--TopSelected);
+    background-color:var(--TopSelected);
 }
 .button:active {
-	position:relative;
+    position:relative;
   top:1px;
   outline:0;
 }
