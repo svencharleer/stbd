@@ -1,13 +1,6 @@
 Template.trajectory.helpers({
   periods() {
-    var r = [{period: "ijkingstoets"}, {period: "TTT"}, {period: "januari"}];
-    if (Meteor.settings.public.showJuni == true) {
-      r.push({period: "juni"})
-    }
-    if (Meteor.settings.public.showSeptember == true) {
-      r.push({period: "september"})
-    }
-    return r;
+    return [{period: this.period}];
   },
   update() {
     //console.log("updating");

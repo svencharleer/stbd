@@ -7,6 +7,7 @@ Template.body.events({
     let column = element.replace(/.*-/, '');
     template.$("." + element).removeClass("fa-compress").addClass("fa-expand");
     template.$("." + column + " .vertical-title").fadeIn();
+    template.$("." + column + " .traject").css("visibility", "hidden");
     template.$("." + column + " .bottom").css("visibility", "hidden");
     template.$("." + column + " .top").css("border-bottom", "0px dotted #ececec");
     template.$("." + column + " .top .column-title").css("visibility", "hidden");
@@ -31,6 +32,7 @@ Template.body.events({
 
     template.$("." + element).removeClass("fa-expand").addClass("fa-compress");
     template.$("." + column + " .vertical-title").fadeOut();
+    template.$("." + column + " .traject").css("visibility", "visible");
     template.$("." + column + " .bottom").css("visibility", "visible");
     template.$("." + column + " .top").css("border-bottom", "1px dotted #ececec");
     template.$("." + column + " .top .column-title").css("visibility", "visible");
@@ -429,6 +431,11 @@ Template.body.helpers({
     return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showSeptember : false;
 
   },
+  'GetPeriod':function(number){
+    var r = [{period: "ijkingstoets"}, {period: "TTT"}, {period: "januari"}, {period: "juni"}, {period: "september"}]
+    return r[number]
+  }
+
 
 
 });
