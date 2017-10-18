@@ -1,37 +1,37 @@
 <template name="failedCourse">
-  <div id="{{id}}_failed" class="course failed-course {{color}}" style="border-color: {{color}}; min-height: 50px;">
-    <div class="course-top {{color}} {{canTolerate}}">
-      <div class="name">{{name}}</div>
-      <div class="top-bar {{color}} {{canTolerate}} ">
-        <div class="grade">
-          <div class="try {{try1.bold}}">{{try1.grade}} |  </div>
-          <div class="try {{try2.bold}}">&nbsp; {{try2.grade}}</div>
-          <div class="getolereerd">Getolereerd</div>          
-        </div>
+    <div id="{{id}}_failed" class="course failed-course {{color}}" style="border-color: {{color}}; min-height: 50px;">
+        <div class="course-top {{color}} {{canTolerate}}">
+            <div class="name">{{name}}</div>
+            <div class="top-bar {{color}} {{canTolerate}} ">
+                <div class="grade">
+                    <div class="try {{try1.bold}}">{{try1.grade}} |</div>
+                    <div class="try {{try2.bold}}">&nbsp; {{try2.grade}}</div>
+                    <div class="getolereerd">Getolereerd</div>
+                </div>
 
-        <div class="credits">
-          {{credits}}<span>stp</span>
+                <div class="credits">
+                    {{credits}}<span>stp</span>
+                </div>
+            </div>
+            <paper-ripple></paper-ripple>
         </div>
-      </div>
-      <paper-ripple></paper-ripple>
+        <div class="course-bottom tolerate {{color}} {{canTolerate}}">
+            <div class='options-container'>
+                <div id="stay-failed" class='tolerate-checkbox stay-failed'>
+                    <div class='checkdot check-fail'>
+                        <a class="fa fa-check"></a>
+                    </div>
+                    <span>Opnieuw afleggen</span>
+                    <paper-ripple></paper-ripple>
+                </div>
+                <div id="tolerate-course" class='tolerate-checkbox tolerate-course'>
+                    <div class='checkdot check-tolerate'>
+                        <a class="fa fa-check"></a>
+                    </div>
+                    <span>Tolereren</span>
+                    <paper-ripple></paper-ripple>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="course-bottom tolerate {{color}} {{canTolerate}}">
-      <div class='options-container'>
-        <div id="stay-failed" class='tolerate-checkbox stay-failed'>
-          <div class='checkdot check-fail'>
-            <a class="fa fa-check"></a>
-          </div>
-          <span>Opnieuw afleggen</span>
-          <paper-ripple></paper-ripple>
-        </div>
-        <div id="tolerate-course" class='tolerate-checkbox tolerate-course'>
-          <div class='checkdot check-tolerate'>
-            <a class="fa fa-check"></a>
-          </div>
-          <span>Tolereren</span>
-          <paper-ripple></paper-ripple>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>

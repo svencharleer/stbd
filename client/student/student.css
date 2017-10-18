@@ -1,26 +1,26 @@
-#student{
-  width: 100%;
-  z-index: 1;
-  background: #fafafa;
-  padding: 4px;
-  border-bottom: 1px solid #ececec;
-  display: flex;
-  align-items: center;
-  cursor: default;
+#student {
+    width: 100%;
+    z-index: 1;
+    background: #fafafa;
+    padding: 4px;
+    border-bottom: 1px solid #ececec;
+    display: flex;
+    align-items: center;
+    cursor: default;
 }
 
-#student input{
-  width:80px;
-  margin-left:  8px;
-  margin-right: 8px;
+#student input {
+    width: 80px;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 #student .fa {
-  margin-left:  8px;
-  margin-right: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 #student span {
-  font-weight: 300;
-  color: #424242;
+    font-weight: 300;
+    color: #424242;
 }

@@ -1,170 +1,177 @@
-:root{
-  --TopStudent:     rgba(165,214,167,1);
-  --TopSelected :   rgb(125, 214, 129);
-  --MiddleStudent:  rgba(128,222,234,1);
-  --MiddleSelected: rgb(83, 216, 232);
-  --LowStudent:    rgba(159,168,218,1);
-  --LowSelected:   rgb(119, 133, 215);
-  --BadStudent:    rgba(255,193,227,1);
-  --BadSelected:   rgb(246, 122, 190);
+:root {
+    --TopStudent: rgba(165, 214, 167, 1);
+    --TopSelected: rgb(125, 214, 129);
+    --MiddleStudent: rgba(128, 222, 234, 1);
+    --MiddleSelected: rgb(83, 216, 232);
+    --LowStudent: rgba(159, 168, 218, 1);
+    --LowSelected: rgb(119, 133, 215);
+    --BadStudent: rgba(255, 193, 227, 1);
+    --BadSelected: rgb(246, 122, 190);
 }
 
-.fields svg { overflow: hidden;}
+.fields svg {
+    overflow: hidden;
+}
 
-.profile{
-  margin: 10px;
-  display: flex;
-  flex-wrap: wrap;
+.profile {
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
 
-  text-align:center;
-  font-weight: 300;
-  text-transform: lowercase;
-  font-size:1em;
-  width: 100%;
-  color: #424242;
-  min-height: 21px;
+    text-align: center;
+    font-weight: 300;
+    text-transform: lowercase;
+    font-size: 1em;
+    width: 100%;
+    color: #424242;
+    min-height: 21px;
 }
 
 .box {
-  width: 8px;
-  height: 8px;
+    width: 8px;
+    height: 8px;
 }
 
 /* Students getting bachelor in 3 years */
-.topstudent{
-  fill: var(--TopStudent);
+.topstudent {
+    fill: var(--TopStudent);
 }
 
 .selected.topstudent.box {
-  fill: var(--TopSelected);
+    fill: var(--TopSelected);
 }
 
 .legend3 {
-  background-color: var(--TopStudent);
-  width: 25%;
-  text-align: center;
+    background-color: var(--TopStudent);
+    width: 25%;
+    text-align: center;
 }
 
 /* Students getting bachelor in 4 years */
 .middlestudent {
-  fill: var(--MiddleStudent);
+    fill: var(--MiddleStudent);
 }
+
 .selected.middlestudent.box {
-  fill: var(--MiddleSelected);
+    fill: var(--MiddleSelected);
 }
 
 .legend4 {
-  background-color: var(--MiddleStudent);
-  width: 25%;
-  text-align: center;
+    background-color: var(--MiddleStudent);
+    width: 25%;
+    text-align: center;
 
 }
-
 
 /* Students getting bachelor in 5 years */
 .lowstudent {
-  fill: var(--LowStudent);
+    fill: var(--LowStudent);
 }
+
 .selected.lowstudent.box {
-  fill:var(--LowSelected);
+    fill: var(--LowSelected);
 }
+
 .legend5 {
-  background-color: var(--LowStudent);
-  width: 25%;
-  text-align: center;
+    background-color: var(--LowStudent);
+    width: 25%;
+    text-align: center;
 
 }
 
 /* Students not getting bachelor */
 .badstudent {
-  fill: var(--BadStudent);
+    fill: var(--BadStudent);
 }
-.selected.badstudent.box{
-  fill:var(--BadSelected);
+
+.selected.badstudent.box {
+    fill: var(--BadSelected);
 }
 
 .legendnot {
-  background-color:var(--BadStudent);
-  width: 25%;
-  text-align: center;
+    background-color: var(--BadStudent);
+    width: 25%;
+    text-align: center;
 }
 
 /*  */
 .unknown {
-  fill: grey;
-  width: 8px;
-  height: 8px;
+    fill: grey;
+    width: 8px;
+    height: 8px;
 
 }
+
 .backgroundProfile {
-  width: 95%;
-  height: 95%;
-  stroke-width: 2px;
+    width: 95%;
+    height: 95%;
+    stroke-width: 2px;
 }
 
 .fields {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
 }
 
-
 .legend {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 300 !important;
-  font-size: 13px  !important;
-  color: #424242   !important;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 300 !important;
+    font-size: 13px !important;
+    color: #424242 !important;
 }
 
 .legend-item {
-  height: 20px;
-  align-items: center;
-  justify-content: center;
-  display: flex;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
 }
 
 .fieldlegend {
-  font-weight: 300;
-  font-size: 13px;
-  margin-bottom: 4px;
-  width: 100%;
+    font-weight: 300;
+    font-size: 13px;
+    margin-bottom: 4px;
+    width: 100%;
 }
 
 .fieldborder {
-  border: 2px solid #58a5f0;
+    border: 2px solid #58a5f0;
 }
 
 /* Tooltip layout */
 .tooltipText {
-  text-anchor: middle;
-  font-weight: 300 !important;
-  font-size: 13px !important;
-  color: #424242 !important;
+    text-anchor: middle;
+    font-weight: 300 !important;
+    font-size: 13px !important;
+    color: #424242 !important;
 }
-
-
 
 .fields .group {
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 160px;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
 }
 
+.legend3 {
+    border-radius: 4px 0px 0px 4px;
+}
 
+.legendnot {
+    border-radius: 0px 4px 4px 0px;
+}
 
-.legend3{border-radius: 4px 0px 0px 4px;}
-.legendnot{border-radius: 0px 4px 4px 0px;}
 /* .best{
 border: 2 solid black;
 } */

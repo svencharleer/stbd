@@ -1,10 +1,10 @@
 <template name="planning">
-<div id="planning">
-  <h2>% studenten die op <strong>{{nrOfCourses}}</strong> vakken succesvol slagen in september</h2>
-  {{> circleGraph}}
+    <div id="planning">
+        <h2>% studenten die op <strong>{{nrOfCourses}}</strong> vakken succesvol slagen in september</h2>
+        {{> circleGraph}}
 
-  {{#with CSE}}
-    {{> CSE_bar}}
-  {{/with}}
-</div>
+        {{#with CSE}}
+            {{> CSE_bar}}
+        {{/with}}
+    </div>
 </template>
