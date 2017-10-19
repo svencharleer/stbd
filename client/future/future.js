@@ -206,10 +206,9 @@ Template.future.onRendered(function () {
   };
 
 
-  let legendsvg = d3.select('#profile');
   let topsvg = d3.select('#best');
-  let middlesvg = d3.select('#middle')
-  let lowsvg = d3.select('#low')
+  let middlesvg = d3.select('#middle');
+  let lowsvg = d3.select('#low');
 
 
   //server function needs this guy's grades.

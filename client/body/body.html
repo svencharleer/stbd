@@ -11,6 +11,7 @@
         <h1>Geen student gevonden</h1>
     </div>
 </div>
+
 {{> student}}
 
 
@@ -46,35 +47,35 @@
     </div>
 
     <div class="flex-column colttt">
-    <div class="vertical-title">Tussentijdse Toetsen</div>
-    <div class="top">
-        <div class="fa compress-colttt fa-compress">
-            <paper-ripple></paper-ripple>
+        <div class="vertical-title">Tussentijdse Toetsen</div>
+        <div class="top">
+            <div class="fa compress-colttt fa-compress">
+                <paper-ripple></paper-ripple>
+            </div>
+            <div class="column-title">
+                Tussentijdse Toetsen
+            </div>
+            <div class="CSE"></div>
         </div>
-        <div class="column-title">
-            Tussentijdse Toetsen
+        <div class="traject">
+            {{#with GetPeriod 1 }}
+                {{> trajectory}}
+            {{/with}}
         </div>
-        <div class="CSE"></div>
-    </div>
-    <div class="traject">
-        {{#with GetPeriod 1 }}
-            {{> trajectory}}
-        {{/with}}
-    </div>
-    <div class="bottom">
-        {{#if Template.subscriptionsReady}}
-            {{#each studentCourses 0}}
-                    <div class="flex-item">
-                        {{> course}}
+        <div class="bottom">
+            {{#if Template.subscriptionsReady}}
+                {{#each studentCourses 0}}
+                        <div class="flex-item">
+                            {{> course}}
+                        </div>
+                {{/each}}
+            {{else}}
+                    <div class="loading">
+                        <paper-spinner alt="Loading" active></paper-spinner>
                     </div>
-            {{/each}}
-        {{else}}
-                <div class="loading">
-                    <paper-spinner alt="Loading" active></paper-spinner>
-                </div>
-        {{/if}}
+            {{/if}}
+        </div>
     </div>
-</div>
     <div class="flex-column column-even coljan">
         <div class="vertical-title">Januari</div>
         <div class="top">
@@ -175,7 +176,9 @@
                 </div>
             </div>
     {{/if}}
-    {{#if Fails}}
+
+    {{#if ShowSeptember}}
+        {{#if Fails}}
             <div class="flex-column colfail">
                 <div class="vertical-title">Onsuccesvolle vakken</div>
                 <div class="top">
@@ -209,8 +212,7 @@
                     {{/if}}
                 </div>
             </div>
-    {{/if}}
-    {{#if ShowSeptember}}
+        {{/if}}
             <div class="flex-column column-even planning">
                 <div class="vertical-title">Studiebelastingplanning</div>
                 <div class="top">

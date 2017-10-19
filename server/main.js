@@ -4,22 +4,16 @@ var Courses = new Meteor.Collection('generic_courses');
 var Grades = new Meteor.Collection('generic_grades');
 var CSEs = new Meteor.Collection('generic_cse');
 var Students = new Mongo.Collection('generic_students');
-//var Bachelor = new Meteor.Collection('bachelor');
 var Historical = new Meteor.Collection('generic_history_sept');
-//var September = new Meteor.Collection('september');
 var Ijkingstoets = new Meteor.Collection('ijkingstoets');
 var Exams = new Meteor.Collection('generic_examsuccess');
 var heatmap = new Meteor.Collection('heatmap');
 var clicks = new Meteor.Collection('clicks');
-//var TTT_analyse = new Meteor.Collection('TTT_analyse');
-//var TTT_mechanica = new Meteor.Collection('TTT_mechanica');
-//var TTT_scheikunde = new Meteor.Collection('TTT_scheikunde');
-//var TTT_algebra = new Meteor.Collection('TTT_algebra');
 
 
 
+//Publish all collections
 Meteor.publish('generic_grades', function(who){
-  //console.log(who);
   return Grades.find({studentid: who});
 });
 
@@ -31,7 +25,6 @@ Meteor.publish('generic_students', function(who){
   return Students.find();
 });
 
-
 Meteor.publish("ijkingstoets", function(who){
 
   return Ijkingstoets.find({student:who});
@@ -41,37 +34,13 @@ Meteor.publish("generic_cse", function(who){
   return CSEs.find({studentid: who});
 });
 
-// Meteor.publish("heatmap", function(){
-//   return heatmap.find({});
-// });
-
 Meteor.publish("clicks", function(){
   return clicks.find({});
 });
 
-/*Meteor.publish("TTT_analyse", function(who){
-  //return TTT_analyse.find({student:620434});
-  return TTT_analyse.find({student:who});
-})
 
-Meteor.publish("TTT_mechanica", function(who){
-  //return TTT_mechanica.find({student:620434});
-  return TTT_mechanica.find({student:who});
-})
-
-Meteor.publish("TTT_scheikunde", function(who){
-  return TTT_scheikunde.find({student:who});
-  //return TTT_scheikunde.find({student:0});
-})
-
-Meteor.publish("TTT_algebra", function(who){
-  return TTT_algebra.find({student:who});
-  //return TTT_scheikunde.find({student:0});
-})*/
 
 Meteor.methods({
-  
-
   getIjkingstoetsTotalDistribution: function(args)
   {
     var scores = Ijkingstoets.find({jaar:args[0]});
