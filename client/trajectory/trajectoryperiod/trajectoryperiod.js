@@ -37,7 +37,7 @@ Template.trajectoryperiod.onRendered(function () {
       Visualisation of Square Plot (50);
       */
       let total = count;
-      let width = 180;
+      let width = 350;
       let container = svg.selectAll(".figures")
         .data(data.distribution).enter();
 

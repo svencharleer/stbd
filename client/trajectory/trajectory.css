@@ -32,7 +32,6 @@
     font-size: .8em;
     font-weight: 300;
     height: 24px;
-    display: flex;
     justify-content: space-between;
     cursor: pointer;
     position: relative;
