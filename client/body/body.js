@@ -371,6 +371,7 @@ Template.body.helpers({
 
     return results;
   },
+
   totalCSE() {
     let cse = 0;
     if (Session.get("CSE_Planning") != undefined) {
@@ -397,27 +398,6 @@ Template.body.helpers({
 
     return courses;
   },
-  CSE_januari() {
-    return {
-      percent: Session.get("CSE_januari"),
-      raw: Session.get("CSE_januari_pure"),
-      credits: Session.get("creditsTaken")[0]
-    }
-  },
-  CSE_juni() {
-    return {
-      percent: Session.get("CSE_juni"),
-      raw: Session.get("CSE_juni_pure"),
-      credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1]
-    }
-  },
-  CSE_september() {
-    return {
-      percent: Session.get("CSE_september"),
-      raw: Session.get("CSE_september_pure"),
-      credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1]
-    }
-  },
 
   Fails() {
     return Session.get("Fails");
@@ -433,6 +413,68 @@ Template.body.helpers({
   },
   'GetPeriod':function(number){
     var r = [{period: "ijkingstoets"}, {period: "TTT"}, {period: "januari"}, {period: "juni"}, {period: "september"}]
+    return r[number]
+  },
+  /**
+   *
+   * @param number: Indicates the index of the column
+   * @returns {{class, period, percent, raw, credits, title, subTitle}|*}
+   * @constructor
+   */
+  'GetColumnInfo':function (number) {
+    var r = [
+      {
+        title: "Ijkingstoets",
+        semester: "A",
+        class: "column-odd",
+        period: "ijkingstoets",
+        percent: undefined,
+        raw: undefined,
+        credits: undefined,
+        subTitle: undefined
+      },
+      {
+        title: "Tussentijdse testen",
+        semester: "B",
+        class: "column-even",
+        period: "TTT",
+        percent: undefined,
+        raw: undefined,
+        credits: undefined,
+        subTitle: undefined
+      },
+      {
+        title: "Januari",
+        semester: 1,
+        class: "column-odd",
+        period: "januari",
+        percent: Session.get("CSE_januari"),
+        raw: Session.get("CSE_januari_pure"),
+        credits: Session.get("creditsTaken")[0],
+        subTitle: "Eerste examenperiode"
+      },
+      {
+        title: "Juni",
+        semester: 2,
+        class: "column-even",
+        period: "juni",
+        percent: Session.get("CSE_juni"),
+        raw: Session.get("CSE_juni_pure"),
+        credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1],
+        subTitle: "Tweede examenperiode"
+      },
+      {
+        title: "September",
+        semester: 3,
+        class: "column-odd",
+        period: "september",
+        percent: Session.get("CSE_september"),
+        raw: Session.get("CSE_september_pure"),
+        credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1],
+        title: "September",
+        subTitle: "Derde examenperiode"
+      },
+    ]
     return r[number]
   }
 

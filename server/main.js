@@ -485,22 +485,26 @@ Meteor.methods({
         result.percentAllPassed = nrPassed/Object.keys(studentsThatMatch).length;
       return result;
     },
-  getFailedCourses(who)
-    {
-      var allCourses = Courses.find({$or:[{semester:1},{semester:2}]}).fetch();
+
+  //TODO clean up and fix so you get name+semester+grade
+  getFailedCourses(who){
+      //Find all courses
+      var allCourses = Courses.find({$or:[{semester:0},{semester:1},{semester:2}]}).fetch();
+      //make temp array with courseids
       var courseIds = [];
       allCourses.forEach(function(c){
         courseIds.push(c.courseid);
-      })
-      var result = [];
-      var courses = Grades.find({
-        studentid:who,
-        courseid:{$in:courseIds},
+      });
+
+      //find all courses the student takes
+      let studentCourses = Grades.find({
+        studentid:who
       }).fetch();
-    //  console.log("in failed courses", courses, who, courseIds, allCourses)
+
+      //Check if he passes course or not
       courses.forEach(function(c){
         if(c.finalscore > 9) return;
-        result.push(c);
+        courseIds.push(c.courseid);
       })
       return result;
   },

@@ -1,0 +1,69 @@
+Template.column.helpers({
+  /**
+   * @returns [{id,name,grade,semester,credits}]
+   */
+  studentCourses() {
+    //get semester from template (Given in body)
+    let semester = this.semester;
+    //array for output
+    let results = [];
+    let courses = undefined;
+    switch(semester){
+      case "A":
+        courses = Courses.find({semester: semester}, {sort: {semester: 1, coursename: 1}});
+        courses = getFailedCourses();
+        console.log(courses)
+        break;
+      case 'B':
+        courses = Courses.find({semester: semester}, {sort: {semester: 1, coursename: 1}});
+        break;
+      case 1:
+        courses = Courses.find({semester: semester}, {sort: {semester: 1, coursename: 1}});
+        break;
+      case 2:
+        //semester = 0 needed for courses during the whole year
+        courses = Courses.find({$or: [{semester: 0}, {semester: 2}]}, {sort: {semester: 1, coursename: 1}});
+        break;
+      case 3:
+        courses = Session.get('FailedCourses');
+        break;
+      default:
+        alert("Expected semester but found: " + semester)
+
+    }
+
+    //Test if there are grades
+    var testStudent = Grades.findOne();
+    if (testStudent == undefined || testStudent.studentid != Session.get("student")) {
+      return results;
+    }
+    if (courses == undefined) return results;
+    courses.forEach(function (j) {
+      var search = {};
+      var result = Grades.findOne({courseid: j.courseid});
+      if (result == undefined) return;
+      var score = result.finalscore;
+      //Geen idee wat dit hier doet
+      // if (failedOnly == true && score >= 10) return;
+      if (score == "#") return;
+      results.push({
+        id: j.courseid,
+        name: j.coursename,
+        grade: score,
+        semester: semester,
+        credits: parseInt(j.credits)
+      });
+
+    });
+    return results;
+
+  },
+  "cseAvailable":function() {
+    return this.credits !== undefined
+  },
+  "getFailedCourses":function () {
+    Meteor.call("getFailedCourses", Session.get("student"), function (err, data) {
+      return data;
+    })
+  }
+});
