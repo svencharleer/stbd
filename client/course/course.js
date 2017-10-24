@@ -10,22 +10,24 @@ Template.course.onRendered(function () {
 
     if (handler1.ready() && handler2.ready()) {
       let studentGrade = instance.data.grade;
-      let method = instance.data.method;
       let semester = instance.data.semester;
       let svg = d3.select(instance.find("svg"));
       let courseId = instance.data.id;
-      if (method == undefined) method = "getCoursePointDistribution";
+      let method = "getCoursePointDistribution";
       if (semester == undefined) semester = 2;
 
       //ugly hack: if semester 3, is 2e zit. we want to show histogram depending on the period
       //you received the highest grade. 3 means you'll show grade_try2, so
       //if they got a higher score in try1, we force it to semester=2 (or 1, doesn't matter)
+      //Normally not needed anymore but stays here for safety
       if (semester === 3 && instance.data.try1 !== undefined) {
-        if (instance.data.try1 >= instance.data.try2 || instance.data.try2 == "NA")
+        if (instance.data.try1 >= instance.data.try2 || instance.data.try2 === "NA")
           semester = 2;
       }
 
-      Meteor.call(method, [courseId, Session.get("Year"), semester], function (err, data) {
+      Meteor.call(method, courseId, Session.get("Year"), semester, function (err, data) {
+        console.log(courseId)
+        console.log(data)
         let grades = data.numberPerGrades;
         let total = 0;
         for (let i = 0; i < grades.length; i++) total += grades[i].count;
@@ -34,7 +36,6 @@ Template.course.onRendered(function () {
         let height = 60;
 
         let graph = svg.selectAll(".dots-container");
-
         graph.selectAll(".dot")
           .data(function (d, i) {
             let count = 0;

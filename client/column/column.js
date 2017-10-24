@@ -46,7 +46,6 @@ Template.column.helpers({
     let result = [];
 
     courses.forEach(function (c) {
-      console.log(c.coursename)
       let studentCourses = Grades.findOne(
         {
           $and : [
