@@ -51,6 +51,7 @@ Template.column.helpers({
       });
 
     });
+    console.log(results)
     return results;
 
   },
