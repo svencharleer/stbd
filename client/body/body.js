@@ -208,19 +208,21 @@ Template.body.onCreated(function () {
 
       //get failed courses
 
-      ////console.log(failedCourses);
       Meteor.call("getFailedCourses", Session.get("student"), function (err, data) {
-        Session.set("FailedCourses", data);
         //set them up for selection
         var selectedCourses = {};
         data.forEach(function (f) {
           selectedCourses[f.courseid] = {id: f.courseid, course: f, checked: true};
         })
-        Session.set("selectedCourses", selectedCourses);
+        Session.set("failedCourses", selectedCourses);
         Session.set("Fails", data.length > 0 ? true : false);
         //console.log("fails set to " + Session.get("Fails"));
 
         if ($(".loading-screen")) $(".loading-screen").hide();
+      });
+
+      Meteor.call("getStudentCourses", Session.get("student"), function (err, courses) {
+        Session.set("selectedCourses", courses);
       });
 
       Meteor.call("getCreditsTaken", Session.get('student'), 1, function (err, credits) {

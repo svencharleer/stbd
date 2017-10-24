@@ -526,6 +526,45 @@ Meteor.methods({
     });
     return result;
   },
+  getStudentCourses(who){
+    //find all courses the student takes
+    let studentCourses = Grades.find({
+      studentid:who
+    }).fetch();
+    courseIds = [];
+    //Check if he passes course or not
+    studentCourses.forEach(function(c){
+      courseIds.push(c.courseid);
+    });
+
+    //Find all selected courses
+    let courses = Courses.find({courseid:{$in : courseIds}}).fetch();
+
+    //Put coursename, courseid, score and semester in result
+    let result = []
+
+    courses.forEach(function (c) {
+      var studentFailedCourses = Grades.findOne(
+        {
+          $and : [
+            {studentid:who},
+            {courseid: c.courseid}
+          ]
+        },
+        {finalscore:1}
+      );
+      result.push(
+        {
+          finalscore: studentFailedCourses.finalscore,
+          studentid: who,
+          courseid: c.courseid,
+          semester: c.semester,
+          coursename: studentFailedCourses.coursename,
+          credits: c.credits
+        })
+    });
+    return result;
+  },
   getRootRoute(){
       if(process.env.ROOTROUTE != undefined)
       {
