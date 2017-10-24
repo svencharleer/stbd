@@ -486,27 +486,45 @@ Meteor.methods({
       return result;
     },
 
-  //TODO clean up and fix so you get name+semester+grade
   getFailedCourses(who){
-      //Find all courses
-      var allCourses = Courses.find({$or:[{semester:0},{semester:1},{semester:2}]}).fetch();
-      //make temp array with courseids
-      var courseIds = [];
-      allCourses.forEach(function(c){
-        courseIds.push(c.courseid);
-      });
+    //find all courses the student takes
+    let studentCourses = Grades.find({
+      studentid:who
+    }).fetch();
+    courseIds = [];
+    //Check if he passes course or not
+    studentCourses.forEach(function(c){
+      if(c.finalscore > 9) return;
+      courseIds.push(c.courseid);
+    });
 
-      //find all courses the student takes
-      let studentCourses = Grades.find({
-        studentid:who
-      }).fetch();
+    //Find all failed courses
+    let failedCourses = Courses.find({courseid:{$in : courseIds}}).fetch();
 
-      //Check if he passes course or not
-      courses.forEach(function(c){
-        if(c.finalscore > 9) return;
-        courseIds.push(c.courseid);
-      })
-      return result;
+    //Put coursename, courseid, score and semester in result
+    let result = []
+
+    failedCourses.forEach(function (c) {
+      var studentFailedCourses = Grades.findOne(
+        {
+          $and : [
+            {studentid:who},
+            {courseid: c.courseid}
+          ]
+        },
+        {finalscore:1}
+      );
+      result.push(
+        {
+          finalscore: studentFailedCourses.finalscore,
+          studentid: who,
+          courseid: c.courseid,
+          semester: c.semester,
+          coursename: studentFailedCourses.coursename,
+          credits: c.credits
+        })
+    });
+    return result;
   },
   getRootRoute(){
       if(process.env.ROOTROUTE != undefined)

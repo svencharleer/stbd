@@ -9,12 +9,10 @@ Template.column.helpers({
     let results = [];
     let courses = undefined;
     switch(semester){
-      case "A":
+      case -2:
         courses = Courses.find({semester: semester}, {sort: {semester: 1, coursename: 1}});
-        courses = getFailedCourses();
-        console.log(courses)
         break;
-      case 'B':
+      case -1:
         courses = Courses.find({semester: semester}, {sort: {semester: 1, coursename: 1}});
         break;
       case 1:

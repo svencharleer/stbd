@@ -425,7 +425,7 @@ Template.body.helpers({
     var r = [
       {
         title: "Ijkingstoets",
-        semester: "A",
+        semester: -2,
         class: "column-odd",
         period: "ijkingstoets",
         percent: undefined,
@@ -435,7 +435,7 @@ Template.body.helpers({
       },
       {
         title: "Tussentijdse testen",
-        semester: "B",
+        semester: -1,
         class: "column-even",
         period: "TTT",
         percent: undefined,
