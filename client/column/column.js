@@ -9,12 +9,10 @@ Template.column.helpers({
     let results = [];
     let courses = undefined;
     switch(semester){
-      case "A":
+      case -2:
         courses = Courses.find({semester: semester}, {sort: {semester: 1, coursename: 1}});
-        courses = getFailedCourses();
-        console.log(courses)
         break;
-      case 'B':
+      case -1:
         courses = Courses.find({semester: semester}, {sort: {semester: 1, coursename: 1}});
         break;
       case 1:
@@ -31,21 +29,19 @@ Template.column.helpers({
         alert("Expected semester but found: " + semester)
 
     }
-
     //Test if there are grades
     var testStudent = Grades.findOne();
     if (testStudent == undefined || testStudent.studentid != Session.get("student")) {
       return results;
     }
-    if (courses == undefined) return results;
+    if (courses === undefined) return results;
     courses.forEach(function (j) {
-      var search = {};
       var result = Grades.findOne({courseid: j.courseid});
-      if (result == undefined) return;
+      if (result === undefined) {
+        return;
+      }
       var score = result.finalscore;
-      //Geen idee wat dit hier doet
-      // if (failedOnly == true && score >= 10) return;
-      if (score == "#") return;
+      if (score === "#") return;
       results.push({
         id: j.courseid,
         name: j.coursename,
@@ -65,5 +61,15 @@ Template.column.helpers({
     Meteor.call("getFailedCourses", Session.get("student"), function (err, data) {
       return data;
     })
+  },
+  "getStudentCourses":function () {
+    let courses = []
+    Meteor.call("getCourses", Session.get('student'), Session.get('semester'), function (err, coursesSemester) {
+      console.log(courses)
+      courses = coursesSemester
+      return courses
+    })
+    console.log(courses)
+    return courses
   }
 });

@@ -5,7 +5,7 @@ var Grades = new Meteor.Collection('generic_grades');
 var CSEs = new Meteor.Collection('generic_cse');
 var Students = new Mongo.Collection('generic_students');
 var Historical = new Meteor.Collection('generic_history_sept');
-var Ijkingstoets = new Meteor.Collection('ijkingstoets');
+// var Ijkingstoets = new Meteor.Collection('ijkingstoets');
 var Exams = new Meteor.Collection('generic_examsuccess');
 var heatmap = new Meteor.Collection('heatmap');
 var clicks = new Meteor.Collection('clicks');
@@ -25,10 +25,10 @@ Meteor.publish('generic_students', function(who){
   return Students.find();
 });
 
-Meteor.publish("ijkingstoets", function(who){
-
-  return Ijkingstoets.find({student:who});
-});
+// Meteor.publish("ijkingstoets", function(who){
+//
+//   return Ijkingstoets.find({student:who});
+// });
 
 Meteor.publish("generic_cse", function(who){
   return CSEs.find({studentid: who});
@@ -41,44 +41,44 @@ Meteor.publish("clicks", function(){
 
 
 Meteor.methods({
-  getIjkingstoetsTotalDistribution: function(args)
-  {
-    var scores = Ijkingstoets.find({jaar:args[0]});
-    var buckets = {};
-    for(var i=0;i<10;i++)
-    {
-      buckets[i] = 0;
-    }
-    //get highest score
-
-    scores.forEach(function(s){
-      if(s.juli == "#")
-      {
-            if(s.september == "#")
-            {
-              return;
-            }
-            else score = s.september;
-      }
-      else if(s.september == "#")
-      {
-        score = s.juli;
-      }
-      else {
-        score = s.juli > s.september ? s.juli : s.september;
-      }
-      var bucketId = parseInt(score/2);
-      if(bucketId == 10) bucketId = 9; //think about this. it's because we only have 10 buckets, not 11, which would include 20 as seperate
-
-      buckets[bucketId]++;
-
-    })
-    var distribution = [];
-    Object.keys(buckets).forEach(function(b){
-      distribution.push({bucket:parseInt(b), count:buckets[b]})
-      })
-    return {distribution: distribution};
-  },
+  // getIjkingstoetsTotalDistribution: function(args)
+  // {
+  //   var scores = Ijkingstoets.find({jaar:args[0]});
+  //   var buckets = {};
+  //   for(var i=0;i<10;i++)
+  //   {
+  //     buckets[i] = 0;
+  //   }
+  //   //get highest score
+  //
+  //   scores.forEach(function(s){
+  //     if(s.juli == "#")
+  //     {
+  //           if(s.september == "#")
+  //           {
+  //             return;
+  //           }
+  //           else score = s.september;
+  //     }
+  //     else if(s.september == "#")
+  //     {
+  //       score = s.juli;
+  //     }
+  //     else {
+  //       score = s.juli > s.september ? s.juli : s.september;
+  //     }
+  //     var bucketId = parseInt(score/2);
+  //     if(bucketId == 10) bucketId = 9; //think about this. it's because we only have 10 buckets, not 11, which would include 20 as seperate
+  //
+  //     buckets[bucketId]++;
+  //
+  //   })
+  //   var distribution = [];
+  //   Object.keys(buckets).forEach(function(b){
+  //     distribution.push({bucket:parseInt(b), count:buckets[b]})
+  //     })
+  //   return {distribution: distribution};
+  // },
   getSemesterDistribution: function(args){
       var search = {};
       var distribution = [];
@@ -319,7 +319,7 @@ Meteor.methods({
 
   },
   
-
+  //TODO check if this is correct
   getHistoricalData: function(who){
 
     //count how many tolerable, failed etc
@@ -373,81 +373,8 @@ Meteor.methods({
       return result;
 
   },
-  getHistoricalData_old: function(who){
-      //count how many tolerable, failed etc
 
-      var f = Grades.find({studentid:who, finalscore:{$lt:8}}).count();
-      f += Grades.find({studentid:who, finalscore:"NA"}).count();
-      var t = Grades.find({studentid:who, $and: [{finalscore:{$gte:8}}, {finalscore:{$lte:9}}]}).count();
-      var p = Grades.find({studentid:who, finalscore:{$gte:10}}).count();
-
-    //green
-    var status = "";
-    if(f == 0 && t <= 2)
-    {
-      status = "green";
-      match = {failed:0, tolerable: {$lte:2}};
-    }
-    else if((f > 0 && f <=4) || (t > 2 && f == 0))
-    {
-      status = "orange";
-      match = {$or: [
-                      {
-                        $and:
-                          [
-                            {failed:{$gt:0}},
-                            {failed:{$lte:3}}
-                          ]
-                    },
-                      {
-                        $and:
-                          [
-                            {tolerable:{$gt:2}}, {failed:0}
-                          ]}
-                        ]
-                    };
-    }
-    else {
-      status = "red";
-      match = {failed:{$gt:3}};
-    }
-    //console.log(status);
-    //match = {failed:f, tolerable:t};
-    //now compare with DB
-    //console.log(JSON.stringify(match));
-    var result = Bachelor.aggregate([
-        {$match : match},
-      //{ $project : { bachelor :  "$bachelor" , tolerable : "$tolerable"} },
-        {$group : { _id : "$status" , "Count" : { $sum : 1}}}
-      ]
-    );
-      return result;
-
-    },
     //number of courses passed, and % chance to pass all courses
-  getSeptemberSucces(nrOfCourses)
-    {
-      var result = {averageCoursesPassed:0, percentAllPassed:0};
-      var ret = September.aggregate([
-        {$match:{taken:nrOfCourses[0]}},
-        {$group:
-          { _id: null, passed_avg: {$avg: "$passed"}},
-
-        }
-      ])[0];
-      if(ret == undefined) return {averageCoursesPassed:0, percentAllPassed:0};
-
-      result.averageCoursesPassed = ret.passed_avg;
-
-
-      var all = September.find({taken:nrOfCourses[0]}).count();
-
-      var passed = September.find({taken:nrOfCourses[0], passed:nrOfCourses[0]}).count();
-      result.percentAllPassed = passed/all;
-
-      return result;
-
-    },
   getSeptemberSuccess(nrOfCourses)
     {
 
@@ -486,38 +413,70 @@ Meteor.methods({
       return result;
     },
 
-  //TODO clean up and fix so you get name+semester+grade
   getFailedCourses(who){
-      //Find all courses
-      var allCourses = Courses.find({$or:[{semester:0},{semester:1},{semester:2}]}).fetch();
-      //make temp array with courseids
-      var courseIds = [];
-      allCourses.forEach(function(c){
-        courseIds.push(c.courseid);
-      });
+    //find all courses the student takes
+    let studentCourses = Grades.find({
+      studentid:who
+    }).fetch();
+    courseIds = [];
+    //Check if he passes course or not
+    studentCourses.forEach(function(c){
+      if(c.finalscore > 9) return;
+      courseIds.push(c.courseid);
+    });
 
-      //find all courses the student takes
-      let studentCourses = Grades.find({
-        studentid:who
-      }).fetch();
+    //Find all failed courses
+    let failedCourses = Courses.find({courseid:{$in : courseIds}}).fetch();
 
-      //Check if he passes course or not
-      courses.forEach(function(c){
-        if(c.finalscore > 9) return;
-        courseIds.push(c.courseid);
-      })
-      return result;
+    //Put coursename, courseid, score and semester in result
+    let result = []
+
+    failedCourses.forEach(function (c) {
+      var studentFailedCourses = Grades.findOne(
+      {
+        $and : [
+          {studentid:who},
+          {courseid: c.courseid}
+        ]
+      },
+      {finalscore:1}
+      );
+      result.push(
+        {
+          finalscore: studentFailedCourses.finalscore,
+          studentid: who,
+          courseid: c.courseid,
+          semester: c.semester,
+          coursename: studentFailedCourses.coursename,
+          credits: c.credits
+        })
+    });
+    return result;
   },
   getRootRoute(){
       if(process.env.ROOTROUTE != undefined)
       {
-        console.log(process.env.ROOTROUTE);
+        // console.log(process.env.ROOTROUTE);
         return process.env.ROOTROUTE;
       }
       else {
         return "dev";
       }
   },
+  /**
+   *
+   * @param who: studentid
+   * @param semester: -2,-1,0,1 or 2
+   * @returns {any}
+   */
+  getCourses(who, semester){
+    //find all courses the student takes
+    match = {$and:[{'studentid': who},{'semester': semester}]};
+    let studentCourses = Grades.find(match).fetch();
+    console.log(studentCourses)
+    return studentCourses
+
+  }
 
 
   });

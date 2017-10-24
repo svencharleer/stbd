@@ -14,11 +14,11 @@
             </div>
         </div>
         <div class="traject">
-            {{> trajectory}}
+            <!--{{> trajectory}}-->
         </div>
         <div class="bottom">
             {{#if Template.subscriptionsReady}}
-                {{#each studentCourses}}
+                {{#each getStudentCourses}}
                     <div class="flex-item">
                         {{> course}}
                     </div>
