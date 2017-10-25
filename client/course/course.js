@@ -26,8 +26,6 @@ Template.course.onRendered(function () {
       }
 
       Meteor.call(method, courseId, Session.get("Year"), semester, function (err, data) {
-        console.log(courseId)
-        console.log(data)
         let grades = data.numberPerGrades;
         let total = 0;
         for (let i = 0; i < grades.length; i++) total += grades[i].count;
@@ -100,7 +98,7 @@ Template.course.onRendered(function () {
           .attr("transform", function (d, i) {
             return "translate(" + (((8 + i) * 7) - 2) + "," + height + ")";  // Starts from 0, always.
           })
-          .attr("class", "yellowbars")
+          .attr("class", "yellowbars");
 
         svg.selectAll(".greenbars").data(function () {
           return d3.range(1);

@@ -241,7 +241,7 @@ Template.body.helpers({
     return Courses.find({});
   },
   ttt() {
-    return Courses.find({semester: 0})
+    return Courses.find({semester: -1})
   },
   january() {
     return Courses.find({semester: 1})
@@ -336,6 +336,7 @@ Template.body.helpers({
   },
 
   ijkingstoetsen() {
+    console.log('ijkingstoetsen')
     var ijkingstoetsen = Ijkingstoets.findOne();
     if (ijkingstoetsen == undefined) return;
     if (ijkingstoetsen.student != Session.get("student")) {
@@ -420,7 +421,7 @@ Template.body.helpers({
   /**
    *
    * @param number: Indicates the index of the column
-   * @returns {{class, period, percent, raw, credits, title, subTitle}|*}
+   * @returns {{class, period, percent, raw, credits, title, subTitle, columnindex}|*}
    * @constructor
    */
   'GetColumnInfo':function (number) {
@@ -433,7 +434,8 @@ Template.body.helpers({
         percent: undefined,
         raw: undefined,
         credits: undefined,
-        subTitle: undefined
+        subTitle: undefined,
+        columnindex: 0
       },
       {
         title: "Tussentijdse testen",
@@ -443,7 +445,8 @@ Template.body.helpers({
         percent: undefined,
         raw: undefined,
         credits: undefined,
-        subTitle: undefined
+        subTitle: undefined,
+        columnindex: 1
       },
       {
         title: "Januari",
@@ -453,7 +456,8 @@ Template.body.helpers({
         percent: Session.get("CSE_januari"),
         raw: Session.get("CSE_januari_pure"),
         credits: Session.get("creditsTaken")[0],
-        subTitle: "Eerste examenperiode"
+        subTitle: "Eerste examenperiode",
+        columnindex: 2
       },
       {
         title: "Juni",
@@ -463,7 +467,8 @@ Template.body.helpers({
         percent: Session.get("CSE_juni"),
         raw: Session.get("CSE_juni_pure"),
         credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1],
-        subTitle: "Tweede examenperiode"
+        subTitle: "Tweede examenperiode",
+        columnindex: 3
       },
       {
         title: "September",
@@ -474,9 +479,10 @@ Template.body.helpers({
         raw: Session.get("CSE_september_pure"),
         credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1],
         title: "September",
-        subTitle: "Derde examenperiode"
+        subTitle: "Derde examenperiode",
+        columnindex: 4
       },
-    ]
+    ];
     return r[number]
   }
 

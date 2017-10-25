@@ -13,6 +13,14 @@ Template.resultGraph.helpers({
     else if (this.grade >= 8 && this.grade <= 9) color = "tolerable"; // "#ffcc80"; //tolerable
     else color = "failed"; // "#ff8a80"; //failed
     return color;
+  },
+  getStrippedCourseID: function () {
+    let courseId = this.id;
+    courseId = courseId.replace(/ /g,'');
+    courseId = courseId.replace(/,/g,'');
+
+    return courseId
+
   }
 });
 
@@ -81,6 +89,8 @@ Template.resultGraph.onRendered(function () {
   let width = 140;
   let height = 60;
   let courseID = Template.instance().firstNode.id;
+  console.log(courseID)
+
   let svg = d3.select("#" + courseID).select(".histogram")
     .attr("class", "histogram")
     .attr("width", width)

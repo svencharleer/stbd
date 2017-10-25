@@ -1,10 +1,11 @@
 Template.column.helpers({
   /**
-   * @returns [{id,name,grade,semester,credits}]
+   * @returns [{id,name,grade,semester,credits, columnindex}]
    */
   studentCourses() {
     //get semester from template (Given in body)
     let semester = this.semester;
+    let columnindex = this.columnindex;
     let studentid = Session.get('student');
     let studentCourses = Grades.find({
       '$and':
@@ -62,7 +63,8 @@ Template.column.helpers({
           id: c.courseid,
           semester: c.semester,
           name: c.coursename,
-          credits: parseInt(c.credits)
+          credits: parseInt(c.credits),
+          columnindex: columnindex
         })
     });
     return result;
