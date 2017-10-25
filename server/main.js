@@ -39,14 +39,33 @@ Meteor.publish("clicks", function () {
 
 
 Meteor.methods({
-  getIjkingstoetsTotalDistribution: function (args) {
-    var scores = Ijkingstoets.find({jaar: args[0]});
+  getDistribution: function (semester, year) {
+    //Look whick score you want to use
+    switch (semester){
+      case -2:
+      case -1:
+        let distribution =  getScoreDistribution(semester, year);
+        break;
+      default:
+        distribution = getCseDistribution(semester, year);
+        break;
+    }
+    return distribution;
+
+  },
+
+  getIjkingstoetsTotalDistribution: function (year) {
+    var scores = Grades.find(
+      {'$and': [
+        {jaar: year} ,
+        {courseid: { $regex : /^"Ijkingstoets"/ }}
+        ]
+      });
     var buckets = {};
     for (var i = 0; i < 10; i++) {
       buckets[i] = 0;
     }
-    //get highest score
-
+    //for each of the categories count
     scores.forEach(function (s) {
       if (s.juli == "#") {
         if (s.september == "#") {
@@ -680,3 +699,38 @@ var helper_GetCreditsTakenSemester = function (who, semester) {
 
 
 };
+
+//TODO positioneringstest en voorkennistest wiskunde ook in rekening brengen
+getScoreDistribution = function (semester, year) {
+  if (semester === -2){
+    let regex = { $regex : /^"Ijkingstoets"/ }
+  }
+  else{
+    regex = { $regex : /^"TTT"/ }
+  }
+  //Find all scores of this year without # or NA
+  var scores = Grades.find(
+    {'$and': [
+      {jaar: year} ,
+      {courseid: regex},
+      {finalscore: {$and: [{$not: "#"}, {$not: 'NA'}]}}
+    ]
+    });
+  var buckets = {};
+  for (var i = 0; i < 10; i++) {
+    buckets[i] = 0;
+  }
+  //For each of the 10 categories count number of occurences
+  scores.forEach(function (s) {
+    var bucketId = parseInt(s / 2);
+    if (bucketId == 10) bucketId = 9;
+    buckets[bucketId] ++;
+  });
+
+  var distribution = [];
+  Object.keys(buckets).forEach(function (b) {
+    distribution.push({bucket: parseInt(b), count: buckets[b]})
+  })
+  return {distribution: distribution};
+
+}

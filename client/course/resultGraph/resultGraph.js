@@ -89,7 +89,6 @@ Template.resultGraph.onRendered(function () {
   let width = 140;
   let height = 60;
   let courseID = Template.instance().firstNode.id;
-  console.log(courseID)
 
   let svg = d3.select("#" + courseID).select(".histogram")
     .attr("class", "histogram")

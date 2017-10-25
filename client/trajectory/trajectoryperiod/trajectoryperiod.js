@@ -4,23 +4,11 @@ Template.trajectoryperiod.onRendered(function () {
     var period = instance.data.period;
     var cse = Session.get("CSE_" + period);
     var svg = d3.select("#distribution_" + period + " svg.distribution");
-    var params = [];
-    if (period == "ijkingstoets") {
-      params = ["getIjkingstoetsTotalDistribution", [Session.get("StartYear")]];
-    }
-    else if (period == "TTT")
-      params = ["getTotalPointDistribution", [0, Session.get("Year")]];
-    else {
-      params = ["getSemesterDistribution", [period, Session.get("Year")]];
-    }
+    var params = ['getDistribution', this.semester, Session.get("Year")];
 
-    Meteor.call(params[0], params[1], function (err, data) {
-      //we calculate CSE for TTT on server (as all the logic is already there), so check whether we got that
-      if (data.studentScore != undefined) {
-        cse = data.studentScore;
-        Session.set("CSE_" + period, cse);
-        //console.log("this is student's TTT CSE " + cse);
-      }
+
+
+    Meteor.call('getDistribution', this.semester, Session.get("Year"), function (err, data) {
       //find max value and min value
       var min = Number.MAX_VALUE;
       var max = Number.MIN_VALUE;

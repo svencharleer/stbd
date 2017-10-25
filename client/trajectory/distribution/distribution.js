@@ -13,13 +13,4 @@ Template.distribution.onRendered(function () {
   for (var i = 0; i < 10; i++)
     buckets.push({bucket: i, count: 10})
 
-  // var rects = svg.selectAll("rect")
-  // .data(buckets)
-  // .enter()
-  // .append("g")
-  // .attr("class","row")
-  // .data(function(d){return d3.range(5)})
-  // .enter()
-  // .append("circle")
-  // .attr("class","dot")
 });
