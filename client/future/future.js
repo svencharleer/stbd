@@ -31,8 +31,7 @@ Template.future.onRendered(function () {
     var nb5 = numbers[2];
     var nbNot = 100 - nb3 - nb4 - nb5;
     let yValues = [nb3, nb4, nb5, nbNot];
-    // var data = Array.apply(null, Array(100)).map(function (_, i) {return i;});
-    var data = d3.range(100)
+    var data = d3.range(100);
     var x = d3.scale.linear()
       .domain([0, 9])
       .range([0, width]);
@@ -58,7 +57,7 @@ Template.future.onRendered(function () {
       return profileClass;
     }
 
-    function tooltipClass(i) {
+    function calculateBarClass(i) {
       var tooltipClass = 'unknown';
       if (i == 0) {
         tooltipClass = "topstudent bar";
@@ -75,7 +74,7 @@ Template.future.onRendered(function () {
       return tooltipClass;
     }
 
-    function barchartTooltip(svg, yValues) {
+    function barchartProfiles(svg, yValues) {
       let xValues = ['3 jaar', '4 jaar', '5 jaar', 'Niet']
       // svg.style('opacity', 0)
       let y = d3.scale.linear()
@@ -106,7 +105,7 @@ Template.future.onRendered(function () {
 
       bar.append("rect")
         .attr('class', function (d, i) {
-          return tooltipClass(i)
+          return calculateBarClass(i)
         })
         .attr("y", function (d) {
           return y(d.value);
@@ -134,7 +133,7 @@ Template.future.onRendered(function () {
       .attr("height", height)
       .on('mouseenter', function () {
         svg.selectAll(".box").style('opacity', 0)
-        barchartTooltip(svg, yValues)
+        barchartProfiles(svg, yValues)
         clicks.insert({
           'session': Session.get('Id'),
           'studentid': Session.get('student'),
@@ -201,32 +200,30 @@ Template.future.onRendered(function () {
     if (Session.get('student') == undefined || Session.get('semester') == undefined) {
       return;
     }
+    /**
+     * Get the profile of the student
+     * [{boolean}]
+     */
     Meteor.call("getCSEProfile", Session.get('student'), Session.get('semester'), function (err, profile) {
       [highProfile, middleProfile, lowProfile] = profile;
-    }),
+    });
 
-      Meteor.call("getCSEDistribution", Session.get('semester'), function (err, listDicts) {
-        [topDict, middleDict, lowDict] = listDicts;
-        topCSEDistribution = [topDict['+0'], topDict['+1'], topDict['+2']]
-        middleCSEDistribution = [middleDict['+0'], middleDict['+1'], middleDict['+2']]
-        lowCSEDistribution = [lowDict['+0'], lowDict['+1'], lowDict['+2']]
+    /**
+     * Get for each profile the number of students in each of the categories
+     * e.g. {+0: 85, +1: 6, +2: 2, B: 1, D: 6}
+     */
+    Meteor.call("getCSEDistribution", Session.get('semester'), function (err, listDicts) {
+      [topDict, middleDict, lowDict] = listDicts;
+      //Make list of dictionary
+      topCSEDistribution = [topDict['+0'], topDict['+1'], topDict['+2']];
+      middleCSEDistribution = [middleDict['+0'], middleDict['+1'], middleDict['+2']];
+      lowCSEDistribution = [lowDict['+0'], lowDict['+1'], lowDict['+2']];
+      //make the fields
+      makeProfileField(topsvg, topCSEDistribution, highProfile);
+      makeProfileField(middlesvg, middleCSEDistribution, middleProfile);
+      makeProfileField(lowsvg, lowCSEDistribution, lowProfile);
+    });
 
-        makeProfileField(topsvg, topCSEDistribution, highProfile);
-        makeProfileField(middlesvg, middleCSEDistribution, middleProfile);
-        makeProfileField(lowsvg, lowCSEDistribution, lowProfile);
-      });
-
-
-      // $("#bachelor").empty();
-      Meteor.call("getHistoricalData", Session.get("student"), function (err, data) {
-        console.log(data)
-        var total = 0;
-        let bachelor = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0}
-        data.forEach(function (d) {
-          bachelor[d._id] = d.Count;
-          if (d._id != "") total += d.Count;
-        })
-      });
   })
 
 

@@ -290,56 +290,6 @@ Meteor.methods({
 
   },
 
-  /**
-   *
-   * @param who: studentid
-   * @returns {null|AggregationCursor|*}
-   */
-  getHistoricalData: function (who) {
-
-    //count how many tolerable, failed etc
-
-    //get the sem1 en sem2 courses only
-    var courses = Courses.find({$or: [{semester: 1}, {semester: 2}]}).fetch();
-    var courseIds = [];
-    courses.forEach(function (c) {
-      courseIds.push(c.courseid);
-    });
-
-    let CSE_student = CSEs.findOne({studentid: who});
-
-
-    var limit1 = 90;
-    var limit2 = 50;
-    if (Meteor.settings.public.cselimit1 != undefined && Meteor.settings.public.cselimit2 != undefined) {
-      limit1 = Meteor.settings.public.cselimit1;
-      limit2 = Meteor.settings.public.cselimit2;
-    }
-
-    if (CSE_student["cse2"] >= limit1) {
-      status = "green";
-      match = {"cse_jun": {$gte: limit1}};
-
-    }
-    else if (CSE_student["cse2"] < limit1 && CSE_student["cse2"] >= limit2) {
-      status = "orange";
-      match = {$and: [{"cse_jun": {$lt: limit1}}, {"cse_jun": {$gte: limit2}}]};
-    }
-    else {
-      status = "red";
-      match = {"cse_jun": {$lt: limit2}};
-    }
-
-
-    var result = Historical.aggregate([
-        {$match: match},
-        {$group: {_id: "$traject", "Count": {$sum: 1}}}
-      ]
-    );
-    return result;
-
-  },
-
   //number of courses passed, and % chance to pass all courses
   getSeptemberSuccess(nrOfCourses) {
 
