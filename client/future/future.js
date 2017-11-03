@@ -220,7 +220,7 @@ Template.future.onRendered(function () {
       [highProfile, middleProfile, lowProfile] = profile;
     }),
 
-      Meteor.call("getCSEDistribution", Session.get('semester'), function (err, listDicts) {
+      Meteor.call("getHistoricDistribution", Session.get('semester'), function (err, listDicts) {
         [topDict, middleDict, lowDict] = listDicts;
         topCSEDistribution = [topDict['+0'], topDict['+1'], topDict['+2']]
         middleCSEDistribution = [middleDict['+0'], middleDict['+1'], middleDict['+2']]

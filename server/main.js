@@ -51,7 +51,7 @@ Meteor.methods({
         distribution =  getScoreDistribution(semester, year);
         break;
       default:
-        distribution =  getCSEDistribution(semester);
+        distribution =  getSemesterCSEDistribution(semester, year);
         break;
     }
     return distribution;
@@ -95,40 +95,7 @@ Meteor.methods({
     })
     return {distribution: distribution};
   },
-  getSemesterDistribution: function (args) {
-    var search = {};
-    var distribution = [];
-    var cse = "";
-    if (args[0] == "januari") {
-      cse = "cse1";
 
-    }
-    else if (args[0] == "juni") {
-      cse = "cse2";
-    }
-    else {
-      cse = "cse3";
-      search["cse2"] = {$lt: 100};
-    }
-    search["year"] = args[1];
-    search["$and"] = [];
-    var and1 = {};
-    var and2 = {};
-    for (var i = 0; i < 10; i++) {
-
-      and1[cse] = {$lt: (10 + i * 10)};
-      and2[cse] = {$gte: 0 + i * 10};
-      if (i == 9)
-        and1[cse] = {$lte: (10 + i * 10)};
-      search["$and"] = [and1, and2];
-      //console.log(JSON.stringify(search));
-
-      var count = CSEs.distinct("studentid", search).length;
-      distribution.push({bucket: i, count: count});
-    }
-    console.log(search)
-    return {distribution: distribution};
-  },
   getTotalPointDistribution: function (args) { //this function is like semester, but not CSE, focused on scores alone
     var courses = Courses.find({semester: args[0]}).fetch();
     var courseIds = [];
@@ -735,52 +702,55 @@ let getScoreDistribution = function (semester, year) {
     buckets[bucketId]++;
   });
 
-  var distribution = [];
+  let distribution = [];
   Object.keys(buckets).forEach(function (b) {
     distribution.push({bucket: parseInt(b), count: buckets[b]})
   });
   return {distribution: distribution};
 };
 
-//todo check if this is correct
 /**
- * Calculate how many students do their b
- * @param {integer} semester : 1 - 2  or default 3
+ * Find the cse distribution in a semester
+ * @param semester
+ * @param year
+ * @returns {{distribution: Array}}
  */
-let getCSEDistribution =  function (semester) {
-  var CSE_entry = helper_getCSEEntryStudent(semester);
-  var students = Historical.find({});
-  var topDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
-  var middleDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
-  var lowDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
+let getSemesterCSEDistribution =  function (semester, year) {
+  console.log('getSemesterDistribution');
+  let cse = 1;
 
-  students.forEach(function (student) {
-    var cseStudent = student[CSE_entry];
-    var trajectStudent = student["traject"];
 
-    var limit1 = 90;
-    var limit2 = 50;
-    if (Meteor.settings.public.cselimit1 != undefined && Meteor.settings.public.cselimit2 != undefined) {
-      limit1 = Meteor.settings.public.cselimit1;
-      limit2 = Meteor.settings.public.cselimit2;
-    }
-    if (cseStudent >= limit1) {
-      topDict[trajectStudent] += 1;
-    }
-    else if (cseStudent < limit1 && cseStudent >= limit2) {
-      middleDict[trajectStudent] += 1;
-    }
-    else {
-      lowDict[trajectStudent] += 1;
-    }
-
+  //Find all cses of this year without # or NA
+  let cses = CSEs.find({year: year});
+  var buckets = {};
+  for (var i = 0; i < 10; i++) {
+    buckets[i] = 0;
+  }
+  //For each of the 10 categories count number of occurrences
+  cses.forEach(function (s) {
+    let bucketId = getBucketID(s, semester);
+    if (bucketId === 10) bucketId = 9;
+    buckets[bucketId]++;
   });
-  topDict = helper_relativateDict(topDict);
-  middleDict = helper_relativateDict(middleDict);
-  lowDict = helper_relativateDict(lowDict);
-  return [topDict, middleDict, lowDict];
 
+  let distribution = [];
+  Object.keys(buckets).forEach(function (b) {
+    distribution.push({bucket: parseInt(b), count: buckets[b]})
+  });
+  return {distribution: distribution};
 
 };
+
+let getBucketID = function (s, semester) {
+  if (semester === 1) {
+    return parseInt(s.cse1 / 10);
+  }
+  else if (semester === 2) {
+    return parseInt(s.cse2 / 10);
+  }
+  else {
+    return parseInt(s.cse3 / 10);
+  }
+}
 
 
