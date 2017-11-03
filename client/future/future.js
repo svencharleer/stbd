@@ -19,7 +19,7 @@ Template.future.onRendered(function () {
 
   /**
    * @param {svg} svg where you want to add the profilefield
-   * @param {[int]} data representing percentage of students who did their bachelor in 3-4 & 5 years
+   * @param {[int]} numbers representing percentage of students who did their bachelor in 3-4 & 5 years
    * @param {boolean} border true if it is the profile of the current student
    */
   function makeProfileField(svg, numbers, border) {
@@ -128,22 +128,7 @@ Template.future.onRendered(function () {
         });
     }
 
-    function calculateTooltip(x) {
-      var text = ' ';
-      if (x < nb3) {
-        text = nb3 + '%';
-      }
-      else if (x < nb3 + nb4) {
-        text = nb4 + '%';
-      }
-      else if (x < nb3 + nb4 + nb5) {
-        text = nb5 + '%';
-      }
-      else {
-        text = nbNot + '%';
-      }
-      return text;
-    }
+
 
     svg.attr("width", width)
       .attr("height", height)
@@ -220,7 +205,7 @@ Template.future.onRendered(function () {
       [highProfile, middleProfile, lowProfile] = profile;
     }),
 
-      Meteor.call("getHistoricDistribution", Session.get('semester'), function (err, listDicts) {
+      Meteor.call("getCSEDistribution", Session.get('semester'), function (err, listDicts) {
         [topDict, middleDict, lowDict] = listDicts;
         topCSEDistribution = [topDict['+0'], topDict['+1'], topDict['+2']]
         middleCSEDistribution = [middleDict['+0'], middleDict['+1'], middleDict['+2']]
@@ -229,14 +214,14 @@ Template.future.onRendered(function () {
         makeProfileField(topsvg, topCSEDistribution, highProfile);
         makeProfileField(middlesvg, middleCSEDistribution, middleProfile);
         makeProfileField(lowsvg, lowCSEDistribution, lowProfile);
-      }),
+      });
 
 
       // $("#bachelor").empty();
       Meteor.call("getHistoricalData", Session.get("student"), function (err, data) {
-        var bachelor = {};
+        console.log(data)
         var total = 0;
-        bachelor = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0}
+        let bachelor = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0}
         data.forEach(function (d) {
           bachelor[d._id] = d.Count;
           if (d._id != "") total += d.Count;

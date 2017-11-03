@@ -290,7 +290,11 @@ Meteor.methods({
 
   },
 
-
+  /**
+   *
+   * @param who: studentid
+   * @returns {null|AggregationCursor|*}
+   */
   getHistoricalData: function (who) {
 
     //count how many tolerable, failed etc
@@ -300,15 +304,13 @@ Meteor.methods({
     var courseIds = [];
     courses.forEach(function (c) {
       courseIds.push(c.courseid);
-    })
+    });
 
-    var CSE_student = CSEs.findOne({studentid: who});
+    let CSE_student = CSEs.findOne({studentid: who});
 
-    //console.log(JSON.stringify(CSE_student));
-    //TODO: select the CSE we want to filter on
-    //green
-    var limit1 = 100;
-    var limit2 = 0;
+
+    var limit1 = 90;
+    var limit2 = 50;
     if (Meteor.settings.public.cselimit1 != undefined && Meteor.settings.public.cselimit2 != undefined) {
       limit1 = Meteor.settings.public.cselimit1;
       limit2 = Meteor.settings.public.cselimit2;
@@ -328,14 +330,9 @@ Meteor.methods({
       match = {"cse_jun": {$lt: limit2}};
     }
 
-    // console.log(status);
-    //match = {failed:f, tolerable:t};
-    //now compare with DB
-    // console.log(JSON.stringify(match));
 
     var result = Historical.aggregate([
         {$match: match},
-        //{ $project : { bachelor :  "$bachelor" , tolerable : "$tolerable"} },
         {$group: {_id: "$traject", "Count": {$sum: 1}}}
       ]
     );
