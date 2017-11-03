@@ -1,7 +1,6 @@
 Template.course.onRendered(function () {
   let instance = this;
 
-
   instance.autorun(function () {
     //Session.get("student")
     let handler1 = instance.subscribe("generic_courses", function () {});

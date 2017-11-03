@@ -2,13 +2,14 @@ Template.trajectoryperiod.onRendered(function () {
   var instance = this;
   instance.autorun(function () {
     var period = instance.data.period;
+    var semester = instance.data.semester;
     var cse = Session.get("CSE_" + period);
     var svg = d3.select("#distribution_" + period + " svg.distribution");
-    var params = ['getDistribution', this.semester, Session.get("Year")];
+    var params = ['getDistribution', semester, Session.get("Year")];
 
 
-
-    Meteor.call('getDistribution', this.semester, Session.get("Year"), function (err, data) {
+    Meteor.call('getDistribution', semester, Session.get("Year"), function (err, data) {
+      console.log(data);
       //find max value and min value
       var min = Number.MAX_VALUE;
       var max = Number.MIN_VALUE;

@@ -78,4 +78,14 @@ Template.column.helpers({
       return data;
     })
   },
+  "trajectInfo":function () {
+    let semester = this.semester;
+    let columnindex = this.columnindex;
+    let period = this.period;
+    return {
+      semester: semester,
+      columnindex: columnindex,
+      period: period
+    }
+  }
 });

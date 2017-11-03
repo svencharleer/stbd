@@ -1,5 +1,6 @@
 //general class for distribution graph.
 Template.distribution.onRendered(function () {
+  let instance = this;
   var svg = d3.select(this.find(".distribution"));
   var height = 100;
   var width = 180;

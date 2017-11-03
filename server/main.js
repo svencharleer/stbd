@@ -1,7 +1,9 @@
 import {Meteor} from 'meteor/meteor';
 
 var Courses = new Meteor.Collection('generic_courses');
-var Grades = new Meteor.Collection('generic_grades');
+const Grades = new Meteor.Collection('generic_grades');
+export default Grades
+
 var CSEs = new Meteor.Collection('generic_cse');
 var Students = new Mongo.Collection('generic_students');
 var Historical = new Meteor.Collection('generic_history_sept');
@@ -39,15 +41,17 @@ Meteor.publish("clicks", function () {
 
 
 Meteor.methods({
+
   getDistribution: function (semester, year) {
     //Look whick score you want to use
+    let distribution = undefined;
     switch (semester){
       case -2:
       case -1:
-        let distribution =  getScoreDistribution(semester, year);
+        distribution =  getScoreDistribution(semester, year);
         break;
       default:
-        distribution = getCseDistribution(semester, year);
+        distribution =  getCSEDistribution(semester);
         break;
     }
     return distribution;
@@ -119,9 +123,10 @@ Meteor.methods({
       search["$and"] = [and1, and2];
       //console.log(JSON.stringify(search));
 
-      var count = CSEs.distinct("studentid", search).length
+      var count = CSEs.distinct("studentid", search).length;
       distribution.push({bucket: i, count: count});
     }
+    console.log(search)
     return {distribution: distribution};
   },
   getTotalPointDistribution: function (args) { //this function is like semester, but not CSE, focused on scores alone
@@ -699,38 +704,83 @@ var helper_GetCreditsTakenSemester = function (who, semester) {
 
 
 };
+/**
+ * Make distribution of scores
+ * @param semester
+ * @param year
+ * @returns {{distribution: Array}}
+ */
+let getScoreDistribution = function (semester, year) {
+  console.log('getScoreDistribution');
+  let regex = {$regex: /(Ijkingstoets|Positioneringstest|Voorkennistest)/};
+  if (semester === -2) {
+    regex = {$regex: /Ijkingstoets/};
+  }
+  else {
+    regex = {$regex: /TTT/};
+  }
 
-//TODO positioneringstest en voorkennistest wiskunde ook in rekening brengen
-getScoreDistribution = function (semester, year) {
-  if (semester === -2){
-    let regex = { $regex : /^"Ijkingstoets"/ }
-  }
-  else{
-    regex = { $regex : /^"TTT"/ }
-  }
   //Find all scores of this year without # or NA
-  var scores = Grades.find(
-    {'$and': [
-      {jaar: year} ,
-      {courseid: regex},
-      {finalscore: {$and: [{$not: "#"}, {$not: 'NA'}]}}
-    ]
-    });
+  let scores = Grades.find({"$and": [{year: year}, {courseid: regex}, {finalscore: { "$gte": -1, "$lt": 21 } }] });
+
+
   var buckets = {};
   for (var i = 0; i < 10; i++) {
     buckets[i] = 0;
   }
-  //For each of the 10 categories count number of occurences
+  //For each of the 10 categories count number of occurrences
   scores.forEach(function (s) {
-    var bucketId = parseInt(s / 2);
-    if (bucketId == 10) bucketId = 9;
-    buckets[bucketId] ++;
+    var bucketId = parseInt(s.finalscore / 2);
+    if (bucketId === 10) bucketId = 9;
+    buckets[bucketId]++;
   });
 
   var distribution = [];
   Object.keys(buckets).forEach(function (b) {
     distribution.push({bucket: parseInt(b), count: buckets[b]})
-  })
+  });
   return {distribution: distribution};
+};
 
-}
+//todo check if this is correct
+/**
+ * Calculate how many students do their b
+ * @param {integer} semester : 1 - 2  or default 3
+ */
+let getCSEDistribution =  function (semester) {
+  var CSE_entry = helper_getCSEEntryStudent(semester);
+  var students = Historical.find({});
+  var topDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
+  var middleDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
+  var lowDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
+
+  students.forEach(function (student) {
+    var cseStudent = student[CSE_entry];
+    var trajectStudent = student["traject"];
+
+    var limit1 = 90;
+    var limit2 = 50;
+    if (Meteor.settings.public.cselimit1 != undefined && Meteor.settings.public.cselimit2 != undefined) {
+      limit1 = Meteor.settings.public.cselimit1;
+      limit2 = Meteor.settings.public.cselimit2;
+    }
+    if (cseStudent >= limit1) {
+      topDict[trajectStudent] += 1;
+    }
+    else if (cseStudent < limit1 && cseStudent >= limit2) {
+      middleDict[trajectStudent] += 1;
+    }
+    else {
+      lowDict[trajectStudent] += 1;
+    }
+
+  });
+  topDict = helper_relativateDict(topDict);
+  middleDict = helper_relativateDict(middleDict);
+  lowDict = helper_relativateDict(lowDict);
+  return [topDict, middleDict, lowDict];
+
+
+};
+
+

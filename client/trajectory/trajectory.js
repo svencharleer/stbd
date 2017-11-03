@@ -1,6 +1,9 @@
 Template.trajectory.helpers({
   periods() {
-    return [{period: this.period}];
+    return [{
+      period: this.period,
+      semester: this.semester
+    }];
   },
   update() {
     //console.log("updating");

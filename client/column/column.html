@@ -14,7 +14,9 @@
             </div>
         </div>
         <div class="traject">
-            {{> trajectory}}
+            {{#with trajectInfo}}
+                {{> trajectory}}
+            {{/with}}
         </div>
         <div class="bottom">
             {{#if Template.subscriptionsReady}}
