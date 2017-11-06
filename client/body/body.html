@@ -11,275 +11,52 @@
         <h1>Geen student gevonden</h1>
     </div>
 </div>
-
 {{> student}}
 
 
 <div class="flex-container">
 <div class="flex-row">
-    <div class="flex-column column-even colijkingstoets">
-        <div class="vertical-title">IJkingstoets</div>
+    {{#with GetColumnInfo 0}}
+        {{> column}}
+    {{/with}}
+
+    {{#with GetColumnInfo 1}}
+        {{> column}}
+    {{/with}}
+
+    {{#with GetColumnInfo 2}}
+        {{> column}}
+    {{/with}}
+
+    <!--{{#with GetColumnInfo 3}}-->
+        <!--{{> column}}-->
+    <!--{{/with}}-->
+
+    <!--{{#with GetColumnInfo 4}}-->
+        <!--{{> column}}-->
+    <!--{{/with}}-->
+
+    <!--Always show the bachelor column-->
+    <div class="flex-column colfuture" id="colfuture">
+        <div class="vertical-title">bachelor</div>
         <div class="top">
-            <div class="fa compress-colijkingstoets fa-compress">
+            <div class="fa compress-colfuture fa-compress">
                 <paper-ripple></paper-ripple>
             </div>
-            <div class="column-title">IJkingstoets</div>
-            <div class="CSE"></div>
-        </div>
-        <div class="traject">
-            {{#with GetPeriod 0 }}
-                {{> trajectory}}
-            {{/with}}
+            <div class="column-title">bachelor</div>
+            <div id="legend" class="periode legend">
+                <div class="legend-item legend3">3j</div>
+                <div class="legend-item legend4">4j</div>
+                <div class="legend-item legend5">5j</div>
+                <div class="legend-item legendnot">Niet</div>
+            </div>
         </div>
         <div class="bottom">
             {{#if Template.subscriptionsReady}}
-                {{#each ijkingstoetsen}}
-                    <div class="flex-item">
-                        {{> ijkingstoets}}
-                    </div>
-                {{/each}}
-            {{else}}
-                <div class="loading">
-                    <paper-spinner alt="Loading" active></paper-spinner>
-                </div>
+                {{> future}}
             {{/if}}
         </div>
     </div>
-
-    <div class="flex-column colttt">
-        <div class="vertical-title">Tussentijdse Toetsen</div>
-        <div class="top">
-            <div class="fa compress-colttt fa-compress">
-                <paper-ripple></paper-ripple>
-            </div>
-            <div class="column-title">
-                Tussentijdse Toetsen
-            </div>
-            <div class="CSE"></div>
-        </div>
-        <div class="traject">
-            {{#with GetPeriod 1 }}
-                {{> trajectory}}
-            {{/with}}
-        </div>
-        <div class="bottom">
-            {{#if Template.subscriptionsReady}}
-                {{#each studentCourses 0}}
-                        <div class="flex-item">
-                            {{> course}}
-                        </div>
-                {{/each}}
-            {{else}}
-                    <div class="loading">
-                        <paper-spinner alt="Loading" active></paper-spinner>
-                    </div>
-            {{/if}}
-        </div>
-    </div>
-    <div class="flex-column column-even coljan">
-        <div class="vertical-title">Januari</div>
-        <div class="top">
-            <div class="fa compress-coljan fa-compress">
-                <paper-ripple></paper-ripple>
-            </div>
-            <div class="column-title">Januari</div>
-            <div class="periode">1e examenperiode</div>
-            <div class="CSE">
-                {{#with CSE_januari}}
-                    {{> CSE_bar }}
-                {{/with}}
-            </div>
-        </div>
-        <div class="traject">
-            {{#with GetPeriod 3 }}
-                {{> trajectory}}
-            {{/with}}
-        </div>
-        <div class="bottom">
-            {{#if Template.subscriptionsReady}}
-                {{#each studentCourses 1}}
-                    <div class="flex-item">
-                        {{> course}}
-                    </div>
-                {{/each}}
-            {{else}}
-                <div class="loading">
-                    <paper-spinner alt="Loading" active></paper-spinner>
-                </div>
-            {{/if}}
-        </div>
-    </div>
-
-    {{#if ShowJuni}}
-            <div class="flex-column coljun">
-                <div class="vertical-title">Juni</div>
-                <div class="top">
-                    <div class="fa compress-coljun fa-compress">
-                        <paper-ripple></paper-ripple>
-                    </div>
-                    <div class="column-title">Juni</div>
-                    <div class="periode">2e examenperiode</div>
-                    <div class="CSE">
-                        {{#with CSE_juni}}
-                            {{> CSE_bar }}
-                        {{/with}}
-                    </div>
-                </div>
-                <div class="bottom">
-                    {{#if Template.subscriptionsReady}}
-                        {{#each studentCourses 2}}
-                            <div class="flex-item">
-                                {{> course}}
-                            </div>
-                        {{/each}}
-                    {{else}}
-                        <div class="loading">
-                            <paper-spinner alt="Loading" active></paper-spinner>
-                        </div>
-                    {{/if}}
-                </div>
-            </div>
-    {{/if}}
-    {{#if ShowSeptember}}
-            <div class="flex-column column-even colsept">
-                <div class="vertical-title">Augustus</div>
-                <div class="top">
-                    <div class="fa compress-colsept fa-compress">
-                        <paper-ripple></paper-ripple>
-                    </div>
-                    <div class="column-title">Augustus</div>
-                    <div class="periode">3e examenperiode</div>
-                    <div id="CSE_sept" class="CSE flickering">
-                        {{#with CSE_september}}
-                            {{> CSE_bar }}
-                        {{/with}}
-                    </div>
-                </div>
-                <div class="bottom">
-                    {{#if Template.subscriptionsReady}}
-                        {{#each studentCourses 1 false 2}}
-                            <div class="flex-item">
-                                {{> course}}
-                            </div>
-                        {{/each}}
-                        <div class="courseseparator"></div>
-                        {{#each studentCourses 2 false 2}}
-                            <div class="flex-item">
-                                {{> course}}
-                            </div>
-                        {{/each}}
-                    {{else}}
-                        <div class="loading">
-                            <paper-spinner alt="Loading" active></paper-spinner>
-                        </div>
-                    {{/if}}
-                </div>
-            </div>
-    {{/if}}
-
-    {{#if ShowSeptember}}
-        {{#if Fails}}
-            <div class="flex-column colfail">
-                <div class="vertical-title">Onsuccesvolle vakken</div>
-                <div class="top">
-                    <div class="fa compress-colfail fa-compress">
-                        <paper-ripple></paper-ripple>
-                    </div>
-                    <div class="column-title">Onsuccesvolle vakken</div>
-                    <div class="periode">Tolerantiepunten</div>
-                    <div id='tolerantiepunten' class="tolerantiepunten flickering">
-                        <paper-progress value={{toleranceCredits}} max="12" min="0"></paper-progress>
-                        <span> {{toleranceCredits}} </span><b> /12</b>
-                    </div>
-                </div>
-                <div class="bottom">
-                    {{#if Template.subscriptionsReady}}
-                        {{#each coursesLeft 1}}
-                            <div class="flex-item">
-                                {{> failedCourse}}
-                            </div>
-                        {{/each}}
-                        <div class="courseseparator"></div>
-                        {{#each coursesLeft 2}}
-                            <div class="flex-item">
-                                {{> failedCourse}}
-                            </div>
-                        {{/each}}
-                    {{else}}
-                        <div class="loading">
-                            <paper-spinner alt="Loading" active></paper-spinner>
-                        </div>
-                    {{/if}}
-                </div>
-            </div>
-        {{/if}}
-            <div class="flex-column column-even planning">
-                <div class="vertical-title">Studiebelastingplanning</div>
-                <div class="top">
-                    <div class="fa compress-planning fa-compress">
-                        <paper-ripple></paper-ripple>
-                    </div>
-                    <div class="column-title">Studiebelastingplanning</div>
-                    <div id='creditsplanned' class="creditsplanned">
-                        <paper-progress value={{totalCSE}} max="180" min="0"></paper-progress>
-                        <span> {{totalCSE}} </span><b> /180</b>
-                    </div>
-                </div>
-                {{#if Template.subscriptionsReady}}
-                    {{> cseplanning}}
-                {{/if}}
-            </div>
-    {{/if}}
-
-    {{#if ShowJuni}}
-            <div class="flex-column planning-column colfail2">
-                <div class="column-title">Onsuccesvolle examens</div>
-                <div class="CSE">
-                </div>
-                <div>
-                    {{#if Template.subscriptionsReady}}
-                        {{#each coursesLeft 1}}
-                            <div class="flex-row">
-                                <div class="flex-item">{{> checkbox}}</div>
-                            </div>
-                        {{/each}}
-                        <!-- <div class="courseseparator"></div> -->
-                        {{#each coursesLeft 2}}
-                            <div class="flex-row">
-                                <div class="flex-item">{{> checkbox}}</div>
-                            </div>
-                        {{/each}}
-                    {{else}}
-                        <div class="loading">
-                            <paper-spinner alt="Loading" active></paper-spinner>
-                        </div>
-                    {{/if}}
-                </div>
-
-            </div>
-    {{/if}}
-
-        <!--Always show the bachelor column-->
-        <div class="flex-column colfuture" id="colfuture">
-            <div class="vertical-title">bachelor</div>
-            <div class="top">
-                <div class="fa compress-colfuture fa-compress">
-                    <paper-ripple></paper-ripple>
-                </div>
-                <div class="column-title">bachelor</div>
-                <div id="legend" class="periode legend">
-                    <div class="legend-item legend3">3j</div>
-                    <div class="legend-item legend4">4j</div>
-                    <div class="legend-item legend5">5j</div>
-                    <div class="legend-item legendnot">Niet</div>
-                </div>
-            </div>
-            <div class="bottom">
-                {{#if Template.subscriptionsReady}}
-                    {{> future}}
-                {{/if}}
-            </div>
-        </div>
     </div>
     </div>
 

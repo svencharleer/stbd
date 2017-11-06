@@ -4,27 +4,27 @@
 }
 
 .course.failed {
-    border-color: #ff8a80;
+    border-color: var(--Fail);
 }
 
 .course.passed {
-    border-color: #a5d6a7;
+    border-color: var(--Pass);
 }
 
 .course.tolerable {
-    border-color: #ffcc80;
+    border-color: var(--Tolerable);
 }
 
 .course .top-bar.failed {
-    background: #ff8a80;
+    background: var(--Fail);
 }
 
 .course .top-bar.passed {
-    background: #a5d6a7;
+    background: var(--Pass);
 }
 
 .course .top-bar.tolerable {
-    background: #ffcc80;
+    background: var(--Tolerable);
 }
 
 /*.course .top-bar.failed:hover    { background: #ec877e; }

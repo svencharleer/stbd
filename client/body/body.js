@@ -17,13 +17,6 @@ Template.body.events({
     template.$("." + column + " .top .periode").css("visibility", "hidden");
     template.$("." + column + "").css("min-width", "27px");
     template.$("." + column + "").css("max-width", "27px");
-    clicks.insert({
-      'session': Session.get('Id'),
-      'studentid': Session.get('student'),
-      'element': element,
-      'time': Date.now(),
-      'action': 'hide_column'
-    })
 
   },
   "click .fa-expand": function (event, template) {
@@ -40,8 +33,8 @@ Template.body.events({
     template.$("." + column + " .top .tolerantiepunten").css("visibility", "visible");
     template.$("." + column + " .top .creditsplanned").css("visibility", "visible");
     template.$("." + column + " .top .periode").css("visibility", "visible");
-    template.$("." + column + "").css("max-width", "180px");
-    template.$("." + column + "").css("min-width", "180px");
+    template.$("." + column + "").css("max-width", "var(--ColumnWidth)");
+    template.$("." + column + "").css("min-width", "var(--ColumnWidth)");
     clicks.insert({
       'session': Session.get('Id'),
       'studentid': Session.get('student'),
@@ -208,19 +201,21 @@ Template.body.onCreated(function () {
 
       //get failed courses
 
-      ////console.log(failedCourses);
       Meteor.call("getFailedCourses", Session.get("student"), function (err, data) {
-        Session.set("FailedCourses", data);
         //set them up for selection
         var selectedCourses = {};
         data.forEach(function (f) {
           selectedCourses[f.courseid] = {id: f.courseid, course: f, checked: true};
         })
-        Session.set("selectedCourses", selectedCourses);
+        Session.set("failedCourses", selectedCourses);
         Session.set("Fails", data.length > 0 ? true : false);
         //console.log("fails set to " + Session.get("Fails"));
 
         if ($(".loading-screen")) $(".loading-screen").hide();
+      });
+
+      Meteor.call("getStudentCourses", Session.get("student"), function (err, courses) {
+        Session.set("selectedCourses", courses);
       });
 
       Meteor.call("getCreditsTaken", Session.get('student'), 1, function (err, credits) {
@@ -239,7 +234,7 @@ Template.body.helpers({
     return Courses.find({});
   },
   ttt() {
-    return Courses.find({semester: 0})
+    return Courses.find({semester: -1})
   },
   january() {
     return Courses.find({semester: 1})
@@ -334,6 +329,7 @@ Template.body.helpers({
   },
 
   ijkingstoetsen() {
+    console.log('ijkingstoetsen')
     var ijkingstoetsen = Ijkingstoets.findOne();
     if (ijkingstoetsen == undefined) return;
     if (ijkingstoetsen.student != Session.get("student")) {
@@ -371,6 +367,7 @@ Template.body.helpers({
 
     return results;
   },
+
   totalCSE() {
     let cse = 0;
     if (Session.get("CSE_Planning") != undefined) {
@@ -397,27 +394,6 @@ Template.body.helpers({
 
     return courses;
   },
-  CSE_januari() {
-    return {
-      percent: Session.get("CSE_januari"),
-      raw: Session.get("CSE_januari_pure"),
-      credits: Session.get("creditsTaken")[0]
-    }
-  },
-  CSE_juni() {
-    return {
-      percent: Session.get("CSE_juni"),
-      raw: Session.get("CSE_juni_pure"),
-      credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1]
-    }
-  },
-  CSE_september() {
-    return {
-      percent: Session.get("CSE_september"),
-      raw: Session.get("CSE_september_pure"),
-      credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1]
-    }
-  },
 
   Fails() {
     return Session.get("Fails");
@@ -433,6 +409,73 @@ Template.body.helpers({
   },
   'GetPeriod':function(number){
     var r = [{period: "ijkingstoets"}, {period: "TTT"}, {period: "januari"}, {period: "juni"}, {period: "september"}]
+    return r[number]
+  },
+  /**
+   *
+   * @param number: Indicates the index of the column
+   * @returns {{class, period, percent, raw, credits, title, subTitle, columnindex}|*}
+   * @constructor
+   */
+  'GetColumnInfo':function (number) {
+    var r = [
+      {
+        title: "Ijkingstoets",
+        semester: -2,
+        class: "column-odd",
+        period: "ijkingstoets",
+        percent: undefined,
+        raw: undefined,
+        credits: undefined,
+        subTitle: undefined,
+        columnindex: 0
+      },
+      {
+        title: "Tussentijdse testen",
+        semester: -1,
+        class: "column-even col1",
+        period: "TTT",
+        percent: undefined,
+        raw: undefined,
+        credits: undefined,
+        subTitle: undefined,
+        columnindex: 1
+      },
+      {
+        title: "Januari",
+        semester: 1,
+        class: "column-odd col2",
+        period: "januari",
+        percent: Session.get("CSE_januari"),
+        raw: Session.get("CSE_januari_pure"),
+        credits: Session.get("creditsTaken")[0],
+        subTitle: "Eerste examenperiode",
+        columnindex: 2
+      },
+      {
+        title: "Juni",
+        semester: 2,
+        class: "column-even",
+        period: "juni",
+        percent: Session.get("CSE_juni"),
+        raw: Session.get("CSE_juni_pure"),
+        credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1],
+        subTitle: "Tweede examenperiode",
+        columnindex: 3
+      },
+      {
+        title: "September",
+        semester: 3,
+        class: "column-odd",
+        period: "september",
+        percent: Session.get("CSE_september"),
+        raw: Session.get("CSE_september_pure"),
+        credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1],
+        title: "September",
+        subTitle: "Derde examenperiode",
+        columnindex: 4
+      },
+    ];
     return r[number]
   }
 

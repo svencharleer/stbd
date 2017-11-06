@@ -1,13 +1,11 @@
 <template name="resultGraph">
-    <div id="{{id}}_{{semester}}" class="course {{color}}">
+    <div id="{{getStrippedCourseID}}_{{columnindex}}" class="course {{color}}">
         <div class="course-top">
             <div class="name">{{name}}</div>
             <div class="top-bar {{color}}">
                 <div class="grade">{{grade}}</div>
                 <div class="credits">
-                    <!-- <div class="bracket">[</div> -->
                     {{credits}}<span>stp</span>
-                    <!-- <div class="bracket">]</div> -->
                 </div>
             </div>
             <paper-ripple></paper-ripple>

@@ -1,4 +1,5 @@
 Template.ijkingstoets.onCreated(function () {
+  console.log('ijkingstoest template')
   let instance = this;
   let bar = "#CBCBCB";
   let barSelect = "#020202";

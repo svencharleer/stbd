@@ -1,3 +1,20 @@
+:root {
+    --TopStudent: rgba(165, 214, 167, 1);
+    --TopSelected: rgb(125, 214, 129);
+    --MiddleStudent: rgba(128, 222, 234, 1);
+    --MiddleSelected: rgb(83, 216, 232);
+    --LowStudent: rgba(159, 168, 218, 1);
+    --LowSelected: rgb(119, 133, 215);
+    --BadStudent: rgba(255, 193, 227, 1);
+    --BadSelected: rgb(246, 122, 190);
+    --ColumnWidth: 350px;
+    --TextColor: #424242;
+    --Pass: #a5d6a7;
+    --Tolerable: #ffcc80;
+    --Fail: #ff8a80;
+}
+
+
 body {
     /* TODO: Need to fix this.. to a standard size */
     max-width: 100%;
@@ -15,7 +32,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #424242;
+    color: var(--TextColor);
     position: absolute;
     width: 100%;
     height: 100%;
@@ -29,7 +46,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #424242;
+    color: var(--TextColor);
     position: absolute;
     width: 100%;
     height: 100%;
@@ -112,8 +129,8 @@ body {
 .flex-column {
     flex-grow: 1;
     justify-content: flex-start;
-    min-width: 350px;
-    max-width: 350px;
+    min-width: var(--ColumnWidth);
+    max-width: var(--ColumnWidth);
     min-height: 700px;
     border-right: 1px solid #ececec;
     border-bottom: 1px solid #ececec;
@@ -201,7 +218,7 @@ body {
     text-transform: lowercase;
     font-size: 1em;
     width: 100%;
-    color: #424242;
+    color: var(--TextColor);
     min-height: 21px;
 }
 
