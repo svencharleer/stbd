@@ -1,35 +1,35 @@
 <template name="trajectory">
-  <div id="trajectory">
-    <h2>Positionering ten opzichte van je medestudenten
-      <paper-ripple></paper-ripple>
-      <a class="hider fa fa-chevron-up"></a>
-    </h2>
+    <div id="trajectory">
+        <h2>Positionering ten opzichte van je medestudenten
+            <paper-ripple></paper-ripple>
+            <a class="hider fa fa-chevron-up"></a>
+        </h2>
 
-    <div class="rowtraject">
-      <div class="traject-legend">
-        <span>100</span>
-        <span></span>
-        <span>80</span>
-        <span></span>
-        <span>60</span>
-        <span></span>
-        <span>40</span>
-        <span></span>
-        <span>20</span>
-        <span></span>
-      </div>
-      <div id="trajectory-bg">
-        <div id="trajectory-bg-middleline"></div>
-      </div>
-      <!-- <canvas id="trajectory-overlay"></canvas> -->
-      {{#if Template.subscriptionsReady}}
-      {{#each periods}}
-      {{> trajectoryperiod}}
-      {{/each}}
-      {{/if}}
-      <!-- curves -->
-      {{update}}
+        <div class="rowtraject">
+            <div class="traject-legend">
+                <span>100</span>
+                <span></span>
+                <span>80</span>
+                <span></span>
+                <span>60</span>
+                <span></span>
+                <span>40</span>
+                <span></span>
+                <span>20</span>
+                <span></span>
+            </div>
+            <div id="trajectory-bg">
+                <div id="trajectory-bg-middleline"></div>
+            </div>
+            <!-- <canvas id="trajectory-overlay"></canvas> -->
+            {{#if Template.subscriptionsReady}}
+                {{#each periods}}
+                    {{> trajectoryperiod}}
+                {{/each}}
+            {{/if}}
+            <!-- curves -->
+            {{update}}
+        </div>
+
     </div>
-
-  </div>
 </template>

@@ -1,15 +1,15 @@
 .distribution {
-  width: 180px;
-  display:inline-block;
-  cursor: pointer;
-  overflow: visible;
+    width: 180px;
+    display: inline-block;
+    cursor: pointer;
+    overflow: visible;
 }
 
 .trace:hover {
-  fill: #e9e9e9;
+    fill: #e9e9e9;
 }
 
 .distribution .tooltip {
-  fill: #828282;
-  display: none;
+    fill: #828282;
+    display: none;
 }

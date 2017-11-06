@@ -1,88 +1,92 @@
 .failed-course .grade {
-  display: flex;
+    display: flex;
 }
 
 .course-bottom.tolerate {
-  justify-content: flex-start;
+    justify-content: flex-start;
 }
 
 /* .course-bottom.tolerate.tolerable.canTolerate {
   max-height: 48px;
 } */
 
-.bold {font-weight: 500;}
-.notbold {font-weight: 300;}
-
-
-/* Flex container */
-.options-container{
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: 100%;
+.bold {
+    font-weight: 500;
 }
 
-.stay-failed{
-  align-self: auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  font-size: 13px;
-  font-weight: 300;
+.notbold {
+    font-weight: 300;
+}
+
+/* Flex container */
+.options-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.stay-failed {
+    align-self: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-size: 13px;
+    font-weight: 300;
 }
 
 .tolerate-checkbox {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
 }
 
-.tolerate-course{
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  font-size: 13px;
-  font-weight: 300;
-  opacity: 0.5;
+.tolerate-course {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 300;
+    opacity: 0.5;
 }
 
-.checkdot{
-  min-width: 16px;
-  min-height: 16px;
-  align-self: flex-start;
-  text-align: center;
-  color: white;
-  border-radius: 50%;
-  margin: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.checkdot {
+    min-width: 16px;
+    min-height: 16px;
+    align-self: flex-start;
+    text-align: center;
+    color: white;
+    border-radius: 50%;
+    margin: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.check-fail{
-  background-color: #eabd79;
+.check-fail {
+    background-color: #eabd79;
 }
 
-.check-tolerate{ 
-  background-color: #81A8B8;
-  align-self: flex-start;
-  text-align: center;
-  color: transparent;
+.check-tolerate {
+    background-color: #81A8B8;
+    align-self: flex-start;
+    text-align: center;
+    color: transparent;
 }
 
-.getolereerd{
-  display: none;
+.getolereerd {
+    display: none;
 }
 
-.try{
-  display: flex;
+.try {
+    display: flex;
 }
 
-.top-bar{
-  transition: background-color 0.5s ease;
+.top-bar {
+    transition: background-color 0.5s ease;
 }
 
 

@@ -1,0 +1,36 @@
+<template name="column">
+    <div class="flex-column {{class}} {{period}}">
+        <div class="vertical-title">{{title}}</div>
+        <div class="top">
+            <div class="fa compress-{{period}} fa-compress">
+                <paper-ripple></paper-ripple>
+            </div>
+            <div class="column-title">{{title}}</div>
+            <div class="periode">{{subTitle}}</div>
+            <div class="CSE">
+                {{#if cseAvailable }}
+                    {{> CSE_bar }}
+                {{/if}}
+            </div>
+        </div>
+        <div class="traject">
+            {{#with trajectInfo}}
+                {{> trajectory}}
+            {{/with}}
+        </div>
+        <div class="bottom">
+            {{#if Template.subscriptionsReady}}
+                {{#each studentCourses}}
+                    <div class="flex-item">
+                        {{> course}}
+                    </div>
+                {{/each}}
+            {{else}}
+                <div class="loading">
+                    <paper-spinner alt="Loading" active></paper-spinner>
+                </div>
+            {{/if}}
+        </div>
+    </div>
+</template>
+
