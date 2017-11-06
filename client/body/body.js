@@ -17,13 +17,6 @@ Template.body.events({
     template.$("." + column + " .top .periode").css("visibility", "hidden");
     template.$("." + column + "").css("min-width", "27px");
     template.$("." + column + "").css("max-width", "27px");
-    clicks.insert({
-      'session': Session.get('Id'),
-      'studentid': Session.get('student'),
-      'element': element,
-      'time': Date.now(),
-      'action': 'hide_column'
-    })
 
   },
   "click .fa-expand": function (event, template) {
@@ -40,8 +33,8 @@ Template.body.events({
     template.$("." + column + " .top .tolerantiepunten").css("visibility", "visible");
     template.$("." + column + " .top .creditsplanned").css("visibility", "visible");
     template.$("." + column + " .top .periode").css("visibility", "visible");
-    template.$("." + column + "").css("max-width", "180px");
-    template.$("." + column + "").css("min-width", "180px");
+    template.$("." + column + "").css("max-width", "var(--ColumnWidth)");
+    template.$("." + column + "").css("min-width", "var(--ColumnWidth)");
     clicks.insert({
       'session': Session.get('Id'),
       'studentid': Session.get('student'),
@@ -440,7 +433,7 @@ Template.body.helpers({
       {
         title: "Tussentijdse testen",
         semester: -1,
-        class: "column-even",
+        class: "column-even col1",
         period: "TTT",
         percent: undefined,
         raw: undefined,
@@ -451,7 +444,7 @@ Template.body.helpers({
       {
         title: "Januari",
         semester: 1,
-        class: "column-odd",
+        class: "column-odd col2",
         period: "januari",
         percent: Session.get("CSE_januari"),
         raw: Session.get("CSE_januari_pure"),

@@ -48,7 +48,7 @@
     margin-bottom: 2px;
     margin: 4px;
     min-height: 32px;
-    color: #424242;
+    color: var(--TextColor);
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -57,7 +57,7 @@
 .course .label {
     font-size: 13px;
     font-weight: 500;
-    color: #424242;
+    color: var(--TextColor);
 }
 
 .course .course-top .credits  {
@@ -65,17 +65,17 @@
     font-weight: 500;
     display: flex;
     align-items: baseline;
-    color: #424242;
+    color: var(--TextColor);
 }
 
 .credits span  {
     font-size: 10px;
-    color: #424242;
+    color: var(--TextColor);
 }
 
 .course .course-top .credits .bracket  {
     font-size: 10px;
-    color: #424242;
+    color: var(--TextColor);
 }
 
 .course svg {

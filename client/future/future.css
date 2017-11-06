@@ -1,13 +1,4 @@
-:root {
-    --TopStudent: rgba(165, 214, 167, 1);
-    --TopSelected: rgb(125, 214, 129);
-    --MiddleStudent: rgba(128, 222, 234, 1);
-    --MiddleSelected: rgb(83, 216, 232);
-    --LowStudent: rgba(159, 168, 218, 1);
-    --LowSelected: rgb(119, 133, 215);
-    --BadStudent: rgba(255, 193, 227, 1);
-    --BadSelected: rgb(246, 122, 190);
-}
+
 
 .fields svg {
     overflow: hidden;
