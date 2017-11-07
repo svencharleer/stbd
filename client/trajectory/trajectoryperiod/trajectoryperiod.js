@@ -9,7 +9,6 @@ Template.trajectoryperiod.onRendered(function () {
 
 
     Meteor.call('getDistribution', semester, Session.get("Year"), function (err, data) {
-      console.log(data);
       //find max value and min value
       var min = Number.MAX_VALUE;
       var max = Number.MIN_VALUE;

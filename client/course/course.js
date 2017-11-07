@@ -3,8 +3,8 @@ Template.course.onRendered(function () {
 
   instance.autorun(function () {
     //Session.get("student")
-    let handler1 = instance.subscribe("generic_courses", function () {});
-    let handler2 = instance.subscribe("generic_grades", Session.get("student"));
+    let handler1 = instance.subscribe("generic_courses", Session.get("program"));
+    let handler2 = instance.subscribe("generic_grades", Session.get("program"), Session.get("student"));
     // let handler3 = instance.subscribe("ijkingstoets", Session.get("student"));
 
     if (handler1.ready() && handler2.ready()) {

@@ -14,12 +14,14 @@ var clicks = new Meteor.Collection('clicks');
 
 
 //Publish all collections
-Meteor.publish('generic_grades', function (who) {
-  return Grades.find({studentid: who});
+Meteor.publish('generic_grades', function (program, who) {
+  return Grades.find({$and: [{studentid: who}, {program: program}]});
 });
 
-Meteor.publish('generic_courses', function () {
-  return Courses.find();
+Meteor.publish('generic_courses', function (program) {
+  return Courses.find({
+    program:   program
+  });
 });
 
 Meteor.publish('generic_students', function (who) {
