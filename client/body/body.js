@@ -117,8 +117,8 @@ Template.body.onCreated(function () {
   this.started = new ReactiveVar(false);
   var instance = this;
   console.log(Meteor.settings.public.logging)
-  let program = "ABA ingenieurswetenschappen (Leuv)"
-  var handler = instance.subscribe("generic_courses", "ABA ingenieurswetenschappen (Leuv)");
+  Session.set('program', Meteor.settings.public.program);
+  var handler = instance.subscribe("generic_courses", Session.get("program"));
   if (Meteor.settings.public.logging) {
     $(".button").css("display", 'flex');
     Session.set('mouseX', 0);
@@ -140,7 +140,7 @@ Template.body.onCreated(function () {
     Session.set("creditsTaken", 0)
     Session.set("toleranceCredits", 12)
 
-    var handler2 = instance.subscribe("generic_grades", program, Session.get("student"));
+    var handler2 = instance.subscribe("generic_grades", Session.get("program"), Session.get("student"));
     var handler3 = instance.subscribe("ijkingstoets", Session.get("student"));
     var handler4 = instance.subscribe("generic_cse", Session.get("student"));
     var handler8 = instance.subscribe("generic_students");
@@ -403,12 +403,15 @@ Template.body.helpers({
 
   },
   'GetPeriod':function(number){
-    var r = [{period: "ijkingstoets"}, {period: "TTT"}, {period: "januari"}, {period: "juni"}, {period: "september"}]
+    var r = [{period: "ijkingstoets"}, {period: "TTT"}, {period: "januari"}, {period: "juni"}, {period: "september"}];
     return r[number]
   },
   /**
    * Get the program from the settings file
    */
+  'GetProgram':function () {
+    return Meteor.settings.public.program;
+  },
 
   /**
    *

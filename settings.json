@@ -8,7 +8,8 @@
             "showJuni": false,
             "showSeptember" :false,
             "dynamic": false,
-            "logging": false
+            "logging": false,
+            "program":"ABA ingenieurswetenschappen (Leuv)"
         }
 
 }

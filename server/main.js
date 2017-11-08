@@ -221,8 +221,8 @@ Meteor.methods({
       limit1 = Meteor.settings.public.cselimit1;
       limit2 = Meteor.settings.public.cselimit2;
     }
-    console.log("CSE limits: " + limit1 + ' ' + limit2);
-    console.log('score student: ' + CSE_score + ' in semester: ' + semester)
+    // console.log("CSE limits: " + limit1 + ' ' + limit2);
+    // console.log('score student: ' + CSE_score + ' in semester: ' + semester)
     var top = false;
     var middle = false;
     var low = false;
@@ -627,7 +627,6 @@ var helper_GetCreditsTakenSemester = function (who, semester) {
  * @returns {{distribution: Array}}
  */
 let getScoreDistribution = function (semester, year) {
-  console.log('getScoreDistribution');
   let regex = {$regex: /(Ijkingstoets|Positioneringstest|Voorkennistest)/};
   if (semester === -2) {
     regex = {$regex: /Ijkingstoets/};
@@ -665,10 +664,6 @@ let getScoreDistribution = function (semester, year) {
  * @returns {{distribution: Array}}
  */
 let getSemesterCSEDistribution =  function (semester, year) {
-  console.log('getSemesterDistribution');
-  let cse = 1;
-
-
   //Find all cses of this year without # or NA
   let cses = CSEs.find({year: year});
   var buckets = {};
