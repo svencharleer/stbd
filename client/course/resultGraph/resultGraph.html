@@ -4,9 +4,11 @@
             <div class="name">{{name}}</div>
             <div class="top-bar {{color}}">
                 <div class="grade">{{grade}}</div>
-                <div class="credits">
-                    {{credits}}<span>stp</span>
-                </div>
+                {{#if validCredits }}
+                    <div class="credits">
+                        {{credits}}<span>stp</span>
+                    </div>
+                {{/if}}
             </div>
             <paper-ripple></paper-ripple>
         </div>

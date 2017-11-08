@@ -20,7 +20,10 @@ Template.resultGraph.helpers({
     courseId = courseId.replace(/,/g,'');
 
     return courseId
-
+  },
+  validCredits: function () {
+    let credits = this.credits;
+    return credits > 0;
   }
 });
 
