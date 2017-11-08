@@ -1,64 +1,59 @@
 <body>
-{{> register}}
-<div class="loading-screen">
+  {{> register}}
+  <div class="loading-screen">
     <div>
-        <paper-spinner alt="Loading Dashboard" active></paper-spinner>
-        <h1>Loading Dashboard</h1>
+      <paper-spinner alt="Loading Dashboard" active></paper-spinner>
+      <h1>Loading Dashboard</h1>
     </div>
-</div>
+  </div>
+</body>
 
-<div class="nostudent">
+<template name="dashboard">
+  <div class="nostudent">
     <div>
-        <h1>Geen student gevonden</h1>
+      <h1>Geen student gevonden</h1>
     </div>
-</div>
-{{> student}}
+  </div>
+  {{> student}}
 
-
-<div class="flex-container">
-<div class="flex-row">
-    {{#with GetColumnInfo 0}}
-        {{> column}}
-    {{/with}}
-
-    {{#with GetColumnInfo 1}}
-        {{> column}}
-    {{/with}}
-
-    {{#with GetColumnInfo 2}}
-        {{> column}}
-    {{/with}}
-
-    <!--{{#with GetColumnInfo 3}}-->
-        <!--{{> column}}-->
-    <!--{{/with}}-->
-
-    <!--{{#with GetColumnInfo 4}}-->
-        <!--{{> column}}-->
-    <!--{{/with}}-->
-
-    <!--Always show the bachelor column-->
-    <div class="flex-column colfuture" id="colfuture">
+  <div class="flex-container">
+    <div class="flex-row">
+      {{#with GetColumnInfo 0}}
+      {{> column}}
+      {{/with}}
+      {{#with GetColumnInfo 1}}
+      {{> column}}
+      {{/with}}
+      {{#with GetColumnInfo 2}}
+      {{> column}}
+      {{/with}}
+      <!--{{#with GetColumnInfo 3}}-->
+      <!--{{> column}}-->
+      <!--{{/with}}-->
+      <!--{{#with GetColumnInfo 4}}-->
+      <!--{{> column}}-->
+      <!--{{/with}}-->
+      <!--Always show the bachelor column-->
+      <div class="flex-column colfuture" id="colfuture">
         <div class="vertical-title">bachelor</div>
         <div class="top">
-            <div class="fa compress-colfuture fa-compress">
-                <paper-ripple></paper-ripple>
-            </div>
-            <div class="column-title">bachelor</div>
-            <div id="legend" class="periode legend">
-                <div class="legend-item legend3">3j</div>
-                <div class="legend-item legend4">4j</div>
-                <div class="legend-item legend5">5j</div>
-                <div class="legend-item legendnot">Niet</div>
-            </div>
+          <div class="fa compress-colfuture fa-compress">
+            <paper-ripple></paper-ripple>
+          </div>
+          <div class="column-title">bachelor</div>
+          <div id="legend" class="periode legend">
+            <div class="legend-item legend3">3j</div>
+            <div class="legend-item legend4">4j</div>
+            <div class="legend-item legend5">5j</div>
+            <div class="legend-item legendnot">Niet</div>
+          </div>
         </div>
         <div class="bottom">
-            {{#if Template.subscriptionsReady}}
-                {{> future}}
-            {{/if}}
+          {{#if Template.subscriptionsReady}}
+          {{> future}}
+          {{/if}}
         </div>
+      </div>
     </div>
-    </div>
-    </div>
-
-    </body>
+  </div>
+</template>

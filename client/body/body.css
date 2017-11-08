@@ -29,7 +29,7 @@ body {
 }
 
 .loading-screen {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     color: var(--TextColor);
@@ -433,5 +433,3 @@ paper-progress #primaryProgress {
     top: 1px;
     outline: 0;
 }
-
-

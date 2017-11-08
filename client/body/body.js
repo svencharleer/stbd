@@ -1,7 +1,6 @@
 import {ReactiveVar} from 'meteor/reactive-var'
 
-
-Template.body.events({
+Template.dashboard.events({
   "click .fa-compress": function (event, template) {
     let element = $(event.target).attr('class').split(' ')[1];
     let column = element.replace(/.*-/, '');
@@ -113,7 +112,7 @@ Template.body.events({
 
 });
 
-Template.body.onCreated(function () {
+Template.dashboard.onCreated(function () {
   this.started = new ReactiveVar(false);
   var instance = this;
   setProgramSettings("dev");
@@ -125,13 +124,12 @@ Template.body.onCreated(function () {
     Session.set('lastMove', Date.now())
   }
 
-
-  instance.autorun(function () {
+    instance.autorun(function () {
     // $(".flex-container").css("display", 'flex');
-    $(".flex-container").hide();
-    $("#student").hide();
+    //$(".flex-container").hide();
+    //$("#student").hide();
     $(".nostudent").hide();
-    if (!$(".loading-screen").is(":visible")) $(".loading-screen").show();
+    //if (!$(".loading-screen").is(":visible")) $(".loading-screen").show();
     Session.set('Id', Meteor.default_connection._lastSessionId);
     Session.set("CSE_januari", 0);
     Session.set("CSE_juni", 0);
@@ -149,7 +147,7 @@ Template.body.onCreated(function () {
       var studentID = Session.get("student");
       var studentName = Students.findOne({studentid: studentID});
       if (studentName == undefined) {
-        if ($(".loading-screen")) $(".loading-screen").hide();
+        //if ($(".loading-screen")) $(".loading-screen").hide();
         $(".nostudent").show();
         $(".flex-container").css("display", 'none');
 
@@ -221,7 +219,7 @@ Template.body.onCreated(function () {
 })
 
 
-Template.body.helpers({
+Template.dashboard.helpers({
   toleranceCredits() {
     return Session.get('toleranceCredits');
   },
@@ -507,5 +505,3 @@ let setProgramSettings = function (root) {
   Session.set('limit2', cselimit2);
 
 }
-
-

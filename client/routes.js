@@ -33,8 +33,8 @@ Router.route('/' + rootRoute + '/:_year/',
 
 Grades = new Meteor.Collection('generic_grades');
 Ijkingstoets = new Meteor.Collection('ijkingstoets');
-Courses = new Meteor.Collection('generic_courses');
+Courses  = new Meteor.Collection('generic_courses');
 Students = new Meteor.Collection('generic_students');
-CSEs = new Meteor.Collection('generic_cse');
-heatmap = new Meteor.Collection('heatmap');
-clicks = new Meteor.Collection('clicks');
+CSEs     = new Meteor.Collection('generic_cse');
+heatmap  = new Meteor.Collection('heatmap');
+clicks   = new Meteor.Collection('clicks');

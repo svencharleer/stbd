@@ -1,17 +1,12 @@
 Template.register.events({
-  'submit form': function(event){
-    event.preventDefault();
-    var user = $('[name=username]').val();
-    console.log(user)
-    switch (user){
-      case "admin":
-        $(".flex-container").css("display", 'flex');
-        $("#student").css("display", "flex");
-        $(".register").hide();
-        break;
-      default:
-        alert("Not a valid user")
-    }
+  'click paper-button': function(event){
+    let token = $(".user-token").val();
+    Session.set("token", token);
 
+    if (token == "abc") {
+        $(".register").fadeOut(function(){
+          Blaze.render(Template.dashboard, $('body')[0]);
+        });
+    }
   }
 });
