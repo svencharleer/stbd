@@ -2,6 +2,7 @@ import {Mongo} from 'meteor/mongo';
 import '../imports/helpers/CSE.js';
 import '../imports/helpers/courses.js';
 
+
 rootRoute = Meteor.settings.public.rootroute == undefined ? "dev" : Meteor.settings.public.rootroute;
 
 console.log("RouteRoot is " + rootRoute);
@@ -18,6 +19,7 @@ Router.route('/' + rootRoute + '/:_year/:_id',
     //reset();
   }
 );
+
 
 Router.route('/' + rootRoute + '/:_year/',
   function () {

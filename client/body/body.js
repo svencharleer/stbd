@@ -116,8 +116,7 @@ Template.body.events({
 Template.body.onCreated(function () {
   this.started = new ReactiveVar(false);
   var instance = this;
-  console.log(Meteor.settings.public.logging)
-  Session.set('program', Meteor.settings.public.program);
+  setProgramSettings("dev");
   var handler = instance.subscribe("generic_courses", Session.get("program"));
   if (Meteor.settings.public.logging) {
     $(".button").css("display", 'flex');
@@ -128,7 +127,9 @@ Template.body.onCreated(function () {
 
 
   instance.autorun(function () {
-    $(".flex-container").css("display", 'flex');
+    // $(".flex-container").css("display", 'flex');
+    $(".flex-container").hide();
+    $("#student").hide();
     $(".nostudent").hide();
     if (!$(".loading-screen").is(":visible")) $(".loading-screen").show();
     Session.set('Id', Meteor.default_connection._lastSessionId);
@@ -163,8 +164,7 @@ Template.body.onCreated(function () {
         semester = 3;
       }
       Session.set('semester', semester);
-      Session.set('limit1', Meteor.settings.public.cselimit1);
-      Session.set('limit2', Meteor.settings.public.cselimit2);
+
 
 
       //get the CSE for the student
@@ -479,10 +479,33 @@ Template.body.helpers({
       },
     ];
     return r[number]
-  }
+  },
+
 
 
 
 });
+
+let setProgramSettings = function (root) {
+  let program = "ABA ingenieurswetenschappen (Leuv)" ;
+  let cselimit1 = 90;
+  let cselimit2 = 50;
+
+  switch (root){
+    case "dev":
+      program = "ABA ingenieurswetenschappen (Leuv)";
+      cselimit1 = 80;
+      cselimit2 = 40;
+      break;
+    default:
+      program = "ABA ingenieurswetenschappen (Leuv)";
+      cselimit1 = 80;
+      cselimit2 = 40;
+  }
+  Session.set("program", program);
+  Session.set('limit1', cselimit1);
+  Session.set('limit2', cselimit2);
+
+}
 
 

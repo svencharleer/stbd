@@ -1,15 +1,12 @@
 {
      "public":{
             "rootroute":"dev",
-            "cselimit1": 90,
-            "cselimit2": 60,
             "ijkingstoets_juli" : true,
             "ijkingstoets_september" : true,
             "showJuni": false,
             "showSeptember" :false,
             "dynamic": false,
-            "logging": false,
-            "program":"ABA ingenieurswetenschappen (Leuv)"
+            "logging": false
         }
 
 }
