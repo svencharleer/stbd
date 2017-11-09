@@ -24,8 +24,10 @@ Meteor.publish('generic_courses', function (program) {
   });
 });
 
-Meteor.publish('generic_students', function (who) {
-  return Students.find();
+Meteor.publish('generic_students', function (program) {
+  return Students.find({
+    program:   program
+  });
 });
 
 Meteor.publish("ijkingstoets", function (who) {
@@ -58,6 +60,57 @@ Meteor.methods({
     }
     return distribution;
 
+  },
+  getTokenInfo: function (token) {
+    let dict = {
+      a : ["ABA biochemie en biotechnologie (Leuv)",50,90],
+      b : ["ABA biologie (Leuv)",50,90],
+      c : ["ABA chemie (Leuv)",50,90],
+      d : ["ABA fysica (Leuv)",50,90],
+      e : ["ABA geografie (Leuv)",50,90],
+      f : ["ABA geologie (Leuv)",50,90],
+      g : ["ABA informatica (Leuv)",50,90],
+      h : ["ABA wiskunde (Leuv)",50,90],
+      i : ["ABA bio-ingenieurswetenschappen (Leuv)",50,90],
+      j : ["ABA ingenieurswetenschappen (Leuv)",50,90],
+      k : ["ABA ingenieurswetenschappen:architectuur (Leuv)",50,90],
+      l : ["ABA biowetenschappen (Geel)",50,90],
+      m : ["ABA industriele wetenschappen (Geel)",50,90],
+      n : ["ABA industriele wetenschappen (Aalst)",50,90],
+      o : ["ABA industriele wetenschappen (Diepenbeek)",50,90],
+      p : ["ABA industriele wetenschappen (Leuven)",50,90],
+      q : ["ABA industriele wetenschappen (Brugge)",50,90],
+      r : ["ABA industriele wetenschappen (Sint-Katelijne-Waver)",50,90],
+      s : ["ABA industriele wetenschappen (Gent)",50,90],
+      t : ["SMA biowetenschappen (Geel)",50,90],
+      u : ["SMA industriele wetenschappen (Geel)",50,90],
+      v : ["SMA industriele wetenschappen (Aalst)",50,90],
+      w : ["SMA industriele wetenschappen (Diepenbeek)",50,90],
+      x : ["SMA industriele wetenschappen (Leuven)",50,90],
+      y : ["SMA industriele wetenschappen (Brugge)",50,90],
+      z : ["SMA industriele wetenschappen (Sint-Katelijne-Waver)",50,90],
+      A : ["ABA architectuur (Gent)",50,90],
+      B : ["ABA achitectuur (Brussel)",50,90],
+      C : ["ABA interieurarchitectuur (Gent)",50,90],
+      D : ["ABA interieurarchitectuur (Brussel)",50,90],
+      E : ["ABA Geneeskunde (Leuv)",50,90],
+      F : ["ABA tandheelkunde (Leuv)",50,90],
+      G : ["ABA biomedische wetenschappen",50,90],
+      H : ["ABA logopedische en audiologische wetenschappen",50,90],
+      I : ["ABA farmaceutische wetenschappen",50,90],
+      J : ["ABA TEW:handelsingenieur (Leuv)",50,90],
+      K : ["ABA geschiedenis (Leuv)",50,90],
+      L : ["ABA taal- en letterkunde (Leuv)",50,90]
+    };
+    let keys = Object.keys(dict);
+    let result = [false, [undefined, undefined, undefined]];
+    keys.forEach(function (key) {
+      if (key == token){
+        let values = dict[key];
+        result = [true, values]
+      }
+    });
+    return result;
   },
 
   getIjkingstoetsTotalDistribution: function (year) {

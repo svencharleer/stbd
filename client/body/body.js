@@ -115,7 +115,7 @@ Template.dashboard.events({
 Template.dashboard.onCreated(function () {
   this.started = new ReactiveVar(false);
   var instance = this;
-  setProgramSettings("dev");
+  console.log(Session.get("program"));
   var handler = instance.subscribe("generic_courses", Session.get("program"));
   if (Meteor.settings.public.logging) {
     $(".button").css("display", 'flex');
@@ -484,24 +484,4 @@ Template.dashboard.helpers({
 
 });
 
-let setProgramSettings = function (root) {
-  let program = "ABA ingenieurswetenschappen (Leuv)" ;
-  let cselimit1 = 90;
-  let cselimit2 = 50;
 
-  switch (root){
-    case "dev":
-      program = "ABA ingenieurswetenschappen (Leuv)";
-      cselimit1 = 80;
-      cselimit2 = 40;
-      break;
-    default:
-      program = "ABA ingenieurswetenschappen (Leuv)";
-      cselimit1 = 80;
-      cselimit2 = 40;
-  }
-  Session.set("program", program);
-  Session.set('limit1', cselimit1);
-  Session.set('limit2', cselimit2);
-
-}
