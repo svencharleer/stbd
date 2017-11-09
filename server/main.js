@@ -2,20 +2,24 @@ import {Meteor} from 'meteor/meteor';
 
 var Courses = new Meteor.Collection('generic_courses');
 const Grades = new Meteor.Collection('generic_grades');
-export default Grades
-
 var CSEs = new Meteor.Collection('generic_cse');
 var Students = new Mongo.Collection('generic_students');
 var Historical = new Meteor.Collection('generic_history_sept');
-var Ijkingstoets = new Meteor.Collection('ijkingstoets');
 var Exams = new Meteor.Collection('generic_examsuccess');
 var heatmap = new Meteor.Collection('heatmap');
 var clicks = new Meteor.Collection('clicks');
+let AllGrades = new Meteor.Collection("all_grades");
+let AllCSEs = new Meteor.Collection("all_cse");
 
 
 //Publish all collections
+//todo check if duplication all/generic_grades and all_cses can be removed
 Meteor.publish('generic_grades', function (program, who) {
   return Grades.find({$and: [{studentid: who}, {program: program}]});
+});
+
+Meteor.publish('all_grades', function (program) {
+  return AllGrades.find({program: program}, {fields: {studentid:0}});
 });
 
 Meteor.publish('generic_courses', function (program) {
@@ -30,13 +34,13 @@ Meteor.publish('generic_students', function (program) {
   });
 });
 
-Meteor.publish("ijkingstoets", function (who) {
-
-  return Ijkingstoets.find({student: who});
-});
 
 Meteor.publish("generic_cse", function (who) {
   return CSEs.find({studentid: who});
+});
+
+Meteor.publish("all_cse", function () {
+  return AllCSEs.find({}, {fields: {studentid:0}} );
 });
 
 Meteor.publish("clicks", function () {
@@ -46,21 +50,6 @@ Meteor.publish("clicks", function () {
 
 Meteor.methods({
 
-  getDistribution: function (semester, year) {
-    //Look whick score you want to use
-    let distribution = undefined;
-    switch (semester){
-      case -2:
-      case -1:
-        distribution =  getScoreDistribution(semester, year);
-        break;
-      default:
-        distribution =  getSemesterCSEDistribution(semester, year);
-        break;
-    }
-    return distribution;
-
-  },
   getTokenInfo: function (token) {
     let dict = {
       a : ["ABA biochemie en biotechnologie (Leuv)",50,90],
@@ -112,131 +101,8 @@ Meteor.methods({
     });
     return result;
   },
-
-  getIjkingstoetsTotalDistribution: function (year) {
-    var scores = Grades.find(
-      {'$and': [
-        {jaar: year} ,
-        {courseid: { $regex : /^"Ijkingstoets"/ }}
-        ]
-      });
-    var buckets = {};
-    for (var i = 0; i < 10; i++) {
-      buckets[i] = 0;
-    }
-    //for each of the categories count
-    scores.forEach(function (s) {
-      if (s.juli == "#") {
-        if (s.september == "#") {
-          return;
-        }
-        else score = s.september;
-      }
-      else if (s.september == "#") {
-        score = s.juli;
-      }
-      else {
-        score = s.juli > s.september ? s.juli : s.september;
-      }
-      var bucketId = parseInt(score / 2);
-      if (bucketId == 10) bucketId = 9; //think about this. it's because we only have 10 buckets, not 11, which would include 20 as seperate
-
-      buckets[bucketId]++;
-
-    })
-    var distribution = [];
-    Object.keys(buckets).forEach(function (b) {
-      distribution.push({bucket: parseInt(b), count: buckets[b]})
-    })
-    return {distribution: distribution};
-  },
-
-  getTotalPointDistribution: function (args) { //this function is like semester, but not CSE, focused on scores alone
-    var courses = Courses.find({semester: args[0]}).fetch();
-    var courseIds = [];
-    courses.forEach(function (c) {
-      courseIds.push(c.courseid);
-    });
-
-    var search = {};
-    var distribution = [];
-    var cse = "finalscore";
-
-    search["courseid"] = {"$in": courseIds};
-    search["year"] = args[1];
-    search["$and"] = [];
-    var and1 = {};
-    var and2 = {};
-    for (var i = 0; i < 10; i++) {
-
-      and1[cse] = {$lt: (2 + i * 2)};
-      and2[cse] = {$gte: 0 + i * 2};
-      if (i == 9)
-        and1[cse] = {$lte: (2 + i * 2)};
-      search["$and"] = [and1, and2];
-      //console.log(JSON.stringify(search));
-
-      var count = Grades.distinct("studentid", search).length
-      distribution.push({bucket: i, count: count});
-    }
-    console.log(JSON.stringify(search));
-    return {distribution: distribution};
-  },
-  getIjkingstoetsPointDistribution: function (args) {
-    var numberPerGrades_juli = {};
-    var numberPerGrades_september = {};
-    console.log("ijk", args);
-    //get all grades of this year
-    var studentGrades = Ijkingstoets.find({jaar: args[0]});
-    if (studentGrades == undefined) return null;
-
-    studentGrades.forEach(function (student) {
-      //get correct grade
-      var grade = 0;
-      if (student.juli != "#") {
-        if (numberPerGrades_juli[student.juli] == undefined)
-          numberPerGrades_juli[student.juli] = {grade: student.juli, count: 0};
-        numberPerGrades_juli[student.juli].count++;
-      }
-      if (student.september != "#") {
-        if (numberPerGrades_september[student.september] == undefined)
-          numberPerGrades_september[student.september] = {grade: student.september, count: 0};
-        numberPerGrades_september[student.september].count++;
-      }
-
-    });
-    var min_june = Number.MAX_VALUE;
-    var min_september = Number.MAX_VALUE;
-    var max_june = Number.MIN_VALUE;
-    var max_september = Number.MIN_VALUE;
-    Object.keys(numberPerGrades_juli).forEach(function (score) {
-      if (min_june > numberPerGrades_juli[score].count)
-        min_june = numberPerGrades_juli[score].count;
-      if (max_june < numberPerGrades_juli[score].count)
-        max_june = numberPerGrades_juli[score].count;
-    });
-    Object.keys(numberPerGrades_september).forEach(function (score) {
-      if (min_september > numberPerGrades_september[score].count)
-        min_september = numberPerGrades_september[score].count;
-      if (max_september < numberPerGrades_september[score].count)
-        max_september = numberPerGrades_september[score].count;
-    });
-
-
-    numberPerGrades_juli = Object.keys(numberPerGrades_juli).map(function (key) {
-      return numberPerGrades_juli[key];
-    });
-    numberPerGrades_september = Object.keys(numberPerGrades_september).map(function (key) {
-      return numberPerGrades_september[key];
-    });
-    return [
-      {numberPerGrades: numberPerGrades_juli, min: min_june, max: max_june},
-      {numberPerGrades: numberPerGrades_september, min: min_september, max: max_september},
-    ];
-  }
-  ,
   /**
-   *
+   * Calculate gradefield and call GetDistribution
    * @param courseid
    * @param year
    * @param semester: -2,-1,0,1,2
@@ -599,44 +465,44 @@ var helper_sumDict = function (obj) {
   return sum;
 }
 
-var helper_GetDistributionFrom100 = function (search, collection, gradeField) {
-  var numberPerGrades = {};
-  var total = 0;
-  //get all grades of this year
-  var studentGrades = collection.find(search);
-
-  var min = Number.MAX_VALUE;
-  var max = Number.MIN_VALUE;
-  studentGrades.forEach(function (student) {
-    //get correct grade
-    var grade = 0;
-
-
-    if (student[gradeField] == "NA" || student[gradeField] == "#" || student[gradeField] == "GR") return;
-    grade = parseInt(student[gradeField] / 5);
-
-
-    //filter out the weird numbers, check later what they mean
-
-
-    if (numberPerGrades[grade] == undefined)
-      numberPerGrades[grade] = {grade: grade, count: 0};
-    numberPerGrades[grade].count++;
-  });
-  Object.keys(numberPerGrades).forEach(function (score) {
-    if (min > numberPerGrades[score].count)
-      min = numberPerGrades[score].count;
-    if (max < numberPerGrades[score].count)
-      max = numberPerGrades[score].count;
-  });
-
-
-  numberPerGrades = Object.keys(numberPerGrades).map(function (key) {
-
-    return numberPerGrades[key];
-  });
-  return {numberPerGrades: numberPerGrades, min: min, max: max, total: total};
-}
+// var helper_GetDistributionFrom100 = function (search, collection, gradeField) {
+//   var numberPerGrades = {};
+//   var total = 0;
+//   //get all grades of this year
+//   var studentGrades = collection.find(search);
+//
+//   var min = Number.MAX_VALUE;
+//   var max = Number.MIN_VALUE;
+//   studentGrades.forEach(function (student) {
+//     //get correct grade
+//     var grade = 0;
+//
+//
+//     if (student[gradeField] == "NA" || student[gradeField] == "#" || student[gradeField] == "GR") return;
+//     grade = parseInt(student[gradeField] / 5);
+//
+//
+//     //filter out the weird numbers, check later what they mean
+//
+//
+//     if (numberPerGrades[grade] == undefined)
+//       numberPerGrades[grade] = {grade: grade, count: 0};
+//     numberPerGrades[grade].count++;
+//   });
+//   Object.keys(numberPerGrades).forEach(function (score) {
+//     if (min > numberPerGrades[score].count)
+//       min = numberPerGrades[score].count;
+//     if (max < numberPerGrades[score].count)
+//       max = numberPerGrades[score].count;
+//   });
+//
+//
+//   numberPerGrades = Object.keys(numberPerGrades).map(function (key) {
+//
+//     return numberPerGrades[key];
+//   });
+//   return {numberPerGrades: numberPerGrades, min: min, max: max, total: total};
+// }
 
 var helper_GetCreditsTakenSemester = function (who, semester) {
   let credits = 0;
@@ -672,82 +538,10 @@ var helper_GetCreditsTakenSemester = function (who, semester) {
 
 
 };
-/**
- * Make distribution of scores
- * @param semester
- * @param year
- * @returns {{distribution: Array}}
- */
-let getScoreDistribution = function (semester, year) {
-  //todo better look into all courses with given semester and join
-  let regex = {$regex: /(Ijkingstoets|Positioneringstest|Voorkennistest)/};
-  if (semester === -2) {
-    regex = {$regex: /Ijkingstoets/};
-  }
-  else {
-    regex = {$regex: /TTT/};
-  }
-
-  //Find all scores of this year without # or NA
-  let scores = Grades.find({"$and": [{year: year}, {courseid: regex}, {finalscore: { "$gte": -1, "$lt": 21 } }] });
 
 
-  var buckets = {};
-  for (var i = 0; i < 10; i++) {
-    buckets[i] = 0;
-  }
-  //For each of the 10 categories count number of occurrences
-  scores.forEach(function (s) {
-    var bucketId = parseInt(s.finalscore / 2);
-    if (bucketId === 10) bucketId = 9;
-    buckets[bucketId]++;
-  });
 
-  let distribution = [];
-  Object.keys(buckets).forEach(function (b) {
-    distribution.push({bucket: parseInt(b), count: buckets[b]})
-  });
-  return {distribution: distribution};
-};
 
-/**
- * Find the cse distribution in a semester
- * @param semester
- * @param year
- * @returns {{distribution: Array}}
- */
-let getSemesterCSEDistribution =  function (semester, year) {
-  //Find all cses of this year without # or NA
-  let cses = CSEs.find({year: year});
-  var buckets = {};
-  for (var i = 0; i < 10; i++) {
-    buckets[i] = 0;
-  }
-  //For each of the 10 categories count number of occurrences
-  cses.forEach(function (s) {
-    let bucketId = getBucketID(s, semester);
-    if (bucketId === 10) bucketId = 9;
-    buckets[bucketId]++;
-  });
 
-  let distribution = [];
-  Object.keys(buckets).forEach(function (b) {
-    distribution.push({bucket: parseInt(b), count: buckets[b]})
-  });
-  return {distribution: distribution};
-
-};
-
-let getBucketID = function (s, semester) {
-  if (semester === 1) {
-    return parseInt(s.cse1 / 10);
-  }
-  else if (semester === 2) {
-    return parseInt(s.cse2 / 10);
-  }
-  else {
-    return parseInt(s.cse3 / 10);
-  }
-}
 
 

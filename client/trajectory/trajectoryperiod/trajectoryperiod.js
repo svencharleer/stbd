@@ -8,7 +8,6 @@ Template.trajectoryperiod.onRendered(function () {
     var params = ['getDistribution', semester, Session.get("Year")];
 
     let data = getDistribution(semester, Session.get("Year"));
-    console.log(data);
     //find max value and min value
     var min = Number.MAX_VALUE;
     var max = Number.MIN_VALUE;
@@ -179,7 +178,7 @@ let getDistribution = function (semester, year) {
  * @returns {{distribution: Array}}
  */
 let getSemesterCSEDistribution =  function (semester, year) {
-  let cses = CSEs.find({year: year});
+  let cses = AllCSEs.find({year: year});
   var buckets = {};
   for (var i = 0; i < 10; i++) {
     buckets[i] = 0;
@@ -212,8 +211,9 @@ let getScoreDistribution = function (semester, year) {
   courses.forEach(function (course) {
     courseids.push(course.courseid)
   });
+  let nbCourses = courseids.length
   //Find all scores of this year without # or NA
-  let scores = Grades.find({"$and": [{year: year}, {courseid: {$in: courseids}}, {finalscore: { "$gte": -1, "$lt": 21 } }] });
+  let scores = AllGrades.find({"$and": [{year: year}, {courseid: {$in: courseids}}, {finalscore: { "$gte": -1, "$lt": 21 } }] });
 
 
   var buckets = {};
@@ -222,7 +222,6 @@ let getScoreDistribution = function (semester, year) {
   }
   //For each of the 10 categories count number of occurrences
   scores.forEach(function (s) {
-    console.log(s.finalscore)
     var bucketId = parseInt(s.finalscore / 2);
     if (bucketId === 10) bucketId = 9;
     buckets[bucketId]++;

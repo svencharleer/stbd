@@ -76,14 +76,18 @@ Helpers_CalculateCSE = function(semester,year, pure) //1 2 3 (sept) 0 = TTT
  */
 Helpers_GetCSETests = function (studentID, semester, year) {
   let courses = Courses.find({semester:semester}).fetch();
+  let nbTakenCourses = 0;
   let totalPoints = 0;
   courses.forEach(function (course) {
     let grade = Grades.findOne({$and: [{studentid: studentID},{courseid: course.courseid}, {year:year}]});
     if (grade != undefined && grade.finalscore > 0){
+      nbTakenCourses ++
       totalPoints += grade.finalscore;
     }
   });
-  return totalPoints;
+  let mean = Math.round(5*totalPoints / nbTakenCourses);
+  console.log(mean);
+  return mean;
 };
 
 /**
@@ -96,7 +100,6 @@ Helpers_GetCSETests = function (studentID, semester, year) {
  */
 Helpers_GetCSE = function(studentID, semester, year)
 {
-  console.log("Helpers_getCSE" + semester)
   var cse = CSEs.findOne({studentid: studentID, year: year});
   var result = -1;
   if(cse != undefined)

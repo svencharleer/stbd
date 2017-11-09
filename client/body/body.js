@@ -140,10 +140,12 @@ Template.dashboard.onCreated(function () {
     Session.set("toleranceCredits", 12)
 
     var handler2 = instance.subscribe("generic_grades", Session.get("program"), Session.get("student"));
-    var handler3 = instance.subscribe("ijkingstoets", Session.get("student"));
+    var handler3 = instance.subscribe("all_grades", Session.get("program"));
     var handler4 = instance.subscribe("generic_cse", Session.get("student"));
-    var handler8 = instance.subscribe("generic_students");
-    if (handler2.ready() && handler3.ready() && handler8.ready() && handler4.ready()) {
+    var handler5 = instance.subscribe("all_cse");
+
+      var handler8 = instance.subscribe("generic_students");
+    if (handler2.ready() && handler3.ready() && handler8.ready() && handler4.ready() && handler5.ready()) {
       var studentID = Session.get("student");
       var studentName = Students.findOne({studentid: studentID});
       if (studentName == undefined) {
