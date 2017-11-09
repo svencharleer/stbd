@@ -178,19 +178,7 @@ Template.dashboard.onCreated(function () {
       Session.set("CSE_juni_pure", Helpers_CalculateCSE(2, year, true));
       Session.set("CSE_september_pure", Helpers_CalculateCSE(3, year, true));
       Session.set("CSE_Planning", Helpers_CalculateStartValues(Session.get('CSE_september_pure')));
-      var score = Ijkingstoets.findOne();
-      var iscore = 0;
-      if (score != undefined) {
-        if (score.juli == "#" || score.september == "#") {
-          if (score.juli == score.september) iscore = 0;
-          else if (score.juli == "#") iscore = score.september;
-          else iscore = score.juli;
-        }
-        else iscore = score.juli > score.september ? score.juli : score.september;
-        //iscore = iscore == 20 ? 9 : parseInt(iscore/2);
-        iscore = iscore * 5;
-      }
-      Session.set("CSE_ijkingstoets", iscore);
+
 
 
       //get failed courses

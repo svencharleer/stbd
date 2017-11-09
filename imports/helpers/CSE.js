@@ -1,5 +1,5 @@
 /**
- * Calculate the CSE of a student
+ * Calculate the pure CSE of a student
  * @param {Integer} semester //0 1 2
  * @param {?} year //2016-2017
  * @param {Integer} pure : return fraction or not
@@ -34,8 +34,6 @@ Helpers_CalculateCSE = function(semester,year, pure) //1 2 3 (sept) 0 = TTT
 
     }
   });
-  // console.log("apart_cse" + cse_forprint)
-  // console.log("total_cse" +totalcse)
   if(pure) return cse;
   if(totalcse>0)
     return Math.round(cse/totalcse*100);
@@ -45,49 +43,60 @@ Helpers_CalculateCSE = function(semester,year, pure) //1 2 3 (sept) 0 = TTT
 
 }
 
-Helpers_GetTotalPointForPeriod = function(semester,year) //1 2 3 (sept) 0 = tTT
-{
+// Helpers_GetTotalPointForPeriod = function(semester,year) //1 2 3 (sept) 0 = tTT
+// {
+//   console.log("gettotalpointforperiod")
+//   var count = 0;
+//   var totalscore = 0;
+//   courses.some(function(j){
+//     var result = Grades.findOne({courseid: j.courseid, year: year});
+//     if(result != undefined)
+//     {
+//       var score = result.finalscore;
+//       if(score != "NA" && score != "#")
+//         totalscore += parseInt(score);
+//       if(score != "#")
+//         if(!(score == "NA" && semester == 0))
+//           count++;
+//
+//     }
+//   });
+//   return 5*totalscore/count;
+//
+// };
 
-  var count = 0;
-  var totalscore = 0;
-  courses.some(function(j){
-    var result = Grades.findOne({courseid: j.courseid, year: year});
-    if(result != undefined)
-    {
-      var score = result.finalscore;
-      if(score != "NA" && score != "#")
-        totalscore += parseInt(score);
-      if(score != "#")
-        if(!(score == "NA" && semester == 0))
-          count++;
-
-    }
-  });
-  return 5*totalscore/count;
-
-};
-
+/**
+ * Get the total number of points
+ * Needed for the tests before januari
+ * @param studentID
+ * @param semester
+ * @param year
+ * @returns {number}
+ * @constructor
+ */
 Helpers_GetCSETests = function (studentID, semester, year) {
   let courses = Courses.find({semester:semester}).fetch();
   let totalPoints = 0;
   courses.forEach(function (course) {
     let grade = Grades.findOne({$and: [{studentid: studentID},{courseid: course.courseid}, {year:year}]});
-    if (grade != undefined && grade > 0){
-      totalPoints += grade
+    if (grade != undefined && grade.finalscore > 0){
+      totalPoints += grade.finalscore;
     }
-  })
+  });
   return totalPoints;
 };
 
 /**
  * Calculate the CSE of a student
+ * Normally only called once from body
  * @param {ObjectId} studentID :
  * @param {Integer} semester : -2 = IJK; -1 = TTT; 1 = januari; 2 = june; 3 = august
  * @param {String} year :   eg. 2016-2017
  * @returns {Int32} : integer between 0 and 100
  */
 Helpers_GetCSE = function(studentID, semester, year)
-{  
+{
+  console.log("Helpers_getCSE" + semester)
   var cse = CSEs.findOne({studentid: studentID, year: year});
   var result = -1;
   if(cse != undefined)
