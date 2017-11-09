@@ -47,7 +47,7 @@ Helpers_CalculateCSE = function(semester,year, pure) //1 2 3 (sept) 0 = TTT
 
 Helpers_GetTotalPointForPeriod = function(semester,year) //1 2 3 (sept) 0 = tTT
 {
-  var courses = Courses.find({semester:semester}).fetch();
+
   var count = 0;
   var totalscore = 0;
   courses.some(function(j){
@@ -65,12 +65,24 @@ Helpers_GetTotalPointForPeriod = function(semester,year) //1 2 3 (sept) 0 = tTT
   });
   return 5*totalscore/count;
 
-}
+};
+
+Helpers_GetCSETests = function (studentID, semester, year) {
+  let courses = Courses.find({semester:semester}).fetch();
+  let totalPoints = 0;
+  courses.forEach(function (course) {
+    let grade = Grades.findOne({$and: [{studentid: studentID},{courseid: course.courseid}, {year:year}]});
+    if (grade != undefined && grade > 0){
+      totalPoints += grade
+    }
+  })
+  return totalPoints;
+};
 
 /**
  * Calculate the CSE of a student
  * @param {ObjectId} studentID :
- * @param {Integer} semester : 0 = TTT; 1 = januari; 2 = june; 3 = august
+ * @param {Integer} semester : -2 = IJK; -1 = TTT; 1 = januari; 2 = june; 3 = august
  * @param {String} year :   eg. 2016-2017
  * @returns {Int32} : integer between 0 and 100
  */
@@ -80,9 +92,11 @@ Helpers_GetCSE = function(studentID, semester, year)
   var result = -1;
   if(cse != undefined)
     {
-      switch(semester) { 
-        case 0:
-          result = Helpers_CalculateCSE(semester, year, 0);
+      switch(semester) {
+        case -2:
+        case -1:
+          result = Helpers_GetCSETests(studentID, semester, year);
+          break;
         case 1:
           result = cse.cse1;
           break;

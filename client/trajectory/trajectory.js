@@ -46,26 +46,6 @@ Template.trajectory.helpers({
           csebuckets[i] = b;
       })
     })
-    /*
-        var context = canvas.get()[0].getContext("2d");
-        context.lineWidth = 5;
-        //context.setLineDash([5,5]);
-        periods.forEach(function(p,i){
-          if(p == undefined || p == "") return;
-          if(i >= periods.length-1) return; //we don't have to draw anymore
-          context.beginPath();
-          var x = p.position().left + p.width()/2;
-          var y = p.position().top+ (100 - (csebuckets[i] * 10 + 3)); //calculate height, based on the fact we have a 5px padding (and it's 100px height) and - 2 for width of line
-          context.moveTo(x,y);
-          //context.moveTo(januari.position().left ,januari.position().top);
-          var toX = periods[i+1].position().left + periods[i+1].width()/2;
-          var toY = periods[i+1].position().top+(100 - (csebuckets[i+1] * 10 + 3));
-          context.bezierCurveTo(x+p.width()/2,y,x+p.width()/2,y,x+p.width()/2,y+(toY-y)/2);
-          context.bezierCurveTo(x+p.width()/2,toY,x+p.width()/2,toY,toX,toY);
-          //context.bezierCurveTo(toX,y,x,toY,toX,toY);
-          context.strokeStyle ="#B3E5FC";
-          context.stroke();
-        })*/
   }
 });
 

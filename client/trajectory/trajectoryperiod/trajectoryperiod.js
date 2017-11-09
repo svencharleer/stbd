@@ -37,14 +37,14 @@ Template.trajectoryperiod.onRendered(function () {
           let current = d.bucket * 10;
           let next = current + 11;
           let color = "white";
-          if (cse == 0) cse = 1;
+          if (cse === 0) cse = 1;
           if ((current < cse) && (cse < next)) color = "#E8F3F8";
           return color;
         })
         .attr("width", "100%")
         .on("mouseover", function (d) {
           svg.selectAll(".tooltip" + d.bucket).style("display", "inline");
-          element = $(this).parent().parent().attr('id')
+          element = $(this).parent().parent().attr('id');
           clicks.insert({
             'session': Session.get('Id'),
             'studentid': Session.get('student'),

@@ -297,7 +297,6 @@ Meteor.methods({
 
   },
 
-  //todo check if this is correct
   /**
    * @param {integer} semester : 1 - 2  or default 3
    */
@@ -680,6 +679,7 @@ var helper_GetCreditsTakenSemester = function (who, semester) {
  * @returns {{distribution: Array}}
  */
 let getScoreDistribution = function (semester, year) {
+  //todo better look into all courses with given semester and join
   let regex = {$regex: /(Ijkingstoets|Positioneringstest|Voorkennistest)/};
   if (semester === -2) {
     regex = {$regex: /Ijkingstoets/};

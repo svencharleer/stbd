@@ -168,6 +168,8 @@ Template.dashboard.onCreated(function () {
       //get the CSE for the student
       var year = Session.get("Year");
       //Helpers_GetCSE comes from imports/helpers/CSE.js
+      Session.set("CSE_ijkingstoets", Helpers_GetCSE(studentID, -2, year));
+      Session.set("CSE_TTT", Helpers_GetCSE(studentID, -1, year));
       Session.set("CSE_januari", Helpers_GetCSE(studentID, 1, year));
       Session.set("CSE_juni", Helpers_GetCSE(studentID, 2, year));
       Session.set("CSE_september", Helpers_GetCSE(studentID, 3, year));
@@ -176,7 +178,6 @@ Template.dashboard.onCreated(function () {
       Session.set("CSE_juni_pure", Helpers_CalculateCSE(2, year, true));
       Session.set("CSE_september_pure", Helpers_CalculateCSE(3, year, true));
       Session.set("CSE_Planning", Helpers_CalculateStartValues(Session.get('CSE_september_pure')));
-      Session.set("CSE_TTT", Helpers_GetTotalPointForPeriod(0, year));
       var score = Ijkingstoets.findOne();
       var iscore = 0;
       if (score != undefined) {
