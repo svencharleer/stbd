@@ -8,15 +8,13 @@ rootRoute = Meteor.settings.public.rootroute == undefined ? "dev" : Meteor.setti
 console.log("RouteRoot is " + rootRoute);
 Router.route('/' + rootRoute + '/:_year/:_id',
   function () {
-
     var year = parseInt(Router.current().params._year);
     var yearString = year + "-" + (year + 1);
-    //console.log(yearString);
     Session.set("studentName", "");
     Session.set("student", parseInt(Router.current().params._id));
     Session.set("Year", yearString);
-    Session.set("StartYear", year)
-    //reset();
+    Session.set("StartYear", year);
+
   }
 );
 

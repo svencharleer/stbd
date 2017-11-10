@@ -156,6 +156,12 @@ Template.dashboard.onCreated(function () {
         return;
       }
       Session.set("studentName", studentName.givenname + " " + studentName.surname);
+      if (studentName.generatiestudent == "J"){
+        Session.set("new", true);
+      }
+      else{
+        Session.set("new", false);
+      }
       var semester = 1;
       if (Meteor.settings.public.showJuni) {
         semester = 2;

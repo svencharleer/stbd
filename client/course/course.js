@@ -23,7 +23,7 @@ Template.course.onRendered(function () {
         if (instance.data.try1 >= instance.data.try2 || instance.data.try2 === "NA")
           semester = 2;
       }
-
+      //todo move functionality to client side instead of calling server
       Meteor.call(method, courseId, Session.get("Year"), semester, function (err, data) {
         let grades = data.numberPerGrades;
         let total = 0;

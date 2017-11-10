@@ -4,6 +4,14 @@ Template.register.events({
     Session.set("token", token);
     setProgramSettings(token);
 
+  },
+  'click paper-input': function(event){
+    let token = $(".user-token").val();
+    if (token === "This token was incorrect"){
+      $(".user-token").val("");
+    }
+
+
   }
 });
 
@@ -22,7 +30,7 @@ let setProgramSettings = function (token) {
       });
     }
     else{
-      alert("No valid token!\nPlease be aware that this token is case sensitive.");
+      $("#input").val("This token was incorrect");
     }
   })
 };
