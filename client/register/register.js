@@ -1,19 +1,18 @@
 Template.register.events({
-  'click paper-button': function(event){
-    let token = $(".user-token").val();
-    Session.set("token", token);
-    setProgramSettings(token);
+    'click paper-button': function (event) {
+      let token = $(".user-token").val();
+      Session.set("token", token);
+      setProgramSettings(token);
 
-  },
-  'click paper-input': function(event){
-    let token = $(".user-token").val();
-    if (token === "This token was incorrect"){
-      $(".user-token").val("");
+    },
+    'keypress paper-input': function (event, template) {
+      if (event.keyCode == 13) {
+        let token = $(".user-token").val();
+        Session.set("token", token);
+        setProgramSettings(token);
+      }
     }
-
-
-  }
-});
+  });
 
 let setProgramSettings = function (token) {
   Meteor.call("getTokenInfo", token, function (err, data) {
