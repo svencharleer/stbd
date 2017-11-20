@@ -141,11 +141,13 @@ Template.dashboard.onCreated(function () {
 
     var handler2 = instance.subscribe("generic_grades", Session.get("program"), Session.get("student"));
     var handler3 = instance.subscribe("all_grades", Session.get("program"));
-    var handler4 = instance.subscribe("generic_cse", Session.get("student"));
+    var handler4 = instance.subscribe("generic_cse", Session.get("program"), Session.get("student"));
     var handler5 = instance.subscribe("all_cse");
+    var handler6 = instance.subscribe("new_grades", Session.get("program"));
+
 
       var handler8 = instance.subscribe("generic_students");
-    if (handler2.ready() && handler3.ready() && handler8.ready() && handler4.ready() && handler5.ready()) {
+    if (handler2.ready() && handler3.ready() && handler8.ready() && handler4.ready() && handler5.ready() && handler6.ready()) {
       var studentID = Session.get("student");
       var studentName = Students.findOne({studentid: studentID});
       if (studentName == undefined) {

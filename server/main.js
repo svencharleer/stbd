@@ -10,16 +10,27 @@ var heatmap = new Meteor.Collection('heatmap');
 var clicks = new Meteor.Collection('clicks');
 let AllGrades = new Meteor.Collection("all_grades");
 let AllCSEs = new Meteor.Collection("all_cse");
+let NewGrades = new Meteor.Collection("new_grades");
+
 
 
 //Publish all collections
-//todo check if duplication all/generic_grades and all_cses can be removed
+//todo check if duplication all/new/generic_grades and all_cses can be removed
 Meteor.publish('generic_grades', function (program, who) {
   return Grades.find({$and: [{studentid: who}, {program: program}]});
 });
 
 Meteor.publish('all_grades', function (program) {
   return AllGrades.find({program: program}, {fields: {studentid:0}});
+});
+
+/**
+ * Warning: only grades of new students
+ * Used for Distributions
+ */
+Meteor.publish('new_grades', function (program) {
+  let newGrades = NewGrades.find({$and:[{program: program},{generatiestudent: "J"}]}, {fields: {studentid:0}});
+  return newGrades
 });
 
 Meteor.publish('generic_courses', function (program) {
@@ -35,12 +46,24 @@ Meteor.publish('generic_students', function (program) {
 });
 
 
-Meteor.publish("generic_cse", function (who) {
-  return CSEs.find({studentid: who});
+Meteor.publish("generic_cse", function (program, who) {
+  return CSEs.find({$and: [{program: program},{studentid: who}]});
 });
 
+/**
+ * Warning: only cses of new students
+ * Used for Distributions
+ */
+//todo fix that this only consist of cses of student nio
 Meteor.publish("all_cse", function () {
-  return AllCSEs.find({}, {fields: {studentid:0}} );
+  let newStudents = Students.find(
+    {generatiestudent: "J"}
+  );
+  let studentIds = []
+  newStudents.forEach(function (student) {
+    studentIds.push(student.studentid)
+  });
+  return AllCSEs.find({studentid: {$in: studentIds}}, {fields: {studentid:0}});
 });
 
 Meteor.publish("clicks", function () {
@@ -52,10 +75,10 @@ Meteor.methods({
 
   getTokenInfo: function (token) {
     let dict = {
-      a : ["ABA biochemie en biotechnologie (Leuv)",50,90],
-      b : ["ABA biologie (Leuv)",50,90],
-      c : ["ABA chemie (Leuv)",50,90],
-      d : ["ABA fysica (Leuv)",50,90],
+      a : ["ABA biochemie en biotechnologie (Leuv)",50,90], //ignoreLine
+      b : ["ABA biologie (Leuv)",50,90], //ignoreLine
+      c : ["ABA chemie (Leuv)",50,90], //ignoreLine
+      d : ["ABA fysica (Leuv)",50,90], //ignoreLine
       e : ["ABA geografie (Leuv)",50,90],
       f : ["ABA geologie (Leuv)",50,90],
       g : ["ABA informatica (Leuv)",50,90],
@@ -465,44 +488,7 @@ var helper_sumDict = function (obj) {
   return sum;
 }
 
-// var helper_GetDistributionFrom100 = function (search, collection, gradeField) {
-//   var numberPerGrades = {};
-//   var total = 0;
-//   //get all grades of this year
-//   var studentGrades = collection.find(search);
-//
-//   var min = Number.MAX_VALUE;
-//   var max = Number.MIN_VALUE;
-//   studentGrades.forEach(function (student) {
-//     //get correct grade
-//     var grade = 0;
-//
-//
-//     if (student[gradeField] == "NA" || student[gradeField] == "#" || student[gradeField] == "GR") return;
-//     grade = parseInt(student[gradeField] / 5);
-//
-//
-//     //filter out the weird numbers, check later what they mean
-//
-//
-//     if (numberPerGrades[grade] == undefined)
-//       numberPerGrades[grade] = {grade: grade, count: 0};
-//     numberPerGrades[grade].count++;
-//   });
-//   Object.keys(numberPerGrades).forEach(function (score) {
-//     if (min > numberPerGrades[score].count)
-//       min = numberPerGrades[score].count;
-//     if (max < numberPerGrades[score].count)
-//       max = numberPerGrades[score].count;
-//   });
-//
-//
-//   numberPerGrades = Object.keys(numberPerGrades).map(function (key) {
-//
-//     return numberPerGrades[key];
-//   });
-//   return {numberPerGrades: numberPerGrades, min: min, max: max, total: total};
-// }
+
 
 var helper_GetCreditsTakenSemester = function (who, semester) {
   let credits = 0;

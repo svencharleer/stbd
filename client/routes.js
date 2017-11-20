@@ -31,6 +31,7 @@ Router.route('/' + rootRoute + '/:_year/',
 
 Grades = new Meteor.Collection('generic_grades');
 AllGrades = new Meteor.Collection('all_grades');
+NewGrades = new Meteor.Collection('new_grades');
 Courses  = new Meteor.Collection('generic_courses');
 Students = new Meteor.Collection('generic_students');
 CSEs     = new Meteor.Collection('generic_cse');

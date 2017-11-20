@@ -211,9 +211,9 @@ let getScoreDistribution = function (semester, year) {
   courses.forEach(function (course) {
     courseids.push(course.courseid)
   });
-  let nbCourses = courseids.length
+  let nbCourses = courseids.length;
   //Find all scores of this year without # or NA
-  let scores = AllGrades.find({"$and": [{year: year}, {courseid: {$in: courseids}}, {finalscore: { "$gte": -1, "$lt": 21 } }] });
+  let scores = NewGrades.find({"$and": [{year: year}, {courseid: {$in: courseids}}, {finalscore: { "$gte": -1, "$lt": 21 } }] });
 
 
   var buckets = {};

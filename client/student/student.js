@@ -1,6 +1,7 @@
 Template.student.events = {
-  'keypress input': function (evt, template) {
-    if (evt.which === 13) {
+  'keypress input': function (event, template) {
+    console.log(event)
+    if (event.which === 13) {
 
 
       var studentNr = template.find("input").value;
@@ -34,7 +35,7 @@ Template.student.helpers({
       return ""
     }
     else{
-      return "NIP";
+      return "nio";
     }
   }
 });
