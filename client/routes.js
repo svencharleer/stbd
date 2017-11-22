@@ -29,12 +29,5 @@ Router.route('/' + rootRoute + '/:_year/',
   }
 );
 
-Grades = new Meteor.Collection('generic_grades');
-AllGrades = new Meteor.Collection('all_grades');
-NewGrades = new Meteor.Collection('new_grades');
-Courses  = new Meteor.Collection('generic_courses');
-Students = new Meteor.Collection('generic_students');
-CSEs     = new Meteor.Collection('generic_cse');
-AllCSEs  = new Meteor.Collection('all_cse');
-heatmap  = new Meteor.Collection('heatmap');
-clicks   = new Meteor.Collection('clicks');
+OwnBoekingen = new Meteor.Collection('own_boekingen');
+ProgramBoekingen = new Meteor.Collection('program_boekingen');

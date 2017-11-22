@@ -6,11 +6,7 @@
  */
 Helpers_CalculateCSE = function(semester,year, pure) //1 2 3 (sept) 0 = TTT
 {
-  var courses;
-  if(semester == 1)
-    courses = Courses.find({semester:semester}).fetch();
-  else
-    courses = Courses.find({$or:[{semester:0},{semester:1},{semester:2}]}).fetch(); //don't get TTTs
+
   var cse = 0;
   var totalcse = 0;
   var cse_forprint = "";
@@ -74,8 +70,8 @@ Helpers_CalculateCSE = function(semester,year, pure) //1 2 3 (sept) 0 = TTT
  * @returns {number}
  * @constructor
  */
-Helpers_GetCSETests = function (studentID, semester, year) {
-  let courses = Courses.find({semester:semester}).fetch();
+Helpers_GetCSETests = function (studentID, semester) {
+  let boekingen = OwnBoekingen.find({Academischeperiode: semester});
   let nbTakenCourses = 0;
   let totalPoints = 0;
   courses.forEach(function (course) {
@@ -98,11 +94,11 @@ Helpers_GetCSETests = function (studentID, semester, year) {
  * @param {String} year :   eg. 2016-2017
  * @returns {Int32} : integer between 0 and 100
  */
-Helpers_GetCSE = function(studentID, semester, year)
+Helpers_GetCSE = function(studentID, semester)
 {
-  var cse = CSEs.findOne({studentid: studentID, year: year});
+  let boekingen = OwnBoekingen.find({Academischeperiode: semester});
   var result = -1;
-  if(cse != undefined)
+  if(boeking != undefined)
     {
       switch(semester) {
         case -2:

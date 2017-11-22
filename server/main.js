@@ -218,8 +218,6 @@ Meteor.methods({
 
       nrPassed++;
     })
-    console.log("match", Object.keys(studentsThatMatch).length);
-    console.log("passed", nrPassed);
     if (Object.keys(studentsThatMatch).length == 0)
       result.percentAllPassed = 0;
     else
