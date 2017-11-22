@@ -204,7 +204,7 @@ Template.future.onRendered(function () {
      * Get the profile of the student
      * [{boolean}]
      */
-    Meteor.call("getCSEProfile", Session.get('student'), Session.get('semester'), function (err, profile) {
+    Meteor.call("getCSEProfile", Session.get('student'), Session.get('semester'), Session.get('limit1'), Session.get('limit2'), function (err, profile) {
       [highProfile, middleProfile, lowProfile] = profile;
     });
 

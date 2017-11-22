@@ -1,78 +1,31 @@
 import {Meteor} from 'meteor/meteor';
 
-var Courses = new Meteor.Collection('generic_courses');
-const Grades = new Meteor.Collection('generic_grades');
-var CSEs = new Meteor.Collection('generic_cse');
-var Students = new Mongo.Collection('generic_students');
-var Historical = new Meteor.Collection('generic_history_sept');
-var Exams = new Meteor.Collection('generic_examsuccess');
-var heatmap = new Meteor.Collection('heatmap');
-var clicks = new Meteor.Collection('clicks');
-let AllGrades = new Meteor.Collection("all_grades");
-let AllCSEs = new Meteor.Collection("all_cse");
-let NewGrades = new Meteor.Collection("new_grades");
+let currentAcademiejaar = "2016-2017";
+let Boekingen = new Meteor.Collection('boekingen');
+let CurrentBoekingen = Boekingen.find({Academiejaar: currentAcademiejaar });
+
+
 
 
 
 //Publish all collections
-//todo check if duplication all/new/generic_grades and all_cses can be removed
-Meteor.publish('generic_grades', function (program, who) {
-  return Grades.find({$and: [{studentid: who}, {program: program}]});
+Meteor.publish('own_boekingen', function (program, studentid) {
+  return CurrentBoekingen.find({$and: [{Student: studentid}, {Opleiding: program}]});
 });
 
-Meteor.publish('all_grades', function (program) {
-  return AllGrades.find({program: program}, {fields: {studentid:0}});
-});
-
-/**
- * Warning: only grades of new students
- * Used for Distributions
- */
-Meteor.publish('new_grades', function (program) {
-  let newGrades = NewGrades.find({$and:[{program: program},{generatiestudent: "J"}]}, {fields: {studentid:0}});
-  return newGrades
-});
-
-Meteor.publish('generic_courses', function (program) {
-  return Courses.find({
-    program:   program
-  });
-});
-
-Meteor.publish('generic_students', function (program) {
-  return Students.find({
-    program:   program
-  });
+Meteor.publish('program_boekingen', function (program) {
+  return CurrentBoekingen.find( {Opleiding: program}, {fields: {Student:0}});
 });
 
 
-Meteor.publish("generic_cse", function (program, who) {
-  return CSEs.find({$and: [{program: program},{studentid: who}]});
-});
-
-/**
- * Warning: only cses of new students
- * Used for Distributions
- */
-//todo fix that this only consist of cses of student nio
-Meteor.publish("all_cse", function () {
-  let newStudents = Students.find(
-    {generatiestudent: "J"}
-  );
-  let studentIds = []
-  newStudents.forEach(function (student) {
-    studentIds.push(student.studentid)
-  });
-  return AllCSEs.find({studentid: {$in: studentIds}}, {fields: {studentid:0}});
-});
-
-Meteor.publish("clicks", function () {
-  return clicks.find({});
-});
 
 
 Meteor.methods({
-
+  /**
+   *
+   * @param token: password for each program
+   * @returns {[boolean,[program,cselimit1, cselimit2]]}: boolean indicates if token is in dict or not
+   */
   getTokenInfo: function (token) {
     let dict = {
       a : ["ABA biochemie en biotechnologie (Leuv)",50,90], //ignoreLine
@@ -124,17 +77,20 @@ Meteor.methods({
     });
     return result;
   },
+
   /**
    * Calculate gradefield and call GetDistribution
    * @param courseid
    * @param year
-   * @param semester: -2,-1,0,1,2
+   * @param semester: -2,-1,0,1,2,3: for wich semester you want the distribution
    * @returns {{numberPerGrades, min, max, total}}
    */
   getCoursePointDistribution: function (courseid, year, semester) {
-    var gradeField = "grade_try1";
-    if (semester == 3) gradeField = "grade_try2";
-    return helper_GetDistribution({courseid: courseid, year: year}, Grades, gradeField);
+    let gradeField = "Score";
+    if (semester === 3){ //only in resits you need the score of that specific period
+      gradeField = "Score September";
+    }
+    return helper_GetDistribution(courseid, year, gradeField);
   },
   /**
    * @return {boolean} dynamic: true if dashboard is dynamic
@@ -152,19 +108,12 @@ Meteor.methods({
    * @param {studentid} who : studentid
    * @param {integer} semester : 1-2 or default 3
    */
-  getCSEProfile: function (who, semester) {
-    var CSE_student = CSEs.findOne({studentid: who});
+  getCSEProfile: function (who, semester, limit1, limit2) {
+    var studentBoeking = CurrentBoekingen.findOne({studentid: who});
     var CSE_entry = helper_getCSEEntry(semester);
-    var CSE_score = CSE_student[CSE_entry]
+    var CSE_score = studentBoeking[CSE_entry];
 
-    var limit1 = 90;
-    var limit2 = 50;
-    if (Meteor.settings.public.cselimit1 != undefined && Meteor.settings.public.cselimit2 != undefined) {
-      limit1 = Meteor.settings.public.cselimit1;
-      limit2 = Meteor.settings.public.cselimit2;
-    }
-    // console.log("CSE limits: " + limit1 + ' ' + limit2);
-    // console.log('score student: ' + CSE_score + ' in semester: ' + semester)
+
     var top = false;
     var middle = false;
     var low = false;
@@ -189,6 +138,7 @@ Meteor.methods({
   /**
    * @param {integer} semester : 1 - 2  or default 3
    */
+  //todo
   getCSEDistribution: function (semester) {
     var CSE_entry = helper_getCSEEntryStudent(semester);
     var students = Historical.find({})
@@ -226,13 +176,18 @@ Meteor.methods({
   },
 
   getCreditsTaken: function (who) {
-    let creditsFirst = helper_GetCreditsTakenSemester(who, 1);
-    let creditsSecond = helper_GetCreditsTakenSemester(who, 2);
+    let creditsFirst = helper_GetCreditsTakenSemester(who, "Eerste Semester");
+    let creditsSecond = helper_GetCreditsTakenSemester(who, "Tweede Semester");
     return [creditsFirst, creditsSecond];
 
 
   },
 
+  /**
+   * Sven
+   * @param nrOfCourses
+   * @returns {{averageCoursesPassed: number, percentAllPassed: number}}
+   */
   //number of courses passed, and % chance to pass all courses
   getSeptemberSuccess(nrOfCourses) {
 
@@ -271,95 +226,33 @@ Meteor.methods({
       result.percentAllPassed = nrPassed / Object.keys(studentsThatMatch).length;
     return result;
   },
+
   /**
    * Find all the courses the student failed
    * @param who: studentid
    * @returns {Array}
    */
-  getFailedCourses(who) {
-    //find all courses the student takes
-    let studentCourses = Grades.find({
-      studentid: who
-    }).fetch();
-    courseIds = [];
-    //Check if he passes course or not
-    studentCourses.forEach(function (c) {
-      if (c.finalscore > 9) return;
-      courseIds.push(c.courseid);
-    });
-
-    //Find all failed courses
-    let failedCourses = Courses.find({courseid: {$in: courseIds}}).fetch();
-
-    //Put coursename, courseid, score and semester in result
-    let result = []
-
-    failedCourses.forEach(function (c) {
-      var studentFailedCourses = Grades.findOne(
-        {
-          $and: [
-            {studentid: who},
-            {courseid: c.courseid}
-          ]
-        },
-        {finalscore: 1}
-      );
-      result.push(
-        {
-          finalscore: studentFailedCourses.finalscore,
-          studentid: who,
-          courseid: c.courseid,
-          semester: c.semester,
-          coursename: studentFailedCourses.coursename,
-          credits: c.credits
-        })
-    });
-    return result;
+  getFailedCourses(studentid) {
+    let failedCourses = CurrentBoekingen.find(
+      {$and:
+        [
+          {Student: studentid},
+          { $not: { $gt: 10 } }
+        ]
+      });
+    return failedCourses;
   },
   /**
    * Find all the courses of the student
-   * @param who
-   * @returns {finalscore, studentid, courseid, semester, coursename, credits}
+   * @param studentid
+   * @returns
    */
-  getStudentCourses(who) {
-    //find all courses the student takes
-    let studentCourses = Grades.find({
-      studentid: who
-    }).fetch();
-    courseIds = [];
-    //Check if he passes course or not
-    studentCourses.forEach(function (c) {
-      courseIds.push(c.courseid);
-    });
-
-    //Find all selected courses
-    let courses = Courses.find({courseid: {$in: courseIds}}).fetch();
-
-    //Put coursename, courseid, score and semester in result
-    let result = []
-
-    courses.forEach(function (c) {
-      var studentFailedCourses = Grades.findOne(
-        {
-          $and: [
-            {studentid: who},
-            {courseid: c.courseid}
-          ]
-        },
-        {finalscore: 1}
-      );
-      result.push(
-        {
-          finalscore: studentFailedCourses.finalscore,
-          studentid: who,
-          courseid: c.courseid,
-          semester: c.semester,
-          coursename: studentFailedCourses.coursename,
-          credits: c.credits
-        })
-    });
-    return result;
+  getStudentCourses(studentid) {
+    return CurrentBoekingen.find({Student: studentid})
   },
+  /*
+  Sven
+   */
   getRootRoute() {
     if (process.env.ROOTROUTE != undefined) {
       console.log(process.env.ROOTROUTE);
@@ -373,6 +266,9 @@ Meteor.methods({
 
 });
 
+/**
+ * Sven
+ */
 Meteor.startup(() => {
   if (process.env.KEY != undefined) {//console.log(process.env.KEY)
     console.log("SSL activated ", process.env.ROOTROUTE, process.env.KEY, process.env.CERT);
@@ -396,22 +292,20 @@ Meteor.startup(() => {
 });
 
 /**
- *
+ * Return the distribution of the course
  * @param search
  * @param collection
  * @param gradeField
  * @returns {{numberPerGrades: {}, min: Number, max: Number, total: number}}
  */
-var helper_GetDistribution = function (search, collection, gradeField) {
+var helper_GetDistribution = function (courseid, year, gradeField) {
   var numberPerGrades = {};
   var total = 0;
   //get all grades of this year
-  var studentGrades = collection.find(search);
-
+  let allGrades  = CurrentBoekingen.find({"ID OPO" : courseid});
   var min = Number.MAX_VALUE;
   var max = Number.MIN_VALUE;
-  //console.log(studentGrades);
-  studentGrades.forEach(function (student) {
+  allGrades.forEach(function (student) {
     //get correct grade
     var grade = 0;
     if (student[gradeField] == "NA" || student[gradeField] == "#" || student[gradeField] == "GR") return;
@@ -435,24 +329,29 @@ var helper_GetDistribution = function (search, collection, gradeField) {
   });
   return {numberPerGrades: numberPerGrades, min: min, max: max, total: total};
 };
-
-var helper_getCSEEntry = function (semester) {
-  var cse_entry = 'cse3';
+/**
+ *
+ * @param semester
+ * @returns cse_entry: fieldname of the db
+ */
+let helper_getCSEEntry = function (semester) {
+  var cse_entry = 'CSE';
   switch (semester) {
     case 1:
-      cse_entry = 'cse1';
+      cse_entry = 'CSE Januari';
       break;
     case 2:
-      cse_entry = 'cse2';
+      cse_entry = 'CSE Juni';
       break;
     default:
-      cse_entry = 'cse3';
+      cse_entry = 'CSE September';
   }
-  return cse_entry;
+return cse_entry;
 
 };
 
-var helper_getCSEEntryStudent = function (semester) {
+//todo remove?
+let helper_getCSEEntryStudent = function (semester) {
   var cse_entry = 'cse_sep';
   switch (semester) {
     case 1:
@@ -468,6 +367,7 @@ var helper_getCSEEntryStudent = function (semester) {
 
 };
 
+//todo
 var helper_relativateDict = function (dict) {
   var resultDict = {"+0": 0, "+1": 0, "+2": 0, "N": 0};
   var sum = helper_sumDict(dict);
@@ -478,6 +378,7 @@ var helper_relativateDict = function (dict) {
   return dict;
 }
 
+//todo
 var helper_sumDict = function (obj) {
   var sum = 0;
   for (var el in obj) {
@@ -489,37 +390,27 @@ var helper_sumDict = function (obj) {
 }
 
 
-
+/**
+ * Calculate number of credits taken
+ * @param who
+ * @param semester
+ * @returns {number}
+ */
 var helper_GetCreditsTakenSemester = function (who, semester) {
   let credits = 0;
   // get all courseIds of student
-  var studentGrades = Grades.find({studentid: who});
-  var studentCourseIds = [];
-  studentGrades.forEach(function (g) {
-    studentCourseIds.push(g.courseid);
-  })
-
-  // Find all courses of the student
-  var coursesStudent = Courses.find({
-    courseid: {$in: studentCourseIds},
-    semester: semester
-  }).fetch();
-
-  //Find all courses that taking a year
-  var yearcoursesStudent = Courses.find({
-    courseid: {$in: studentCourseIds},
-    semester: 0
-  }).fetch();
-
-  coursesStudent.forEach(function (c) {
-    credits += c.credits
+  var studentBoekingen = CurrentBoekingen.find({$and: [{studentid: who}, {Academischeperiode: semester}]});
+  studentBoekingen.forEach(function (b) {
+    credits += parseInt(b.Studiepunten)
   });
-  if (semester == 2) {
-    yearcoursesStudent.forEach(function (c) {
-      credits += c.credits
+
+  //ugly fix for courses of semester Academiejaar that we show in semester 2
+  if (semester == "Tweede Semester"){
+    var jaarBoekingen = CurrentBoekingen.find({$and: [{studentid: who}, {Academischeperiode: "Academiejaar"}]});
+    jaarBoekingen.forEach(function (b) {
+      credits += parseInt(b.Studiepunten)
     });
   }
-
   return credits;
 
 
