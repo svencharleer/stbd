@@ -1,0 +1,11 @@
+-- connect to stela-two
+SELECT * FROM dbo.lissa_historic_boekingen_raw;
+GO
+
+
+-- SELECT * FROM dbo.lissa_historic_doorloop_raw;
+-- GO
+
+-- SELECT * FROM dbo.lissa_historic_registraties_raw;
+-- GO
+
