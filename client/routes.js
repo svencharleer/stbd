@@ -29,5 +29,5 @@ Router.route('/' + rootRoute + '/:_year/',
   }
 );
 
-OwnBoekingen = new Meteor.Collection('own_boekingen');
-ProgramBoekingen = new Meteor.Collection('program_boekingen');
+Boekingen = new Mongo.Collection('boekingen');
+

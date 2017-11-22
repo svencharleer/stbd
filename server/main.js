@@ -1,20 +1,19 @@
 import {Meteor} from 'meteor/meteor';
 
 let currentAcademiejaar = "2016-2017";
-let Boekingen = new Meteor.Collection('boekingen');
-let CurrentBoekingen = Boekingen.find({Academiejaar: currentAcademiejaar });
-
-
-
-
+let Boekingen = new Mongo.Collection('boekingen');
 
 //Publish all collections
 Meteor.publish('own_boekingen', function (program, studentid) {
-  return CurrentBoekingen.find({$and: [{Student: studentid}, {Opleiding: program}]});
+  let own = Boekingen.find({$and: [{Student: studentid}, {Opleiding: program}, {Academiejaar: currentAcademiejaar }]});
+  own.forEach(function (s) {
+    console.log(s)
+  })
+  return own;
 });
 
 Meteor.publish('program_boekingen', function (program) {
-  return CurrentBoekingen.find( {Opleiding: program}, {fields: {Student:0}});
+  return Boekingen.find( {$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar }]}, {fields: {Student:0}});
 });
 
 
@@ -109,7 +108,7 @@ Meteor.methods({
    * @param {integer} semester : 1-2 or default 3
    */
   getCSEProfile: function (who, semester, limit1, limit2) {
-    var studentBoeking = CurrentBoekingen.findOne({studentid: who});
+    var studentBoeking = Boekingen.findOne({$and:[{studentid: who},{Academiejaar: currentAcademiejaar }]});
     var CSE_entry = helper_getCSEEntry(semester);
     var CSE_score = studentBoeking[CSE_entry];
 
@@ -231,11 +230,12 @@ Meteor.methods({
    * @returns {Array}
    */
   getFailedCourses(studentid) {
-    let failedCourses = CurrentBoekingen.find(
+    let failedCourses = Boekingen.find(
       {$and:
         [
           {Student: studentid},
-          { $not: { $gt: 10 } }
+          { $not: { $gt: 10 } },
+          {Academiejaar: currentAcademiejaar }
         ]
       });
     return failedCourses;
@@ -246,7 +246,7 @@ Meteor.methods({
    * @returns
    */
   getStudentCourses(studentid) {
-    return CurrentBoekingen.find({Student: studentid})
+    return Boekingen.find({$and:[{Student: studentid},{Academiejaar: currentAcademiejaar }]})
   },
   /*
   Sven
@@ -300,7 +300,7 @@ var helper_GetDistribution = function (courseid, year, gradeField) {
   var numberPerGrades = {};
   var total = 0;
   //get all grades of this year
-  let allGrades  = CurrentBoekingen.find({"ID OPO" : courseid});
+  let allGrades  = Boekingen.find({$and:[{"ID OPO" : courseid},{Academiejaar: currentAcademiejaar }]});
   var min = Number.MAX_VALUE;
   var max = Number.MIN_VALUE;
   allGrades.forEach(function (student) {
@@ -397,14 +397,14 @@ var helper_sumDict = function (obj) {
 var helper_GetCreditsTakenSemester = function (who, semester) {
   let credits = 0;
   // get all courseIds of student
-  var studentBoekingen = CurrentBoekingen.find({$and: [{studentid: who}, {Academischeperiode: semester}]});
+  var studentBoekingen = Boekingen.find({$and: [{studentid: who}, {Academischeperiode: semester},{Academiejaar: currentAcademiejaar }]});
   studentBoekingen.forEach(function (b) {
     credits += parseInt(b.Studiepunten)
   });
 
   //ugly fix for courses of semester Academiejaar that we show in semester 2
   if (semester == "Tweede Semester"){
-    var jaarBoekingen = CurrentBoekingen.find({$and: [{studentid: who}, {Academischeperiode: "Academiejaar"}]});
+    var jaarBoekingen = Boekingen.find({$and: [{studentid: who}, {Academischeperiode: "Academiejaar"},{Academiejaar: currentAcademiejaar }]});
     jaarBoekingen.forEach(function (b) {
       credits += parseInt(b.Studiepunten)
     });

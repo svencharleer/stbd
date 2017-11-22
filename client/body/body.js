@@ -70,10 +70,9 @@ Template.dashboard.onCreated(function () {
   this.started = new ReactiveVar(false);
   var instance = this;
 
-  var handler1 = instance.subscribe("own_boekingen", Session.get("program"), Session.get("student"));
-  var handler2 = instance.subscribe("program_boekingen", Session.get("program"));
+  let OwnBoekingen = Meteor.subscribe("own_boekingen", Session.get("program"), Session.get("student"));
+  let ProgramBoekingen = Meteor.subscribe("program_boekingen", Session.get("program"));
 
-  console.log(Session.get("program"));
   if (Meteor.settings.public.logging) {
     $(".button").css("display", 'flex');
     Session.set('mouseX', 0);
@@ -93,7 +92,7 @@ Template.dashboard.onCreated(function () {
     Session.set("toleranceCredits", 12);
 
 
-    if (handler1.ready() && handler2.ready()) {
+    if (OwnBoekingen.ready() && ProgramBoekingen.ready()) {
       let studentID = Session.get("student");
       let studentBoeking = OwnBoekingen.findOne();
       let studentGivenName = studentBoeking["Student-Voornaam(key)"];
