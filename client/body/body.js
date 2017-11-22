@@ -70,8 +70,8 @@ Template.dashboard.onCreated(function () {
   this.started = new ReactiveVar(false);
   var instance = this;
 
-  let OwnBoekingen = Meteor.subscribe("own_boekingen", Session.get("program"), Session.get("student"));
-  let ProgramBoekingen = Meteor.subscribe("program_boekingen", Session.get("program"));
+  let handler1 = Meteor.subscribe("own_boekingen", Session.get("program"), Session.get("student"));
+  let handler2 = Meteor.subscribe("program_boekingen", Session.get("program"));
 
   if (Meteor.settings.public.logging) {
     $(".button").css("display", 'flex');
@@ -92,9 +92,9 @@ Template.dashboard.onCreated(function () {
     Session.set("toleranceCredits", 12);
 
 
-    if (OwnBoekingen.ready() && ProgramBoekingen.ready()) {
+    if (handler1.ready() && handler2.ready()) {
       let studentID = Session.get("student");
-      let studentBoeking = OwnBoekingen.findOne();
+      let studentBoeking = Boekingen.findOne();
       let studentGivenName = studentBoeking["Student-Voornaam(key)"];
       let studentSurName = studentBoeking["Student-Familienaam(key)"];
       let nio = studentGivenName["Nieuwi/dopleiding"];
@@ -154,7 +154,7 @@ Template.dashboard.onCreated(function () {
       //
       //   if ($(".loading-screen")) $(".loading-screen").hide();
       // });
-      Session.set("selectedCourses", OwnBoekingen)
+      Session.set("selectedCourses", Boekingen)
 
 
       Meteor.call("getCreditsTaken", Session.get('student'), 1, function (err, credits) {
@@ -170,20 +170,20 @@ Template.dashboard.helpers({
     return Session.get('toleranceCredits');
   },
   // courses() {
-  //   return OwnBoekingen.find({fields: {OPOID: 1}})
+  //   return Boekingen.find({fields: {OPOID: 1}})
   // },
   // ttt() {
-  //   return OwnBoekingen.find({Academischeperiode: "TTT"},{fields: {OPOID: 1}})
+  //   return Boekingen.find({Academischeperiode: "TTT"},{fields: {OPOID: 1}})
   // },
   // january() {
-  //   return OwnBoekingen.find({Academischeperiode: "Eerste Semester"},{fields: {OPOID: 1}})
+  //   return Boekingen.find({Academischeperiode: "Eerste Semester"},{fields: {OPOID: 1}})
   // },
   // june() {
-  //   return OwnBoekingen.find({Academischeperiode: "Tweede Semester"},{fields: {OPOID: 1}})
+  //   return Boekingen.find({Academischeperiode: "Tweede Semester"},{fields: {OPOID: 1}})
   // },
   //
   // studentGrade(studentid, courseid) {
-  //   return OwnBoekingen.find({OPOID: courseid},{fields: {Score: 1}})
+  //   return Boekingen.find({OPOID: courseid},{fields: {Score: 1}})
   // },
   //
   // studentCourses(semester, failedOnly, gradetry) {

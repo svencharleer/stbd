@@ -3,7 +3,7 @@ Template.column.helpers({
    * @returns [{id,name,grade,semester,credits, columnindex}]
    */
   studentCourses() {
-    return OwnBoekingen.find()
+    return Boekingen.find()
   },
   "cseAvailable":function() {
     return this.credits !== undefined

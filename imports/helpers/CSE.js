@@ -71,7 +71,7 @@ Helpers_CalculateCSE = function(semester,year, pure) //1 2 3 (sept) 0 = TTT
  * @constructor
  */
 Helpers_GetCSETests = function (studentID, semester) {
-  let boekingen = OwnBoekingen.find({Academischeperiode: semester});
+  let boekingen = Boekingen.find({Academischeperiode: semester});
   let nbTakenCourses = 0;
   let totalPoints = 0;
   courses.forEach(function (course) {
@@ -96,7 +96,7 @@ Helpers_GetCSETests = function (studentID, semester) {
  */
 Helpers_GetCSE = function(studentID, semester)
 {
-  let boekingen = OwnBoekingen.find({Academischeperiode: semester});
+  let boekingen = Boekingen.find({Academischeperiode: semester});
   var result = -1;
   if(boeking != undefined)
     {
