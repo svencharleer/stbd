@@ -19,12 +19,12 @@
 
       <div class="flex-container">
           <div class="flex-row">
-              {{#with GetColumnInfo 0}}
-                  {{> column}}
-              {{/with}}
-              {{#with GetColumnInfo 1}}
-                  {{> column}}
-              {{/with}}
+              <!--{{#with GetColumnInfo 0}}-->
+                  <!--{{> column}}-->
+              <!--{{/with}}-->
+              <!--{{#with GetColumnInfo 1}}-->
+                  <!--{{> column}}-->
+              <!--{{/with}}-->
               {{#with GetColumnInfo 2}}
                   {{> column}}
               {{/with}}
@@ -35,26 +35,7 @@
               <!--{{> column}}-->
                   <!--{{/with}}-->
               <!--Always show the bachelor column-->
-              <div class="flex-column colfuture" id="colfuture">
-                  <div class="vertical-title">bachelor</div>
-                  <div class="top">
-                      <div class="fa compress-colfuture fa-compress">
-                          <paper-ripple></paper-ripple>
-                      </div>
-                      <div class="column-title">Opleiding</div>
-                      <div id="legend" class="periode legend">
-                          <div class="legend-item legend3">+0j</div>
-                          <div class="legend-item legend4">+1j</div>
-                          <div class="legend-item legend5">+2j</div>
-                          <div class="legend-item legendnot">Niet</div>
-                      </div>
-                  </div>
-                  <div class="bottom">
-                      {{#if Template.subscriptionsReady}}
-                          {{> future}}
-                      {{/if}}
-                  </div>
-              </div>
+              <!--{{> futurecolumn}}-->
           </div>
       </div>
   </div>

@@ -14,6 +14,14 @@ Template.register.events({
     }
   });
 
+Template.register.onRendered(function () {
+  let handler1 = Meteor.subscribe("own_boekingen", Session.get("program"), Session.get("student"));
+  if (handler1.ready()){
+    Meteor.subscribe("program_boekingen", Session.get("program"));
+  }
+
+});
+
 let setProgramSettings = function (token) {
   Meteor.call("getTokenInfo", token, function (err, data) {
     console.log(data);
@@ -33,3 +41,4 @@ let setProgramSettings = function (token) {
     }
   })
 };
+

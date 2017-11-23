@@ -15,10 +15,8 @@ Template.resultGraph.helpers({
     return color;
   },
   getStrippedCourseID: function () {
-    let courseId = this.id;
+    let courseId = this.IDOPO;
     courseId = courseId.replace(/ /g,'');
-    courseId = courseId.replace(/,/g,'');
-
     return courseId
   },
   validCredits: function () {

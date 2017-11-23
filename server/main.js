@@ -6,9 +6,6 @@ let Boekingen = new Mongo.Collection('boekingen');
 //Publish all collections
 Meteor.publish('own_boekingen', function (program, studentid) {
   let own = Boekingen.find({$and: [{Student: studentid}, {Opleiding: program}, {Academiejaar: currentAcademiejaar }]});
-  own.forEach(function (s) {
-    console.log(s)
-  })
   return own;
 });
 
@@ -77,20 +74,7 @@ Meteor.methods({
     return result;
   },
 
-  /**
-   * Calculate gradefield and call GetDistribution
-   * @param courseid
-   * @param year
-   * @param semester: -2,-1,0,1,2,3: for wich semester you want the distribution
-   * @returns {{numberPerGrades, min, max, total}}
-   */
-  getCoursePointDistribution: function (courseid, year, semester) {
-    let gradeField = "Score";
-    if (semester === 3){ //only in resits you need the score of that specific period
-      gradeField = "Score September";
-    }
-    return helper_GetDistribution(courseid, year, gradeField);
-  },
+
   /**
    * @return {boolean} dynamic: true if dashboard is dynamic
    *
@@ -108,7 +92,7 @@ Meteor.methods({
    * @param {integer} semester : 1-2 or default 3
    */
   getCSEProfile: function (who, semester, limit1, limit2) {
-    var studentBoeking = Boekingen.findOne({$and:[{studentid: who},{Academiejaar: currentAcademiejaar }]});
+    var studentBoeking = Boekingen.findOne({$and:[{Student: who},{Academiejaar: currentAcademiejaar }]});
     var CSE_entry = helper_getCSEEntry(semester);
     var CSE_score = studentBoeking[CSE_entry];
 
@@ -226,7 +210,7 @@ Meteor.methods({
 
   /**
    * Find all the courses the student failed
-   * @param who: studentid
+   * @param studentid: studentid
    * @returns {Array}
    */
   getFailedCourses(studentid) {
@@ -289,44 +273,7 @@ Meteor.startup(() => {
 
 });
 
-/**
- * Return the distribution of the course
- * @param search
- * @param collection
- * @param gradeField
- * @returns {{numberPerGrades: {}, min: Number, max: Number, total: number}}
- */
-var helper_GetDistribution = function (courseid, year, gradeField) {
-  var numberPerGrades = {};
-  var total = 0;
-  //get all grades of this year
-  let allGrades  = Boekingen.find({$and:[{"ID OPO" : courseid},{Academiejaar: currentAcademiejaar }]});
-  var min = Number.MAX_VALUE;
-  var max = Number.MIN_VALUE;
-  allGrades.forEach(function (student) {
-    //get correct grade
-    var grade = 0;
-    if (student[gradeField] == "NA" || student[gradeField] == "#" || student[gradeField] == "GR") return;
-    grade = parseInt(student[gradeField]);
-    //Initialise the count on 0 if the first with this score
-    if (numberPerGrades[grade] === undefined)
-      numberPerGrades[grade] = {grade: grade, count: 0};
-    numberPerGrades[grade].count++;
-  });
 
-  Object.keys(numberPerGrades).forEach(function (score) {
-    if (min > numberPerGrades[score].count)
-      min = numberPerGrades[score].count;
-    if (max < numberPerGrades[score].count)
-      max = numberPerGrades[score].count;
-  });
-
-
-  numberPerGrades = Object.keys(numberPerGrades).map(function (key) {
-    return numberPerGrades[key];
-  });
-  return {numberPerGrades: numberPerGrades, min: min, max: max, total: total};
-};
 /**
  *
  * @param semester

@@ -70,8 +70,6 @@ Template.dashboard.onCreated(function () {
   this.started = new ReactiveVar(false);
   var instance = this;
 
-  let handler1 = Meteor.subscribe("own_boekingen", Session.get("program"), Session.get("student"));
-  let handler2 = Meteor.subscribe("program_boekingen", Session.get("program"));
 
   if (Meteor.settings.public.logging) {
     $(".button").css("display", 'flex');
@@ -94,9 +92,9 @@ Template.dashboard.onCreated(function () {
 
     if (handler1.ready() && handler2.ready()) {
       let studentID = Session.get("student");
-      let studentBoeking = Boekingen.findOne();
-      let studentGivenName = studentBoeking["Student-Voornaam(key)"];
-      let studentSurName = studentBoeking["Student-Familienaam(key)"];
+      let studentBoeking = Boekingen.findOne({Student: studentID});
+      let studentGivenName = studentBoeking["Student-Voornaam(Key)"];
+      let studentSurName = studentBoeking["Student-Familienaam(Key)"];
       let nio = studentGivenName["Nieuwi/dopleiding"];
       if (studentName == undefined) {
         $(".nostudent").show();
@@ -104,7 +102,7 @@ Template.dashboard.onCreated(function () {
         return;
       }
       Session.set("studentName", studentGivenName + " " + studentSurName);
-      if (studentName.generatiestudent == "J"){
+      if (nio == "J"){
         Session.set("new", true);
       }
       else{
@@ -154,7 +152,7 @@ Template.dashboard.onCreated(function () {
       //
       //   if ($(".loading-screen")) $(".loading-screen").hide();
       // });
-      Session.set("selectedCourses", Boekingen)
+      Session.set("selectedCourses", Boekingen.findOne({Student: studentID}))
 
 
       Meteor.call("getCreditsTaken", Session.get('student'), 1, function (err, credits) {
