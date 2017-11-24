@@ -8,9 +8,9 @@ Template.resultGraph.onCreated(function () {
 Template.resultGraph.helpers({
   color: function () {
     let color = "white"; //"#ef9a9a";
-    if (this.grade < 8) color = "failed" //"#ff8a80"; //failed
-    else if (this.grade > 9) color = "passed" //"#a5d6a7"; //passed
-    else if (this.grade >= 8 && this.grade <= 9) color = "tolerable"; // "#ffcc80"; //tolerable
+    if (this.Score < 8) color = "failed" //"#ff8a80"; //failed
+    else if (this.Score > 9) color = "passed" //"#a5d6a7"; //passed
+    else if (this.Score >= 8 && this.Score <= 9) color = "tolerable"; // "#ffcc80"; //tolerable
     else color = "failed"; // "#ff8a80"; //failed
     return color;
   },
@@ -20,7 +20,7 @@ Template.resultGraph.helpers({
     return courseId
   },
   validCredits: function () {
-    let credits = this.credits;
+    let credits = this.Studiepunten;
     return credits > 0;
   }
 });
@@ -34,9 +34,9 @@ Template.resultGraph.events({
       clicks.insert({
         'session': Session.get('Id'),
         'studentid': Session.get('student'),
-        'element': 'course-top_' + this.id,
+        'element': 'course-top_' + this.IDOPO,
         'time': Date.now(),
-        'action': 'visible' + this.credits
+        'action': 'visible' + this.Studiepunten
       })
     } else {
       template.$(".course-bottom").css("max-height", "0px");
@@ -48,9 +48,9 @@ Template.resultGraph.events({
       clicks.insert({
         'session': Session.get('Id'),
         'studentid': Session.get('student'),
-        'element': 'course-top_' + this.id,
+        'element': 'course-top_' + this.IDOPO,
         'time': Date.now(),
-        'action': 'hide' + this.credits
+        'action': 'hide' + this.Studiepunten
       })
 
     }
@@ -64,9 +64,9 @@ Template.resultGraph.events({
       clicks.insert({
         'session': Session.get('Id'),
         'studentid': Session.get('student'),
-        'element': 'course-bottom_' + this.id,
+        'element': 'course-bottom_' + this.IDOPO,
         'time': Date.now(),
-        'action': 'zoom' + this.credits
+        'action': 'zoom' + this.Studiepunten
       })
     } else {
       template.$(".course").css("transform", "scale(1)");
@@ -76,9 +76,9 @@ Template.resultGraph.events({
       clicks.insert({
         'session': Session.get('Id'),
         'studentid': Session.get('student'),
-        'element': 'course-bottom_' + this.id,
+        'element': 'course-bottom_' + this.IDOPO,
         'time': Date.now(),
-        'action': 'reset_zoom' + this.credits
+        'action': 'reset_zoom' + this.Studiepunten
       })
     }
 

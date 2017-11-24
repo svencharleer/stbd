@@ -2,17 +2,16 @@ Template.course.onRendered(function () {
   let instance = this;
 
   instance.autorun(function () {
-    let studentGrade = instance.data.grade;
-    let semester = instance.data.semester;
+    let studentGrade = instance.data.Score;
+    let semester = instance.data.Academischeperiode;
     let svg = d3.select(instance.find("svg"));
-    let courseId = instance.data.id;
+    let courseId = instance.data.IDOPO;
     if (semester == undefined) semester = 3;
 
 
 
     data = getCoursePointDistribution(courseId, semester);
     let grades = data.numberPerGrades;
-    console.log(grades)
     let total = 0;
     for (let i = 0; i < grades.length; i++) total += grades[i].count;
 
@@ -114,7 +113,7 @@ let getCoursePointDistribution =  function (courseid, year, semester) {
   if (semester === 3){ //only in resits you need the score of that specific period
     gradeField = "ScoreSeptember";
   }
-  return getCoursePointDistributionSemester(courseid, year, gradeField);
+  return getCoursePointDistributionSemester(courseid, gradeField);
 }
 
 /**
@@ -127,7 +126,7 @@ let getCoursePointDistribution =  function (courseid, year, semester) {
 let getCoursePointDistributionSemester = function (courseid, gradeField) {
   var numberPerGrades = {};
   var total = 0;
-  let allGrades  = Boekingen.find({"IDOPO" : courseid});
+  let allGrades  = Boekingen.find({IDOPO : courseid});
   var min = Number.MAX_VALUE;
   var max = Number.MIN_VALUE;
   allGrades.forEach(function (student) {

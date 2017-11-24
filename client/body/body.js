@@ -34,13 +34,6 @@ Template.dashboard.events({
     template.$("." + column + " .top .periode").css("visibility", "visible");
     template.$("." + column + "").css("max-width", "var(--ColumnWidth)");
     template.$("." + column + "").css("min-width", "var(--ColumnWidth)");
-    clicks.insert({
-      'session': Session.get('Id'),
-      'studentid': Session.get('student'),
-      'element': element,
-      'time': Date.now(),
-      'action': 'show_column'
-    })
 
   },
 
@@ -67,6 +60,7 @@ Template.dashboard.events({
 });
 
 Template.dashboard.onCreated(function () {
+
   this.started = new ReactiveVar(false);
   var instance = this;
 
@@ -78,8 +72,8 @@ Template.dashboard.onCreated(function () {
     Session.set('lastMove', Date.now())
   }
 
-    instance.autorun(function () {
-    $(".nostudent").hide();
+  instance.autorun(function () {
+    $(".nostudent").css("display", "none")
     Session.set('Id', Meteor.default_connection._lastSessionId);
     Session.set("CSE_januari", 0);
     Session.set("CSE_juni", 0);
@@ -90,75 +84,76 @@ Template.dashboard.onCreated(function () {
     Session.set("toleranceCredits", 12);
 
 
-    if (handler1.ready() && handler2.ready()) {
-      let studentID = Session.get("student");
-      let studentBoeking = Boekingen.findOne({Student: studentID});
-      let studentGivenName = studentBoeking["Student-Voornaam(Key)"];
-      let studentSurName = studentBoeking["Student-Familienaam(Key)"];
-      let nio = studentGivenName["Nieuwi/dopleiding"];
-      if (studentName == undefined) {
-        $(".nostudent").show();
-        $(".flex-container").css("display", 'none');
-        return;
-      }
-      Session.set("studentName", studentGivenName + " " + studentSurName);
-      if (nio == "J"){
-        Session.set("new", true);
-      }
-      else{
-        Session.set("new", false);
-      }
+    let studentID = Session.get("student");
+    let studentBoeking = Boekingen.findOne({Student: studentID});
+    let studentGivenName = studentBoeking["Student-Voornaam(Key)"];
+    let studentSurName = studentBoeking["Student-Familienaam(Key)"];
+    let nio = studentGivenName["Nieuwi/dopleiding"];
+    if (studentSurName == undefined) {
+      // $(".nostudent").show();
+      $(".nostudent").css("display", "flex");
 
-      let currentSemester = 1;
-      if (Meteor.settings.public.showJuni) {
-        currentSemester = 2;
-      }
-      if (Meteor.settings.public.showSeptember) {
-        currentSemester = 3;
-      }
-      Session.set('semester', currentSemester);
-
-
-
-      //get the CSE for the student
-      var year = Session.get("Year");
-      //Helpers_GetCSE comes from imports/helpers/CSE.js
-      // Session.set("CSE_ijkingstoets", Helpers_GetCSE(studentID, -2, year));
-      // Session.set("CSE_TTT", Helpers_GetCSE(studentID, -1, year));
-      Session.set("CSE_januari", studentBoeking.CSEJanuari);
-      Session.set("CSE_juni", studentBoeking.CSEJuni);
-      Session.set("CSE_september", studentBoeking.CSESeptember);
-
-      // Session.set("CSE_januari_pure", Helpers_CalculateCSE(1, year, true));
-      // Session.set("CSE_juni_pure", Helpers_CalculateCSE(2, year, true));
-      // Session.set("CSE_september_pure", Helpers_CalculateCSE(3, year, true));
-      Session.set("CSE_Planning", Helpers_CalculateStartValues(Session.get('CSE_september_pure')));
-
-
-
-      //get failed courses
-      /**
-       * Sven //todo
-       */
-      // Meteor.call("getFailedCourses", Session.get("student"), function (err, data) {
-      //   //set them up for selection
-      //   var selectedCourses = {};
-      //   data.forEach(function (f) {
-      //     selectedCourses[f.courseid] = {id: f.courseid, course: f, checked: true};
-      //   })
-      //   Session.set("failedCourses", selectedCourses);
-      //   Session.set("Fails", data.length > 0 ? true : false);
-      //   //console.log("fails set to " + Session.get("Fails"));
-      //
-      //   if ($(".loading-screen")) $(".loading-screen").hide();
-      // });
-      Session.set("selectedCourses", Boekingen.findOne({Student: studentID}))
-
-
-      Meteor.call("getCreditsTaken", Session.get('student'), 1, function (err, credits) {
-        Session.set('creditsTaken', credits)
-      });
+      $(".flex-container").css("display", 'none');
+      return;
     }
+    Session.set("studentName", studentGivenName + " " + studentSurName);
+    if (nio == "J"){
+      Session.set("new", true);
+    }
+    else{
+      Session.set("new", false);
+    }
+
+    let currentSemester = 1;
+    if (Meteor.settings.public.showJuni) {
+      currentSemester = 2;
+    }
+    if (Meteor.settings.public.showSeptember) {
+      currentSemester = 3;
+    }
+    Session.set('semester', currentSemester);
+
+
+
+    //get the CSE for the student
+    var year = Session.get("Year");
+    //Helpers_GetCSE comes from imports/helpers/CSE.js
+    // Session.set("CSE_ijkingstoets", Helpers_GetCSE(studentID, -2, year));
+    // Session.set("CSE_TTT", Helpers_GetCSE(studentID, -1, year));
+    Session.set("CSE_januari", studentBoeking.CSEJanuari);
+    Session.set("CSE_juni", studentBoeking.CSEJuni);
+    Session.set("CSE_september", studentBoeking.CSESeptember);
+
+    // Session.set("CSE_januari_pure", Helpers_CalculateCSE(1, year, true));
+    // Session.set("CSE_juni_pure", Helpers_CalculateCSE(2, year, true));
+    // Session.set("CSE_september_pure", Helpers_CalculateCSE(3, year, true));
+    Session.set("CSE_Planning", Helpers_CalculateStartValues(Session.get('CSE_september_pure')));
+
+
+
+    //get failed courses
+    /**
+     * Sven //todo
+     */
+    // Meteor.call("getFailedCourses", Session.get("student"), function (err, data) {
+    //   //set them up for selection
+    //   var selectedCourses = {};
+    //   data.forEach(function (f) {
+    //     selectedCourses[f.courseid] = {id: f.courseid, course: f, checked: true};
+    //   })
+    //   Session.set("failedCourses", selectedCourses);
+    //   Session.set("Fails", data.length > 0 ? true : false);
+    //   //console.log("fails set to " + Session.get("Fails"));
+    //
+    //   if ($(".loading-screen")) $(".loading-screen").hide();
+    // });
+    // Session.set("selectedCourses", Boekingen.find({Student: studentID}))
+
+
+    Meteor.call("getCreditsTaken", Session.get('student'), 1, function (err, credits) {
+      Session.set('creditsTaken', credits)
+    });
+
   })
 })
 

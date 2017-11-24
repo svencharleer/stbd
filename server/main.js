@@ -10,7 +10,7 @@ Meteor.publish('own_boekingen', function (program, studentid) {
 });
 
 Meteor.publish('program_boekingen', function (program) {
-  return Boekingen.find( {$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar }]}, {fields: {Student:0}});
+  return Boekingen.find( {$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar }]}, {fields: {"Student-Familienaam(Key)":0}});
 });
 
 
@@ -72,6 +72,29 @@ Meteor.methods({
       }
     });
     return result;
+  },
+  /**
+   * Method that splits the calls for the distribution
+   * into calls to csedistribution and scoredistribution
+   * Called from trajectoryperiod
+   * @param semester
+   * @param year
+   * @returns {undefined}
+   */
+  getDistribution : function (semester, program) {
+    //Look whick score you want to use
+    let distribution = undefined;
+    switch (semester){
+      case -2:
+      case "TTT":
+        distribution =  getScoreDistribution(semester, program);
+        break;
+      default:
+        distribution =  getSemesterCSEDistribution(semester, program);
+        break;
+    }
+    return distribution;
+
   },
 
 
@@ -283,13 +306,13 @@ let helper_getCSEEntry = function (semester) {
   var cse_entry = 'CSE';
   switch (semester) {
     case 1:
-      cse_entry = 'CSE Januari';
+      cse_entry = 'CSEJanuari';
       break;
     case 2:
-      cse_entry = 'CSE Juni';
+      cse_entry = 'CSEJuni';
       break;
     default:
-      cse_entry = 'CSE September';
+      cse_entry = 'CSESeptember';
   }
 return cse_entry;
 
@@ -350,7 +373,7 @@ var helper_GetCreditsTakenSemester = function (who, semester) {
   });
 
   //ugly fix for courses of semester Academiejaar that we show in semester 2
-  if (semester == "Tweede Semester"){
+  if (semester === "Tweede Semester"){
     var jaarBoekingen = Boekingen.find({$and: [{studentid: who}, {Academischeperiode: "Academiejaar"},{Academiejaar: currentAcademiejaar }]});
     jaarBoekingen.forEach(function (b) {
       credits += parseInt(b.Studiepunten)
@@ -360,6 +383,145 @@ var helper_GetCreditsTakenSemester = function (who, semester) {
 
 
 };
+
+/**
+ * Find the cse distribution in a semester
+ * @param semester
+ * @returns {{distribution: Array}}
+ */
+let getSemesterCSEDistribution =  function (semester, program) {
+  let studentIDs = distinct(Boekingen, "Student", program);
+  let cses = getCSEs(semester, studentIDs);
+
+  //initialise dict of buckets
+  var buckets = {};
+  for (var i = 0; i < 10; i++) {
+    buckets[i] = 0;
+  }
+  //For each of the 10 categories count number of occurrences
+  cses.forEach(function (cse) {
+    if (cse != "NULL"){
+      let bucketId = parseInt(cse / 10);
+      if (bucketId === 10) bucketId = 9;
+      buckets[bucketId]++;
+    }
+  });
+  console.log(buckets)
+  let distribution = [];
+  Object.keys(buckets).forEach(function (b) {
+    distribution.push({bucket: parseInt(b), count: buckets[b]})
+  });
+  console.log(distribution);
+  return {distribution: distribution};
+
+};
+
+/**
+ * Make distribution of scores
+ * Needed for tests before jan exams
+ * @param semester
+ * @param year
+ * @returns {{distribution: Array}}
+ */
+let getScoreDistribution = function (semester, year) {
+  let courses = Courses.find({semester:semester});
+  let courseids = [];
+  courses.forEach(function (course) {
+    courseids.push(course.courseid)
+  });
+  let nbCourses = courseids.length;
+  //Find all scores of this year without # or NA
+  let scores = NewGrades.find({"$and": [{year: year}, {courseid: {$in: courseids}}, {finalscore: { "$gte": -1, "$lt": 21 } }] });
+
+
+  var buckets = {};
+  for (var i = 0; i < 10; i++) {
+    buckets[i] = 0;
+  }
+  //For each of the 10 categories count number of occurrences
+  scores.forEach(function (s) {
+    var bucketId = parseInt(s.finalscore / 2);
+    if (bucketId === 10) bucketId = 9;
+    buckets[bucketId]++;
+  });
+
+  let distribution = [];
+  Object.keys(buckets).forEach(function (b) {
+    distribution.push({bucket: parseInt(b), count: buckets[b]})
+  });
+  return {distribution: distribution};
+};
+
+let getBucketID = function (s, semester) {
+  if (semester === 1) {
+    return parseInt(s.cse1 / 10);
+  }
+  else if (semester === 2) {
+    return parseInt(s.cse2 / 10);
+  }
+  else {
+    return parseInt(s.cse3 / 10);
+  }
+};
+let getCSEs = function (semester, studentids) {
+  let boekingen = Boekingen.find({$and: [{Student: {$in: studentids}}, {Academiejaar: currentAcademiejaar}]});
+  let cses = [];
+  switch (semester) {
+    case "Eerste semester":
+      boekingen.forEach(function (b) {
+        cses.push(b.CSEJanuari)
+      });
+      break;
+    case 2:
+      boekingen.forEach(function (b) {
+        cses.push(b.CSEJuni)
+      })
+      break;
+    default:
+      boekingen.forEach(function (b) {
+        cses.push(b.CSESeptember)
+      })
+  }
+  return cses;
+}
+/**
+ * Return the CSE field based on semester
+ * @param semester
+ * @returns {string}
+ */
+let getCSE = function (semester, id) {
+  let cse;
+  switch (semester) {
+    case "Eerste semester":
+      cse = Boekingen.findOne({$and: [{Student: id }, {Academiejaar: currentAcademiejaar}]});
+      cse = cse.CSEJanuari;
+      break;
+    case 2:
+      cse = Boekingen.findOne({$and: [{Student: id }, {Academiejaar: currentAcademiejaar}]});
+      cse = cse.CSEJuni;
+      break;
+    default:
+      cse = Boekingen.findOne({$and: [{Student: id }, {Academiejaar: currentAcademiejaar}]});
+      cse = cse.CSESeptember;
+  }
+  return cse;
+};
+
+let distinct = function(collection, field, program) {
+  return _.uniq(
+    collection.find(
+      {$and: [
+        {"Nieuwi/dopleiding" : "J"},
+        {Academiejaar: currentAcademiejaar},
+        {Opleiding: program}
+      ]}
+      ,
+      {sort: {[field]: 1}}
+    )
+      .fetch()
+      .map(x => x[field])
+    , true);
+}
 
 
 

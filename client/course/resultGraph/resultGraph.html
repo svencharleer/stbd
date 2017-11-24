@@ -1,12 +1,12 @@
 <template name="resultGraph">
     <div id="{{getStrippedCourseID}}_{{columnindex}}" class="course {{color}}">
         <div class="course-top">
-            <div class="name">{{name}}</div>
+            <div class="name">{{Opleidingsonderdeel}}</div>
             <div class="top-bar {{color}}">
-                <div class="grade">{{grade}}</div>
+                <div class="grade">{{Score}}</div>
                 {{#if validCredits }}
                     <div class="credits">
-                        {{credits}}<span>stp</span>
+                        {{Studiepunten}}<span>stp</span>
                     </div>
                 {{/if}}
             </div>

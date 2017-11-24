@@ -229,13 +229,6 @@ Template.cseplanning.events({
   'click .slideflex'(event, template) {
     slide_update()
     let value = d3.select(event.currentTarget).select('.value').select('span').text()
-    clicks.insert({
-      'session': Session.get('Id'),
-      'studentid': Session.get('student'),
-      'element': 'slideflex_' + event.currentTarget.lastElementChild.id,
-      'time': Date.now(),
-      'action': 'slide_' + value.substring(0, 2)
-    })
   },
   'mouseout .slideflex'(event, template) {
     slide_update();
