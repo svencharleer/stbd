@@ -10,7 +10,7 @@ Meteor.publish('own_boekingen', function (program, studentid) {
 });
 
 Meteor.publish('program_boekingen', function (program) {
-  return Boekingen.find( {$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar }]}, {fields: {"Student-Familienaam(Key)":0}});
+  return Boekingen.find( {$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar }]}, {fields:{Student:0, Aanlognummer:0, "Student-Familienaam(Key)":0}});
 });
 
 
@@ -76,17 +76,18 @@ Meteor.methods({
   /**
    * Method that splits the calls for the distribution
    * into calls to csedistribution and scoredistribution
-   * Called from trajectoryperiod
+   * Called from trajectoryperiod, needed to be in server
+   * because you need studentids + a lot of entries
    * @param semester
-   * @param year
+   * @param program
    * @returns {undefined}
    */
   getDistribution : function (semester, program) {
     //Look whick score you want to use
     let distribution = undefined;
     switch (semester){
-      case -2:
-      case "TTT":
+      case -2: //ijkingstoets
+      case "TTT": ///a TTT test
         distribution =  getScoreDistribution(semester, program);
         break;
       default:
@@ -147,7 +148,7 @@ Meteor.methods({
   //todo
   getCSEDistribution: function (semester) {
     var CSE_entry = helper_getCSEEntryStudent(semester);
-    var students = Historical.find({})
+    var students = Historical.find({});
     var topDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
     var middleDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
     var lowDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
@@ -423,16 +424,8 @@ let getSemesterCSEDistribution =  function (semester, program) {
  * @param year
  * @returns {{distribution: Array}}
  */
-let getScoreDistribution = function (semester, year) {
-  let courses = Courses.find({semester:semester});
-  let courseids = [];
-  courses.forEach(function (course) {
-    courseids.push(course.courseid)
-  });
-  let nbCourses = courseids.length;
-  //Find all scores of this year without # or NA
-  let scores = NewGrades.find({"$and": [{year: year}, {courseid: {$in: courseids}}, {finalscore: { "$gte": -1, "$lt": 21 } }] });
-
+let getScoreDistribution = function (semester, program) {
+  let scores = Boekingen.find({$and:[{Academiejaar: currentAcademiejaar},{Opleiding: program},{Score: { "$gte": -1, "$lt": 21 } }]},{fields:{Score:1}});
 
   var buckets = {};
   for (var i = 0; i < 10; i++) {
@@ -440,7 +433,7 @@ let getScoreDistribution = function (semester, year) {
   }
   //For each of the 10 categories count number of occurrences
   scores.forEach(function (s) {
-    var bucketId = parseInt(s.finalscore / 2);
+    var bucketId = parseInt(s.Score / 2);
     if (bucketId === 10) bucketId = 9;
     buckets[bucketId]++;
   });
