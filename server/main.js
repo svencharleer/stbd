@@ -2,12 +2,14 @@ import {Meteor} from 'meteor/meteor';
 
 let currentAcademiejaar = "2016-2017";
 let Boekingen = new Mongo.Collection('boekingen');
+let Historic = new Mongo.Collection("doorloop");
 
 //Publish all collections
 Meteor.publish('own_boekingen', function (program, studentid) {
   let own = Boekingen.find({$and: [{Student: studentid}, {Opleiding: program}, {Academiejaar: currentAcademiejaar }]});
   return own;
 });
+
 
 // Meteor.publish('program_boekingen', function (program) {
 //   return Boekingen.find( {$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar }]}, {fields:{Student:0, Aanlognummer:0, "Student-Familienaam(Key)":0}});
@@ -159,24 +161,18 @@ Meteor.methods({
   /**
    * @param {integer} semester : 1 - 2  or default 3
    */
-  //todo
-  getCSEDistribution: function (semester) {
-    var CSE_entry = helper_getCSEEntryStudent(semester);
-    var students = Historical.find({});
-    var topDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
-    var middleDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
-    var lowDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
+  getHistoricDistribution: function (program, semester, limit1, limit2) {
+    let CSE_entry = "Jaar X: CSE";
+    // var CSE_entry = helper_getCSEEntryStudent(semester);
+    var students = Historic.find( {"Jaar X: Opleiding": program});
+    var topDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
+    var middleDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
+    var lowDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
 
     students.forEach(function (student) {
-      var cseStudent = student[CSE_entry];
-      var trajectStudent = student["traject"];
+      let cseStudent = student[CSE_entry];
+      let trajectStudent = student["Doorloop: Studieduur"];
 
-      var limit1 = 90;
-      var limit2 = 50;
-      if (Meteor.settings.public.cselimit1 != undefined && Meteor.settings.public.cselimit2 != undefined) {
-        limit1 = Meteor.settings.public.cselimit1;
-        limit2 = Meteor.settings.public.cselimit2;
-      }
       if (cseStudent >= limit1) {
         topDict[trajectStudent] += 1;
       }
@@ -188,6 +184,7 @@ Meteor.methods({
       }
 
     });
+
     topDict = helper_relativateDict(topDict);
     middleDict = helper_relativateDict(middleDict);
     lowDict = helper_relativateDict(lowDict);
@@ -350,10 +347,14 @@ let helper_getCSEEntryStudent = function (semester) {
 
 };
 
-//todo
+/**
+ * Transform dict from absolute to relative values
+ * @param dict
+ * @returns {*}
+ */
 var helper_relativateDict = function (dict) {
-  var resultDict = {"+0": 0, "+1": 0, "+2": 0, "N": 0};
   var sum = helper_sumDict(dict);
+  console.log(sum);
   for (var key in dict) {
     var counter = dict[key];
     dict[key] = Math.round((counter / sum ) * 100)
@@ -361,8 +362,13 @@ var helper_relativateDict = function (dict) {
   return dict;
 }
 
-//todo
-var helper_sumDict = function (obj) {
+/**
+ * Get the total number of students
+ * sum of all values
+ * @param obj
+ * @returns {number}
+ */
+let helper_sumDict = function (obj) {
   var sum = 0;
   for (var el in obj) {
     if (obj.hasOwnProperty(el)) {
@@ -370,7 +376,7 @@ var helper_sumDict = function (obj) {
     }
   }
   return sum;
-}
+};
 
 
 /**

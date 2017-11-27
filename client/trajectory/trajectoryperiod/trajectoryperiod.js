@@ -19,9 +19,7 @@ Template.trajectoryperiod.onRendered(function () {
           min = d.count;
         count += d.count;
       });
-      /*
-      Visualisation of Square Plot (50);
-      */
+
       let total = count;
       let width = 350;
       let container = svg.selectAll(".figures")

@@ -42,13 +42,6 @@ Template.dashboard.events({
     if (started) {
       event.target.value = "Start session";
       template.started.set(false);
-      clicks.insert({
-        'session': Session.get('Id'),
-        'studentid': Session.get('student'),
-        'element': "button",
-        'time': Date.now(),
-        'action': 'stop_session'
-      })
 
     }
     else {
