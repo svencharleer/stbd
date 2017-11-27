@@ -1,15 +1,14 @@
 Template.course.onRendered(function () {
   let instance = this;
-
   instance.autorun(function () {
-    let studentGrade = instance.data.Score;
-    let semester = instance.data.Academischeperiode;
+    let studentGrade = instance.data.Scorejanuari;
+    let courseSemester = instance.data.Academischeperiode;
     let svg = d3.select(instance.find("svg"));
     let courseId = instance.data.IDOPO;
-    if (semester == undefined) semester = 3;
+    if (courseSemester == undefined) courseSemester = 3;
 
 
-    Meteor.call("getCoursePointDistribution", courseId, semester, function (err, data) {
+    Meteor.call("getCoursePointDistribution", courseId, courseSemester, function (err, data) {
       let grades = data.numberPerGrades;
       let total = 0;
       for (let i = 0; i < grades.length; i++) total += grades[i].count;

@@ -8,20 +8,31 @@ Template.resultGraph.onCreated(function () {
 Template.resultGraph.helpers({
   color: function () {
     let color = "white"; //"#ef9a9a";
-    if (this.Score < 8) color = "failed" //"#ff8a80"; //failed
-    else if (this.Score > 9) color = "passed" //"#a5d6a7"; //passed
-    else if (this.Score >= 8 && this.Score <= 9) color = "tolerable"; // "#ffcc80"; //tolerable
+    //todo fix this for resits
+    let courseSemester = this.Academischeperiode;
+    let scoreEntry = getScoreEntry(courseSemester);
+    let score = this[scoreEntry];
+    if (score < 8) color = "failed" //"#ff8a80"; //failed
+    else if (score > 9) color = "passed" //"#a5d6a7"; //passed
+    else if (score >= 8 && score <= 9) color = "tolerable"; // "#ffcc80"; //tolerable
     else color = "failed"; // "#ff8a80"; //failed
     return color;
   },
   getStrippedCourseID: function () {
     let courseId = this.IDOPO;
     courseId = courseId.replace(/ /g,'');
+    courseId = courseId.replace(/,/g,'');
     return courseId
   },
   validCredits: function () {
     let credits = this.Studiepunten;
     return credits > 0;
+  },
+  Score: function () {
+    let courseSemester = this.Academischeperiode;
+    let scoreEntry = getScoreEntry(courseSemester);
+    let score = this[scoreEntry];
+    return score;
   }
 });
 
@@ -64,7 +75,6 @@ Template.resultGraph.onRendered(function () {
   let width = 140;
   let height = 60;
   let courseID = Template.instance().firstNode.id;
-
   let svg = d3.select("#" + courseID).select(".histogram")
     .attr("class", "histogram")
     .attr("width", width)
@@ -96,4 +106,25 @@ Template.resultGraph.onRendered(function () {
   })
 
 });
+
+/**
+ *
+ * @param semester
+ * @returns score_entry: fieldname of the db
+ */
+let getScoreEntry = function (semester) {
+  var score_entry = 'Score';
+  switch (semester) {
+    case "Eerste Semester":
+      score_entry = 'Scorejanuari';
+      break;
+    case "Tweede Semester":
+      score_entry = 'Scorejuni';
+      break;
+    default:
+      score_entry = 'Score';
+  }
+  return score_entry;
+
+};
 

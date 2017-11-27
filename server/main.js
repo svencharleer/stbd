@@ -128,6 +128,7 @@ Meteor.methods({
   },
 
   /**
+   * Get the profile (low,middle,high) based on current cse and limits
    * @param {studentid} who : studentid
    * @param {integer} semester : 1-2 or default 3
    */
@@ -444,7 +445,7 @@ let getSemesterCSEDistribution =  function (semester, program) {
  * Make distribution of scores
  * Needed for tests before jan exams
  * @param semester
- * @param year
+ * @param program
  * @returns {{distribution: Array}}
  */
 let getScoreDistribution = function (semester, program) {
