@@ -73,9 +73,9 @@ Template.trajectoryperiod.onRendered(function () {
           svg.select(".tooltip" + d.bucket).style("display", "none");
         })
         .attr("fill", function (d) {
-          if (_.isNaN(cse)) cse = 1;
-          if (_.isUndefined(cse)) cse = 1;
-          if (cse == 0) cse = 1;
+          if (_.isNaN(cse)) cse = 0;
+          if (_.isUndefined(cse)) cse = 0;
+          //if (cse == 0) cse = 1;
           let pbucket = d3.select(this.parentNode).datum().bucket;
           let current = pbucket * 10;
           let next = current + 11;
@@ -119,12 +119,3 @@ Template.trajectoryperiod.onRendered(function () {
     })
     })
 });
-
-
-
-
-
-
-
-
-
