@@ -415,8 +415,8 @@ var helper_GetCreditsTakenSemester = function (who, semester) {
  * @returns {{distribution: Array}}
  */
 let getSemesterCSEDistribution =  function (semester, program) {
-  let studentIDs = distinct(Boekingen, "Student", program);
-  let cses = getCSEs(semester, studentIDs);
+  // let studentIDs = distinct(Boekingen, "Student", program);
+  let cses = getCSEs(semester, program);
 
   //initialise dict of buckets
   var buckets = {};
@@ -426,6 +426,7 @@ let getSemesterCSEDistribution =  function (semester, program) {
   //For each of the 10 categories count number of occurrences
   cses.forEach(function (cse) {
     if (cse != "NULL"){
+      console.log(cse)
       let bucketId = parseInt(cse / 10);
       if (bucketId === 10) bucketId = 9;
       buckets[bucketId]++;
@@ -468,49 +469,38 @@ let getScoreDistribution = function (semester, program) {
 };
 
 
-let getCSEs = function (semester, studentids) {
-  let boekingen = Boekingen.find({$and: [{Student: {$in: studentids}},{"Nieuwi/dopleiding": "J"} ,{Academiejaar:currentAcademiejaar}]});
+let getCSEs = function (semester, program) {
+  // let boeking = Boekingen.findOne({$and: [{Student: {$in: studentids}},{"Nieuwi/dopleiding": "J"} ,{Academiejaar:currentAcademiejaar}]});
+  let boekingen = Boekingen.find({$and: [{Opleiding: program},{"Nieuwi/dopleiding": "J"} ,{Academiejaar:currentAcademiejaar}]});
   let cses = [];
   switch (semester) {
     case "Eerste semester":
       boekingen.forEach(function (b) {
-        cses.push(b.CSEJanuari)
+        let cse = b.CSEJanuari;
+        if (cse != undefined & cse > 0){
+          cses.push(cse)
+        }
+
       });
       break;
-    case 2:
+    case "Tweede semester":
       boekingen.forEach(function (b) {
-        cses.push(b.CSEJuni)
-      })
+        let cse = b.CSEJuni;
+        if (cse != undefined & cse > 0){
+          cses.push(cse)
+        }
+      });
       break;
     default:
       boekingen.forEach(function (b) {
-        cses.push(b.CSESeptember)
-      })
+        let cse = b.CSEJanuari;
+        if (cse != undefined & cse > 0){
+          cses.push(cse)
+        }
+      });
+      break;
   }
   return cses;
-};
-
-/**
- * Return the CSE field based on semester
- * @param semester
- * @returns {string}
- */
-let getCSE = function (semester, id) {
-  let cse;
-  switch (semester) {
-    case "Eerste semester":
-      cse = Boekingen.findOne({$and: [{Student: id }, {Academiejaar: currentAcademiejaar}]});
-      cse = cse.CSEJanuari;
-      break;
-    case 2:
-      cse = Boekingen.findOne({$and: [{Student: id }, {Academiejaar: currentAcademiejaar}]});
-      cse = cse.CSEJuni;
-      break;
-    default:
-      cse = Boekingen.findOne({$and: [{Student: id }, {Academiejaar: currentAcademiejaar}]});
-      cse = cse.CSESeptember;
-  }
-  return cse;
 };
 
 let distinct = function(collection, field, program) {
