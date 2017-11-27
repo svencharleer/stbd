@@ -427,7 +427,6 @@ let getSemesterCSEDistribution =  function (semester, program) {
   //For each of the 10 categories count number of occurrences
   cses.forEach(function (cse) {
     if (cse != "NULL"){
-      console.log(cse)
       let bucketId = parseInt(cse / 10);
       if (bucketId === 10) bucketId = 9;
       buckets[bucketId]++;
@@ -449,7 +448,7 @@ let getSemesterCSEDistribution =  function (semester, program) {
  * @returns {{distribution: Array}}
  */
 let getScoreDistribution = function (semester, program) {
-  let scores = Boekingen.find({$and:[{Academiejaar: currentAcademiejaar},{Opleiding: program},{Score: { "$gte": -1, "$lt": 21 } }]},{fields:{Score:1}});
+  let scores = Boekingen.find({$and:[{Academiejaar: currentAcademiejaar},{Academischeperiode:semester},{Opleiding: program},{Score: { "$gte": -1, "$lt": 21 } }]},{fields:{Score:1}});
 
   var buckets = {};
   for (var i = 0; i < 10; i++) {

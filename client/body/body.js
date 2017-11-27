@@ -111,8 +111,8 @@ Template.dashboard.onCreated(function () {
     //get the CSE for the student
     var year = Session.get("Year");
     //Helpers_GetCSE comes from imports/helpers/CSE.js
-    // Session.set("CSE_ijkingstoets", Helpers_GetCSE(studentID, -2, year));
-    // Session.set("CSE_TTT", Helpers_GetCSE(studentID, -1, year));
+    Session.set("CSE_ijkingstoets", getCSETests(studentID, -2, year, Session.get("program")));
+    Session.set("CSE_TTT", getCSETests(studentID, "TTT", year, Session.get("program")));
     Session.set("CSE_januari", studentBoeking.CSEJanuari);
     Session.set("CSE_juni", studentBoeking.CSEJuni);
     Session.set("CSE_september", studentBoeking.CSESeptember);
@@ -124,23 +124,7 @@ Template.dashboard.onCreated(function () {
 
 
 
-    //get failed courses
-    /**
-     * Sven //todo
-     */
-    // Meteor.call("getFailedCourses", Session.get("student"), function (err, data) {
-    //   //set them up for selection
-    //   var selectedCourses = {};
-    //   data.forEach(function (f) {
-    //     selectedCourses[f.courseid] = {id: f.courseid, course: f, checked: true};
-    //   })
-    //   Session.set("failedCourses", selectedCourses);
-    //   Session.set("Fails", data.length > 0 ? true : false);
-    //   //console.log("fails set to " + Session.get("Fails"));
-    //
-    //   if ($(".loading-screen")) $(".loading-screen").hide();
-    // });
-    // Session.set("selectedCourses", Boekingen.find({Student: studentID}))
+
 
 
     Meteor.call("getCreditsTaken", Session.get('student'), 1, function (err, credits) {
@@ -155,143 +139,7 @@ Template.dashboard.helpers({
   toleranceCredits() {
     return Session.get('toleranceCredits');
   },
-  // courses() {
-  //   return Boekingen.find({fields: {OPOID: 1}})
-  // },
-  // ttt() {
-  //   return Boekingen.find({Academischeperiode: "TTT"},{fields: {OPOID: 1}})
-  // },
-  // january() {
-  //   return Boekingen.find({Academischeperiode: "Eerste Semester"},{fields: {OPOID: 1}})
-  // },
-  // june() {
-  //   return Boekingen.find({Academischeperiode: "Tweede Semester"},{fields: {OPOID: 1}})
-  // },
-  //
-  // studentGrade(studentid, courseid) {
-  //   return Boekingen.find({OPOID: courseid},{fields: {Score: 1}})
-  // },
-  //
-  // studentCourses(semester, failedOnly, gradetry) {
-  //
-  //   var results = [];
-  //   var searchTerm = {semester: semester};
-  //   var courses = Courses.find(searchTerm, {sort: {semester: 1, coursename: 1}});
-  //   if (semester == 2) {
-  //     courses = Courses.find({$or: [{semester: 0}, {semester: 2}]}, {sort: {semester: 1, coursename: 1}});
-  //   }
-  //   var testStudent = Grades.findOne();
-  //   if (testStudent == undefined || testStudent.studentid != Session.get("student")) {
-  //     //console.log(testStudent.student, Session.get("student"));
-  //     return results;
-  //   }
-  //   courses.forEach(function (j) {
-  //     var search = {};
-  //     var result = Grades.findOne({courseid: j.courseid});
-  //     if (result == undefined) return;
-  //     var score = gradetry != 2 ? result.grade_try1 : result.grade_try2;
-  //
-  //     //console.log("in the courses" + result.student);
-  //     if (failedOnly == true && score >= 10) return;
-  //     if (score == "#") return;
-  //     //hack for TTT
-  //     if (score == "NA" && semester == 0) return;
-  //     results.push({
-  //       id: j.courseid,
-  //       name: j.coursename,
-  //       grade: score,
-  //       realGrade: score,
-  //       semester: gradetry != 2 ? semester : 3,
-  //       credits: parseInt(j.credits)
-  //     });
-  //
-  //   })
-  //   return results;
-  //
-  // },
-  //
-  // coursesLeft(sem) {
-  //   var results = [];
-  //   var courses = Courses.find({semester: sem}, {sort: {semester: 1, coursename: 1}});
-  //   if (sem == 2) {
-  //     courses = Courses.find({$or: [{semester: 0}, {semester: 2}]}, {sort: {semester: 1, coursename: 1}});
-  //   }
-  //   var testStudent = Grades.findOne();
-  //   if (testStudent == undefined || testStudent.studentid != Session.get("student")) {
-  //     //console.log(testStudent.student, Session.get("student"));
-  //     return results;
-  //   }
-  //   courses.forEach(function (j) {
-  //     // console.log(j)
-  //     var search = {};
-  //     var result = Grades.findOne({courseid: j.courseid});
-  //     if (result == undefined) return;
-  //     var score = "#";
-  //     score = result.finalscore;
-  //     var try1 = result.grade_try1;
-  //     var try2 = result.grade_try2;
-  //
-  //
-  //     //console.log("in the courses" + result.student);
-  //     if (score >= 10) return;
-  //     //if(score == "#") return;
-  //     results.push({
-  //         id: j.courseid,
-  //         name: j.coursename,
-  //         grade: score,
-  //         realGrade: score,
-  //         semester: 2,
-  //         try1: try1,
-  //         try2: try2,
-  //         credits: parseInt(j.credits)
-  //       }
-  //     );
-  //
-  //   })
-  //   // console.log('results')
-  //   // console.log(results)
-  //   return results;
-  // },
 
-  // ijkingstoetsen() {
-  //   console.log('ijkingstoetsen')
-  //   var ijkingstoetsen = Ijkingstoets.findOne();
-  //   if (ijkingstoetsen == undefined) return;
-  //   if (ijkingstoetsen.student != Session.get("student")) {
-  //     return [];
-  //   }
-  //   var juli =
-  //     {
-  //       id: "ijkingstoets_juli",
-  //       name: "IJkingstoets juli",
-  //       grade: ijkingstoetsen.juli,
-  //       realGrade: ijkingstoetsen.juli,
-  //       credits: 0
-  //     };
-  //   var september =
-  //     {
-  //       id: "ijkingstoets_september",
-  //       name: "IJkingstoets september",
-  //       grade: ijkingstoetsen.september,
-  //       realGrade: ijkingstoetsen.september,
-  //       credits: 0
-  //     };
-  //   var results = [];
-  //   var nrOfIjk = 0;
-  //   if (Meteor.settings.public.ijkingstoets_juli == true) {
-  //     results.push(juli);
-  //     nrOfIjk++;
-  //   }
-  //   if (Meteor.settings.public.ijkingstoets_september == true) {
-  //     results.push(september);
-  //     nrOfIjk++;
-  //   }
-  //   if (nrOfIjk == 1)
-  //     results[0].name = "Ijkingstoets";
-  //
-  //
-  //   return results;
-  // },
 
   totalCSE() {
     let cse = 0;
@@ -301,28 +149,6 @@ Template.dashboard.helpers({
     }
     return cse;
   },
-
-
-  // failedCourses() {
-  //   var courses = [];
-  //   var selectedCourses = Session.get("selectedCourses");
-  //   if (selectedCourses == undefined) return courses;
-  //   Object.keys(selectedCourses).forEach(function (i) {
-  //
-  //     courses.push({
-  //       id: selectedCourses[i].course.idopleidingsond,
-  //       name: Courses.findOne({_id: selectedCourses[i].course.idopleidingsond}).name,
-  //       grade: selectedCourses[i].course.scorenajuni,
-  //       realGrade: selectedCourses[i].course.scorenajuni
-  //     });
-  //   })
-  //
-  //   return courses;
-  // },
-  //
-  // Fails() {
-  //   return Session.get("Fails");
-  // },
 
   ShowJuni() {
     return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showJuni : false;
@@ -410,4 +236,18 @@ Template.dashboard.helpers({
 
 });
 
+let getCSETests = function(studentid, period, year, program){
+  let boekingen = Boekingen.find({$and: [{Student: studentid}, {Academischeperiode: period}, {Opleiding:program}, {Academiejaar: year}]});
+  let nb = 0;
+  let score = 0;
+  boekingen.forEach(function (b) {
+    if (b.Score >= 0){
+      nb ++;
+      score += b.Score
+    }
+  });
+  let cse = parseInt(5*score / nb);
+  console.log(cse, score, nb)
+  return cse;
+};
 
