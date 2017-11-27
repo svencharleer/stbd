@@ -31,13 +31,7 @@ Template.resultGraph.events({
       template.$(".course-bottom").css("max-height", "60px");
       template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
       template.show.set(true);
-      clicks.insert({
-        'session': Session.get('Id'),
-        'studentid': Session.get('student'),
-        'element': 'course-top_' + this.IDOPO,
-        'time': Date.now(),
-        'action': 'visible' + this.Studiepunten
-      })
+
     } else {
       template.$(".course-bottom").css("max-height", "0px");
       template.$(".top-bar").css("box-shadow", "0px 0px 0px gainsboro");
@@ -45,13 +39,6 @@ Template.resultGraph.events({
       template.$(".course").css("transform", "scale(1)");
       template.$(".course").css("z-index", "0");
       template.show.set(false);
-      clicks.insert({
-        'session': Session.get('Id'),
-        'studentid': Session.get('student'),
-        'element': 'course-top_' + this.IDOPO,
-        'time': Date.now(),
-        'action': 'hide' + this.Studiepunten
-      })
 
     }
   },
@@ -61,25 +48,12 @@ Template.resultGraph.events({
       template.$(".course").css("z-index", "1000");
       template.$(".course").css("box-shadow", "1px 1px 5px gainsboro");
       template.zoom.set(true);
-      clicks.insert({
-        'session': Session.get('Id'),
-        'studentid': Session.get('student'),
-        'element': 'course-bottom_' + this.IDOPO,
-        'time': Date.now(),
-        'action': 'zoom' + this.Studiepunten
-      })
+
     } else {
       template.$(".course").css("transform", "scale(1)");
       template.$(".course").css("z-index", "0");
       template.$(".course").css("box-shadow", "0px 0px 0px gainsboro");
       template.zoom.set(false);
-      clicks.insert({
-        'session': Session.get('Id'),
-        'studentid': Session.get('student'),
-        'element': 'course-bottom_' + this.IDOPO,
-        'time': Date.now(),
-        'action': 'reset_zoom' + this.Studiepunten
-      })
     }
 
   }

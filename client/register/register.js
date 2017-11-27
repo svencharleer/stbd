@@ -6,7 +6,7 @@ Template.register.events({
 
     },
     'keypress paper-input': function (event, template) {
-      if (event.keyCode == 13) {
+      if (event.keyCode === 13) {
         let token = $(".user-token").val();
         Session.set("token", token);
         setProgramSettings(token);
@@ -14,26 +14,15 @@ Template.register.events({
     }
   });
 
-Template.register.onRendered(function () {
-  let handler1 = Meteor.subscribe("own_boekingen", Session.get("program"), Session.get("student"));
-  if (handler1.ready()){
-    Meteor.subscribe("program_boekingen", Session.get("program"), function (){
-
-    });
-  }
-
-});
-
+/**
+ * Check token and load dashboard
+ * @param token
+ */
 let setProgramSettings = function (token) {
-
-
   Meteor.call("getTokenInfo", token, function (err, data) {
     console.log(data);
     let validToken =  data[0];
     if (validToken){
-
-
-
       let values = data[1];
       [program, cselimit1, cselimit2] = values;
       Session.set("program", program);
@@ -48,9 +37,8 @@ let setProgramSettings = function (token) {
 };
 
 let loadDashboard = function () {
-  console.log("loading dashboard")
   $(".register").fadeOut(function(){
-    $(".loading-screen").show();
+    $(".loading-screen").css("display", "flex");
     subscribe();
   });
 };
@@ -59,7 +47,9 @@ let subscribe = function () {
   Meteor.subscribe("own_boekingen", Session.get("program"), Session.get("student"),{
     onReady: function () {
       console.log("handler 1 ready");
-      subscribeProgramBoekingen();
+      $(".loading-screen").hide();
+      Blaze.render(Template.dashboard, $('body')[0]);
+      // subscribeProgramBoekingen();
     },
     onError: function () {
       console.log("handler 1 failed")

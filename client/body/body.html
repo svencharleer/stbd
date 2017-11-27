@@ -1,10 +1,8 @@
 <body>
   {{> register}}
   <div class="loading-screen">
-    <div>
       <paper-spinner alt="Loading Dashboard" active></paper-spinner>
       <h1>Loading Dashboard</h1>
-    </div>
   </div>
 </body>
 
@@ -22,9 +20,9 @@
               {{#with GetColumnInfo 0}}
                   {{> column}}
               {{/with}}
-              <!--{{#with GetColumnInfo 1}}-->
-                  <!--{{> column}}-->
-              <!--{{/with}}-->
+              {{#with GetColumnInfo 1}}
+                  {{> column}}
+              {{/with}}
               {{#with GetColumnInfo 2}}
                   {{> column}}
               {{/with}}
