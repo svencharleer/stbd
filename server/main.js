@@ -164,7 +164,7 @@ Meteor.methods({
   getHistoricDistribution: function (program, semester, limit1, limit2) {
     let CSE_entry = "Jaar X: CSE";
     // var CSE_entry = helper_getCSEEntryStudent(semester);
-    var students = Historic.find( {"Jaar X: Opleiding": program});
+    var students = Historic.find({$and: [{"Generatiestudent ?": "J" },{"Jaar X: Opleiding": program}]} );
     var topDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
     var middleDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
     var lowDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
@@ -354,7 +354,6 @@ let helper_getCSEEntryStudent = function (semester) {
  */
 var helper_relativateDict = function (dict) {
   var sum = helper_sumDict(dict);
-  console.log(sum);
   for (var key in dict) {
     var counter = dict[key];
     dict[key] = Math.round((counter / sum ) * 100)
@@ -470,7 +469,7 @@ let getScoreDistribution = function (semester, program) {
 
 
 let getCSEs = function (semester, studentids) {
-  let boekingen = Boekingen.find({$and: [{Student: {$in: studentids}}, {Academiejaar: currentAcademiejaar}]});
+  let boekingen = Boekingen.find({$and: [{Student: {$in: studentids}},{"Nieuwi/dopleiding": "J"} ,{Academiejaar:currentAcademiejaar}]});
   let cses = [];
   switch (semester) {
     case "Eerste semester":
