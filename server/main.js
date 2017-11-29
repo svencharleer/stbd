@@ -26,10 +26,10 @@ Meteor.methods({
    */
   getTokenInfo: function (token) {
     let dict = {
-      a : ["ABA biochemie en biotechnologie (Leuv)",50,90], //ignoreLine
-      b : ["ABA biologie (Leuv)",50,90], //ignoreLine
-      c : ["ABA chemie (Leuv)",50,90], //ignoreLine
-      d : ["ABA fysica (Leuv)",50,90], //ignoreLine
+      a : ["ABA biochemie en biotechnologie (Leuv)",50,90],
+      b : ["ABA biologie (Leuv)",50,90],
+      c : ["ABA chemie (Leuv)",50,90],
+      d : ["ABA fysica (Leuv)",50,90], 
       e : ["ABA geografie (Leuv)",50,90],
       f : ["ABA geologie (Leuv)",50,90],
       g : ["ABA informatica (Leuv)",50,90],
@@ -561,10 +561,3 @@ let getCoursePointDistributionSemester = function (courseid, gradeField) {
   });
   return {numberPerGrades: numberPerGrades, min: min, max: max, total: total};
 };
-
-
-
-
-
-
-

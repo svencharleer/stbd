@@ -1,9 +1,6 @@
 Template.student.events = {
   'keypress input': function (event, template) {
-    console.log(event)
     if (event.which === 13) {
-
-
       var studentNr = template.find("input").value;
       rootRoute = Meteor.settings.public.rootroute == undefined ? "dev" : Meteor.settings.public.rootroute;
       var year = Session.get("StartYear");
@@ -12,6 +9,7 @@ Template.student.events = {
 
       let view = Blaze.getView($(".dashboardcontainer")[0]);
       Blaze.remove(view);
+
       $(".register").fadeIn();
       Router.go("/" + rootRoute + "/" + year + "/" + studentNr);
 
@@ -32,10 +30,10 @@ Template.student.helpers({
   },
   newStudent: function () {
     if (Session.get("new")){
-      return ""
+      return "nio"
     }
     else{
-      return "nio";
+      return "";
     }
   }
 });

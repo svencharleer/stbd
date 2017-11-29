@@ -66,7 +66,7 @@ Template.dashboard.onCreated(function () {
   }
 
   instance.autorun(function () {
-    $(".nostudent").css("display", "none")
+    $(".nostudent").css("display", "none");
     Session.set('Id', Meteor.default_connection._lastSessionId);
     Session.set("CSE_januari", 0);
     Session.set("CSE_juni", 0);
@@ -78,17 +78,19 @@ Template.dashboard.onCreated(function () {
 
 
     let studentID = Session.get("student");
-    let studentBoeking = Boekingen.findOne({Student: studentID});
-    let studentGivenName = studentBoeking["Student-Voornaam(Key)"];
-    let studentSurName = studentBoeking["Student-Familienaam(Key)"];
-    let nio = studentGivenName["Nieuwi/dopleiding"];
-    if (studentSurName == undefined) {
-      // $(".nostudent").show();
-      $(".nostudent").css("display", "flex");
+    let studentBoeking = Boekingen.findOne({$and: [{Student: studentID}]});
+    if (studentBoeking === undefined){
+      console.log("studentboeking not defined");
 
       $(".flex-container").css("display", 'none');
+      $(".nostudent").css("display", "flex");
       return;
     }
+    console.log("after if");
+    let studentGivenName = studentBoeking["Student-Voornaam(Key)"];
+    let studentSurName = studentBoeking["Student-Familienaam(Key)"];
+    let nio = studentBoeking["Nieuwi/dopleiding"];
+
     Session.set("studentName", studentGivenName + " " + studentSurName);
     if (nio == "J"){
       Session.set("new", true);
@@ -247,7 +249,6 @@ let getCSETests = function(studentid, period, year, program){
     }
   });
   let cse = parseInt(5*score / nb);
-  console.log(cse, score, nb)
   return cse;
 };
 
