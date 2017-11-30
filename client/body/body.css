@@ -43,7 +43,7 @@ body {
 }
 
 .nostudent {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     color: var(--TextColor);

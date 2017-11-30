@@ -20,7 +20,6 @@ Template.register.events({
  */
 let setProgramSettings = function (token) {
   Meteor.call("getTokenInfo", token, function (err, data) {
-    console.log(data);
     let validToken =  data[0];
     if (validToken){
       let values = data[1];
@@ -46,26 +45,16 @@ let loadDashboard = function () {
 let subscribe = function () {
   Meteor.subscribe("own_boekingen", Session.get("program"), Session.get("student"),{
     onReady: function () {
-      console.log("handler 1 ready");
       $(".loading-screen").hide();
-      Blaze.render(Template.dashboard, $('body')[0]);
-      // subscribeProgramBoekingen();
+      if (Boekingen.findOne() != undefined){
+        Blaze.render(Template.dashboard, $('body')[0]);
+      }
+      else{
+        Blaze.render(Template.nostudent, $('body')[0]);
+      }
     },
     onError: function () {
-      console.log("handler 1 failed")
-    }
-  });
-};
-
-let subscribeProgramBoekingen = function () {
-  Meteor.subscribe("program_boekingen", Session.get("program"),{
-    onReady: function () {
-      console.log("handler 2 ready");
-      $(".loading-screen").hide();
-      Blaze.render(Template.dashboard, $('body')[0]);
-    },
-    onError: function () {
-      console.log("handler 2 failed")
+      Blaze.render(Template.nostudent, $('body')[0]);
     }
   });
 };

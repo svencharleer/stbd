@@ -22,6 +22,7 @@ Template.resultGraph.helpers({
     let courseId = this.IDOPO;
     courseId = courseId.replace(/ /g,'');
     courseId = courseId.replace(/,/g,'');
+    courseId = courseId.replace(/:/g,'');
     return courseId
   },
   validCredits: function () {

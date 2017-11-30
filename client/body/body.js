@@ -68,6 +68,8 @@ Template.dashboard.onCreated(function () {
   instance.autorun(function () {
     $(".nostudent").css("display", "none");
     Session.set('Id', Meteor.default_connection._lastSessionId);
+    Session.set("CSE_ijkingstoets", 0);
+    Session.set("CSE_TTT", 0);
     Session.set("CSE_januari", 0);
     Session.set("CSE_juni", 0);
     Session.set("CSE_september", 0);
@@ -78,7 +80,7 @@ Template.dashboard.onCreated(function () {
 
 
     let studentID = Session.get("student");
-    let studentBoeking = Boekingen.findOne({$and: [{Student: studentID}]});
+    let studentBoeking = Boekingen.findOne({$and: [{Student: studentID},{"Student-Voornaam(Key)": {$ne: "Undefined"}} ]});
     if (studentBoeking === undefined){
       console.log("studentboeking not defined");
 
@@ -86,7 +88,6 @@ Template.dashboard.onCreated(function () {
       $(".nostudent").css("display", "flex");
       return;
     }
-    console.log("after if");
     let studentGivenName = studentBoeking["Student-Voornaam(Key)"];
     let studentSurName = studentBoeking["Student-Familienaam(Key)"];
     let nio = studentBoeking["Nieuwi/dopleiding"];
@@ -242,13 +243,17 @@ let getCSETests = function(studentid, period, year, program){
   let boekingen = Boekingen.find({$and: [{Student: studentid}, {Academischeperiode: period}, {Opleiding:program}, {Academiejaar: year}]});
   let nb = 0;
   let score = 0;
+  let cse = 0;
   boekingen.forEach(function (b) {
     if (b.Score >= 0){
       nb ++;
       score += b.Score
     }
   });
-  let cse = parseInt(5*score / nb);
+  let newCse = parseInt(5*score / nb);
+  if (Number.isInteger(newCse)){
+    cse = parseInt(5*score / nb);
+  }
   return cse;
 };
 

@@ -6,13 +6,17 @@
   </div>
 </body>
 
+<template name="nostudent">
+    <div class="nostudent">
+        <div>
+            <h1>Geen student gevonden</h1>
+        </div>
+    </div>
+</template>
+
 <template name="dashboard">
   <div class="dashboardcontainer"  >
-      <div class="nostudent">
-          <div>
-              <h1>Geen student gevonden</h1>
-          </div>
-      </div>
+
       {{> student}}
 
       <div class="flex-container">

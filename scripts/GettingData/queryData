@@ -2,7 +2,7 @@
 -- SELECT * FROM dbo.lissa_historic_boekingen_raw;
 -- GO
 --import this collection into mongo
---mongoimport --host localhost:3001 --db meteor --type csv --headerline --file boekingen.csv
+--mongoimport --host localhost:3001 --db meteor --type csv --headerline --collection boekingen --file boekingen.csv
 
 
 

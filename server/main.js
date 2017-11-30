@@ -6,7 +6,7 @@ let Historic = new Mongo.Collection("doorloop");
 
 //Publish all collections
 Meteor.publish('own_boekingen', function (program, studentid) {
-  let own = Boekingen.find({$and: [{Student: studentid}, {Opleiding: program}, {Academiejaar: currentAcademiejaar }]});
+  let own = Boekingen.find({$and: [{Student: studentid}, {Opleiding:  program}, {Academiejaar: currentAcademiejaar }]});
   return own;
 });
 
@@ -26,44 +26,44 @@ Meteor.methods({
    */
   getTokenInfo: function (token) {
     let dict = {
-      a : ["ABA biochemie en biotechnologie (Leuv)",50,90],
-      b : ["ABA biologie (Leuv)",50,90],
-      c : ["ABA chemie (Leuv)",50,90],
-      d : ["ABA fysica (Leuv)",50,90], 
-      e : ["ABA geografie (Leuv)",50,90],
-      f : ["ABA geologie (Leuv)",50,90],
-      g : ["ABA informatica (Leuv)",50,90],
-      h : ["ABA wiskunde (Leuv)",50,90],
-      i : ["ABA bio-ingenieurswetenschappen (Leuv)",50,90],
-      j : ["ABA ingenieurswetenschappen (Leuv)",50,90],
-      k : ["ABA ingenieurswetenschappen:architectuur (Leuv)",50,90],
-      l : ["ABA biowetenschappen (Geel)",50,90],
-      m : ["ABA industriele wetenschappen (Geel)",50,90],
-      n : ["ABA industriele wetenschappen (Aalst)",50,90],
-      o : ["ABA industriele wetenschappen (Diepenbeek)",50,90],
-      p : ["ABA industriele wetenschappen (Leuven)",50,90],
-      q : ["ABA industriele wetenschappen (Brugge)",50,90],
-      r : ["ABA industriele wetenschappen (Sint-Katelijne-Waver)",50,90],
-      s : ["ABA industriele wetenschappen (Gent)",50,90],
-      t : ["SMA biowetenschappen (Geel)",50,90],
-      u : ["SMA industriele wetenschappen (Geel)",50,90],
-      v : ["SMA industriele wetenschappen (Aalst)",50,90],
-      w : ["SMA industriele wetenschappen (Diepenbeek)",50,90],
-      x : ["SMA industriele wetenschappen (Leuven)",50,90],
-      y : ["SMA industriele wetenschappen (Brugge)",50,90],
-      z : ["SMA industriele wetenschappen (Sint-Katelijne-Waver)",50,90],
-      A : ["ABA architectuur (Gent)",50,90],
-      B : ["ABA achitectuur (Brussel)",50,90],
-      C : ["ABA interieurarchitectuur (Gent)",50,90],
-      D : ["ABA interieurarchitectuur (Brussel)",50,90],
-      E : ["ABA Geneeskunde (Leuv)",50,90],
-      F : ["ABA tandheelkunde (Leuv)",50,90],
-      G : ["ABA biomedische wetenschappen",50,90],
-      H : ["ABA logopedische en audiologische wetenschappen",50,90],
-      I : ["ABA farmaceutische wetenschappen",50,90],
-      J : ["ABA TEW:handelsingenieur (Leuv)",50,90],
-      K : ["ABA geschiedenis (Leuv)",50,90],
-      L : ["ABA taal- en letterkunde (Leuv)",50,90]
+      a : ["ABA biochemie en biotechnologie (Leuv)",85,95],
+      b : ["ABA biologie (Leuv)",85,95],
+      c : ["ABA chemie (Leuv)",85,95],
+      d : ["ABA fysica (Leuv)",85,95],
+      e : ["ABA geografie (Leuv)",85,95],
+      f : ["ABA geologie (Leuv)",85,95],
+      g : ["ABA informatica (Leuv)",85,95],
+      h : ["ABA wiskunde (Leuv)",85,95],
+      i : ["ABA bio-ingenieurswetenschappen (Leuv)",85,95],
+      j : ["ABA ingenieurswetenschappen (Leuv)",85,95],
+      k : ["ABA ingenieurswetenschappen: architectuur (Leuv)",85,95],
+      l : ["ABA biowetenschappen (Geel)",85,95],
+      m : ["ABA industriële wetenschappen (Geel)",85,95],
+      n : ["ABA industriële wetenschappen (Aalst)",85,95],
+      o : ["ABA industriële wetenschappen (Diepenbeek)",85,95],
+      p : ["ABA industriële wetenschappen (Leuven)",85,95],
+      q : ["ABA industriële wetenschappen (Brugge)",85,95],
+      r : ["ABA industriële wetenschappen (Sint-Katelijne-Waver)",85,95],
+      s : ["ABA industriële wetenschappen (Gent)",85,95],
+      t : ["S MA biowetenschappen (Geel)",85,95],
+      u : ["S MA industriële wetenschappen (Geel)",85,95],
+      v : ["S MA industriële wetenschappen (Aalst)",85,95],
+      w : ["S MA industriële wetenschappen (Diepenbeek)",85,95],
+      x : ["S MA industriële wetenschappen (Leuven)",85,95],
+      y : ["S MA industriële wetenschappen (Brugge)",85,95],
+      z : ["S MA industriële wetenschappen (Sint-Katelijne-Waver)",85,95],
+      A : ["ABA architectuur (Gent)",85,95],
+      B : ["ABA architectuur (Brus)",85,95],
+      C : ["ABA interieurarchitectuur (Gent)",85,95],
+      D : ["ABA interieurarchitectuur (Brus)",85,95],
+      E : ["ABA geneeskunde (Leuv)",85,95],
+      F : ["ABA tandheelkunde (Leuv)",85,95],
+      G : ["ABA biomedische wetenschappen (Leuv)",85,95],
+      H : ["ABA logopedische en audiologische wetenschappen (Leuv)",85,95],
+      I : ["ABA farmaceutische wetenschappen (Leuv)",85,95],
+      J : ["ABA TEW: handelsingenieur (Leuv)",85,95],
+      K : ["ABA geschiedenis (Leuv)",85,95],
+      L : ["ABA taal- & letterkunde (Leuv)",85,95]
     };
     let keys = Object.keys(dict);
     let result = [false, [undefined, undefined, undefined]];
@@ -163,32 +163,41 @@ Meteor.methods({
    * @param {integer} semester : 1 - 2  or default 3
    */
   getHistoricDistribution: function (program, semester, limit1, limit2) {
-    let CSE_entry = "Jaar X: CSE";
-    // var CSE_entry = helper_getCSEEntryStudent(semester);
-    var students = Historic.find({$and: [{"Generatiestudent ?": "J" },{"Jaar X: Opleiding": program}]} );
+    let CSE_entryDefault = "Jaar X: CSE";
+    var CSE_entry = helper_getCSEEntryStudent(semester);
     var topDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
     var middleDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
     var lowDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
-
-    students.forEach(function (student) {
-      let cseStudent = student[CSE_entry];
-      let trajectStudent = student["Doorloop: Studieduur"];
-
-      if (cseStudent >= limit1) {
+    let top;
+    let middle;
+    let low;
+    [top, middle, low] = getStudentIds(program, limit1, limit2, semester);
+    let topdoorloop = Historic.find({Student: {$in: top}});
+    let middledoorloop = Historic.find({Student: {$in: middle}});
+    let lowdoorloop = Historic.find({Student: {$in: low}});
+    if (typeof topdoorloop.forEach == "function"){
+      topdoorloop.forEach(function (student) {
+        let trajectStudent = student["Doorloop: Studieduur"];
         topDict[trajectStudent] += 1;
-      }
-      else if (cseStudent < limit1 && cseStudent >= limit2) {
+      });
+    }
+    if (typeof middledoorloop.forEach == "function"){
+      middledoorloop.forEach(function (student) {
+        let trajectStudent = student["Doorloop: Studieduur"];
         middleDict[trajectStudent] += 1;
-      }
-      else {
+      });
+    }
+    if (typeof lowdoorloop.forEach == "function"){
+      lowdoorloop.forEach(function (student) {
+        let trajectStudent = student["Doorloop: Studieduur"];
         lowDict[trajectStudent] += 1;
-      }
-
-    });
+      });
+    }
 
     topDict = helper_relativateDict(topDict);
     middleDict = helper_relativateDict(middleDict);
     lowDict = helper_relativateDict(lowDict);
+
     return [topDict, middleDict, lowDict];
 
 
@@ -331,18 +340,17 @@ return cse_entry;
 
 };
 
-//todo remove?
 let helper_getCSEEntryStudent = function (semester) {
-  var cse_entry = 'cse_sep';
+  var cse_entry = 'CSESeptember';
   switch (semester) {
     case 1:
-      cse_entry = 'cse_jan';
+      cse_entry = 'CSEJanuari';
       break;
     case 2:
-      cse_entry = 'cse_jun';
+      cse_entry = 'CSEJuni';
       break;
     default:
-      cse_entry = 'cse_jun';
+      cse_entry = 'CSEJanuari';
   }
   return cse_entry;
 
@@ -355,10 +363,13 @@ let helper_getCSEEntryStudent = function (semester) {
  */
 var helper_relativateDict = function (dict) {
   var sum = helper_sumDict(dict);
-  for (var key in dict) {
-    var counter = dict[key];
-    dict[key] = Math.round((counter / sum ) * 100)
+  if (sum != 0){
+    for (var key in dict) {
+      var counter = dict[key];
+      dict[key] = Math.round((counter / sum ) * 100)
+    }
   }
+
   return dict;
 }
 
@@ -372,7 +383,11 @@ let helper_sumDict = function (obj) {
   var sum = 0;
   for (var el in obj) {
     if (obj.hasOwnProperty(el)) {
-      sum += parseFloat(obj[el]);
+      let float = parseFloat(obj[el]);
+      if (!isNaN(float)){
+        sum += float ;
+      }
+
     }
   }
   return sum;
@@ -561,3 +576,38 @@ let getCoursePointDistributionSemester = function (courseid, gradeField) {
   });
   return {numberPerGrades: numberPerGrades, min: min, max: max, total: total};
 };
+
+let getStudentIds = function(program, limit1, limit2, semester){
+  switch (semester){
+    case "Eerste Semester":
+      var top = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar}, {CSEJanuari: {$gte: limit1} }]});
+      var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar}, {CSEJanuari: { $gte: limit2, $lte: limit1 } }]});
+      // var low = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar}, {CSEJanuari: {$and:[{$ge: limit2} ,{$lt: limit1}]}}]}).fetch();
+      break;
+    default:
+      var top = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar}, {CSEJanuari: {$gt: limit1} }]});
+      var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar}, {CSEJanuari: { $gte: limit2, $lte: limit1 } }]});
+      var low = Boekingen.find({$and:
+        [ {Opleiding: program},
+          {Academiejaar: currentAcademiejaar},
+          {CSEJanuari: {$lt: limit2}}
+          ]}).fetch();
+      break;
+  }
+  let toplist = [];
+  let midlist = [];
+  let lowlist = [];
+
+  top.forEach(function (boeking) {
+    toplist.push(boeking.Student)
+  });
+  middle.forEach(function (boeking) {
+    midlist.push(boeking.Student)
+  });
+  low.forEach(function (boeking) {
+    lowlist.push(boeking.Student)
+  });
+
+  return [toplist, midlist, lowlist]
+
+}
