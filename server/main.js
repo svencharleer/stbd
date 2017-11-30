@@ -163,14 +163,13 @@ Meteor.methods({
    * @param {integer} semester : 1 - 2  or default 3
    */
   getHistoricDistribution: function (program, semester, limit1, limit2) {
-    let CSE_entryDefault = "Jaar X: CSE";
-    var CSE_entry = helper_getCSEEntryStudent(semester);
     var topDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
     var middleDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
     var lowDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
     let top;
     let middle;
     let low;
+
     [top, middle, low] = getStudentIds(program, limit1, limit2, semester);
     let topdoorloop = Historic.find({Student: {$in: top}});
     let middledoorloop = Historic.find({Student: {$in: middle}});
@@ -578,19 +577,19 @@ let getCoursePointDistributionSemester = function (courseid, gradeField) {
 };
 
 let getStudentIds = function(program, limit1, limit2, semester){
+  let years = ["2009-2010", "2010-2011", "2011-2012", "2012-2013"];
   switch (semester){
     case "Eerste Semester":
-      var top = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar}, {CSEJanuari: {$gte: limit1} }]});
-      var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar}, {CSEJanuari: { $gte: limit2, $lte: limit1 } }]});
-      // var low = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar}, {CSEJanuari: {$and:[{$ge: limit2} ,{$lt: limit1}]}}]}).fetch();
+      var top = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJanuari: {$gte: limit1} }]});
+      var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJanuari: { $gte: limit2, $lte: limit1 } }]});
       break;
     default:
-      var top = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar}, {CSEJanuari: {$gt: limit1} }]});
-      var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar}, {CSEJanuari: { $gte: limit2, $lte: limit1 } }]});
+      var top = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJanuari: {$gt: limit1} }]});
+      var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJanuari: { $gte: limit2, $lte: limit1 } }]});
       var low = Boekingen.find({$and:
         [ {Opleiding: program},
-          {Academiejaar: currentAcademiejaar},
-          {CSEJanuari: {$lt: limit2}}
+          {Academiejaar: {$in: years}},
+          {CSEJanuari: {$lt: limit2}},
           ]}).fetch();
       break;
   }
