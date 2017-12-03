@@ -11,11 +11,21 @@
   margin-top: 10%;
 }
 
-.register paper-button {
+.register .access-tool {
+  display: flex;
+  flex-direction: column;
+}
+
+.register .access-tool paper-button {
   align-self: flex-end;
   background: #3F51B5;
   color: white;
   margin-top: 8px;
+}
+
+.register .access-tool a {
+  align-self: flex-end;
+  margin-top: 16px;
 }
 
 .register h1 {
@@ -24,3 +34,8 @@
   cursor: default;
 }
 
+.register .token-error {
+  display: none;
+  position: absolute;
+  color: #e74c3c;
+}
