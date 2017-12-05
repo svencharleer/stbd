@@ -70,4 +70,5 @@ fabric.properties
 # own
 .DS_Store
 .idea/*
+public/*
 
