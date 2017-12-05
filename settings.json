@@ -1,12 +1,12 @@
 {
-     "public":{
-            "rootroute":"dev",
-            "ijkingstoets_juli" : true,
-            "ijkingstoets_september" : true,
-            "showJuni": false,
-            "showSeptember" :false,
-            "dynamic": false,
-            "logging": false
-        }
+  "public":{
+    "rootroute":"dev",
+    "ijkingstoets_juli" : true,
+    "ijkingstoets_september" : true,
+    "showJuni": false,
+    "showSeptember" :false,
+    "dynamic": false,
+    "logging": false
+  }
 
 }
