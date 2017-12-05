@@ -652,6 +652,5 @@ Meteor.methods({
           lowlist.push(boeking.Student)
         });
       }
-      console.log(toplist, midlist, lowlist)
       return [toplist, midlist, lowlist]
       }
