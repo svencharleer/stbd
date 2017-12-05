@@ -7,7 +7,6 @@ Template.course.onRendered(function () {
     let courseId = instance.data.IDOPO;
     if (courseSemester == undefined) courseSemester = 3;
 
-
     Meteor.call("getCoursePointDistribution", courseId, courseSemester, function (err, data) {
       let grades = data.numberPerGrades;
       let total = 0;

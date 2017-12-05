@@ -10,7 +10,6 @@ Template.trajectoryperiod.onRendered(function () {
       var min = Number.MAX_VALUE;
       var max = Number.MIN_VALUE;
       var count = 0;
-
       data.distribution.forEach(function (d) {
         if (d.count > max)
           max = d.count;
@@ -60,7 +59,8 @@ Template.trajectoryperiod.onRendered(function () {
         .selectAll("circle")
         .data(function (d) {
           let dots = Math.round(((50 * d.count) / total));
-          if (dots > 30) dots = 0;
+          console.log(dots)
+          if (dots > 35) dots = 35;
           return d3.range(dots);
         })
         .enter()

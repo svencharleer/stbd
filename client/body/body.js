@@ -101,20 +101,26 @@ Template.dashboard.onCreated(function () {
     }
 
     let currentSemester = 1;
+    let semesterString = "Eerste Semester";
     if (Meteor.settings.public.showJuni) {
       currentSemester = 2;
+      semesterString = "Tweede Semester";
+
     }
     if (Meteor.settings.public.showSeptember) {
       currentSemester = 3;
+      semesterString = "Tweede Semester";
+
     }
     Session.set('semester', currentSemester);
+    Session.set("semesterString", semesterString);
 
 
 
     //get the CSE for the student
     var year = Session.get("Year");
     //Helpers_GetCSE comes from imports/helpers/CSE.js
-    Session.set("CSE_ijkingstoets", getCSETests(studentID, -2, year, Session.get("program")));
+    Session.set("CSE_ijkingstoets", getCSETests(studentID, "IJK", year, Session.get("program")));
     Session.set("CSE_TTT", getCSETests(studentID, "TTT", year, Session.get("program")));
     Session.set("CSE_januari", studentBoeking.CSEJanuari);
     Session.set("CSE_juni", studentBoeking.CSEJuni);
@@ -176,7 +182,7 @@ Template.dashboard.helpers({
     var r = [
       {
         title: "Ijkingstoets",
-        semester: -2,
+        semester: "IJK",
         class: "column-odd",
         period: "ijkingstoets",
         percent: undefined,
