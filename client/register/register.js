@@ -1,15 +1,22 @@
+import {ReactiveVar} from 'meteor/reactive-var'
+
+Template.resultGraph.onCreated(function () {
+  this.alive = new ReactiveVar(false);
+});
+
 Template.register.events({
-  'click paper-button': function (event) {
+  'click paper-button': function (event, template) {
     let token = $(".user-token").val();
     Session.set("token", token);
-    setProgramSettings(token);
+    setProgramSettings(token, template);
 
   },
   'keypress paper-input': function (event, template) {
     if (event.keyCode === 13) {
       let token = $(".user-token").val();
       Session.set("token", token);
-      setProgramSettings(token);
+      setProgramSettings(token, template);
+
     }
   },
   'click a': function (event) {
@@ -23,7 +30,7 @@ Template.register.events({
 * Check token and load dashboard
 * @param token
 */
-let setProgramSettings = function (token) {
+let setProgramSettings = function (token, template) {
   Meteor.call("getTokenInfo", token, function (err, data) {
     let validToken =  data[0];
     if (validToken){
@@ -32,7 +39,11 @@ let setProgramSettings = function (token) {
       Session.set("program", program);
       Session.set("limit2", cselimit1);
       Session.set("limit1", cselimit2);
-      loadDashboard();
+      if (!template.alive){
+        template.alive = true;
+        loadDashboard();
+
+      }
     }
     else{
       $(".token-error").fadeIn();

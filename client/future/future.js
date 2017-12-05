@@ -179,7 +179,7 @@ Template.future.onRendered(function () {
 
   //server function needs this guy's grades.
   this.autorun(function () {
-    if (Session.get('student') == undefined || Session.get('semester') == undefined) {
+    if (Session.get('student') == undefined || Session.get('semesterString') == undefined) {
       return;
     }
     /**
@@ -194,7 +194,7 @@ Template.future.onRendered(function () {
      * Get for each profile the number of students in each of the categories
      * e.g. {+0: 85, +1: 6, +2: 2, B: 1, D: 6}
      */
-    Meteor.call("getHistoricDistribution", Session.get('program'), Session.get("semester"), Session.get('limit1'), Session.get('limit2'), function (err, listDicts) {
+    Meteor.call("getHistoricDistribution", Session.get('program'), Session.get("semesterString"), Session.get('limit1'), Session.get('limit2'), function (err, listDicts) {
       [topDict, middleDict, lowDict] = listDicts;
       //Make list of dictionary
       topCSEDistribution = [topDict['0'], topDict['1'], topDict['2']];
