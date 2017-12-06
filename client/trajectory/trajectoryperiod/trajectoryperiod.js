@@ -59,7 +59,6 @@ Template.trajectoryperiod.onRendered(function () {
         .selectAll("circle")
         .data(function (d) {
           let dots = Math.round(((50 * d.count) / total));
-          console.log(dots)
           if (dots > 35) dots = 35;
           return d3.range(dots);
         })

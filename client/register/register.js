@@ -1,8 +1,4 @@
-import {ReactiveVar} from 'meteor/reactive-var'
 
-Template.resultGraph.onCreated(function () {
-  this.alive = new ReactiveVar(false);
-});
 
 Template.register.events({
   'click paper-button': function (event, template) {
@@ -39,8 +35,8 @@ let setProgramSettings = function (token, template) {
       Session.set("program", program);
       Session.set("limit2", cselimit1);
       Session.set("limit1", cselimit2);
-      if (!template.alive){
-        template.alive = true;
+      if (!Session.get("alive")){
+
         loadDashboard();
 
       }
@@ -101,6 +97,7 @@ let subscribe = function () {
     onReady: function () {
       $(".loading-screen").hide();
       if (Boekingen.findOne() != undefined){
+        Session.set("alive", true);
         Blaze.render(Template.dashboard, $('body')[0]);
       }
       else{
@@ -112,3 +109,7 @@ let subscribe = function () {
     }
   });
 };
+
+Template.register.onCreated(function () {
+  Session.set("alive", false);
+})

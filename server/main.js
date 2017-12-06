@@ -4,6 +4,7 @@ let _ = require('lodash');
 let currentAcademiejaar = "2016-2017";
 let Boekingen = new Mongo.Collection('boekingen');
 let Historic = new Mongo.Collection("doorloop");
+let Tokens = new Mongo.Collection("tokens")
 
 //Publish all collections
 Meteor.publish('own_boekingen', function (program, studentid) {
@@ -35,58 +36,15 @@ Meteor.methods({
   /**
   *
   * @param token: password for each program
-  * @returns {[boolean,[program,cselimit1, cselimit2]]}: boolean indicates if token is in dict or not
+  * @returns {[boolean,[program,cselimit2, cselimit1]]}: boolean indicates if token is in dict or not
+   * limit 2 is lower than limit1
   */
   getTokenInfo: function (token) {
-    let dict = {
-      zfmkf : ["ABA biochemie en biotechnologie (Leuv)",30,70],
-      hjaur : ["ABA biologie (Leuv)",30,70],
-      xxtft : ["ABA chemie (Leuv)",30,70],
-      aqtxb : ["ABA fysica (Leuv)",30,70],
-      wdhnb : ["ABA geografie (Leuv)",30,70],
-      qkofm : ["ABA geologie (Leuv)",30,70],
-      ceyhb : ["ABA informatica (Leuv)",30,70],
-      kapif : ["ABA wiskunde (Leuv)",30,70],
-      yypkr : ["ABA bio-ingenieurswetenschappen (Leuv)",30,70],
-      vykte : ["ABA ingenieurswetenschappen (Leuv)",30,70],
-      tidfy : ["ABA ingenieurswetenschappen: architectuur (Leuv)",30,70],
-      swkwy : ["ABA biowetenschappen (Geel)",30,70],
-      ghcau : ["ABA industriële wetenschappen (Geel)",30,70],
-      swhuv : ["ABA industriële wetenschappen (Aals)",30,70],
-      eycrw : ["ABA industriële wetenschappen (Diepenbeek)",30,70],
-      lbktt : ["ABA industriële wetenschappen (Leuv)",30,70],
-      xafjc : ["ABA industriële wetenschappen (Brug/Oost)",30,70],
-      akefl : ["ABA industriële wetenschappen (StKa)",30,70],
-      ylbkb : ["ABA industriële wetenschappen (Gent)",30,70],
-      cicsf : ["S MA biowetenschappen (Geel)",30,70],
-      yrgex : ["S MA industriële wetenschappen (Geel)",30,70],
-      dhqyf : ["S MA industriële wetenschappen (Aalst)",30,70],
-      goubq : ["S MA industriële wetenschappen (Diepenbeek)",30,70],
-      ftdad : ["S MA industriële wetenschappen (Leuven)",30,70],
-      ayrmu : ["S MA industriële wetenschappen (Brugge)",30,70],
-      tjyqe : ["S MA industriële wetenschappen (Sint-Katelijne-Waver)",30,70],
-      rwspn : ["ABA architectuur (Gent)",30,70],
-      alwtf : ["ABA architectuur (Brus)",30,70],
-      sbvuu : ["ABA interieurarchitectuur (Gent)",30,70],
-      aizxs : ["ABA interieurarchitectuur (Brus)",30,70],
-      bsezm : ["ABA geneeskunde (Leuv)",30,70],
-      xhdar : ["ABA tandheelkunde (Leuv)",30,70],
-      rlznw : ["ABA biomedische wetenschappen (Leuv)",30,70],
-      jrruu : ["ABA logopedische en audiologische wetenschappen (Leuv)",30,70],
-      xsrjy : ["ABA farmaceutische wetenschappen (Leuv)",30,70],
-      soabo : ["ABA TEW: handelsingenieur (Leuv)",30,70],
-      jkany : ["ABA geschiedenis (Leuv)",30,70],
-      ymkct : ["ABA taal- & letterkunde (Leuv)",30,70],
-      odkle : ["S MA verpleegkunde en vroedkunde (Leuv ea)",30,70]
-    };
-    let keys = Object.keys(dict);
+    let tokeninfo =  Tokens.findOne({token: token})
     let result = [false, [undefined, undefined, undefined]];
-    keys.forEach(function (key) {
-      if (key == token){
-        let values = dict[key];
-        result = [true, values]
-      }
-    });
+    if ( tokeninfo != undefined ){
+      result = [ true , [tokeninfo.Opleiding, tokeninfo.limit2, tokeninfo.limit1]]
+    }
     return result;
   },
   /**
@@ -146,11 +104,9 @@ Meteor.methods({
   * @param {integer} semester : 1-2 or default 3
   */
   getCSEProfile: function (who, semester, limit1, limit2) {
-    var studentBoeking = Boekingen.findOne({$and:[{Student: who},{Academiejaar: currentAcademiejaar }]});
+    var studentBoeking = Boekingen.findOne({$and:[{Student: who},{Academiejaar: currentAcademiejaar },{Studiepunten: {$ne: 0}}]});
     var CSE_entry = helper_getCSEEntry(semester);
     var CSE_score = studentBoeking[CSE_entry];
-
-
     var top = false;
     var middle = false;
     var low = false;
@@ -466,7 +422,6 @@ Meteor.methods({
   let getSemesterCSEDistribution =  function (semester, program) {
     // let studentIDs = distinct(Boekingen, "Student", program);
     let cses = getCSEs(semester, program);
-
     //initialise dict of buckets
     var buckets = {};
     for (var i = 0; i < 10; i++) {
@@ -516,37 +471,36 @@ Meteor.methods({
     return {distribution: distribution};
   };
 
-
-  let getCSEs = function (semester, program) {
+/**
+ * Find all cses of students of a given program in a given semester
+ * @param semester Eerste semester or Tweede semester
+ * @param program
+ * @returns {Array}
+ */
+let getCSEs = function (semester, program) {
     // let boeking = Boekingen.findOne({$and: [{Student: {$in: studentids}},{"Nieuwi/dopleiding": "J"} ,{Academiejaar:currentAcademiejaar}]});
-    let boekingen = Boekingen.find({$and: [{Opleiding: program},{"Nieuwi/dopleiding": "J"} ,{Academiejaar:currentAcademiejaar}]});
+    let boekingen = Boekingen.find({$and: [{Opleiding: program},{"Nieuwi/dopleiding": "J"} ,{Academiejaar:currentAcademiejaar}, {"Student-Voornaam(Key)": {$ne: "Undefined"}}]});
     let cses = [];
+    console.log(semester)
     switch (semester) {
-      case "Eerste semester":
-      boekingen.forEach(function (b) {
-        let cse = b.CSEJanuari;
-        if (cse != undefined & cse > 0){
+      case "Eerste Semester":
+        boekingen.forEach(function (b) {
+          let cse = b.CSEJanuari;
           cses.push(cse)
-        }
-
-      });
-      break;
-      case "Tweede semester":
-      boekingen.forEach(function (b) {
-        let cse = b.CSEJuni;
-        if (cse != undefined & cse > 0){
+        });
+        break;
+      case "Tweede Semester":
+        boekingen.forEach(function (b) {
+          let cse = b.CSEJuni;
           cses.push(cse)
-        }
-      });
-      break;
+        });
+        break;
       default:
-      boekingen.forEach(function (b) {
-        let cse = b.CSEJanuari;
-        if (cse != undefined & cse > 0){
+        boekingen.forEach(function (b) {
+          let cse = b.CSEJanuari;
           cses.push(cse)
-        }
-      });
-      break;
+        });
+        break;
     }
     return cses;
   };
@@ -583,7 +537,7 @@ Meteor.methods({
     let getCoursePointDistributionSemester = function (courseid, gradeField) {
       var numberPerGrades = {};
       var total = 0;
-      let allGrades  = Boekingen.find({IDOPO : courseid});
+      let allGrades  = Boekingen.find({$and:[{IDOPO : courseid},{Academiejaar: currentAcademiejaar}]});
       var min = Number.MAX_VALUE;
       var max = Number.MIN_VALUE;
       allGrades.forEach(function (student) {

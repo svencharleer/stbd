@@ -219,7 +219,7 @@ Template.CSETool.onRendered(function () {
     tag4g3.selectAll("circle").attr("cx",start3 + 10);
 
     svg.selectAll(".title-gp1").attr("x", start1 + 5).text("CSE >   " + limit1);
-    svg.selectAll(".title-gp2").attr("x", start2 + 5).text(limit2 + "≤ CSE ≥ " + limit1);
+    svg.selectAll(".title-gp2").attr("x", start2 + 5).text(limit1 + " ≤ CSE ≤ " + limit2);
     svg.selectAll(".title-gp3").attr("x", start3 + 5).text("CSE <   " + limit2);
 
   });
