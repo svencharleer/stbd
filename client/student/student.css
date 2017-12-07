@@ -24,3 +24,14 @@
     font-weight: 300;
     color: #424242;
 }
+
+.student paper-button {
+    align-self: flex-end;
+    background: #3F51B5;
+    color: white;
+    margin-top: 4px;
+    width:auto;
+    height: 20px;
+    width: 40px;
+    display: none;
+}

@@ -57,14 +57,6 @@ Template.dashboard.onCreated(function () {
   this.started = new ReactiveVar(false);
   var instance = this;
 
-
-  if (Meteor.settings.public.logging) {
-    $(".button").css("display", 'flex');
-    Session.set('mouseX', 0);
-    Session.set('mouseY', 0);
-    Session.set('lastMove', Date.now())
-  }
-
   instance.autorun(function () {
     $(".nostudent").css("display", "none");
     Session.set('Id', Meteor.default_connection._lastSessionId);
