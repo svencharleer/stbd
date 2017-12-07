@@ -13,7 +13,7 @@ Template.resultGraph.helpers({
     let scoreEntry = getScoreEntry(courseSemester);
     let score = this[scoreEntry];
     if (score < 8) color = "failed" //"#ff8a80"; //failed
-    else if (score > 9) color = "passed" //"#a5d6a7"; //passed
+    else if (score > 9 || score=="G") color = "passed" //"#a5d6a7"; //passed
     else if (score >= 8 && score <= 9) color = "tolerable"; // "#ffcc80"; //tolerable
     else color = "failed"; // "#ff8a80"; //failed
     return color;

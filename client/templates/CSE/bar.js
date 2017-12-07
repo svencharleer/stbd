@@ -52,7 +52,7 @@ let creditsPassed = function (semester) {
   );
   let creditsPassed = 0;
   all.forEach(function (p) {
-    if (p[scorefield] > 9){
+    if (p[scorefield] > 9 || p[scorefield] == "G"){
       creditsPassed += parseInt(p.Studiepunten);
     }
   });

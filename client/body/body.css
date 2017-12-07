@@ -72,27 +72,7 @@ body {
   font-weight: 300;
 }
 
-.nostudent h1 {
-  color: #7c7c7c;
-  font-size: 24px;
-  font-style: italic;
-  font-weight: 300;
-}
 
-.nostudent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--TextColor);
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    /* background: white; */
-    z-index: 1000;
-
-    justify-content: center;
-    margin-top: 5%;
-}
 
 .h1 {
     color: #7c7c7c;
