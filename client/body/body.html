@@ -1,4 +1,7 @@
 <body>
+
+  {{> student}}
+
   {{> register}}
   <div class="loading-screen">
       <paper-spinner alt="Loading Dashboard" active></paper-spinner>
@@ -21,9 +24,6 @@
 
 <template name="dashboard">
   <div class="dashboardcontainer"  >
-
-      {{> student}}
-
       <div class="flex-container">
           <div class="flex-row">
               {{#with GetColumnInfo 0}}

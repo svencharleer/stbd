@@ -35,6 +35,7 @@ let setProgramSettings = function (token, template) {
       Session.set("program", program);
       Session.set("limit2", cselimit1);
       Session.set("limit1", cselimit2);
+      //Prevent that the dashboard is rendered twice
       if (!Session.get("alive")){
 
         loadDashboard();
@@ -93,10 +94,11 @@ let loadDashboard = function () {
 };
 
 let subscribe = function () {
+  console.log(Session.get("student"))
   Meteor.subscribe("own_boekingen", Session.get("program"), Session.get("student"),{
     onReady: function () {
       $(".loading-screen").hide();
-      if (Boekingen.findOne() != undefined){
+      if (Boekingen.findOne({Student: Session.get("student")}) != undefined){
         Session.set("alive", true);
         Blaze.render(Template.dashboard, $('body')[0]);
       }
