@@ -4,7 +4,7 @@ let _ = require('lodash');
 let currentAcademiejaar = "2016-2017";
 let Boekingen = new Mongo.Collection('boekingen');
 let Historic = new Mongo.Collection("doorloop");
-let Tokens = new Mongo.Collection("tokens")
+let Tokens = new Mongo.Collection("tokens");
 
 //Publish all collections
 Meteor.publish('own_boekingen', function (program, studentid) {
@@ -136,6 +136,7 @@ Meteor.methods({
    * @param limit2
    * @returns {[null,null,null]}
    */
+  //todo check if csetool is using same data
   getHistoricDistribution: function (program, semester, limit1, limit2) {
     var topDict    = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
     var middleDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
@@ -570,12 +571,13 @@ let getCSEs = function (semester, program) {
       let years = ["2009-2010", "2010-2011", "2011-2012", "2012-2013"];
       switch (semester){
         case "Eerste Semester":
-          var top    = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJanuari: {$gt: limit1} }]}).fetch();
-          var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJanuari: { $gte: limit2, $lte: limit1 } }]}).fetch();
+          var top    = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}},{"Nieuwi/dopleiding": "J"}, {CSEJanuari: {$gt: limit1} }]}).fetch();
+          var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}},{"Nieuwi/dopleiding": "J"}, {CSEJanuari: { $gte: limit2, $lte: limit1 } }]}).fetch();
           var low    = Boekingen.find({$and:
             [{Opleiding: program},
               {Academiejaar: {$in: years}},
               {CSEJanuari: {$lt: limit2}},
+              {"Nieuwi/dopleiding": "J"}
             ]}).fetch();
           break;
         default:
