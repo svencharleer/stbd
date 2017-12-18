@@ -134,34 +134,16 @@ Template.future.onRendered(function () {
       .on('mouseenter', function () {
         svg.selectAll(".box").style('opacity', 0)
         barchartProfiles(svg, yValues)
-        clicks.insert({
-          'session': Session.get('Id'),
-          'studentid': Session.get('student'),
-          'element': svg.attr('id'),
-          'time': Date.now(),
-          'action': 'bachelor_hover'
-        })
+
       })
       .on('mouseleave', function () {
         svg.selectAll(".box").style('opacity', 1)
         svg.selectAll('.tooltipHistogram').remove();
-        clicks.insert({
-          'session': Session.get('Id'),
-          'studentid': Session.get('student'),
-          'element': svg.attr('id'),
-          'time': Date.now(),
-          'action': 'bachelor_leave'
-        })
+
 
       })
       .on('click', function () {
-        clicks.insert({
-          'session': Session.get('Id'),
-          'studentid': Session.get('student'),
-          'element': svg.attr('id'),
-          'time': Date.now(),
-          'action': 'bachelor_click'
-        })
+
       })
 
     if (border) {
@@ -197,14 +179,14 @@ Template.future.onRendered(function () {
 
   //server function needs this guy's grades.
   this.autorun(function () {
-    if (Session.get('student') == undefined || Session.get('semester') == undefined) {
+    if (Session.get('student') == undefined || Session.get('semesterString') == undefined) {
       return;
     }
     /**
      * Get the profile of the student
      * [{boolean}]
      */
-    Meteor.call("getCSEProfile", Session.get('student'), Session.get('semester'), function (err, profile) {
+    Meteor.call("getCSEProfile", Session.get('student'), Session.get('semester'), Session.get('limit1'), Session.get('limit2'), function (err, profile) {
       [highProfile, middleProfile, lowProfile] = profile;
     });
 
@@ -212,12 +194,12 @@ Template.future.onRendered(function () {
      * Get for each profile the number of students in each of the categories
      * e.g. {+0: 85, +1: 6, +2: 2, B: 1, D: 6}
      */
-    Meteor.call("getCSEDistribution", Session.get('semester'), function (err, listDicts) {
+    Meteor.call("getHistoricDistribution", Session.get('program'), Session.get("semesterString"), Session.get('limit1'), Session.get('limit2'), function (err, listDicts) {
       [topDict, middleDict, lowDict] = listDicts;
       //Make list of dictionary
-      topCSEDistribution = [topDict['+0'], topDict['+1'], topDict['+2']];
-      middleCSEDistribution = [middleDict['+0'], middleDict['+1'], middleDict['+2']];
-      lowCSEDistribution = [lowDict['+0'], lowDict['+1'], lowDict['+2']];
+      topCSEDistribution = [topDict['0'], topDict['1'], topDict['2']];
+      middleCSEDistribution = [middleDict['0'], middleDict['1'], middleDict['2']];
+      lowCSEDistribution = [lowDict['0'], lowDict['1'], lowDict['2']];
       //make the fields
       makeProfileField(topsvg, topCSEDistribution, highProfile);
       makeProfileField(middlesvg, middleCSEDistribution, middleProfile);

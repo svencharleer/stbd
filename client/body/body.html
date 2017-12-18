@@ -1,20 +1,18 @@
 <body>
   {{> register}}
   <div class="loading-screen">
-    <div>
       <paper-spinner alt="Loading Dashboard" active></paper-spinner>
-      <h1>Loading Dashboard</h1>
-    </div>
+      <h1>Loading Dashboard...</h1>
+  </div>
+
+  <div class="loading-csetool">
+      <paper-spinner alt="Loading CSE Tool" active></paper-spinner>
+      <h1>Loading CSE Tool...</h1>
   </div>
 </body>
 
 <template name="dashboard">
   <div class="dashboardcontainer"  >
-      <div class="nostudent">
-          <div>
-              <h1>Geen student gevonden</h1>
-          </div>
-      </div>
       {{> student}}
 
       <div class="flex-container">
@@ -28,33 +26,14 @@
               {{#with GetColumnInfo 2}}
                   {{> column}}
               {{/with}}
-                  <!--{{#with GetColumnInfo 3}}-->
-              <!--{{> column}}-->
-                  <!--{{/with}}-->
-                  <!--{{#with GetColumnInfo 4}}-->
-              <!--{{> column}}-->
-                  <!--{{/with}}-->
+              <!--{{#with GetColumnInfo 3}}-->
+                <!--{{> column}}-->
+              <!--{{/with}}-->
+              <!--{{#with GetColumnInfo 4}}-->
+                <!--{{> column}}-->
+              <!--{{/with}}-->
               <!--Always show the bachelor column-->
-              <div class="flex-column colfuture" id="colfuture">
-                  <div class="vertical-title">bachelor</div>
-                  <div class="top">
-                      <div class="fa compress-colfuture fa-compress">
-                          <paper-ripple></paper-ripple>
-                      </div>
-                      <div class="column-title">Opleiding</div>
-                      <div id="legend" class="periode legend">
-                          <div class="legend-item legend3">+0j</div>
-                          <div class="legend-item legend4">+1j</div>
-                          <div class="legend-item legend5">+2j</div>
-                          <div class="legend-item legendnot">Niet</div>
-                      </div>
-                  </div>
-                  <div class="bottom">
-                      {{#if Template.subscriptionsReady}}
-                          {{> future}}
-                      {{/if}}
-                  </div>
-              </div>
+              {{> futurecolumn}}
           </div>
       </div>
   </div>

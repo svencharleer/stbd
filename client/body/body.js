@@ -34,13 +34,6 @@ Template.dashboard.events({
     template.$("." + column + " .top .periode").css("visibility", "visible");
     template.$("." + column + "").css("max-width", "var(--ColumnWidth)");
     template.$("." + column + "").css("min-width", "var(--ColumnWidth)");
-    clicks.insert({
-      'session': Session.get('Id'),
-      'studentid': Session.get('student'),
-      'element': element,
-      'time': Date.now(),
-      'action': 'show_column'
-    })
 
   },
 
@@ -49,171 +42,96 @@ Template.dashboard.events({
     if (started) {
       event.target.value = "Start session";
       template.started.set(false);
-      clicks.insert({
-        'session': Session.get('Id'),
-        'studentid': Session.get('student'),
-        'element': "button",
-        'time': Date.now(),
-        'action': 'stop_session'
-      })
 
     }
     else {
       event.target.value = "Stop session";
       template.started.set(true);
-      clicks.insert({
-        'session': Session.get('Id'),
-        'studentid': Session.get('student'),
-        'element': "button",
-        'time': Date.now(),
-        'action': 'start_session'
-      })
-    }
-
-  },
-
-  "mousemove .flex-container *": function (event, template) {
-    if (Meteor.settings.public.logging) {
-      // console.log(event.clientX)
-      // Session.get('mouseX')
-      let currentX = Session.get('mouseX');
-      let currentY = Session.get('mouseY');
-      let lastMove = Session.get('lastMove');
-      let diffX = Math.abs(event.clientX - currentX);
-      let diffY = Math.abs(event.clientY - currentY);
-      let diffTime = Math.abs(Date.now() - lastMove)
-      if ((diffX > 20 || diffY > 20) && diffTime > 5000) {
-        Session.set('mouseX', event.clientX);
-        Session.set('mouseY', event.clientY);
-        heatmap.insert({
-          'session': Session.get('Id'),
-          "studentid": Session.get('student'),
-          "x": event.clientX,
-          "y": event.clientY,
-          "time": Date.now()
-        })
-        Session.set('lastMove', Date.now())
-      }
-      else if ((diffX > 150 || diffY > 100)) {
-        Session.set('mouseX', event.clientX);
-        Session.set('mouseY', event.clientY);
-        heatmap.insert({
-          'session': Session.get('Id'),
-          "studentid": Session.get('student'),
-          "x": event.clientX,
-          "y": event.clientY,
-          "time": Date.now()
-        })
-        Session.set('lastMove', Date.now())
-      }
     }
 
   }
-
 });
 
 Template.dashboard.onCreated(function () {
+
   this.started = new ReactiveVar(false);
   var instance = this;
-  console.log(Session.get("program"));
-  var handler = instance.subscribe("generic_courses", Session.get("program"));
-  if (Meteor.settings.public.logging) {
-    $(".button").css("display", 'flex');
-    Session.set('mouseX', 0);
-    Session.set('mouseY', 0);
-    Session.set('lastMove', Date.now())
-  }
 
-    instance.autorun(function () {
-    // $(".flex-container").css("display", 'flex');
-    //$(".flex-container").hide();
-    //$("#student").hide();
-    $(".nostudent").hide();
-    //if (!$(".loading-screen").is(":visible")) $(".loading-screen").show();
+  instance.autorun(function () {
+    $(".nostudent").css("display", "none");
     Session.set('Id', Meteor.default_connection._lastSessionId);
+    Session.set("CSE_ijkingstoets", 0);
+    Session.set("CSE_TTT", 0);
     Session.set("CSE_januari", 0);
     Session.set("CSE_juni", 0);
     Session.set("CSE_september", 0);
     Session.set("selectedCourses", undefined);
     Session.set("studentName", "");
-    Session.set("creditsTaken", 0)
-    Session.set("toleranceCredits", 12)
-
-    var handler2 = instance.subscribe("generic_grades", Session.get("program"), Session.get("student"));
-    var handler3 = instance.subscribe("all_grades", Session.get("program"));
-    var handler4 = instance.subscribe("generic_cse", Session.get("program"), Session.get("student"));
-    var handler5 = instance.subscribe("all_cse");
-    var handler6 = instance.subscribe("new_grades", Session.get("program"));
+    Session.set("creditsTaken", 0);
+    Session.set("toleranceCredits", 12);
 
 
-      var handler8 = instance.subscribe("generic_students");
-    if (handler2.ready() && handler3.ready() && handler8.ready() && handler4.ready() && handler5.ready() && handler6.ready()) {
-      var studentID = Session.get("student");
-      var studentName = Students.findOne({studentid: studentID});
-      if (studentName == undefined) {
-        //if ($(".loading-screen")) $(".loading-screen").hide();
-        $(".nostudent").show();
-        $(".flex-container").css("display", 'none');
+    let studentID = Session.get("student");
+    let studentBoeking = Boekingen.findOne({$and: [{Student: studentID},{"Student-Voornaam(Key)": {$ne: "Undefined"}} ]});
+    if (studentBoeking === undefined){
+      console.log("studentboeking not defined");
 
-        return;
-      }
-      Session.set("studentName", studentName.givenname + " " + studentName.surname);
-      if (studentName.generatiestudent == "J"){
-        Session.set("new", true);
-      }
-      else{
-        Session.set("new", false);
-      }
-      var semester = 1;
-      if (Meteor.settings.public.showJuni) {
-        semester = 2;
-      }
-      if (Meteor.settings.public.showSeptember) {
-        semester = 3;
-      }
-      Session.set('semester', semester);
-
-
-
-      //get the CSE for the student
-      var year = Session.get("Year");
-      //Helpers_GetCSE comes from imports/helpers/CSE.js
-      Session.set("CSE_ijkingstoets", Helpers_GetCSE(studentID, -2, year));
-      Session.set("CSE_TTT", Helpers_GetCSE(studentID, -1, year));
-      Session.set("CSE_januari", Helpers_GetCSE(studentID, 1, year));
-      Session.set("CSE_juni", Helpers_GetCSE(studentID, 2, year));
-      Session.set("CSE_september", Helpers_GetCSE(studentID, 3, year));
-
-      Session.set("CSE_januari_pure", Helpers_CalculateCSE(1, year, true));
-      Session.set("CSE_juni_pure", Helpers_CalculateCSE(2, year, true));
-      Session.set("CSE_september_pure", Helpers_CalculateCSE(3, year, true));
-      Session.set("CSE_Planning", Helpers_CalculateStartValues(Session.get('CSE_september_pure')));
-
-
-
-      //get failed courses
-
-      Meteor.call("getFailedCourses", Session.get("student"), function (err, data) {
-        //set them up for selection
-        var selectedCourses = {};
-        data.forEach(function (f) {
-          selectedCourses[f.courseid] = {id: f.courseid, course: f, checked: true};
-        })
-        Session.set("failedCourses", selectedCourses);
-        Session.set("Fails", data.length > 0 ? true : false);
-        //console.log("fails set to " + Session.get("Fails"));
-
-        if ($(".loading-screen")) $(".loading-screen").hide();
-      });
-
-      Meteor.call("getStudentCourses", Session.get("student"), function (err, courses) {
-        Session.set("selectedCourses", courses);
-      });
-
-      Meteor.call("getCreditsTaken", Session.get('student'), 1, function (err, credits) {
-        Session.set('creditsTaken', credits)
-      });
+      $(".flex-container").css("display", 'none');
+      $(".nostudent").css("display", "flex");
+      return;
     }
+    let studentGivenName = studentBoeking["Student-Voornaam(Key)"];
+    let studentSurName = studentBoeking["Student-Familienaam(Key)"];
+    let nio = studentBoeking["Nieuwi/dopleiding"];
+
+    Session.set("studentName", studentGivenName + " " + studentSurName);
+    if (nio == "J"){
+      Session.set("new", true);
+    }
+    else{
+      Session.set("new", false);
+    }
+
+    let currentSemester = 1;
+    let semesterString = "Eerste Semester";
+    if (Meteor.settings.public.showJuni) {
+      currentSemester = 2;
+      semesterString = "Tweede Semester";
+
+    }
+    if (Meteor.settings.public.showSeptember) {
+      currentSemester = 3;
+      semesterString = "Tweede Semester";
+
+    }
+    Session.set('semester', currentSemester);
+    Session.set("semesterString", semesterString);
+
+
+
+    //get the CSE for the student
+    var year = Session.get("Year");
+    //Helpers_GetCSE comes from imports/helpers/CSE.js
+    Session.set("CSE_ijkingstoets", getCSETests(studentID, "IJK", year, Session.get("program")));
+    Session.set("CSE_TTT", getCSETests(studentID, "TTT", year, Session.get("program")));
+    Session.set("CSE_januari", studentBoeking.CSEJanuari);
+    Session.set("CSE_juni", studentBoeking.CSEJuni);
+    Session.set("CSE_september", studentBoeking.CSESeptember);
+
+    // Session.set("CSE_januari_pure", Helpers_CalculateCSE(1, year, true));
+    // Session.set("CSE_juni_pure", Helpers_CalculateCSE(2, year, true));
+    // Session.set("CSE_september_pure", Helpers_CalculateCSE(3, year, true));
+    Session.set("CSE_Planning", Helpers_CalculateStartValues(Session.get('CSE_september_pure')));
+
+
+
+
+
+
+    Meteor.call("getCreditsTaken", Session.get('student'), 1, function (err, credits) {
+      Session.set('creditsTaken', credits)
+    });
+
   })
 })
 
@@ -222,143 +140,7 @@ Template.dashboard.helpers({
   toleranceCredits() {
     return Session.get('toleranceCredits');
   },
-  courses() {
-    return Courses.find({});
-  },
-  ttt() {
-    return Courses.find({semester: -1})
-  },
-  january() {
-    return Courses.find({semester: 1})
-  },
-  june() {
-    return Courses.find({semester: 2})
-  },
 
-  studentGrade(who, what) {
-    return Grades.find({studentid: who, courseid: what})
-  },
-
-  studentCourses(semester, failedOnly, gradetry) {
-
-    var results = [];
-    var searchTerm = {semester: semester};
-    var courses = Courses.find(searchTerm, {sort: {semester: 1, coursename: 1}});
-    if (semester == 2) {
-      courses = Courses.find({$or: [{semester: 0}, {semester: 2}]}, {sort: {semester: 1, coursename: 1}});
-    }
-    var testStudent = Grades.findOne();
-    if (testStudent == undefined || testStudent.studentid != Session.get("student")) {
-      //console.log(testStudent.student, Session.get("student"));
-      return results;
-    }
-    courses.forEach(function (j) {
-      var search = {};
-      var result = Grades.findOne({courseid: j.courseid});
-      if (result == undefined) return;
-      var score = gradetry != 2 ? result.grade_try1 : result.grade_try2;
-
-      //console.log("in the courses" + result.student);
-      if (failedOnly == true && score >= 10) return;
-      if (score == "#") return;
-      //hack for TTT
-      if (score == "NA" && semester == 0) return;
-      results.push({
-        id: j.courseid,
-        name: j.coursename,
-        grade: score,
-        realGrade: score,
-        semester: gradetry != 2 ? semester : 3,
-        credits: parseInt(j.credits)
-      });
-
-    })
-    return results;
-
-  },
-
-  coursesLeft(sem) {
-    var results = [];
-    var courses = Courses.find({semester: sem}, {sort: {semester: 1, coursename: 1}});
-    if (sem == 2) {
-      courses = Courses.find({$or: [{semester: 0}, {semester: 2}]}, {sort: {semester: 1, coursename: 1}});
-    }
-    var testStudent = Grades.findOne();
-    if (testStudent == undefined || testStudent.studentid != Session.get("student")) {
-      //console.log(testStudent.student, Session.get("student"));
-      return results;
-    }
-    courses.forEach(function (j) {
-      // console.log(j)
-      var search = {};
-      var result = Grades.findOne({courseid: j.courseid});
-      if (result == undefined) return;
-      var score = "#";
-      score = result.finalscore;
-      var try1 = result.grade_try1;
-      var try2 = result.grade_try2;
-
-
-      //console.log("in the courses" + result.student);
-      if (score >= 10) return;
-      //if(score == "#") return;
-      results.push({
-          id: j.courseid,
-          name: j.coursename,
-          grade: score,
-          realGrade: score,
-          semester: 2,
-          try1: try1,
-          try2: try2,
-          credits: parseInt(j.credits)
-        }
-      );
-
-    })
-    // console.log('results')
-    // console.log(results)
-    return results;
-  },
-
-  ijkingstoetsen() {
-    console.log('ijkingstoetsen')
-    var ijkingstoetsen = Ijkingstoets.findOne();
-    if (ijkingstoetsen == undefined) return;
-    if (ijkingstoetsen.student != Session.get("student")) {
-      return [];
-    }
-    var juli =
-      {
-        id: "ijkingstoets_juli",
-        name: "IJkingstoets juli",
-        grade: ijkingstoetsen.juli,
-        realGrade: ijkingstoetsen.juli,
-        credits: 0
-      };
-    var september =
-      {
-        id: "ijkingstoets_september",
-        name: "IJkingstoets september",
-        grade: ijkingstoetsen.september,
-        realGrade: ijkingstoetsen.september,
-        credits: 0
-      };
-    var results = [];
-    var nrOfIjk = 0;
-    if (Meteor.settings.public.ijkingstoets_juli == true) {
-      results.push(juli);
-      nrOfIjk++;
-    }
-    if (Meteor.settings.public.ijkingstoets_september == true) {
-      results.push(september);
-      nrOfIjk++;
-    }
-    if (nrOfIjk == 1)
-      results[0].name = "Ijkingstoets";
-
-
-    return results;
-  },
 
   totalCSE() {
     let cse = 0;
@@ -367,28 +149,6 @@ Template.dashboard.helpers({
       if (cse > 180) cse = 180;
     }
     return cse;
-  },
-
-
-  failedCourses() {
-    var courses = [];
-    var selectedCourses = Session.get("selectedCourses");
-    if (selectedCourses == undefined) return courses;
-    Object.keys(selectedCourses).forEach(function (i) {
-
-      courses.push({
-        id: selectedCourses[i].course.idopleidingsond,
-        name: Courses.findOne({_id: selectedCourses[i].course.idopleidingsond}).name,
-        grade: selectedCourses[i].course.scorenajuni,
-        realGrade: selectedCourses[i].course.scorenajuni
-      });
-    })
-
-    return courses;
-  },
-
-  Fails() {
-    return Session.get("Fails");
   },
 
   ShowJuni() {
@@ -403,12 +163,6 @@ Template.dashboard.helpers({
     var r = [{period: "ijkingstoets"}, {period: "TTT"}, {period: "januari"}, {period: "juni"}, {period: "september"}];
     return r[number]
   },
-  /**
-   * Get the program from the settings file
-   */
-  'GetProgram':function () {
-    return Meteor.settings.public.program;
-  },
 
   /**
    *
@@ -420,7 +174,7 @@ Template.dashboard.helpers({
     var r = [
       {
         title: "Ijkingstoets",
-        semester: -2,
+        semester: "IJK",
         class: "column-odd",
         period: "ijkingstoets",
         percent: undefined,
@@ -431,7 +185,7 @@ Template.dashboard.helpers({
       },
       {
         title: "Tussentijdse testen",
-        semester: -1,
+        semester: "TTT",
         class: "column-even col1",
         period: "TTT",
         percent: undefined,
@@ -442,7 +196,7 @@ Template.dashboard.helpers({
       },
       {
         title: "Januari",
-        semester: 1,
+        semester: "Eerste Semester",
         class: "column-odd col2",
         period: "januari",
         percent: Session.get("CSE_januari"),
@@ -453,7 +207,7 @@ Template.dashboard.helpers({
       },
       {
         title: "Juni",
-        semester: 2,
+        semester: "Tweede Semester",
         class: "column-even",
         period: "juni",
         percent: Session.get("CSE_juni"),
@@ -483,4 +237,21 @@ Template.dashboard.helpers({
 
 });
 
+let getCSETests = function(studentid, period, year, program){
+  let boekingen = Boekingen.find({$and: [{Student: studentid}, {Academischeperiode: period}, {Opleiding:program}, {Academiejaar: year}]});
+  let nb = 0;
+  let score = 0;
+  let cse = 0;
+  boekingen.forEach(function (b) {
+    if (b.Score >= 0){
+      nb ++;
+      score += b.Score
+    }
+  });
+  let newCse = parseInt(5*score / nb);
+  if (Number.isInteger(newCse)){
+    cse = parseInt(5*score / nb);
+  }
+  return cse;
+};
 

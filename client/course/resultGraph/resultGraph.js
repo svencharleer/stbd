@@ -8,22 +8,32 @@ Template.resultGraph.onCreated(function () {
 Template.resultGraph.helpers({
   color: function () {
     let color = "white"; //"#ef9a9a";
-    if (this.grade < 8) color = "failed" //"#ff8a80"; //failed
-    else if (this.grade > 9) color = "passed" //"#a5d6a7"; //passed
-    else if (this.grade >= 8 && this.grade <= 9) color = "tolerable"; // "#ffcc80"; //tolerable
+    //todo fix this for resits
+    let courseSemester = this.Academischeperiode;
+    let scoreEntry = getScoreEntry(courseSemester);
+    let score = this[scoreEntry];
+    if (score < 8) color = "failed" //"#ff8a80"; //failed
+    else if (score > 9 || score=="G") color = "passed" //"#a5d6a7"; //passed
+    else if (score >= 8 && score <= 9) color = "tolerable"; // "#ffcc80"; //tolerable
     else color = "failed"; // "#ff8a80"; //failed
     return color;
   },
   getStrippedCourseID: function () {
-    let courseId = this.id;
+    let courseId = this.IDOPO;
     courseId = courseId.replace(/ /g,'');
     courseId = courseId.replace(/,/g,'');
-
+    courseId = courseId.replace(/:/g,'');
     return courseId
   },
   validCredits: function () {
-    let credits = this.credits;
+    let credits = this.Studiepunten;
     return credits > 0;
+  },
+  Score: function () {
+    let courseSemester = this.Academischeperiode;
+    let scoreEntry = getScoreEntry(courseSemester);
+    let score = this[scoreEntry];
+    return score;
   }
 });
 
@@ -33,13 +43,7 @@ Template.resultGraph.events({
       template.$(".course-bottom").css("max-height", "60px");
       template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
       template.show.set(true);
-      clicks.insert({
-        'session': Session.get('Id'),
-        'studentid': Session.get('student'),
-        'element': 'course-top_' + this.id,
-        'time': Date.now(),
-        'action': 'visible' + this.credits
-      })
+
     } else {
       template.$(".course-bottom").css("max-height", "0px");
       template.$(".top-bar").css("box-shadow", "0px 0px 0px gainsboro");
@@ -47,13 +51,6 @@ Template.resultGraph.events({
       template.$(".course").css("transform", "scale(1)");
       template.$(".course").css("z-index", "0");
       template.show.set(false);
-      clicks.insert({
-        'session': Session.get('Id'),
-        'studentid': Session.get('student'),
-        'element': 'course-top_' + this.id,
-        'time': Date.now(),
-        'action': 'hide' + this.credits
-      })
 
     }
   },
@@ -63,25 +60,12 @@ Template.resultGraph.events({
       template.$(".course").css("z-index", "1000");
       template.$(".course").css("box-shadow", "1px 1px 5px gainsboro");
       template.zoom.set(true);
-      clicks.insert({
-        'session': Session.get('Id'),
-        'studentid': Session.get('student'),
-        'element': 'course-bottom_' + this.id,
-        'time': Date.now(),
-        'action': 'zoom' + this.credits
-      })
+
     } else {
       template.$(".course").css("transform", "scale(1)");
       template.$(".course").css("z-index", "0");
       template.$(".course").css("box-shadow", "0px 0px 0px gainsboro");
       template.zoom.set(false);
-      clicks.insert({
-        'session': Session.get('Id'),
-        'studentid': Session.get('student'),
-        'element': 'course-bottom_' + this.id,
-        'time': Date.now(),
-        'action': 'reset_zoom' + this.credits
-      })
     }
 
   }
@@ -92,7 +76,6 @@ Template.resultGraph.onRendered(function () {
   let width = 140;
   let height = 60;
   let courseID = Template.instance().firstNode.id;
-
   let svg = d3.select("#" + courseID).select(".histogram")
     .attr("class", "histogram")
     .attr("width", width)
@@ -124,4 +107,25 @@ Template.resultGraph.onRendered(function () {
   })
 
 });
+
+/**
+ *
+ * @param semester
+ * @returns score_entry: fieldname of the db
+ */
+let getScoreEntry = function (semester) {
+  var score_entry = 'Score';
+  switch (semester) {
+    case "Eerste Semester":
+      score_entry = 'Scorejanuari';
+      break;
+    case "Tweede Semester":
+      score_entry = 'Scorejuni';
+      break;
+    default:
+      score_entry = 'Score';
+  }
+  return score_entry;
+
+};
 

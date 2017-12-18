@@ -1,0 +1,23 @@
+<template name="futurecolumn">
+    <div class="flex-column colfuture" id="colfuture">
+        <div class="vertical-title">bachelor</div>
+        <div class="top">
+            <div class="fa compress-colfuture fa-compress">
+                <paper-ripple></paper-ripple>
+            </div>
+            <div class="column-title">Opleiding</div>
+            <div id="legend" class="periode legend">
+                <div class="legend-item legend3">+0j</div>
+                <div class="legend-item legend4">+1j</div>
+                <div class="legend-item legend5">+2j</div>
+                <div class="legend-item legendnot">Niet</div>
+            </div>
+        </div>
+        <div class="bottom">
+            {{#if Template.subscriptionsReady}}
+                {{> future}}
+            {{/if}}
+        </div>
+    </div>
+
+</template>

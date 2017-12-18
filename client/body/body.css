@@ -42,20 +42,37 @@ body {
     align-items: center;
 }
 
-.nostudent {
-    display: flex;
+.loading-screen h1 {
+  color: #7c7c7c;
+  font-size: 16px;
+  margin-top: 16px;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.loading-csetool {
+    display: none;
     flex-direction: column;
     align-items: center;
     color: var(--TextColor);
     position: absolute;
     width: 100%;
     height: 100%;
-    /* background: white; */
+    background: white;
     z-index: 1000;
-
     justify-content: center;
-    margin-top: 5%;
+    align-items: center;
 }
+
+.loading-csetool h1 {
+  color: #7c7c7c;
+  font-size: 16px;
+  margin-top: 16px;
+  font-style: italic;
+  font-weight: 300;
+}
+
+
 
 .h1 {
     color: #7c7c7c;

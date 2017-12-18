@@ -1,9 +1,13 @@
 <template name="register">
-  <div class="register">
+    <div class="register">
     <div class="register-container">
       <h1>Access Token: </h1>
-      <paper-input class="user-token" type="text" id="input"></paper-input>
-      <paper-button>Login</paper-button>
+      <paper-input class="user-token" type="password" id="input"></paper-input>
+      <div class="access-tool">
+        <div class="token-error">This token is incorrect.</div>
+        <paper-button>Login</paper-button>
+        <a href="">CSE Tool</a>
+      </div>
     </div>
   </div>
 </template>

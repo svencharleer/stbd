@@ -1,145 +1,95 @@
 import {Meteor} from 'meteor/meteor';
+let _ = require('lodash');
 
-var Courses = new Meteor.Collection('generic_courses');
-const Grades = new Meteor.Collection('generic_grades');
-var CSEs = new Meteor.Collection('generic_cse');
-var Students = new Mongo.Collection('generic_students');
-var Historical = new Meteor.Collection('generic_history_sept');
-var Exams = new Meteor.Collection('generic_examsuccess');
-var heatmap = new Meteor.Collection('heatmap');
-var clicks = new Meteor.Collection('clicks');
-let AllGrades = new Meteor.Collection("all_grades");
-let AllCSEs = new Meteor.Collection("all_cse");
-let NewGrades = new Meteor.Collection("new_grades");
-
-
+let currentAcademiejaar = "2016-2017";
+let Boekingen = new Mongo.Collection('boekingen');
+let Historic = new Mongo.Collection("doorloop");
+let Tokens = new Mongo.Collection("tokens");
 
 //Publish all collections
-//todo check if duplication all/new/generic_grades and all_cses can be removed
-Meteor.publish('generic_grades', function (program, who) {
-  return Grades.find({$and: [{studentid: who}, {program: program}]});
+Meteor.publish('own_boekingen', function (program, studentid) {
+  let own = Boekingen.find({$and: [{Student: studentid}, {Opleiding:  program}, {Academiejaar: currentAcademiejaar }]});
+  return own;
 });
 
-Meteor.publish('all_grades', function (program) {
-  return AllGrades.find({program: program}, {fields: {studentid:0}});
-});
+// Meteor.publish('cse_tool', function(program){
+//   let students = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: ["2009-2010", "2010-2011", "2011-2012", "2012-2013"]}}]}).fetch();
+//   students = _.uniq(students, false, function(s) {return s.Student});
+//   let studentList = [];
+//   let studentCSE  = [];
+//   let historic    = [];
+//   students.forEach(function(b){
+//     studentList.push(b.Student);
+//     studentCSE.push({student: b.Student, cse: b.CSEJanuari});
+//   });
+//   Historic.find({Student: {$in: studentList}}).forEach(function (s) {
+//     historic.push({student: s["Student"], year: s["Doorloop: Studieduur"]});
+//   });
+//   return [studentCSE,historic];
+// });
 
-/**
- * Warning: only grades of new students
- * Used for Distributions
- */
-Meteor.publish('new_grades', function (program) {
-  let newGrades = NewGrades.find({$and:[{program: program},{generatiestudent: "J"}]}, {fields: {studentid:0}});
-  return newGrades
-});
-
-Meteor.publish('generic_courses', function (program) {
-  return Courses.find({
-    program:   program
-  });
-});
-
-Meteor.publish('generic_students', function (program) {
-  return Students.find({
-    program:   program
-  });
-});
-
-
-Meteor.publish("generic_cse", function (program, who) {
-  return CSEs.find({$and: [{program: program},{studentid: who}]});
-});
-
-/**
- * Warning: only cses of new students
- * Used for Distributions
- */
-//todo fix that this only consist of cses of student nio
-Meteor.publish("all_cse", function () {
-  let newStudents = Students.find(
-    {generatiestudent: "J"}
-  );
-  let studentIds = []
-  newStudents.forEach(function (student) {
-    studentIds.push(student.studentid)
-  });
-  return AllCSEs.find({studentid: {$in: studentIds}}, {fields: {studentid:0}});
-});
-
-Meteor.publish("clicks", function () {
-  return clicks.find({});
-});
-
+// Meteor.publish('program_boekingen', function (program) {
+//   return Boekingen.find( {$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar }]}, {fields:{Student:0, Aanlognummer:0, "Student-Familienaam(Key)":0}});
+// });
 
 Meteor.methods({
-
+  /**
+  *
+  * @param token: password for each program
+  * @returns {[boolean,[program,cselimit2, cselimit1]]}: boolean indicates if token is in dict or not
+   * limit 2 is lower than limit1
+  */
   getTokenInfo: function (token) {
-    let dict = {
-      a : ["ABA biochemie en biotechnologie (Leuv)",50,90], //ignoreLine
-      b : ["ABA biologie (Leuv)",50,90], //ignoreLine
-      c : ["ABA chemie (Leuv)",50,90], //ignoreLine
-      d : ["ABA fysica (Leuv)",50,90], //ignoreLine
-      e : ["ABA geografie (Leuv)",50,90],
-      f : ["ABA geologie (Leuv)",50,90],
-      g : ["ABA informatica (Leuv)",50,90],
-      h : ["ABA wiskunde (Leuv)",50,90],
-      i : ["ABA bio-ingenieurswetenschappen (Leuv)",50,90],
-      j : ["ABA ingenieurswetenschappen (Leuv)",50,90],
-      k : ["ABA ingenieurswetenschappen:architectuur (Leuv)",50,90],
-      l : ["ABA biowetenschappen (Geel)",50,90],
-      m : ["ABA industriele wetenschappen (Geel)",50,90],
-      n : ["ABA industriele wetenschappen (Aalst)",50,90],
-      o : ["ABA industriele wetenschappen (Diepenbeek)",50,90],
-      p : ["ABA industriele wetenschappen (Leuven)",50,90],
-      q : ["ABA industriele wetenschappen (Brugge)",50,90],
-      r : ["ABA industriele wetenschappen (Sint-Katelijne-Waver)",50,90],
-      s : ["ABA industriele wetenschappen (Gent)",50,90],
-      t : ["SMA biowetenschappen (Geel)",50,90],
-      u : ["SMA industriele wetenschappen (Geel)",50,90],
-      v : ["SMA industriele wetenschappen (Aalst)",50,90],
-      w : ["SMA industriele wetenschappen (Diepenbeek)",50,90],
-      x : ["SMA industriele wetenschappen (Leuven)",50,90],
-      y : ["SMA industriele wetenschappen (Brugge)",50,90],
-      z : ["SMA industriele wetenschappen (Sint-Katelijne-Waver)",50,90],
-      A : ["ABA architectuur (Gent)",50,90],
-      B : ["ABA achitectuur (Brussel)",50,90],
-      C : ["ABA interieurarchitectuur (Gent)",50,90],
-      D : ["ABA interieurarchitectuur (Brussel)",50,90],
-      E : ["ABA Geneeskunde (Leuv)",50,90],
-      F : ["ABA tandheelkunde (Leuv)",50,90],
-      G : ["ABA biomedische wetenschappen",50,90],
-      H : ["ABA logopedische en audiologische wetenschappen",50,90],
-      I : ["ABA farmaceutische wetenschappen",50,90],
-      J : ["ABA TEW:handelsingenieur (Leuv)",50,90],
-      K : ["ABA geschiedenis (Leuv)",50,90],
-      L : ["ABA taal- en letterkunde (Leuv)",50,90]
-    };
-    let keys = Object.keys(dict);
+    let tokeninfo =  Tokens.findOne({token: token})
     let result = [false, [undefined, undefined, undefined]];
-    keys.forEach(function (key) {
-      if (key == token){
-        let values = dict[key];
-        result = [true, values]
-      }
-    });
+    if ( tokeninfo != undefined ){
+      result = [ true , [tokeninfo.Opleiding, tokeninfo.limit2, tokeninfo.limit1]]
+    }
     return result;
   },
   /**
-   * Calculate gradefield and call GetDistribution
-   * @param courseid
-   * @param year
-   * @param semester: -2,-1,0,1,2
-   * @returns {{numberPerGrades, min, max, total}}
-   */
-  getCoursePointDistribution: function (courseid, year, semester) {
-    var gradeField = "grade_try1";
-    if (semester == 3) gradeField = "grade_try2";
-    return helper_GetDistribution({courseid: courseid, year: year}, Grades, gradeField);
+  * Method that splits the calls for the distribution
+  * into calls to csedistribution and scoredistribution
+  * Called from trajectoryperiod, needed to be in server
+  * because you need studentids + a lot of entries
+  * @param semester
+  * @param program
+  * @returns {undefined}
+  */
+  getDistribution : function (semester, program) {
+    //Look whick score you want to use
+    let distribution = undefined;
+    switch (semester){
+      case "IJK": //ijkingstoets
+      case "TTT": ///a TTT test
+      distribution =  getScoreDistribution(semester, program);
+      break;
+      default:
+      distribution =  getSemesterCSEDistribution(semester, program);
+      break;
+    }
+    return distribution;
   },
   /**
-   * @return {boolean} dynamic: true if dashboard is dynamic
-   *
-   */
+  * Calculate gradefield and call GetDistribution
+  * @param courseid
+  * @param year
+  * @param semester: -2,-1,0,1,2,3: for which semester you want the distribution
+  * @returns {{numberPerGrades, min, max, total}}
+  */
+  getCoursePointDistribution : function (courseid, semester) {
+    let gradeField = "Score";
+    if (semester === 3){ //only in resits you need the score of that specific period
+      gradeField = "ScoreSeptember";
+    }
+    return getCoursePointDistributionSemester(courseid, gradeField);
+  },
+
+
+  /**
+  * @return {boolean} dynamic: true if dashboard is dynamic
+  *
+  */
   getDynamicSetting: function () {
     var dynamic = true;
     if (Meteor.settings.public.dynamic != undefined) {
@@ -149,22 +99,14 @@ Meteor.methods({
   },
 
   /**
-   * @param {studentid} who : studentid
-   * @param {integer} semester : 1-2 or default 3
-   */
-  getCSEProfile: function (who, semester) {
-    var CSE_student = CSEs.findOne({studentid: who});
+  * Get the profile (low,middle,high) based on current cse and limits
+  * @param {studentid} who : studentid
+  * @param {integer} semester : 1-2 or default 3
+  */
+  getCSEProfile: function (who, semester, limit1, limit2) {
+    var studentBoeking = Boekingen.findOne({$and:[{Student: who},{Academiejaar: currentAcademiejaar },{Studiepunten: {$ne: 0}}]});
     var CSE_entry = helper_getCSEEntry(semester);
-    var CSE_score = CSE_student[CSE_entry]
-
-    var limit1 = 90;
-    var limit2 = 50;
-    if (Meteor.settings.public.cselimit1 != undefined && Meteor.settings.public.cselimit2 != undefined) {
-      limit1 = Meteor.settings.public.cselimit1;
-      limit2 = Meteor.settings.public.cselimit2;
-    }
-    // console.log("CSE limits: " + limit1 + ' ' + limit2);
-    // console.log('score student: ' + CSE_score + ' in semester: ' + semester)
+    var CSE_score = studentBoeking[CSE_entry];
     var top = false;
     var middle = false;
     var low = false;
@@ -187,52 +129,88 @@ Meteor.methods({
   },
 
   /**
-   * @param {integer} semester : 1 - 2  or default 3
+   *
+   * @param program
+   * @param semester
+   * @param limit1
+   * @param limit2
+   * @returns {[null,null,null]}
    */
-  getCSEDistribution: function (semester) {
-    var CSE_entry = helper_getCSEEntryStudent(semester);
-    var students = Historical.find({})
-    var topDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
-    var middleDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
-    var lowDict = {"+0": 0, "+1": 0, "+2": 0, "B": 0, "D": 0};
-
-    students.forEach(function (student) {
-      var cseStudent = student[CSE_entry];
-      var trajectStudent = student["traject"];
-
-      var limit1 = 90;
-      var limit2 = 50;
-      if (Meteor.settings.public.cselimit1 != undefined && Meteor.settings.public.cselimit2 != undefined) {
-        limit1 = Meteor.settings.public.cselimit1;
-        limit2 = Meteor.settings.public.cselimit2;
-      }
-      if (cseStudent >= limit1) {
+  //todo check if csetool is using same data
+  getHistoricDistribution: function (program, semester, limit1, limit2) {
+    var topDict    = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
+    var middleDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
+    var lowDict    = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
+    let top;
+    let middle;
+    let low;
+    [top, middle, low] = getStudentIds(program, limit1, limit2, semester);
+    let topdoorloop    = Historic.find({Student: {$in: top}});
+    let middledoorloop = Historic.find({Student: {$in: middle}});
+    let lowdoorloop    = Historic.find({Student: {$in: low}});
+    if (typeof topdoorloop.forEach == "function"){
+      topdoorloop.forEach(function (student) {
+        let trajectStudent = student["Doorloop: Studieduur"];
         topDict[trajectStudent] += 1;
-      }
-      else if (cseStudent < limit1 && cseStudent >= limit2) {
+      });
+    }
+    if (typeof middledoorloop.forEach == "function"){
+      middledoorloop.forEach(function (student) {
+        let trajectStudent = student["Doorloop: Studieduur"];
         middleDict[trajectStudent] += 1;
-      }
-      else {
+      });
+    }
+    if (typeof lowdoorloop.forEach == "function"){
+      lowdoorloop.forEach(function (student) {
+        let trajectStudent = student["Doorloop: Studieduur"];
         lowDict[trajectStudent] += 1;
-      }
+      });
+    }
 
-    });
-    topDict = helper_relativateDict(topDict);
+    topDict    = helper_relativateDict(topDict);
     middleDict = helper_relativateDict(middleDict);
-    lowDict = helper_relativateDict(lowDict);
+    lowDict    = helper_relativateDict(lowDict);
+
     return [topDict, middleDict, lowDict];
-
-
   },
-
+  /**
+  * Frank CSE Tool
+  * @String: program. The selected program to filter everything.
+  */
+  getCSETool: function (program) {
+    let students = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: ["2009-2010", "2010-2011", "2011-2012", "2012-2013"]}}]}).fetch();
+    students = _.uniqBy(students, 'Student');
+    //get all the students, only once.
+    let studentList = [];
+    let studentCSE  = [];
+    let historic    = [];
+    //push student's data to array.
+    students.forEach(function(b){
+      studentList.push(b.Student);
+      studentCSE.push({student: b.Student, cse: b.CSEJanuari});
+    });
+    //push historic data to array.
+    Historic.find({Student: {$in: studentList}}).forEach(function (s) {
+      historic.push({student: s["Student"], year: s["Doorloop: Studieduur"]});
+    });
+    //merge both collections.
+    let data   = _.map(historic, function(obj) {
+      return _.assign(obj, _.find(studentCSE, {student: obj.student}));
+    });
+    //anonimize data just before sending.
+    data.forEach(function(v){ delete v.student });
+    return data;
+  },
   getCreditsTaken: function (who) {
-    let creditsFirst = helper_GetCreditsTakenSemester(who, 1);
-    let creditsSecond = helper_GetCreditsTakenSemester(who, 2);
+    let creditsFirst = helper_GetCreditsTakenSemester(who, "Eerste Semester");
+    let creditsSecond = helper_GetCreditsTakenSemester(who, "Tweede Semester");
     return [creditsFirst, creditsSecond];
-
-
   },
-
+  /**
+  * Sven
+  * @param nrOfCourses
+  * @returns {{averageCoursesPassed: number, percentAllPassed: number}}
+  */
   //number of courses passed, and % chance to pass all courses
   getSeptemberSuccess(nrOfCourses) {
 
@@ -263,271 +241,372 @@ Meteor.methods({
 
       nrPassed++;
     })
-    console.log("match", Object.keys(studentsThatMatch).length);
-    console.log("passed", nrPassed);
     if (Object.keys(studentsThatMatch).length == 0)
-      result.percentAllPassed = 0;
+    result.percentAllPassed = 0;
     else
-      result.percentAllPassed = nrPassed / Object.keys(studentsThatMatch).length;
+    result.percentAllPassed = nrPassed / Object.keys(studentsThatMatch).length;
     return result;
   },
+
   /**
-   * Find all the courses the student failed
-   * @param who: studentid
-   * @returns {Array}
-   */
-  getFailedCourses(who) {
-    //find all courses the student takes
-    let studentCourses = Grades.find({
-      studentid: who
-    }).fetch();
-    courseIds = [];
-    //Check if he passes course or not
-    studentCourses.forEach(function (c) {
-      if (c.finalscore > 9) return;
-      courseIds.push(c.courseid);
-    });
+  * Find all the courses the student failed
+  * @param studentid: studentid
+  * @returns {Array}
+  */
+  getFailedCourses(studentid) {
+    let failedCourses = Boekingen.find(
+      {$and:
+        [
+          {Student: studentid},
+          { $not: { $gt: 10 } },
+          {Academiejaar: currentAcademiejaar }
+        ]
+      });
+      return failedCourses;
+    },
+    /**
+    * Find all the courses of the student
+    * @param studentid
+    * @returns
+    */
+    getStudentCourses(studentid) {
+      return Boekingen.find({$and:[{Student: studentid},{Academiejaar: currentAcademiejaar }]})
+    },
+    /*
+    Sven
+    */
+    getRootRoute() {
+      if (process.env.ROOTROUTE != undefined) {
+        console.log(process.env.ROOTROUTE);
+        return process.env.ROOTROUTE;
+      }
+      else {
+        return "dev";
+      }
+    },
 
-    //Find all failed courses
-    let failedCourses = Courses.find({courseid: {$in: courseIds}}).fetch();
 
-    //Put coursename, courseid, score and semester in result
-    let result = []
-
-    failedCourses.forEach(function (c) {
-      var studentFailedCourses = Grades.findOne(
-        {
-          $and: [
-            {studentid: who},
-            {courseid: c.courseid}
-          ]
-        },
-        {finalscore: 1}
-      );
-      result.push(
-        {
-          finalscore: studentFailedCourses.finalscore,
-          studentid: who,
-          courseid: c.courseid,
-          semester: c.semester,
-          coursename: studentFailedCourses.coursename,
-          credits: c.credits
-        })
-    });
-    return result;
-  },
+  });
   /**
-   * Find all the courses of the student
-   * @param who
-   * @returns {finalscore, studentid, courseid, semester, coursename, credits}
-   */
-  getStudentCourses(who) {
-    //find all courses the student takes
-    let studentCourses = Grades.find({
-      studentid: who
-    }).fetch();
-    courseIds = [];
-    //Check if he passes course or not
-    studentCourses.forEach(function (c) {
-      courseIds.push(c.courseid);
-    });
-
-    //Find all selected courses
-    let courses = Courses.find({courseid: {$in: courseIds}}).fetch();
-
-    //Put coursename, courseid, score and semester in result
-    let result = []
-
-    courses.forEach(function (c) {
-      var studentFailedCourses = Grades.findOne(
-        {
-          $and: [
-            {studentid: who},
-            {courseid: c.courseid}
-          ]
-        },
-        {finalscore: 1}
-      );
-      result.push(
-        {
-          finalscore: studentFailedCourses.finalscore,
-          studentid: who,
-          courseid: c.courseid,
-          semester: c.semester,
-          coursename: studentFailedCourses.coursename,
-          credits: c.credits
-        })
-    });
-    return result;
-  },
-  getRootRoute() {
-    if (process.env.ROOTROUTE != undefined) {
-      console.log(process.env.ROOTROUTE);
-      return process.env.ROOTROUTE;
+  * Sven
+  */
+  Meteor.startup(() => {
+    if (process.env.KEY != undefined) {//console.log(process.env.KEY)
+      console.log("SSL activated ", process.env.ROOTROUTE, process.env.KEY, process.env.CERT);
+      SSLProxy({
+        port: process.env.SSL_PORT, //or 443 (normal port/requires sudo)
+        ssl: {
+          key: Assets.getText(process.env.KEY),
+          cert: Assets.getText(process.env.CERT),
+          //Optional CA
+          //Assets.getText("ca.pem")
+        }
+      });
     }
     else {
-      return "dev";
+      console.log("process.env.KEY/CERT is not set, running without certificate/ssl");
     }
-  },
+  });
 
 
-});
+  /**
+  *
+  * @param semester
+  * @returns cse_entry: fieldname of the db
+  */
+  let helper_getCSEEntry = function (semester) {
+    var cse_entry = 'CSE';
+    switch (semester) {
+      case 1:
+      cse_entry = 'CSEJanuari';
+      break;
+      case 2:
+      cse_entry = 'CSEJuni';
+      break;
+      default:
+      cse_entry = 'CSESeptember';
+    }
+    return cse_entry;
 
-Meteor.startup(() => {
-  if (process.env.KEY != undefined) {//console.log(process.env.KEY)
-    console.log("SSL activated ", process.env.ROOTROUTE, process.env.KEY, process.env.CERT);
-    SSLProxy({
-      port: process.env.SSL_PORT, //or 443 (normal port/requires sudo)
-      ssl: {
-        key: Assets.getText(process.env.KEY),
-        cert: Assets.getText(process.env.CERT),
+  };
 
-        //Optional CA
-        //Assets.getText("ca.pem")
+  let helper_getCSEEntryStudent = function (semester) {
+    var cse_entry = 'CSESeptember';
+    switch (semester) {
+      case 1:
+      cse_entry = 'CSEJanuari';
+      break;
+      case 2:
+      cse_entry = 'CSEJuni';
+      break;
+      default:
+      cse_entry = 'CSEJanuari';
+    }
+    return cse_entry;
+
+  };
+
+  /**
+  * Transform dict from absolute to relative values
+  * @param dict
+  * @returns {*}
+  */
+  var helper_relativateDict = function (dict) {
+    var sum = helper_sumDict(dict);
+    if (sum != 0){
+      for (var key in dict) {
+        var counter = dict[key];
+        dict[key] = Math.round((counter / sum ) * 100)
       }
+    }
 
+    return dict;
+  }
+
+  /**
+  * Get the total number of students
+  * sum of all values
+  * @param obj
+  * @returns {number}
+  */
+  let helper_sumDict = function (obj) {
+    var sum = 0;
+    for (var el in obj) {
+      if (obj.hasOwnProperty(el)) {
+        let float = parseFloat(obj[el]);
+        if (!isNaN(float)){
+          sum += float ;
+        }
+
+      }
+    }
+    return sum;
+  };
+
+
+  /**
+  * Calculate number of credits taken
+  * @param who
+  * @param semester
+  * @returns {number}
+  */
+  var helper_GetCreditsTakenSemester = function (who, semester) {
+    let credits = 0;
+    // get all courseIds of student
+    var studentBoekingen = Boekingen.find({$and: [{studentid: who}, {Academischeperiode: semester},{Academiejaar: currentAcademiejaar }]});
+    studentBoekingen.forEach(function (b) {
+      credits += parseInt(b.Studiepunten)
     });
-  }
-  else {
-    console.log("process.env.KEY/CERT is not set, running without certificate/ssl");
-  }
+
+    //ugly fix for courses of semester Academiejaar that we show in semester 2
+    if (semester === "Tweede Semester"){
+      var jaarBoekingen = Boekingen.find({$and: [{studentid: who}, {Academischeperiode: "Academiejaar"},{Academiejaar: currentAcademiejaar }]});
+      jaarBoekingen.forEach(function (b) {
+        credits += parseInt(b.Studiepunten)
+      });
+    }
+    return credits;
 
 
-});
+  };
+
+  //
+  //FUNCTIONS NEEDED FOR DISTRIBUTION
+  //Called from getDistribution
+  //Template Trajectory
+  //
+  /**
+  * Find the cse distribution in a semester
+  * @param semester
+  * @returns {{distribution: Array}}
+  */
+  let getSemesterCSEDistribution =  function (semester, program) {
+    // let studentIDs = distinct(Boekingen, "Student", program);
+    let cses = getCSEs(semester, program);
+    //initialise dict of buckets
+    var buckets = {};
+    for (var i = 0; i < 10; i++) {
+      buckets[i] = 0;
+    }
+    //For each of the 10 categories count number of occurrences
+    cses.forEach(function (cse) {
+      if (cse != "NULL"){
+        let bucketId = parseInt(cse / 10);
+        if (bucketId === 10) bucketId = 9;
+        buckets[bucketId]++;
+      }
+    });
+    let distribution = [];
+    Object.keys(buckets).forEach(function (b) {
+      distribution.push({bucket: parseInt(b), count: buckets[b]})
+    });
+    return {distribution: distribution};
+
+  };
+
+  /**
+  * Make distribution of scores
+  * Needed for tests before jan exams
+  * @param semester
+  * @param program
+  * @returns {{distribution: Array}}
+  */
+  let getScoreDistribution = function (semester, program) {
+    let scores = Boekingen.find({$and:[{Academiejaar: currentAcademiejaar},{Academischeperiode:semester},{Opleiding: program},{Score: { "$gte": -1, "$lt": 21 } }]},{fields:{Score:1}});
+
+    var buckets = {};
+    for (var i = 0; i < 10; i++) {
+      buckets[i] = 0;
+    }
+    //For each of the 10 categories count number of occurrences
+    scores.forEach(function (s) {
+      var bucketId = parseInt(s.Score / 2);
+      if (bucketId === 10) bucketId = 9;
+      buckets[bucketId]++;
+    });
+
+    let distribution = [];
+    Object.keys(buckets).forEach(function (b) {
+      distribution.push({bucket: parseInt(b), count: buckets[b]})
+    });
+    return {distribution: distribution};
+  };
 
 /**
- *
- * @param search
- * @param collection
- * @param gradeField
- * @returns {{numberPerGrades: {}, min: Number, max: Number, total: number}}
+ * Find all cses of students of a given program in a given semester
+ * @param semester Eerste semester or Tweede semester
+ * @param program
+ * @returns {Array}
  */
-var helper_GetDistribution = function (search, collection, gradeField) {
-  var numberPerGrades = {};
-  var total = 0;
-  //get all grades of this year
-  var studentGrades = collection.find(search);
-
-  var min = Number.MAX_VALUE;
-  var max = Number.MIN_VALUE;
-  //console.log(studentGrades);
-  studentGrades.forEach(function (student) {
-    //get correct grade
-    var grade = 0;
-    if (student[gradeField] == "NA" || student[gradeField] == "#" || student[gradeField] == "GR") return;
-    grade = parseInt(student[gradeField]);
-    //Initialise the count on 0 if the first with this score
-    if (numberPerGrades[grade] === undefined)
-      numberPerGrades[grade] = {grade: grade, count: 0};
-    numberPerGrades[grade].count++;
-  });
-
-  Object.keys(numberPerGrades).forEach(function (score) {
-    if (min > numberPerGrades[score].count)
-      min = numberPerGrades[score].count;
-    if (max < numberPerGrades[score].count)
-      max = numberPerGrades[score].count;
-  });
-
-
-  numberPerGrades = Object.keys(numberPerGrades).map(function (key) {
-    return numberPerGrades[key];
-  });
-  return {numberPerGrades: numberPerGrades, min: min, max: max, total: total};
-};
-
-var helper_getCSEEntry = function (semester) {
-  var cse_entry = 'cse3';
-  switch (semester) {
-    case 1:
-      cse_entry = 'cse1';
-      break;
-    case 2:
-      cse_entry = 'cse2';
-      break;
-    default:
-      cse_entry = 'cse3';
-  }
-  return cse_entry;
-
-};
-
-var helper_getCSEEntryStudent = function (semester) {
-  var cse_entry = 'cse_sep';
-  switch (semester) {
-    case 1:
-      cse_entry = 'cse_jan';
-      break;
-    case 2:
-      cse_entry = 'cse_jun';
-      break;
-    default:
-      cse_entry = 'cse_jun';
-  }
-  return cse_entry;
-
-};
-
-var helper_relativateDict = function (dict) {
-  var resultDict = {"+0": 0, "+1": 0, "+2": 0, "N": 0};
-  var sum = helper_sumDict(dict);
-  for (var key in dict) {
-    var counter = dict[key];
-    dict[key] = Math.round((counter / sum ) * 100)
-  }
-  return dict;
-}
-
-var helper_sumDict = function (obj) {
-  var sum = 0;
-  for (var el in obj) {
-    if (obj.hasOwnProperty(el)) {
-      sum += parseFloat(obj[el]);
+let getCSEs = function (semester, program) {
+    // let boeking = Boekingen.findOne({$and: [{Student: {$in: studentids}},{"Nieuwi/dopleiding": "J"} ,{Academiejaar:currentAcademiejaar}]});
+    let boekingen = Boekingen.find({$and: [{Opleiding: program},{"Nieuwi/dopleiding": "J"} ,{Academiejaar:currentAcademiejaar}, {"Student-Voornaam(Key)": {$ne: "Undefined"}}]});
+    let cses = [];
+    console.log(semester)
+    switch (semester) {
+      case "Eerste Semester":
+        boekingen.forEach(function (b) {
+          let cse = b.CSEJanuari;
+          cses.push(cse)
+        });
+        break;
+      case "Tweede Semester":
+        boekingen.forEach(function (b) {
+          let cse = b.CSEJuni;
+          cses.push(cse)
+        });
+        break;
+      default:
+        boekingen.forEach(function (b) {
+          let cse = b.CSEJanuari;
+          cses.push(cse)
+        });
+        break;
     }
-  }
-  return sum;
-}
+    return cses;
+  };
+
+  let distinct = function(collection, field, program) {
+    return _.uniq(
+      collection.find(
+        {$and: [
+          {"Nieuwi/dopleiding" : "J"},
+          {Academiejaar: currentAcademiejaar},
+          {Opleiding: program}
+        ]}
+        ,
+        {sort: {[field]: 1}}
+      )
+      .fetch()
+      .map(x => x[field])
+      , true);
+    };
 
 
-
-var helper_GetCreditsTakenSemester = function (who, semester) {
-  let credits = 0;
-  // get all courseIds of student
-  var studentGrades = Grades.find({studentid: who});
-  var studentCourseIds = [];
-  studentGrades.forEach(function (g) {
-    studentCourseIds.push(g.courseid);
-  })
-
-  // Find all courses of the student
-  var coursesStudent = Courses.find({
-    courseid: {$in: studentCourseIds},
-    semester: semester
-  }).fetch();
-
-  //Find all courses that taking a year
-  var yearcoursesStudent = Courses.find({
-    courseid: {$in: studentCourseIds},
-    semester: 0
-  }).fetch();
-
-  coursesStudent.forEach(function (c) {
-    credits += c.credits
-  });
-  if (semester == 2) {
-    yearcoursesStudent.forEach(function (c) {
-      credits += c.credits
-    });
-  }
-
-  return credits;
+    //
+    //FUNCTIONS NEEDED FOR COURSEDISTRIBUTION
+    //
 
 
-};
+    /**
+    * Return the distribution of the course
+    * @param courseid
+    * @param year
+    * @param gradeField
+    * @returns {{numberPerGrades: {}, min: Number, max: Number, total: number}}
+    */
+    let getCoursePointDistributionSemester = function (courseid, gradeField) {
+      var numberPerGrades = {};
+      var total = 0;
+      let allGrades  = Boekingen.find({$and:[{IDOPO : courseid},{Academiejaar: currentAcademiejaar}]});
+      var min = Number.MAX_VALUE;
+      var max = Number.MIN_VALUE;
+      allGrades.forEach(function (student) {
+        //get correct grade
+        var grade = 0;
+        if (student[gradeField] == "NA" || student[gradeField] == "#" || student[gradeField] == "GR") return;
+        grade = parseInt(student[gradeField]);
+        //Initialise the count on 0 if the first with this score
+        if (numberPerGrades[grade] === undefined)
+        numberPerGrades[grade] = {grade: grade, count: 0};
+        numberPerGrades[grade].count++;
+      });
+      Object.keys(numberPerGrades).forEach(function (score) {
+        if (min > numberPerGrades[score].count)
+        min = numberPerGrades[score].count;
+        if (max < numberPerGrades[score].count)
+        max = numberPerGrades[score].count;
+      });
 
 
+      numberPerGrades = Object.keys(numberPerGrades).map(function (key) {
+        return numberPerGrades[key];
+      });
+      return {numberPerGrades: numberPerGrades, min: min, max: max, total: total};
+    };
 
+    let getStudentIds = function(program, limit1, limit2, semester) {
+      console.log(program)
 
-
-
-
+      let years = ["2009-2010", "2010-2011", "2011-2012", "2012-2013"];
+      switch (semester){
+        case "Eerste Semester":
+          var top    = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}},{"Nieuwi/dopleiding": "J"}, {CSEJanuari: {$gt: limit1} }]}).fetch();
+          var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}},{"Nieuwi/dopleiding": "J"}, {CSEJanuari: { $gte: limit2, $lte: limit1 } }]}).fetch();
+          var low    = Boekingen.find({$and:
+            [{Opleiding: program},
+              {Academiejaar: {$in: years}},
+              {CSEJanuari: {$lt: limit2}},
+              {"Nieuwi/dopleiding": "J"}
+            ]}).fetch();
+          break;
+        default:
+          var top    = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJanuari: {$gt: limit1} }]});
+          var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJanuari: { $gte: limit2, $lte: limit1 } }]});
+          var low    = Boekingen.find({$and:
+            [{Opleiding: program},
+              {Academiejaar: {$in: years}},
+              {CSEJanuari: {$lt: limit2}},
+            ]});
+            break;
+        }
+        let toplist = [];
+        let midlist = [];
+        let lowlist = [];
+      if (typeof top.forEach == "function") {
+        top.forEach(function (boeking) {
+          toplist.push(boeking.Student)
+        });
+      }
+      if (typeof middle.forEach == "function") {
+        middle.forEach(function (boeking) {
+          midlist.push(boeking.Student)
+        });
+      }
+      if (typeof low.forEach == "function") {
+        low.forEach(function (boeking) {
+          lowlist.push(boeking.Student)
+        });
+      }
+      return [toplist, midlist, lowlist]
+      }
