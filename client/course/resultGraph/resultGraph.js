@@ -33,7 +33,7 @@ Template.resultGraph.helpers({
     let courseSemester = this.Academischeperiode;
     let scoreEntry = getScoreEntry(courseSemester);
     let score = this[scoreEntry];
-    return score;
+    return parseInt(score);
   }
 });
 

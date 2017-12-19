@@ -196,6 +196,7 @@ Template.future.onRendered(function () {
      */
     Meteor.call("getHistoricDistribution", Session.get('program'), Session.get("semesterString"), Session.get('limit1'), Session.get('limit2'), function (err, listDicts) {
       [topDict, middleDict, lowDict] = listDicts;
+      console.log(topDict)
       //Make list of dictionary
       topCSEDistribution = [topDict['0'], topDict['1'], topDict['2']];
       middleCSEDistribution = [middleDict['0'], middleDict['1'], middleDict['2']];

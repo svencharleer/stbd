@@ -58,7 +58,7 @@ Template.trajectoryperiod.onRendered(function () {
         .attr("class", "row")
         .selectAll("circle")
         .data(function (d) {
-          let dots = Math.round(((50 * d.count) / total));
+          let dots = Math.ceil(((50 * d.count) / total));
           if (dots > 35) dots = 35;
           return d3.range(dots);
         })
@@ -93,7 +93,7 @@ Template.trajectoryperiod.onRendered(function () {
         .ease("exp")
         .attr("cx", function (d, i) {
           let parent = d3.select(this.parentNode).datum().count;
-          let start = (Math.round(((50 * parent) / total)) * 8) + 2;
+          let start = (Math.ceil(((50 * parent) / total)) * 8) + 2;
           return ((width / 2) + (i * 8)) - start / 2;
         });
 
@@ -109,7 +109,14 @@ Template.trajectoryperiod.onRendered(function () {
           return (100 - (d.bucket * 10));
         })
         .text(function (d) {
-          return ((Math.round((50 * d.count) / total) * 2)) + "%";
+          let value = ((50 * d.count) / total) * 2
+          let roundedValue = Math.round(value)
+          if (value != 0 && roundedValue == 1){
+            return "1%"
+          }
+          else{
+            return roundedValue + "%"
+          }
         })
         .attr("width", 180)
         .attr("height", 4)

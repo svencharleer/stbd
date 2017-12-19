@@ -238,14 +238,14 @@ Template.dashboard.helpers({
 });
 
 let getCSETests = function(studentid, period, year, program){
-  let boekingen = Boekingen.find({$and: [{Student: studentid}, {Academischeperiode: period}, {Opleiding:program}, {Academiejaar: year}]});
+  let boekingen = Boekingen.find({$and: [{Student: studentid}, {Academischeperiode: period},{ "Score": { $ne: "#" }}, {Opleiding:program}, {Academiejaar: year}]});
   let nb = 0;
   let score = 0;
   let cse = 0;
   boekingen.forEach(function (b) {
     if (b.Score >= 0){
       nb ++;
-      score += b.Score
+      score += parseInt(b.Score)
     }
   });
   let newCse = parseInt(5*score / nb);

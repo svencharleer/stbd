@@ -452,8 +452,8 @@ Meteor.methods({
   * @returns {{distribution: Array}}
   */
   let getScoreDistribution = function (semester, program) {
-    let scores = Boekingen.find({$and:[{Academiejaar: currentAcademiejaar},{Academischeperiode:semester},{Opleiding: program},{Score: { "$gte": -1, "$lt": 21 } }]},{fields:{Score:1}});
-
+    console.log(semester, program, currentAcademiejaar)
+    let scores = Boekingen.find({$and:[{Academiejaar: currentAcademiejaar},{Academischeperiode:semester},{Opleiding: program},{ "Score": { $gte: "0", $lte: "20" }}]},{fields:{Score:1}});
     var buckets = {};
     for (var i = 0; i < 10; i++) {
       buckets[i] = 0;
@@ -566,8 +566,6 @@ let getCSEs = function (semester, program) {
     };
 
     let getStudentIds = function(program, limit1, limit2, semester) {
-      console.log(program)
-
       let years = ["2009-2010", "2010-2011", "2011-2012", "2012-2013"];
       switch (semester){
         case "Eerste Semester":
@@ -608,5 +606,6 @@ let getCSEs = function (semester, program) {
           lowlist.push(boeking.Student)
         });
       }
+      console.log(toplist)
       return [toplist, midlist, lowlist]
       }
