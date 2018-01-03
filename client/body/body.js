@@ -230,10 +230,12 @@ Template.body.helpers({
 
     var results = [];
     var searchTerm = {semester:semester};
-    var courses = Courses.find(searchTerm, {sort:{semester:1, coursename:1}});
-    if (semester == 2){
-      courses = Courses.find({$or:[{semester:0},{semester:2}]},{sort:{semester:1, coursename:1}});
-    }
+    var courses = Courses.find(searchTerm, {sort:{semester:semester, coursename:1}});
+    // semester 0 is needed for courses during the whole academic year
+    // but Sven gave ttt also semester 0
+    // if (semester == 2){
+    //   courses = Courses.find({$or:[{semester:0},{semester:2}]},{sort:{semester:1, coursename:1}});
+    // }
     var testStudent = Grades.findOne();
     if(testStudent == undefined || testStudent.studentid != Session.get("student"))
     {
@@ -267,9 +269,9 @@ Template.body.helpers({
   coursesLeft(sem){
     var results = [];
     var courses = Courses.find({semester:sem},{sort:{semester:1, coursename:1}});
-    if (sem == 2){
-      courses = Courses.find({$or:[{semester:0},{semester:2}]},{sort:{semester:1, coursename:1}});
-    }
+    // if (sem == 2){
+    //   courses = Courses.find({$or:[{semester:0},{semester:2}]},{sort:{semester:1, coursename:1}});
+    // }
     var testStudent = Grades.findOne();
     if(testStudent == undefined || testStudent.studentid != Session.get("student"))
     {

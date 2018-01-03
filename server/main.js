@@ -723,9 +723,10 @@ var helper_GetCreditsTakenSemester =  function(who, semester){
   }).fetch();
 
   //Find all courses that taking a year
+  //todo fixed for demo
   var yearcoursesStudent = Courses.find({
     courseid:{$in:studentCourseIds},
-    semester: 0
+    semester: 4
   }).fetch();
 
   coursesStudent.forEach(function(c){

@@ -10,7 +10,7 @@ Helpers_CalculateCSE = function(semester,year, pure) //1 2 3 (sept) 0 = TTT
   if(semester == 1)
     courses = Courses.find({semester:semester}).fetch();
   else
-    courses = Courses.find({$or:[{semester:0},{semester:1},{semester:2}]}).fetch(); //don't get TTTs
+    courses = Courses.find({$or:[{semester:1},{semester:2}]}).fetch(); //don't get TTTs
   var cse = 0;
   var totalcse = 0;
   var cse_forprint = "";
