@@ -28,7 +28,7 @@ def insert_grade(document, collection):
     # Insert grade into document + update finalscore
 
     # possibile scores
-    possible_scores = [0,4,9,10,15,20,"NA","#", "GR"]
+    possible_scores = [0,1,2,2,3,4,4,4,5,5,5,5,6,6,7,7,8,8,8,8,9,9,9,9,9,9,9,10,10,10,10,10,11,11,11,12,12,12,12,12,12,12,13,14,14,14,14,15,15,15,15,16,16,16,17,18,19,20,"NA","#", "GR"]
 
     grade_try1 = document['grade_try1']
     # Generate random score
