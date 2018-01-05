@@ -1,14 +1,31 @@
 -- connect to stela-two
--- SELECT * FROM dbo.lissa_historic_boekingen_raw;
--- GO
+SELECT * FROM dbo.lissa_historic_boekingen_raw;
+GO
 --import this collection into mongo
 --mongoimport --host localhost:3001 --db meteor --type csv --headerline --collection boekingen --file boekingen.csv
 
 
 
-SELECT * FROM dbo.lissa_historic_doorloop_raw;
-GO
+-- SELECT * FROM dbo.lissa_historic_doorloop_raw;
+-- GO
 
 -- SELECT * FROM dbo.lissa_historic_registraties_raw;
 -- GO
+
+-- SELECT DISTINCT
+
+--     Opleiding AS Opleiding,
+
+--     CASE
+--         WHEN Opleiding LIKE 'S MA industri%'
+--         THEN RTRIM(REPLACE(REPLACE(
+--                 SUBSTRING(Opleiding, 1, CHARINDEX(':', Opleiding) -1)
+--                 + ' ' + RIGHT(Opleiding, CHARINDEX('(',REVERSE(Opleiding)) ) ,
+--                 '(St', '(StKa)'
+--             ),'Ka)Ka', 'Ka'))
+--         -- ELSE Opleiding
+--     END AS Opleiding_mapped
+
+
+-- FROM lissa_historic_registraties_raw
 

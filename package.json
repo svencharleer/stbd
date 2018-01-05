@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
+    "bcrypt": "^1.0.3",
     "catty": "0.0.7",
     "lodash": "^4.17.4",
     "meteor-node-stubs": "^0.2.11",
