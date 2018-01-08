@@ -12,25 +12,6 @@ Meteor.publish('own_boekingen', function (program, studentid) {
   return own;
 });
 
-// Meteor.publish('cse_tool', function(program){
-//   let students = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: ["2009-2010", "2010-2011", "2011-2012", "2012-2013"]}}]}).fetch();
-//   students = _.uniq(students, false, function(s) {return s.Student});
-//   let studentList = [];
-//   let studentCSE  = [];
-//   let historic    = [];
-//   students.forEach(function(b){
-//     studentList.push(b.Student);
-//     studentCSE.push({student: b.Student, cse: b.CSEJanuari});
-//   });
-//   Historic.find({Student: {$in: studentList}}).forEach(function (s) {
-//     historic.push({student: s["Student"], year: s["Doorloop: Studieduur"]});
-//   });
-//   return [studentCSE,historic];
-// });
-
-// Meteor.publish('program_boekingen', function (program) {
-//   return Boekingen.find( {$and:[{Opleiding: program},{Academiejaar: currentAcademiejaar }]}, {fields:{Student:0, Aanlognummer:0, "Student-Familienaam(Key)":0}});
-// });
 
 Meteor.methods({
   /**
@@ -452,7 +433,6 @@ Meteor.methods({
   * @returns {{distribution: Array}}
   */
   let getScoreDistribution = function (semester, program) {
-    console.log(semester, program, currentAcademiejaar)
     let scores = Boekingen.find({$and:[{Academiejaar: currentAcademiejaar},{Academischeperiode:semester},{Opleiding: program},{ "Score": { $gte: "0", $lte: "20" }}]},{fields:{Score:1}});
     var buckets = {};
     for (var i = 0; i < 10; i++) {
@@ -482,7 +462,6 @@ let getCSEs = function (semester, program) {
     // let boeking = Boekingen.findOne({$and: [{Student: {$in: studentids}},{"Nieuwi/dopleiding": "J"} ,{Academiejaar:currentAcademiejaar}]});
     let boekingen = Boekingen.find({$and: [{Opleiding: program},{"Nieuwi/dopleiding": "J"} ,{Academiejaar:currentAcademiejaar}, {"Student-Voornaam(Key)": {$ne: "Undefined"}}]});
     let cses = [];
-    console.log(semester)
     switch (semester) {
       case "Eerste Semester":
         boekingen.forEach(function (b) {
@@ -566,7 +545,7 @@ let getCSEs = function (semester, program) {
     };
 
     let getStudentIds = function(program, limit1, limit2, semester) {
-      let years = ["2009-2010", "2010-2011", "2011-2012", "2012-2013"];
+      let years = ["2009-2010", "2010-2011", "2011-2012", "2012-2013", "2013-2014"];
       switch (semester){
         case "Eerste Semester":
           var top    = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}},{"Nieuwi/dopleiding": "J"}, {CSEJanuari: {$gt: limit1} }]}).fetch();
@@ -606,6 +585,5 @@ let getCSEs = function (semester, program) {
           lowlist.push(boeking.Student)
         });
       }
-      console.log(toplist)
       return [toplist, midlist, lowlist]
       }
