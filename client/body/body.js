@@ -243,9 +243,15 @@ let getCSETests = function(studentid, period, year, program){
   let score = 0;
   let cse = 0;
   boekingen.forEach(function (b) {
-    if (b.Score >= 0){
+    if (b.Score === "NA"){
+      nb ++
+    }
+    else if (b.Score >= 0){
       nb ++;
       score += parseInt(b.Score)
+    }
+    else{
+      console.log(b.Score)
     }
   });
   let newCse = parseInt(5*score / nb);

@@ -43,11 +43,11 @@ Meteor.methods({
     switch (semester){
       case "IJK": //ijkingstoets
       case "TTT": ///a TTT test
-      distribution =  getScoreDistribution(semester, program);
-      break;
+        distribution =  getScoreDistribution(semester, program);
+        break;
       default:
-      distribution =  getSemesterCSEDistribution(semester, program);
-      break;
+        distribution =  getSemesterCSEDistribution(semester, program);
+        break;
     }
     return distribution;
   },
@@ -117,11 +117,10 @@ Meteor.methods({
    * @param limit2
    * @returns {[null,null,null]}
    */
-  //todo check if csetool is using same data
   getHistoricDistribution: function (program, semester, limit1, limit2) {
-    var topDict    = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
-    var middleDict = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
-    var lowDict    = {0:0, 1:0, 2:0, NULL: 0, "-1":0};
+    var topDict    = {0:0, 1:0, 2:0, 99:0, NULL: 0, "-1":0, "-2":0};
+    var middleDict = {0:0, 1:0, 2:0, 99:0, NULL: 0, "-1":0, "-2":0};
+    var lowDict    = {0:0, 1:0, 2:0, 99:0, NULL: 0, "-1":0, "-2":0};
     let top;
     let middle;
     let low;
@@ -132,19 +131,47 @@ Meteor.methods({
     if (typeof topdoorloop.forEach == "function"){
       topdoorloop.forEach(function (student) {
         let trajectStudent = student["Doorloop: Studieduur"];
-        topDict[trajectStudent] += 1;
+        //98 means we have no data, but he has not quited
+        if (trajectStudent === 98){
+	        topDict[2] += 1;
+        }
+        else if (trajectStudent < 0){
+	        topDict[0] += 1;
+        }
+        else{
+	        topDict[trajectStudent] += 1;
+        }
+
       });
     }
     if (typeof middledoorloop.forEach == "function"){
       middledoorloop.forEach(function (student) {
         let trajectStudent = student["Doorloop: Studieduur"];
-        middleDict[trajectStudent] += 1;
+	      //98 means we have no data, but he has not quited
+	      if (trajectStudent === 98){
+		      middleDict[2] += 1;
+	      }
+	      else if (trajectStudent < 0){
+		      middleDict[0] += 1;
+	      }
+	      else{
+		      middleDict[trajectStudent] += 1;
+	      }
       });
     }
     if (typeof lowdoorloop.forEach == "function"){
       lowdoorloop.forEach(function (student) {
         let trajectStudent = student["Doorloop: Studieduur"];
-        lowDict[trajectStudent] += 1;
+	      //98 means we have no data, but he has not quited
+	      if (trajectStudent === 98){
+		      lowDict[2] += 1;
+	      }
+	      else if (trajectStudent < 0){
+		      lowDict[0] += 1;
+	      }
+	      else{
+		      lowDict[trajectStudent] += 1;
+	      }
       });
     }
 
@@ -403,7 +430,7 @@ Meteor.methods({
   * @returns {{distribution: Array}}
   */
   let getSemesterCSEDistribution =  function (semester, program) {
-    // let studentIDs = distinct(Boekingen, "Student", program);
+  	//returns cses as a list
     let cses = getCSEs(semester, program);
     //initialise dict of buckets
     var buckets = {};
@@ -412,10 +439,13 @@ Meteor.methods({
     }
     //For each of the 10 categories count number of occurrences
     cses.forEach(function (cse) {
-      if (cse != "NULL"){
-        let bucketId = parseInt(cse / 10);
+      if (cse !== "NULL" && cse > 0){
+        let bucketId = parseInt((cse-1) / 10);
         if (bucketId === 10) bucketId = 9;
         buckets[bucketId]++;
+      }
+      else{
+      	buckets[0]++;
       }
     });
     let distribution = [];
@@ -434,16 +464,21 @@ Meteor.methods({
   * @returns {{distribution: Array}}
   */
   let getScoreDistribution = function (semester, program) {
-    let scores = Boekingen.find({$and:[{Academiejaar: currentAcademiejaar},{Academischeperiode:semester},{Opleiding: program},{ "Score": { $gte: "0", $lte: "20" }}]},{fields:{Score:1}});
+    let scores = Boekingen.find({$and:[{Academiejaar: currentAcademiejaar},{Academischeperiode:semester},{Opleiding: program},{ "Score": { $ne: "#" }}]},{fields:{Score:1}});
     var buckets = {};
     for (var i = 0; i < 10; i++) {
       buckets[i] = 0;
     }
     //For each of the 10 categories count number of occurrences
     scores.forEach(function (s) {
-      var bucketId = parseInt(s.Score / 2);
-      if (bucketId === 10) bucketId = 9;
-      buckets[bucketId]++;
+      if (s.Score === "NA"){
+	      buckets[0]++;
+      }
+      else{
+	      let bucketId = parseInt(s.Score / 2);
+	      if (bucketId === 10) bucketId = 9;
+	      buckets[bucketId]++;
+      }
     });
 
     let distribution = [];
@@ -460,7 +495,7 @@ Meteor.methods({
  * @returns {Array}
  */
 let getCSEs = function (semester, program) {
-    // let boeking = Boekingen.findOne({$and: [{Student: {$in: studentids}},{"Nieuwi/dopleiding": "J"} ,{Academiejaar:currentAcademiejaar}]});
+    //Find all boekingen of this year in this program that are new in the program and not a TTT or IJK (ne undefined)
     let boekingen = Boekingen.find({$and: [{Opleiding: program},{"Nieuwi/dopleiding": "J"} ,{Academiejaar:currentAcademiejaar}, {"Student-Voornaam(Key)": {$ne: "Undefined"}}]});
     let cses = [];
     switch (semester) {

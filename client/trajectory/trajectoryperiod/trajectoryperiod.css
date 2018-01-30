@@ -5,3 +5,7 @@
 .trace{
     height: 10px;
 }
+
+text{
+    text-anchor: start;
+}

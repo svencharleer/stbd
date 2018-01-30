@@ -103,7 +103,7 @@ Template.trajectoryperiod.onRendered(function () {
           return "tooltip tooltip" + d.bucket;
         })
         .style("z-index", 1000)
-        .attr("x", 350)
+        .attr("x", 0)
         .attr("text-anchor", "end")
         .attr("y", function (d, i) {
           return (100 - (d.bucket * 10));
