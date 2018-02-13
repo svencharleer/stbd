@@ -199,7 +199,7 @@ Meteor.methods({
     });
     //push historic data to array.
     Historic.find({Student: {$in: studentList}}).forEach(function (s) {
-      historic.push({student: s["Student"], year: s["Doorloop: Studieduur"]});
+      historic.push({student: s["Student"], year: s["Doorloop:Studieduur"]});
     });
     //merge both collections.
     let data   = _.map(historic, function(obj) {
