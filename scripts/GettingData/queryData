@@ -1,14 +1,22 @@
 -- connect to stela-two
--- SELECT * FROM dbo.lissa_historic_boekingen_raw;
--- GO
+SELECT * FROM dbo.lissa_historic_boekingen_alt;
+GO
 --import this collection into mongo
 --mongoimport --host localhost:3001 --db meteor --type csv --headerline --collection boekingen --file boekingen.csv
 
 
 
-SELECT * FROM dbo.lissa_historic_doorloop_raw;
-GO
+-- SELECT * FROM dbo.lissa_historic_doorloop_alt;
+-- GO
 
 -- SELECT * FROM dbo.lissa_historic_registraties_raw;
+-- GO
+
+-- SELECT DISTINCT
+
+--     [IDOPO]
+
+
+-- FROM lissa_historic_boekingen_alt
 -- GO
 

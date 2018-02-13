@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 let _ = require('lodash');
 
-let currentAcademiejaar = "2016-2017";
+let currentAcademiejaar = "2017-2018";
 let Boekingen = new Mongo.Collection('boekingen');
 let Historic = new Mongo.Collection("doorloop");
 let Tokens = new Mongo.Collection("tokens");
@@ -130,7 +130,7 @@ Meteor.methods({
     let lowdoorloop    = Historic.find({Student: {$in: low}});
     if (typeof topdoorloop.forEach == "function"){
       topdoorloop.forEach(function (student) {
-        let trajectStudent = student["Doorloop: Studieduur"];
+        let trajectStudent = student["Doorloop:Studieduur"];
         //98 means we have no data, but he has not quited
         if (trajectStudent === 98){
 	        topDict[2] += 1;
@@ -146,7 +146,7 @@ Meteor.methods({
     }
     if (typeof middledoorloop.forEach == "function"){
       middledoorloop.forEach(function (student) {
-        let trajectStudent = student["Doorloop: Studieduur"];
+        let trajectStudent = student["Doorloop:Studieduur"];
 	      //98 means we have no data, but he has not quited
 	      if (trajectStudent === 98){
 		      middleDict[2] += 1;
@@ -161,7 +161,7 @@ Meteor.methods({
     }
     if (typeof lowdoorloop.forEach == "function"){
       lowdoorloop.forEach(function (student) {
-        let trajectStudent = student["Doorloop: Studieduur"];
+        let trajectStudent = student["Doorloop:Studieduur"];
 	      //98 means we have no data, but he has not quited
 	      if (trajectStudent === 98){
 		      lowDict[2] += 1;
@@ -178,7 +178,6 @@ Meteor.methods({
     topDict    = helper_relativateDict(topDict);
     middleDict = helper_relativateDict(middleDict);
     lowDict    = helper_relativateDict(lowDict);
-
     return [topDict, middleDict, lowDict];
   },
   /**
@@ -551,6 +550,7 @@ let getCSEs = function (semester, program) {
     * @returns {{numberPerGrades: {}, min: Number, max: Number, total: number}}
     */
     let getCoursePointDistributionSemester = function (courseid, gradeField) {
+      console.log(courseid, gradeField)
       var numberPerGrades = {};
       var total = 0;
       let allGrades  = Boekingen.find({$and:[{IDOPO : courseid},{Academiejaar: currentAcademiejaar}]});
@@ -584,7 +584,8 @@ let getCSEs = function (semester, program) {
       let years = ["2009-2010", "2010-2011", "2011-2012", "2012-2013", "2013-2014"];
       switch (semester){
         case "Eerste Semester":
-          var top    = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}},{"Nieuwi/dopleiding": "J"}, {CSEJanuari: {$gt: limit1} }]}).fetch();
+          // console.log('eerste semester', program)
+	        var top    = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}},{"Nieuwi/dopleiding": "J"}, {CSEJanuari: {$gt: limit1} }]}).fetch();
           var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}},{"Nieuwi/dopleiding": "J"}, {CSEJanuari: { $gte: limit2, $lte: limit1 } }]}).fetch();
           var low    = Boekingen.find({$and:
             [{Opleiding: program},

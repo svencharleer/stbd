@@ -11,7 +11,7 @@ Template.student.events = {
       rootRoute = Meteor.settings.public.rootroute == undefined ? "dev" : Meteor.settings.public.rootroute;
       var year = Session.get("StartYear");
       //todo change this to 2017
-      if (year == undefined) year = 2016;
+      if (year == undefined) year = 2017;
 
       let view = Blaze.getView($(".dashboardcontainer")[0]);
       let view2 = Blaze.getView($(".nostudent")[0]);
