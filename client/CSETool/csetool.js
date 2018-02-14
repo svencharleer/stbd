@@ -60,7 +60,7 @@ Template.CSETool.onRendered(function () {
   .attr("r", 3)
   .attr("class", function(d){
     let name;
-    if(d.year == "NULL") name = "bad";
+    if(d.year == 99) name = "bad";
     if(d.year == 2)      name = "low";
     if(d.year == 1)      name = "mid";
     if(d.year <  1)      name = "top";
@@ -68,7 +68,7 @@ Template.CSETool.onRendered(function () {
   })
   .style("fill", function(d) {
     let color = "";
-    if(d.year == "NULL") color = "rgba(255, 193, 227, 1)";
+    if(d.year == 99) color = "rgba(255, 193, 227, 1)";
     if(d.year == 2)      color = "rgba(159, 168, 218, 1)";
     if(d.year == 1)      color = "rgba(128, 222, 234, 1)";
     if(d.year <  1)      color = "rgba(165, 214, 167, 1)";
