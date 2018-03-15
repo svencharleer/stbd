@@ -1,5 +1,7 @@
 # LISSA
 
+![alt text] (https://github.com/svencharleer/stbd/blob/master/LISSA-demo.png)
+
 ## How to...
 
 Import data from JSON files into meteor database.
