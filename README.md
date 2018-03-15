@@ -1,6 +1,6 @@
 # LISSA
 
-![alt text] (https://github.com/svencharleer/stbd/blob/master/LISSA-demo.png)
+Screenshot: https://github.com/svencharleer/stbd/blob/master/LISSA-demo.png
 
 ## How to...
 
