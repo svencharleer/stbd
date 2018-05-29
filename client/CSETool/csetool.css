@@ -1,0 +1,62 @@
+.cse-tool-container {
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cse-tool.title {
+  font-weight: 100;
+  font-size: 32px;
+  color: #424242;
+  margin-bottom: 16px;
+}
+
+.cse-tool.tool-groups {
+  display: flex;
+  justify-content: space-around;
+  width: 800px;
+}
+
+.csetool.legend {
+  width: 150px;
+}
+
+.cse-tool.ct-slider {
+  width: 240px;
+  height: 60px;
+}
+
+.cse-tool.ct-slider .slider-title {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 8px;
+  color: #424242;
+}
+
+.cse-tool.controls {
+  display: flex;
+  width: 700px;
+  justify-content: space-between;
+}
+
+#cse-tool-d3 svg {
+  overflow: visible;
+}
+
+#cse-tool-d3 svg circle {
+  transition: all 0.8s ease;
+}
+
+#cse-tool-d3 .sql-bad{r: 3px; fill: rgba(255, 193, 227, 1);}
+#cse-tool-d3 .sql-low{r: 3px; fill: rgba(159, 168, 218, 1);}
+#cse-tool-d3 .sql-mid{r: 3px; fill: rgba(128, 222, 234, 1);}
+#cse-tool-d3 .sql-top{r: 3px; fill: rgba(165, 214, 167, 1);}
+
+#cse-tool-d3 svg text {
+  font-size: 12px;
+  fill: #646464;
+  font-style: italic;
+  font-weight: 100;
+}

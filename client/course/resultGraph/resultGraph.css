@@ -1,16 +1,36 @@
 
+.course.white {
+    border-color: white;
+}
 
-.course.white  { border-color: white; }
-.course.failed { border-color: #ff8a80; }
-.course.passed { border-color: #a5d6a7; }
-.course.tolerable { border-color: #ffcc80; }
+.course.failed {
+    border-color: var(--Fail);
+}
 
-.course .top-bar.failed { background: #ff8a80; }
-.course .top-bar.passed { background: #a5d6a7; }
-.course .top-bar.tolerable { background: #ffcc80; }
+.course.passed {
+    border-color: var(--Pass);
+}
+
+.course.tolerable {
+    border-color: var(--Tolerable);
+}
+
+.course .top-bar.failed {
+    background: var(--Fail);
+}
+
+.course .top-bar.passed {
+    background: var(--Pass);
+}
+
+.course .top-bar.tolerable {
+    background: var(--Tolerable);
+}
 
 /*.course .top-bar.failed:hover    { background: #ec877e; }
 .course .top-bar.passed:hover    { background: #9fcca1; }
 .course .top-bar.tolerable:hover { background: #eabd79; }*/
 
-.course .top-bar {cursor: pointer;}
+.course .top-bar {
+    cursor: pointer;
+}

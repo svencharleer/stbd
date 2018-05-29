@@ -1,0 +1,41 @@
+.register {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+.register-container {
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.register .access-tool {
+  display: flex;
+  flex-direction: column;
+}
+
+.register .access-tool paper-button {
+  align-self: flex-end;
+  background: #3F51B5;
+  color: white;
+  margin-top: 8px;
+}
+
+.register .access-tool a {
+  align-self: flex-end;
+  margin-top: 16px;
+}
+
+.register h1 {
+  font-weight: 100;
+  color: #828282;
+  cursor: default;
+}
+
+.register .token-error {
+  display: none;
+  position: absolute;
+  color: #e74c3c;
+}

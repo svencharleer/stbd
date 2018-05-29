@@ -1,24 +1,43 @@
 Template.student.events = {
-  'keypress input': function (evt, template) {
-    if (evt.which === 13) {
+  'keypress input': function (event, template) {
+    console.log("keypress")
+    if (event.which === 13) {
+      //todo official way to unsubscribe?
+      Boekingen._collection.find({}).forEach(report => {
+        Boekingen._collection.remove(report._id)
+      });
       var studentNr = template.find("input").value;
-
-
+      console.log(studentNr)
       rootRoute = Meteor.settings.public.rootroute == undefined ? "dev" : Meteor.settings.public.rootroute;
-//      Meteor.subscribe("studentgrades",Session.get("student"));
-//      Meteor.subscribe("ijkingstoets", Session.get("student"));
       var year = Session.get("StartYear");
-      if(year == undefined) year = 2016;
+      //todo change this to 2017
+      if (year == undefined) year = 2017;
+
+      let view = Blaze.getView($(".dashboardcontainer")[0]);
+      let view2 = Blaze.getView($(".nostudent")[0]);
+      Blaze.remove(view);
+      Blaze.remove(view2);
+      Session.set("alive", false);
       Router.go("/" + rootRoute + "/" + year + "/" + studentNr);
+      $(".register").fadeIn();
 
-
-      //document.location.reload(true);
     }
-    clicks.insert({'session': Session.get('Id'), 'studentid': Session.get('student') , 'element': 'student '  + studentNr, 'time': Date.now() , 'action': 'student'} )                                          
   }
 };
 
 Template.student.helpers({
-  student: function() {return Session.get("student")},
-  studentName: function() {return Session.get("studentName")}
+  student: function () {
+    return Session.get("student")
+  },
+  studentName: function () {
+    return Session.get("studentName")
+  },
+  newStudent: function () {
+    if (Session.get("new")){
+      return "nio"
+    }
+    else{
+      return "";
+    }
+  }
 });

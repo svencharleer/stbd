@@ -12,7 +12,8 @@
     "paper-progress": "PolymerElements/paper-progress#~1.0.9",
     "paper-spinner": "PolymerElements/paper-spinner#~1.2.0",
     "pixi.js": "pixi#~3.0.11",
-    "paper-input": "PolymerElements/paper-input#~1.1.11"
+    "paper-input": "PolymerElements/paper-input#~1.1.11",
+    "animate.css": "^3.5.2"
   },
   "private": true
 }

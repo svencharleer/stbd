@@ -1,7 +1,10 @@
 <template name="student">
-<div id="student">
-  <i class="fa fa-user" aria-hidden="true"></i>
-  <span id="studentName">{{studentName}}</span>
-  <input type="text" placeholder="Student #" value="{{student}}">
-</div>
+    <div id="student" class="student">
+        <i class="fa fa-user" aria-hidden="true"></i>
+        <span id="studentName">{{studentName}}</span>
+        <input type="text" placeholder="Student #" value="{{student}}">
+
+        <span id="nieuw">{{newStudent}}</span>
+        <paper-button>Go</paper-button>
+    </div>
 </template>

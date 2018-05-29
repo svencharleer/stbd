@@ -1,13 +1,12 @@
 {
-     "public":{
-            "rootroute":"dev",
-            "cselimit1": 90,
-            "cselimit2": 60,
-            "ijkingstoets_juli" : true,
-            "ijkingstoets_september" : true,
-            "showJuni": true,
-            "showSeptember" :true,
-            "dynamic": true
-        }
+  "public":{
+    "rootroute":"dev",
+    "ijkingstoets_juli" : true,
+    "ijkingstoets_september" : true,
+    "showJuni": false,
+    "showSeptember" :false,
+    "dynamic": false,
+    "logging": false
+  }
 
 }
