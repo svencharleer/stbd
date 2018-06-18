@@ -184,7 +184,7 @@ Meteor.methods({
   * Frank CSE Tool
   * @String: program. The selected program to filter everything.
   */
-  getCSETool: function (program) {
+  getCSETool: function (program, cse) {
     let students = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: ["2009-2010", "2010-2011", "2011-2012", "2012-2013", "2013-2014"]}}]}).fetch();
     //let students = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: ["2009-2010", "2010-2011", "2011-2012", "2012-2013"]}}]}).fetch();
     students = _.uniqBy(students, 'Student');
@@ -194,8 +194,13 @@ Meteor.methods({
     let historic    = [];
     //push student's data to array.
     students.forEach(function(b){
+      let cse_opt = null;
+      console.log(cse);
+      if(cse == "cse1") cse_opt =  b.CSEJanuari;
+      if(cse == "cse2") cse_opt =  b.CSEJuni;
+      if(cse == "cse3") cse_opt =  b.CSESeptember;
       studentList.push(b.Student);
-      studentCSE.push({student: b.Student, cse: b.CSEJanuari});
+      studentCSE.push({student: b.Student, cse: cse_opt});
     });
     //push historic data to array.
     Historic.find({Student: {$in: studentList}}).forEach(function (s) {

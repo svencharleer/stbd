@@ -15,10 +15,20 @@ Template.register.events({
 
     }
   },
-  'click a': function (event) {
+  'click .cse1': function (event) {
     let token = $(".user-token").val();
     Session.set("token", token);
-    setCSEToolSettings(token);
+    setCSEToolSettings(token, "cse1");
+  },
+  'click .cse2': function (event) {
+    let token = $(".user-token").val();
+    Session.set("token", token);
+    setCSEToolSettings(token, "cse2");
+  },
+  'click .cse3': function (event) {
+    let token = $(".user-token").val();
+    Session.set("token", token);
+    setCSEToolSettings(token, "cse3");
   }
 });
 
@@ -53,7 +63,7 @@ let setProgramSettings = function (token, template) {
   })
 };
 
-let setCSEToolSettings = function (token) {
+let setCSEToolSettings = function (token, cse) {
   Meteor.call("getTokenInfo", token, function (err, data) {
     let validToken =  data[0];
     if (validToken){
@@ -62,7 +72,7 @@ let setCSEToolSettings = function (token) {
       Session.set("program", program);
       Session.set("limit2", cselimit1);
       Session.set("limit1", cselimit2);
-      loadCSETool();
+      loadCSETool(cse);
     }
     else{
       $(".token-error").fadeIn();
@@ -75,10 +85,10 @@ let setCSEToolSettings = function (token) {
   })
 };
 
-let loadCSETool = function () {
+let loadCSETool = function (cse) {
   $(".register").fadeOut(function(){
     $(".loading-csetool").css("display", "flex");
-    Meteor.call("getCSETool", Session.get('program'), function (err, data) {
+    Meteor.call("getCSETool", Session.get('program'), cse, function (err, data) {
       Session.set("cse_data", data);
       Blaze.render(Template.CSETool, $('body')[0]);
       $(".loading-csetool").fadeOut();
