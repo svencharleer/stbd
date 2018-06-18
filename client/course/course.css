@@ -120,3 +120,41 @@
     font-weight: 500;
     color: #424242;
 }
+
+
+
+.course.white {
+    border-color: white;
+}
+
+.course.failed {
+    border-color: var(--Fail);
+}
+
+.course.passed {
+    border-color: var(--Pass);
+}
+
+.course.tolerable {
+    border-color: var(--Tolerable);
+}
+
+.course .top-bar.failed {
+    background: var(--Fail);
+}
+
+.course .top-bar.passed {
+    background: var(--Pass);
+}
+
+.course .top-bar.tolerable {
+    background: var(--Tolerable);
+}
+
+/*.course .top-bar.failed:hover    { background: #ec877e; }
+.course .top-bar.passed:hover    { background: #9fcca1; }
+.course .top-bar.tolerable:hover { background: #eabd79; }*/
+
+.course .top-bar {
+    cursor: pointer;
+}

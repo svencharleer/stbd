@@ -11,10 +11,10 @@ Template.resultGraph.helpers({
     //todo fix this for resits
     let courseSemester = this.Academischeperiode;
     let scoreEntry = getScoreEntry(courseSemester);
-    let score = this[scoreEntry];
-    if (score < 8) color = "failed"; //"#ff8a80"; //failed
-    else if (score > 9 || score === "G") color = "passed"; //"#a5d6a7"; //passed
-    else if (score >= 8 && score <= 9) color = "tolerable"; // "#ffcc80"; //tolerable
+    let score = this.finalescorenajaar1;
+    if (score < 5) color = "failed"; //"#ff8a80"; //failed
+    else if (score > 5 || score === "G") color = "passed"; //"#a5d6a7"; //passed
+    else if (score >= 5 && score <= 5) color = "tolerable"; // "#ffcc80"; //tolerable
     else color = "failed"; // "#ff8a80"; //failed
     return color;
   },
@@ -30,10 +30,7 @@ Template.resultGraph.helpers({
     return credits > 0;
   },
   Score: function () {
-    let courseSemester = this.Academischeperiode;
-    let scoreEntry = getScoreEntry(courseSemester);
-    let score = this[scoreEntry];
-    return parseInt(score);
+    return parseInt(this.finalescorenajaar1);
   }
 });
 
@@ -72,41 +69,41 @@ Template.resultGraph.events({
 });
 
 
-Template.resultGraph.onRendered(function () {
-  let width = 140;
-  let height = 60;
-  let courseID = Template.instance().firstNode.id;
-  let svg = d3.select("#" + courseID).select(".histogram")
-    .attr("class", "histogram")
-    .attr("width", width)
-    .attr("height", height)
-    .attr("x", 0)
-    .attr("y", 0);
-
-  let template = Template.instance();
-
-  svg.append("g") // Add the dots to the graph!
-    .attr("class", "main-container")
-    .selectAll(".dots-container")
-    .data(function () {
-      let sample = [];
-      for (let i = 0; i <= 20; i++) sample.push({grade: i, count: 0});
-      sample.max = 20;
-      return sample;
-    })
-    .enter()
-    .append("g")
-    .attr("class", "dots-container");
-
-  Meteor.call("getDynamicSetting", function (err, dynamic) {
-    if (!dynamic) {
-      template.$(".course-bottom").css("max-height", "60px");
-      template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
-      template.show.set(true);
-    }
-  })
-
-});
+// Template.resultGraph.onRendered(function () {
+//   let width = 140;
+//   let height = 60;
+//   let courseID = Template.instance().firstNode.id;
+//   let svg = d3.select("#" + courseID).select(".histogram")
+//     .attr("class", "histogram")
+//     .attr("width", width)
+//     .attr("height", height)
+//     .attr("x", 0)
+//     .attr("y", 0);
+//
+//   let template = Template.instance();
+//
+//   svg.append("g") // Add the dots to the graph!
+//     .attr("class", "main-container")
+//     .selectAll(".dots-container")
+//     .data(function () {
+//       let sample = [];
+//       for (let i = 0; i <= 1; i++) sample.push({grade: i, count: 0});
+//       sample.max = 1;
+//       return sample;
+//     })
+//     .enter()
+//     .append("g")
+//     .attr("class", "dots-container");
+//
+//   Meteor.call("getDynamicSetting", function (err, dynamic) {
+//     if (!dynamic) {
+//       template.$(".course-bottom").css("max-height", "60px");
+//       template.$(".top-bar").css("box-shadow", "1px 1px 5px gainsboro");
+//       template.show.set(true);
+//     }
+//   })
+//
+// });
 
 /**
  *
@@ -128,4 +125,3 @@ let getScoreEntry = function (semester) {
   return score_entry;
 
 };
-

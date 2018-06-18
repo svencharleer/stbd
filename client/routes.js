@@ -2,11 +2,9 @@ import {Mongo} from 'meteor/mongo';
 import '../imports/helpers/CSE.js';
 import '../imports/helpers/courses.js';
 
-
 rootRoute = Meteor.settings.public.rootroute == undefined ? "dev" : Meteor.settings.public.rootroute;
 
-console.log("RouteRoot is " + rootRoute);
-Router.route('/' + rootRoute + '/:_year/:_id',
+Router.route('/:_id',
   function () {
     let year = parseInt(Router.current().params._year);
     let yearString = year + "-" + (year + 1);
@@ -14,7 +12,6 @@ Router.route('/' + rootRoute + '/:_year/:_id',
     Session.set("student", parseInt(Router.current().params._id));
     Session.set("Year", yearString);
     Session.set("StartYear", year);
-
   }
 );
 
@@ -32,4 +29,6 @@ Router.route('/' + rootRoute + '/:_year/',
   }
 );
 
-Boekingen = new Mongo.Collection('boekingen');
+Boekingen  = new Mongo.Collection('boekingen');
+Histogram  = new Mongo.Collection('histograms');
+Meteor.subscribe('histograms');

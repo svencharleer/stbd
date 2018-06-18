@@ -61,17 +61,17 @@ Template.CSETool.onRendered(function () {
   .attr("class", function(d){
     let name;
     if(d.year == 99) name = "bad";
-    if(d.year == 2)      name = "low";
-    if(d.year == 1)      name = "mid";
-    if(d.year <  1)      name = "top";
+    if((d.year == 2) || (d.year == 98))  name = "low";
+    if(d.year == 1)  name = "mid";
+    if(d.year <  1)  name = "top";
     return name;
   })
   .style("fill", function(d) {
     let color = "";
     if(d.year == 99) color = "rgba(255, 193, 227, 1)";
-    if(d.year == 2)      color = "rgba(159, 168, 218, 1)";
-    if(d.year == 1)      color = "rgba(128, 222, 234, 1)";
-    if(d.year <  1)      color = "rgba(165, 214, 167, 1)";
+    if((d.year == 2) || (d.year == 98))  color = "rgba(159, 168, 218, 1)";
+    if(d.year == 1)  color = "rgba(128, 222, 234, 1)";
+    if(d.year <  1)  color = "rgba(165, 214, 167, 1)";
     return color;
   });
 

@@ -3,9 +3,7 @@ Template.column.helpers({
    * @returns [{id,name,grade,semester,credits, columnindex}]
    */
   studentCourses() {
-    let semester = this.semester
-    let ownboekingen = Boekingen.find({$and:[{Academischeperiode: semester},{Student: Session.get("student")}]});
-    return ownboekingen;
+    return Boekingen.find({$and:[{SemesterBlok: parseInt(this.semester)},{Student: Session.get("student")}]});
   },
   "cseAvailable":function() {
     return this.credits !== undefined

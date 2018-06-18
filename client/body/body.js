@@ -75,13 +75,12 @@ Template.dashboard.onCreated(function () {
     let studentBoeking = Boekingen.findOne({$and: [{Student: studentID},{"Student-Voornaam(Key)": {$ne: "Undefined"}} ]});
     if (studentBoeking === undefined){
       console.log("studentboeking not defined");
-
       $(".flex-container").css("display", 'none');
       $(".nostudent").css("display", "flex");
       return;
     }
-    let studentGivenName = studentBoeking["Student-Voornaam(Key)"];
-    let studentSurName = studentBoeking["Student-Familienaam(Key)"];
+    let studentGivenName = studentBoeking["Voornaam"];
+    let studentSurName = studentBoeking["Familienaam"];
     let nio = studentBoeking["Nieuwi/dopleiding"];
 
     Session.set("studentName", studentGivenName + " " + studentSurName);
@@ -173,10 +172,10 @@ Template.dashboard.helpers({
   'GetColumnInfo':function (number) {
     var r = [
       {
-        title: "Ijkingstoets",
-        semester: "IJK",
+        title: "Blok 1",
+        semester: "1",
         class: "column-odd",
-        period: "ijkingstoets",
+        period: "Blok1",
         percent: undefined,
         raw: undefined,
         credits: undefined,
@@ -184,10 +183,10 @@ Template.dashboard.helpers({
         columnindex: 0
       },
       {
-        title: "Tussentijdse testen",
-        semester: "TTT",
+        title: "Blok 2",
+        semester: "2",
         class: "column-even col1",
-        period: "TTT",
+        period: "Blok 2",
         percent: undefined,
         raw: undefined,
         credits: undefined,
@@ -195,10 +194,10 @@ Template.dashboard.helpers({
         columnindex: 1
       },
       {
-        title: "Januari",
-        semester: "Eerste Semester",
+        title: "Blok 3",
+        semester: "3",
         class: "column-odd col2",
-        period: "januari",
+        period: "Blok3",
         percent: Session.get("CSE_januari"),
         raw: Session.get("CSE_januari_pure"),
         credits: Session.get("creditsTaken")[0],
@@ -206,10 +205,10 @@ Template.dashboard.helpers({
         columnindex: 2
       },
       {
-        title: "Juni",
-        semester: "Tweede Semester",
+        title: "Blok 4",
+        semester: "4",
         class: "column-even",
-        period: "juni",
+        period: "Blok4",
         percent: Session.get("CSE_juni"),
         raw: Session.get("CSE_juni_pure"),
         credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1],
@@ -260,4 +259,3 @@ let getCSETests = function(studentid, period, year, program){
   }
   return cse;
 };
-
