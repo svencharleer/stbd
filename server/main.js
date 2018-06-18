@@ -3,13 +3,19 @@ let _ = require('lodash');
 
 let currentAcademiejaar = "2017-2018";
 let Boekingen = new Mongo.Collection('boekingen');
-let Historic = new Mongo.Collection("doorloop");
-let Tokens = new Mongo.Collection("tokens");
+let Historic  = new Mongo.Collection("doorloop");
+let Tokens    = new Mongo.Collection("tokens");
+let Hisrogram = new Mongo.Collection("histograms");
 
 //Publish all collections
 Meteor.publish('own_boekingen', function (program, studentid) {
-  let own = Boekingen.find({$and: [{Student: studentid}, {Opleiding:  program}, {Academiejaar: currentAcademiejaar }]});
+  //let own = Boekingen.find({$and: [{Student: studentid}, {Opleiding:  program}, {Academiejaar: currentAcademiejaar }]});
+  let own = Boekingen.find({Student: studentid});
   return own;
+});
+
+Meteor.publish('histograms', function (program, studentid) {
+  return Hisrogram.find();
 });
 
 

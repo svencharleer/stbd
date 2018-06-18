@@ -1,29 +1,16 @@
 .nostudent{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    /* background: white; */
-    z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
-.nostudent h1 {
-    color: #7c7c7c;
-    font-size: 24px;
-    font-style: italic;
-    font-weight: 300;
-}
-
-.nostudent banner {
-
-    color: var(--TextColor);
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    /* background: white; */
-    z-index: 1000;
-
-    justify-content: center;
-    margin-top: 5%;
+.nostudent .banner {
+  color: #7c7c7c;
+  font-size: 24px;
+  font-style: italic;
+  font-weight: 300;
+  justify-content: center;
+  align-items: center;
 }
