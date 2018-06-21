@@ -228,6 +228,17 @@ Template.dashboard.helpers({
         subTitle: "Derde examenperiode",
         columnindex: 4
       },
+      { // Unsuccesful Exams
+        semester: 0,
+        class: "column-odd",
+        period: "null",
+        percent: Session.get("CSE_september"),
+        raw: Session.get("CSE_september_pure"),
+        credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1],
+        title: "onsuccesvolle examens",
+        subTitle: "onsuccesvolle examens",
+        columnindex: 5
+      }
     ];
     return r[number]
   },
@@ -260,4 +271,3 @@ let getCSETests = function(studentid, period, year, program){
   }
   return cse;
 };
-

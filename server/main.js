@@ -185,7 +185,7 @@ Meteor.methods({
   * @String: program. The selected program to filter everything.
   */
   getCSETool: function (program, cse) {
-    let students = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: ["2009-2010", "2010-2011", "2011-2012", "2012-2013", "2013-2014"]}}]}).fetch();
+    let students = Boekingen.find({$and:[{Opleiding: program}, {"Nieuwi/dopleiding": "J"}, {Academiejaar: {$in: ["2009-2010", "2010-2011", "2011-2012", "2012-2013", "2013-2014"]}}]}).fetch();
     //let students = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: ["2009-2010", "2010-2011", "2011-2012", "2012-2013"]}}]}).fetch();
     students = _.uniqBy(students, 'Student');
     //get all the students, only once.
@@ -195,7 +195,7 @@ Meteor.methods({
     //push student's data to array.
     students.forEach(function(b){
       let cse_opt = null;
-      console.log(cse);
+      //console.log(cse);
       if(cse == "cse1") cse_opt =  b.CSEJanuari;
       if(cse == "cse2") cse_opt =  b.CSEJuni;
       if(cse == "cse3") cse_opt =  b.CSESeptember;
