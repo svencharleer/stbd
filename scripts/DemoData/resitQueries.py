@@ -90,6 +90,19 @@ def find_nb_passed_resits_old(studentId, opleiding, boekingen):
     nb_passed_resits = passed_resits.count()
     return nb_passed_resits
 
+def percentageDict(dict):
+    acc_dict = accumulateDict(dict)
+    new_dict = {}
+    values =  acc_dict.values()
+    new_dict['nb_failed'] = values[-1]
+    total = values[0]
+    for x in range(0,15):
+        if (total != 0 ):
+            new_dict[x] = int(round(values[x] / float(total) * 100))
+        else:
+            new_dict[x] = values[x]
+    return new_dict
+
 def accumulateDict(dict):
     new_dict = {}
     values =  dict.values()
@@ -97,7 +110,6 @@ def accumulateDict(dict):
     accumulated_values = accumulateRow(values[:-1])
     for x in range(0,15):
         new_dict[x] = accumulated_values[x]
-    print new_dict
     return new_dict
     
 
@@ -167,7 +179,18 @@ def main():
         for i in range(0,14):
             dictRow = dictList[i]
             accumulatedDictRow = accumulateDict(dictRow)
+            percentageDict(dictRow)
             writer.writerow(accumulatedDictRow)
+
+    # Write percentage values to csv
+    with open('dataPercentage.csv', 'w') as csvfile:
+        fieldnames = ['nb_failed',0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for i in range(0,14):
+            dictRow = dictList[i]
+            percentageDictRow = percentageDict(dictRow)
+            writer.writerow(percentageDictRow)
 
 
 
