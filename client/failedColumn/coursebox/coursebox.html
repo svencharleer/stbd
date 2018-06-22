@@ -1,5 +1,5 @@
 <template name="coursebox">
-  <div id="{{getStrippedCourseID}}_{{columnindex}}" class="course {{color}}">
+  <div id="{{getStrippedCourseID}}_{{columnindex}}" class="failbox course {{color}}">
       <div class="course-top">
           <div class="name">{{Opleidingsonderdeel}}</div>
           <div class="top-bar {{color}}">
@@ -9,8 +9,9 @@
                       {{Studiepunten}}<span>stp</span>
                   </div>
               {{/if}}
-              <paper-checkbox checked></paper-checkbox>
+
           </div>
       </div>
+      <paper-checkbox checked class="{{boxcolor}}"></paper-checkbox>
   </div>
 </template>

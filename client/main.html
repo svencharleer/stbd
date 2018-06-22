@@ -19,18 +19,18 @@
 <link rel="icon" sizes="16x16 32x32" href="/favicon.ico?v=2">
 <script src='https://cdnjs.cloudflare.com/ajax/libs/wnumb/1.0.4/wNumb.min.js'></script>
 <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-    <style is="custom-style">
-    paper-progress {
-    width: 70%;
-    border: solid 1px #777777;
-    --paper-progress-active-color: #777777;
-    margin: auto;
-    }
-    </style>
+<style is="custom-style">
+paper-progress {
+width: 70%;
+border: solid 1px #777777;
+--paper-progress-active-color: #777777;
+margin: auto;
+}
+</style>
 </head> -->
 
 
- <head>
+<head>
   <meta charset="utf-8">
   <meta name="google" content="notranslate"/>
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
@@ -57,5 +57,20 @@
     --paper-progress-active-color: #777777;
     margin: auto;
   }
+
+  paper-checkbox.boxfailed {
+    --paper-checkbox-checked-color: var(--Fail);
+    --paper-checkbox-checked-ink-color: var(--Fail);
+    --paper-checkbox-unchecked-color: var(--paper-red-900);
+    --paper-checkbox-unchecked-ink-color: var(--paper-red-900);
+  }
+
+  paper-checkbox.boxtolerable {
+    --paper-checkbox-checked-color: var(--Tolerable);
+    --paper-checkbox-checked-ink-color: var(--Tolerable);
+    --paper-checkbox-unchecked-color: var(--paper-yellow-900);
+    --paper-checkbox-unchecked-ink-color: var(--paper-yellow-900);
+  }
+
   </style>
 </head>

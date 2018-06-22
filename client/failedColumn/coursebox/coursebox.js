@@ -18,6 +18,18 @@ Template.coursebox.helpers({
     else color = "failed"; // "#ff8a80"; //failed
     return color;
   },
+  boxcolor: function () {
+    let color = "white"; //"#ef9a9a";
+    //todo fix this for resits
+    let courseSemester = this.Academischeperiode;
+    let scoreEntry = getScoreEntry(courseSemester);
+    let score = this[scoreEntry];
+    if (score < 8) color = "boxfailed"; //"#ff8a80"; //failed
+    else if (score > 9 || score === "G") color = "passed"; //"#a5d6a7"; //passed
+    else if (score >= 8 && score <= 9) color = "boxtolerable"; // "#ffcc80"; //tolerable
+    else color = "boxfailed"; // "#ff8a80"; //failed
+    return color;
+  },
   getStrippedCourseID: function () {
     let courseId = this.IDOPO;
     courseId = courseId.replace(/ /g,'');
@@ -39,7 +51,7 @@ Template.coursebox.helpers({
 
 Template.coursebox.events({
   "click .course-top": function (event, template) {
-    
+
   }
 });
 
