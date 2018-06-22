@@ -1,5 +1,3 @@
-
-
 Template.register.events({
   'click paper-button': function (event, template) {
     let token = $(".user-token").val();
@@ -12,7 +10,6 @@ Template.register.events({
       let token = $(".user-token").val();
       Session.set("token", token);
       setProgramSettings(token, template);
-
     }
   },
   'click .cse1': function (event) {
@@ -47,9 +44,7 @@ let setProgramSettings = function (token, template) {
       Session.set("limit1", cselimit2);
       //Prevent that the dashboard is rendered twice
       if (!Session.get("alive")){
-
         loadDashboard();
-
       }
     }
     else{

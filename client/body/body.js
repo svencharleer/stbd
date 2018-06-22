@@ -34,21 +34,17 @@ Template.dashboard.events({
     template.$("." + column + " .top .periode").css("visibility", "visible");
     template.$("." + column + "").css("max-width", "var(--ColumnWidth)");
     template.$("." + column + "").css("min-width", "var(--ColumnWidth)");
-
   },
-
   "click .button": function (event, template) {
     let started = template.started.get();
     if (started) {
       event.target.value = "Start session";
       template.started.set(false);
-
     }
     else {
       event.target.value = "Stop session";
       template.started.set(true);
     }
-
   }
 });
 
@@ -107,8 +103,6 @@ Template.dashboard.onCreated(function () {
     Session.set('semester', currentSemester);
     Session.set("semesterString", semesterString);
 
-
-
     //get the CSE for the student
     var year = Session.get("Year");
     //Helpers_GetCSE comes from imports/helpers/CSE.js
@@ -123,11 +117,6 @@ Template.dashboard.onCreated(function () {
     // Session.set("CSE_september_pure", Helpers_CalculateCSE(3, year, true));
     Session.set("CSE_Planning", Helpers_CalculateStartValues(Session.get('CSE_september_pure')));
 
-
-
-
-
-
     Meteor.call("getCreditsTaken", Session.get('student'), 1, function (err, credits) {
       Session.set('creditsTaken', credits)
     });
@@ -140,8 +129,6 @@ Template.dashboard.helpers({
   toleranceCredits() {
     return Session.get('toleranceCredits');
   },
-
-
   totalCSE() {
     let cse = 0;
     if (Session.get("CSE_Planning") != undefined) {
@@ -150,7 +137,6 @@ Template.dashboard.helpers({
     }
     return cse;
   },
-
   ShowJuni() {
     return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showJuni : false;
 
@@ -165,11 +151,11 @@ Template.dashboard.helpers({
   },
 
   /**
-   *
-   * @param number: Indicates the index of the column
-   * @returns {{class, period, percent, raw, credits, title, subTitle, columnindex}|*}
-   * @constructor
-   */
+  *
+  * @param number: Indicates the index of the column
+  * @returns {{class, period, percent, raw, credits, title, subTitle, columnindex}|*}
+  * @constructor
+  */
   'GetColumnInfo':function (number) {
     var r = [
       {
@@ -228,24 +214,9 @@ Template.dashboard.helpers({
         subTitle: "Derde examenperiode",
         columnindex: 4
       },
-      { // Unsuccesful Exams
-        semester: 0,
-        class: "column-odd",
-        period: "null",
-        percent: Session.get("CSE_september"),
-        raw: Session.get("CSE_september_pure"),
-        credits: Session.get("creditsTaken")[0] + Session.get("creditsTaken")[1],
-        title: "onsuccesvolle examens",
-        subTitle: "onsuccesvolle examens",
-        columnindex: 5
-      }
     ];
     return r[number]
-  },
-
-
-
-
+  }
 });
 
 let getCSETests = function(studentid, period, year, program){

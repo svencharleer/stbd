@@ -4,16 +4,13 @@
   "dependencies": {
     "d3": "~3.5.17",
     "chroma-js": "~1.1.1",
-    "polymer": "~1.4.0",
-    "iron-flex-layout": "PolymerElements/iron-flex-layout#~1.3.1",
-    "paper-material": "PolymerElements/paper-material#~1.0.6",
-    "paper-card": "PolymerElements/paper-card#~1.1.1",
-    "paper-button": "PolymerElements/paper-button#~1.0.12",
-    "paper-progress": "PolymerElements/paper-progress#~1.0.9",
-    "paper-spinner": "PolymerElements/paper-spinner#~1.2.0",
-    "pixi.js": "pixi#~3.0.11",
-    "paper-input": "PolymerElements/paper-input#~1.1.11",
-    "animate.css": "^3.5.2"
+    "polymer": "latest",
+    "paper-button": "PolymerElements/paper-button#latest",
+    "paper-progress": "PolymerElements/paper-progress#latest",
+    "paper-spinner": "PolymerElements/paper-spinner#latest",
+    "paper-input": "PolymerElements/paper-input#latest",
+    "animate.css": "^3.5.2",
+    "paper-checkbox": "PolymerElements/paper-checkbox#latest"
   },
   "private": true
 }

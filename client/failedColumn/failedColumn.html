@@ -1,0 +1,27 @@
+<template name="failedColumn">
+  <div class="flex-column">
+    <div class="vertical-title">herexamen</div>
+    <div class="top">
+      <div class="fa compress-colfuture fa-compress">
+        <paper-ripple></paper-ripple>
+      </div>
+      <div class="column-title">herexamen</div>
+    </div>
+    <div class="middle">
+
+    </div>
+    <div class="bottom">
+      {{#if Template.subscriptionsReady}}
+      {{#each failedCourses}}
+      <div class="flex-item">
+        {{> coursebox}}
+      </div>
+      {{/each}}
+      {{else}}
+      <div class="loading">
+        <paper-spinner alt="Loading" active></paper-spinner>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</template>
