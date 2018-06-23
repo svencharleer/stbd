@@ -7,7 +7,7 @@
     --LowSelected: rgb(119, 133, 215);
     --BadStudent: rgba(255, 193, 227, 1);
     --BadSelected: rgb(246, 122, 190);
-    --ColumnWidth: 350px;
+    --ColumnWidth: 180px;
     --TextColor: #424242;
     --Pass: #a5d6a7;
     --Tolerable: #ffcc80;
@@ -97,9 +97,7 @@ body {
 }
 
 .column {
-
     justify-content: space-around;
-
     display: flex; /* or inline-flex */
     flex-direction: column;
     display: -webkit-box;
@@ -107,7 +105,6 @@ body {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-
     -webkit-flex-flow: column wrap;
     flex-flow: column wrap;
 }
@@ -127,7 +124,7 @@ body {
 }
 
 .flex-item {
-    width: 45%;
+    width: 95%; /* 45% double column */
     justify-content: space-around;
 }
 

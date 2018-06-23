@@ -1,13 +1,19 @@
 <template name="failedColumn">
-  <div class="flex-column">
+  <div class="flex-column failed-column">
     <div class="vertical-title">herexamen</div>
     <div class="top">
       <div class="fa compress-colfuture fa-compress">
         <paper-ripple></paper-ripple>
       </div>
       <div class="column-title">herexamen</div>
+      <div class="CSE">
+              {{> CSE_bar }}
+      </div>
     </div>
     <div class="middle">
+      <svg height="129" width="350">
+        <circle cx="180" cy="60" r="54" stroke="#999999" stroke-width="1" fill="white"></circle>
+      </svg>
     </div>
     <div class="bottom">
       {{#if Template.subscriptionsReady}}
