@@ -16,7 +16,5 @@ Template.checkbox.events({
     selectedCourses[template.$(".checkbox").attr("course")].checked = !currentState;
     Session.set("selectedCourses", selectedCourses);
     return;
-
-
   }
 });
