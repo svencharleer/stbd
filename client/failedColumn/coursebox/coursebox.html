@@ -1,17 +1,16 @@
 <template name="coursebox">
   <div id="{{getStrippedCourseID}}_{{columnindex}}" class="failbox course {{color}}">
-      <div class="course-top">
-          <div class="name">{{Opleidingsonderdeel}}</div>
-          <div class="top-bar {{color}}">
-              <div class="grade">{{Score}}</div>
-              {{#if validCredits }}
-                  <div class="credits">
-                      {{Studiepunten}}<span>stp</span>
-                  </div>
-              {{/if}}
-
-          </div>
+    <div class="course-top">
+      <div class="name">{{Opleidingsonderdeel}}</div>
+      <div class="top-bar {{color}}">
+        <div class="grade">{{Score}}</div>
+        {{#if validCredits }}
+        <div class="credits">
+          {{Studiepunten}}<span>stp</span>
+        </div>
+        {{/if}}
       </div>
-      <paper-checkbox checked class="{{boxcolor}}"></paper-checkbox>
+    </div>
+    <paper-checkbox checked class="{{boxcolor}}"></paper-checkbox>
   </div>
 </template>

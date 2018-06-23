@@ -1,7 +1,7 @@
 .CSE {
     color: #777777;
     text-align: center;
-    font-size: .7em;
+    font-size: 12px;
     min-height: 16px;
     display: flex;
     align-items: baseline;
@@ -9,10 +9,10 @@
     justify-content: space-between;
 }
 
-paper-progress {
+.CSE paper-progress {
     border: 0 !important;
 }
 
-paper-progress #primaryProgress {
+.CSE paper-progress #primaryProgress {
     background: #81a8b8 !important;
 }
