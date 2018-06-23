@@ -19,7 +19,7 @@ Template.trajectoryperiod.onRendered(function () {
       });
 
       let total = count;
-      let width = 350;
+      let width = 180; //350?
       let container = svg.selectAll(".figures")
         .data(data.distribution).enter();
 

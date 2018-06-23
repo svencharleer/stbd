@@ -7,7 +7,7 @@
     --LowSelected: rgb(119, 133, 215);
     --BadStudent: rgba(255, 193, 227, 1);
     --BadSelected: rgb(246, 122, 190);
-    --ColumnWidth: 180px;
+    --ColumnWidth: 180px; /* 350 for double column. */
     --TextColor: #424242;
     --Pass: #a5d6a7;
     --Tolerable: #ffcc80;
@@ -148,21 +148,21 @@ body {
     min-height: 700px;
     border-right: 1px solid #ececec;
     border-bottom: 1px solid #ececec;
-    border-top: 1px solid #ececec;
+    /* border-top: 1px solid #ececec; */
     transition: all 0.7s ease-out;
     position: relative;
 }
 
 #colfuture{
     /*flex-grow: 1;*/
-    min-width: 180px;
+    /* min-width: 180px;
     max-width: 180px;
     min-height: 700px;
     border-right: 1px solid #ececec;
     border-bottom: 1px solid #ececec;
     border-top: 1px solid #ececec;
     transition: all 0.7s ease-out;
-    position: relative;
+    position: relative; */
 }
 
 .flex-column .vertical-title {
