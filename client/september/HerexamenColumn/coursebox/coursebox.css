@@ -8,5 +8,5 @@
 }
 
 .failbox .course-top {
-  border-right: 1px solid var(--Fail);
+  border-right: 1px solid;
 }

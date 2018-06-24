@@ -31,6 +31,19 @@
 .course .top-bar.passed:hover    { background: #9fcca1; }
 .course .top-bar.tolerable:hover { background: #eabd79; }*/
 
-.course .top-bar {
-    cursor: pointer;
+
+.course-top.white {
+    border-color: white;
+}
+
+.course-top.failed {
+    border-color: var(--Fail);
+}
+
+.course-top.passed {
+    border-color: var(--Pass);
+}
+
+.course-top.tolerable {
+    border-color: var(--Tolerable);
 }
