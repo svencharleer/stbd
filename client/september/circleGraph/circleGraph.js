@@ -8,27 +8,27 @@ Template.circleGraph.rendered = function () {
   svg.attr("width", 100 + padding);
   svg.attr("height", 100 + padding);
   svg.append("circle")
-    .attr("cx", (padding + width) / 2)
-    .attr("cy", (padding + height) / 2)
-    .attr("r", width / 2)
-    .attr("fill", "#B9E88B");
+  .attr("cx", (padding + width) / 2)
+  .attr("cy", (padding + height) / 2)
+  .attr("r", width / 2)
+  .attr("fill", "#E8F3F8");
   svg.append("rect")
-    .attr("x", 0)
-    .attr("y", 0)
-    .attr("width", width + padding)
+  .attr("x", 0)
+  .attr("y", 0)
+  .attr("width", width + padding)
 
-    .attr("fill", "white");
+  .attr("fill", "white");
   svg.append("text")
-    .attr("x", (padding + width) / 2)
+  .attr("x", (padding + width) / 2)
 
-    .attr("fill", "#88B458")
-    .attr("text-anchor", "middle")
-    .text("");
+  .attr("fill", "#88B458")
+  .attr("text-anchor", "middle")
+  .text("");
 
   svg.append("circle")
-    .attr("cx", (padding + width) / 2)
-    .attr("cy", (padding + height) / 2)
-    .attr("r", width / 2 + 3)
-    .attr("fill", "none")
-    .attr("stroke", "#6A6A6A");
+  .attr("cx", (padding + width) / 2)
+  .attr("cy", (padding + height) / 2)
+  .attr("r", width / 2 + 3)
+  .attr("fill", "none")
+  .attr("stroke", "#C2CBCE");
 }

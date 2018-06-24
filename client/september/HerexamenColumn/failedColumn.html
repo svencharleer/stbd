@@ -6,27 +6,27 @@
         <paper-ripple></paper-ripple>
       </div>
       <div class="column-title">herexamen</div>
-      <div class="CSE">
-              {{> CSE_bar }}
-      </div>
+      {{> CSE_bar }}
     </div>
     <div class="middle">
-      <svg height="129" width="350">
-        <circle cx="180" cy="60" r="54" stroke="#999999" stroke-width="1" fill="white"></circle>
-      </svg>
+      {{> circleGraph}}
+      <h5>{{checked}}/{{failed}}</h5>
     </div>
     <div class="bottom">
-      {{#if Template.subscriptionsReady}}
-      {{#each failedCourses}}
-      <div class="flex-item">
-        {{> coursebox}}
+      <div class="eerste-failed">
+        {{#each eersteCourses}}
+        <div class="flex-item">
+          {{> coursebox}}
+        </div>
+        {{/each}}
       </div>
-      {{/each}}
-      {{else}}
-      <div class="loading">
-        <paper-spinner alt="Loading" active></paper-spinner>
+      <div class="tweede-failed">
+        {{#each tweedeCourses}}
+        <div class="flex-item">
+          {{> coursebox}}
+        </div>
+        {{/each}}
       </div>
-      {{/if}}
     </div>
   </div>
 </template>
