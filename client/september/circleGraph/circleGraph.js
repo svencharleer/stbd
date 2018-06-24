@@ -20,8 +20,24 @@ Template.circleGraph.helpers({
   "all":function () {
     let program = Template.instance().program.get()
     return program[Template.instance().failed.get()];
+  },
+  "numchecked": function() {
+    return Session.get("numChecked");
+  },
+  "numall": function() {
+    return Template.instance().failed.get();
   }
 });
+
+Template.circleGraph.events({
+    'mouseenter .cg-container': function(e) {
+        $(".cg-legend").css("visibility","visible");
+    },
+    'mouseleave .cg-container': function(e) {
+        $(".cg-legend").css("visibility","hidden");
+    }
+});
+
 
 // Deprecated ->>>
 // Template.circleGraph.rendered = function () {
