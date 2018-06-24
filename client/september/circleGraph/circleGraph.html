@@ -1,3 +1,15 @@
+<!-- Hey look, without d3 or svg ;D -->
+
 <template name="circleGraph">
-    <svg class="circleGraph"></svg>
+  <div class="cg-container">
+    <div class="cg-bar checked" style="height: {{checked}}px">
+      <h5>{{checked}}</h5>
+      <paper-ripple></paper-ripple>
+    </div>
+    <div class="cg-bar all" style="height: {{all}}px">
+      <h5>{{all}}</h5>
+      <paper-ripple></paper-ripple>
+    </div>
+  </div>
+  <div class="cg-border"></div>
 </template>

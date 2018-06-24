@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  position: relative;
 }
 
 .failed-column .middle h5 {
@@ -12,6 +13,8 @@
   padding-right: 8px;
   font-weight: 500;
   color: #828282;
+  position: absolute;
+  bottom: 0;
 }
 
 .failed-column .eerste-failed {
