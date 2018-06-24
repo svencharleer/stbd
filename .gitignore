@@ -70,7 +70,8 @@ fabric.properties
 # own
 .DS_Store
 .idea/*
-public/*
+public/bower_components
+
 
 
 bower_components/
