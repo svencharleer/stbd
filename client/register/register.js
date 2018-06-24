@@ -99,7 +99,6 @@ let loadDashboard = function () {
 };
 
 let subscribe = function () {
-  console.log(Session.get("student"))
   Meteor.subscribe("own_boekingen", Session.get("program"), Session.get("student"),{
     onReady: function () {
       $(".loading-screen").hide();

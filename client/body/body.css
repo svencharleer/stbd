@@ -27,6 +27,10 @@
     /* Non-prefixed version, currently supported by Chrome and Opera */
 }
 
+paper-progress {
+  transition: all 1.1s ease;
+}
+
 body {
     /* TODO: Need to fix this.. to a standard size */
     max-width: 100%;

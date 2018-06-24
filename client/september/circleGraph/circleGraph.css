@@ -12,22 +12,31 @@
 
 .cg-container .cg-bar {
   width: 100px;
-  height: 20px;
+  height: 0px;
   position: absolute;
   bottom: 0;
 }
 
+.cg-container .cg-bar h5 {
+  position: absolute;
+  top: 0;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+}
+
 .cg-container .all {
-  height: 20px;
+  height: 0px;
   background-color: #648694fc;
   background-image: url(/pattern.png);
   transition: all 0.4s ease;
 }
 
 .cg-container .checked {
-  height: 60px;
+  height: 0px;
   background: #81A8B8;
-  transition: all 0.4s ease;
+  transition: all 1.2s ease;
 }
 
 .cg-border {

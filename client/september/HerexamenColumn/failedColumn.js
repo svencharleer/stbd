@@ -12,6 +12,7 @@ Template.failedColumn.created = function() {
       credits += parseInt(p.Studiepunten);
   });
   Session.set("checkedCSE",credits);
+  Session.set("numChecked",courses.count());
 };
 
 Template.failedColumn.helpers({
@@ -40,6 +41,7 @@ Template.failedColumn.helpers({
 Template.failedColumn.events({
   'click paper-checkbox': function(e, template) {
     template.selected.set(document.querySelectorAll('paper-checkbox[checked]').length);
+    Session.set("numChecked",document.querySelectorAll('paper-checkbox[checked]').length);
     // Extract the CSE from the HTML.
     let stpTotal = 0;
     $(".failbox").each(function(index) {

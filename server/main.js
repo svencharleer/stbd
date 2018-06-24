@@ -5,6 +5,7 @@ let currentAcademiejaar = "2017-2018";
 let Boekingen = new Mongo.Collection('boekingen');
 let Historic = new Mongo.Collection("doorloop");
 let Tokens = new Mongo.Collection("tokens");
+let Resits = new Mongo.Collection("resits");
 
 //Publish all collections
 Meteor.publish('own_boekingen', function (program, studentid) {
@@ -12,6 +13,9 @@ Meteor.publish('own_boekingen', function (program, studentid) {
   return own;
 });
 
+Meteor.publish('resits', function(){
+  return Resits.find({});
+});
 
 Meteor.methods({
   /**

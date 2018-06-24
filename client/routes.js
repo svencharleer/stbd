@@ -32,3 +32,5 @@ Router.route('/' + rootRoute + '/:_year/', function () {
 );
 
 Boekingen = new Mongo.Collection('boekingen');
+Resits = new Mongo.Collection("resits");
+Meteor.subscribe('resits');

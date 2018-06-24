@@ -1,9 +1,25 @@
+import { ReactiveVar } from 'meteor/reactive-var'
+
+Template.circleGraph.created = function() {
+
+  this.failed = new ReactiveVar(0);
+  let courses = Boekingen.find({$and:[{Student: Session.get("student")}, {Score: {$lt: 10}}]});
+  this.failed.set(courses.count());
+
+  let program = [];
+  this.program = new ReactiveVar([]);
+  program = JSON.parse(Resits.find({program: Session.get("program")}).fetch()[0][courses.count()]);
+  this.program.set(program);
+};
+
 Template.circleGraph.helpers({
   "checked":function () {
-    return 60;
+    let program = Template.instance().program.get()
+    return program[Session.get("numChecked")];
   },
   "all":function () {
-    return 20;
+    let program = Template.instance().program.get()
+    return program[Template.instance().failed.get()];
   }
 });
 
