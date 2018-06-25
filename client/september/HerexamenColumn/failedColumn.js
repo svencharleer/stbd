@@ -9,7 +9,7 @@ Template.failedColumn.created = function() {
   // CSE bar needs percentage
   let credits = 0;
   courses.fetch().forEach(function (p) {
-      credits += parseInt(p.Studiepunten);
+    credits += parseInt(p.Studiepunten);
   });
   Session.set("checkedCSE",credits);
   Session.set("numChecked",courses.count());
@@ -97,43 +97,41 @@ let creditsPassed = function (semester) {
 };
 
 /**
- *
- * @param semester
- * @returns cse_entry: fieldname of the db
- */
+*
+* @param semester
+* @returns cse_entry: fieldname of the db
+*/
 let getCSEEntry = function (semester) {
   var cse_entry = 'CSE';
   switch (semester) {
     case "Eerste Semester":
-      cse_entry = 'CSEJanuari';
-      break;
+    cse_entry = 'CSEJanuari';
+    break;
     case "Tweede Semester":
-      cse_entry = 'CSEJuni';
-      break;
+    cse_entry = 'CSEJuni';
+    break;
     default:
-      cse_entry = 'CSESeptember';
+    cse_entry = 'CSESeptember';
   }
   return cse_entry;
-
 };
 
 /**
- *
- * @param semester
- * @returns cse_entry: fieldname of the db
- */
+*
+* @param semester
+* @returns cse_entry: fieldname of the db
+*/
 let getScoreEntry = function (semester) {
   var cse_entry = 'Score';
   switch (semester) {
     case "Eerste Semester":
-      cse_entry = 'Scorejanuari';
-      break;
+    cse_entry = 'Scorejanuari';
+    break;
     case "Tweede Semester":
-      cse_entry = 'Scorejuni';
-      break;
+    cse_entry = 'Scorejuni';
+    break;
     default:
-      cse_entry = 'Scoreseptember';
+    cse_entry = 'Scoreseptember';
   }
   return cse_entry;
-
 };
