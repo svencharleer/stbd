@@ -1,0 +1,19 @@
+<template name="planningColumn">
+  <div class="flex-column planning">
+    <div class="vertical-title">Studiebelastingplanning</div>
+    <div class="top">
+      <div class="fa compress-planning fa-compress">
+        <paper-ripple></paper-ripple>
+      </div>
+      <div class="column-title">Studiebelastingplanning</div>
+      <div class="CSE">
+        CSE {{percent}}% <paper-progress value="{{percent}}" max="100" min="0"></paper-progress>
+      </div>
+    </div>
+    <div class="middle">
+    </div>
+    <div class="bottom">
+      {{> cseplanning}
+    </div>
+  </div>
+</template>
