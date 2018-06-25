@@ -6,14 +6,15 @@ Template.dashboard.events({
     let column = element.replace(/.*-/, '');
     template.$("." + element).removeClass("fa-compress").addClass("fa-expand");
     template.$("." + column + " .vertical-title").fadeIn();
-    template.$("." + column + " .traject").css("visibility", "hidden");
-    template.$("." + column + " .bottom").css("visibility", "hidden");
     template.$("." + column + " .top").css("border-bottom", "0px dotted #ececec");
     template.$("." + column + " .top .column-title").css("visibility", "hidden");
     template.$("." + column + " .top .CSE").css("visibility", "hidden");
     template.$("." + column + " .top .tolerantiepunten").css("visibility", "hidden");
     template.$("." + column + " .top .creditsplanned").css("visibility", "hidden");
     template.$("." + column + " .top .periode").css("visibility", "hidden");
+    template.$("." + column + " .traject").fadeOut();
+    template.$("." + column + " .middle").fadeOut();
+    template.$("." + column + " .bottom").fadeOut();
     template.$("." + column + "").css("min-width", "27px");
     template.$("." + column + "").css("max-width", "27px");
 
@@ -21,17 +22,17 @@ Template.dashboard.events({
   "click .fa-expand": function (event, template) {
     let element = $(event.target).attr('class').split(' ')[1];
     let column = element.replace(/.*-/, '');
-
     template.$("." + element).removeClass("fa-expand").addClass("fa-compress");
     template.$("." + column + " .vertical-title").fadeOut();
-    template.$("." + column + " .traject").css("visibility", "visible");
-    template.$("." + column + " .bottom").css("visibility", "visible");
     template.$("." + column + " .top").css("border-bottom", "1px dotted #ececec");
     template.$("." + column + " .top .column-title").css("visibility", "visible");
     template.$("." + column + " .top .CSE").css("visibility", "visible");
     template.$("." + column + " .top .tolerantiepunten").css("visibility", "visible");
     template.$("." + column + " .top .creditsplanned").css("visibility", "visible");
     template.$("." + column + " .top .periode").css("visibility", "visible");
+    template.$("." + column + " .traject").fadeIn();
+    template.$("." + column + " .middle").fadeIn();
+    template.$("." + column + " .bottom").fadeIn();
     template.$("." + column + "").css("max-width", "var(--ColumnWidth)");
     template.$("." + column + "").css("min-width", "var(--ColumnWidth)");
   },

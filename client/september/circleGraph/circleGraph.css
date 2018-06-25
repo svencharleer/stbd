@@ -104,7 +104,3 @@
   background-color: #648694fc;
   background-image: url(/pattern.png);
 }
-
-.cg-container:hover .cg-legend {
-    visibility: visible;
-}
