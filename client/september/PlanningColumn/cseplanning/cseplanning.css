@@ -1,0 +1,140 @@
+div.d3slider.yearTwoa {
+  width: 50%;
+}
+
+div.d3slider.yearTwob {
+  width: 50%;
+}
+
+.d3slider {
+  width: 100%;
+  z-index: 0 !important;
+}
+
+/* dragger outer */
+.default {
+  fill: #81A8B8;
+}
+
+.yearOne, .yearTwo, .yearTwoa, .yearTwob, .yearThree {
+  fill: var(--TopStudent);
+}
+
+circle.dragger-outer.yearOne, circle.dragger-outer.yearTwo {
+  display: none;
+}
+
+.yearFour {
+  fill: var(--MiddleStudent);
+}
+
+.yearFive {
+  fill: var(--LowStudent);
+}
+
+circle.dragger-inner.yearOne, circle.dragger-inner.yearTwo {
+  display: none;
+}
+
+/* slider background */
+rect[class^=d3slider-rect-range] {
+  fill: #e0e0e0;
+}
+
+/* hover */
+.default:hover {
+  fill: #537988;
+}
+
+.dragger .yearOne:hover, .dragger .yearTwo:hover, .dragger .yearTwoa:hover, .dragger .yearTwob:hover, .dragger .yearThree:hover {
+  fill: var(--TopSelected);
+}
+
+.dragger .yearFour:hover {
+  fill: var(--MiddleSelected);
+}
+
+.dragger .yearFive:hover {
+  fill: var(--LowSelected);
+}
+
+#cseplanning {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 90%;
+  overflow: visible;
+}
+
+.slideflex {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  cursor: default;
+  min-height: 60px;
+}
+
+.slideflex .slider-top {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  color: #424242;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.slider-top span {
+  font-weight: 300;
+}
+
+.slideflex .slider-top .value span {
+  color: #777777;
+}
+
+.semester span {
+  font-size: 12px;
+  font-weight: 300;
+  margin-left: 15px;
+}
+
+.slideflex > span {
+  width: 30px;
+  justify-content: space-around;
+  font-size: 12px;
+  color: #777777;
+  display: flex;
+}
+
+.slideflex > svg {
+  justify-content: space-around;
+}
+
+#slidetotal {
+  font-weight: 400;
+}
+
+#slidetotal span {
+  color: #777777;
+  font-weight: 300;
+  font-size: 16px;
+  margin-right: 0px;
+}
+
+.slidetotal {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  justify-content: flex-end;
+  align-items: baseline;
+  cursor: default;
+}
+
+.slidetotal span {
+  margin-right: 4px;
+  color: #777;
+  font-size: 12px;
+}

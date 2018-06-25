@@ -1,22 +1,54 @@
-var slider1 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearOne');
-var slider2 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearTwo');
-var slider2a = d3.slider().min(0).max(40).ticks(0).showRange(true).value(0).cssClass('yearTwoa');
-var slider2b = d3.slider().min(0).max(40).ticks(0).showRange(true).value(0).cssClass('yearTwob');
-var slider3 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearThree');
-var slider4 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearFour');
-var slider5 = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearFive');
+import { ReactiveVar } from 'meteor/reactive-var'
 
-Template.cseplanning.csePlanning = function () {
-  return Session.get("CSE_Planning");
-}
+let slider1  = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearOne');
+let slider2  = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearTwo');
+let slider2a = d3.slider().min(0).max(40).ticks(0).showRange(true).value(0).cssClass('yearTwoa');
+let slider2b = d3.slider().min(0).max(40).ticks(0).showRange(true).value(0).cssClass('yearTwob');
+let slider3  = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearThree');
+let slider4  = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearFour');
+let slider5  = d3.slider().min(0).max(72).ticks(0).showRange(true).value(0).cssClass('yearFive');
 
 Template.cseplanning.onCreated(function () {
+  let cPassFirst  = creditsPassed("Eerste Semester");
+  let cPassSecond = creditsPassed("Tweede Semester");
+  Session.set("cse1", cPassFirst+cPassSecond);
+  Session.set("CSE_Planning", {cse1: cPassFirst+cPassSecond, cse2: 0, cse2a:0, cse2b:0, cse3:0, cse4:0, cse5:0});
+});
 
-
-})
+Template.cseplanning.helpers({
+  'totalCSE': function () {
+    let cse = 0;
+    if (Session.get("CSE_Planning") != undefined) {
+      cse = Session.get("CSE_Planning").cse1 + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
+      if (cse > 180) cse = 180;
+    }
+    return cse;
+  },
+  'jaar1': function () {
+    return Session.get("CSE_Planning").cse1;
+  },
+  'jaar2': function () {
+    return Session.get("cse2a") + Session.get("cse2b");
+  },
+  'jaar2a': function () {
+    return Session.get("cse2a");
+  },
+  'jaar2b': function () {
+    return Session.get("cse2b");
+  },
+  'jaar3': function () {
+    return Session.get("cse3");
+  },
+  'jaar4': function () {
+    return Session.get("cse4");
+  },
+  'jaar5': function () {
+    return Session.get("cse5");
+  }
+});
 
 Template.cseplanning.onRendered(function () {
-  $('#creditsplanned').find("paper-progress").css('width', '75%');
+  //$('#creditsplanned').find("paper-progress").css('width', '75%');
   //Bind sliders to div
   d3.select("#cseslider_y1").call(slider1);
   d3.select("#cseslider_y2").call(slider2);
@@ -32,12 +64,6 @@ Template.cseplanning.onRendered(function () {
   //   return cse;
   // }
 
-
-  //Set sliders to initial values
-  let cses = Template.cseplanning.csePlanning();
-  if (cses == undefined) {
-    return;
-  }
   slider1.setValue(Math.floor(cses.cse1));
   slider2.setValue(Math.floor(cses.cse2));
   slider2a.setValue(Math.floor(cses.cse2a));
@@ -238,40 +264,6 @@ Template.cseplanning.events({
   }
 });
 
-Template.cseplanning.helpers({
-  'totalCSE': function () {
-    let cse = 0;
-    if (Session.get("CSE_Planning") != undefined) {
-      cse = Session.get("CSE_Planning").cse1 + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5");
-      if (cse > 180) cse = 180;
-    }
-    return cse;
-  },
-  'jaar1': function () {
-    var cses = Session.get("CSE_Planning");
-    if (cses == undefined) return;
-    return cses.cse1;
-  },
-  'jaar2': function () {
-    return Session.get("cse2a") + Session.get("cse2b");
-  },
-  'jaar2a': function () {
-    return Session.get("cse2a");
-  },
-  'jaar2b': function () {
-    return Session.get("cse2b");
-  },
-  'jaar3': function () {
-    return Session.get("cse3");
-  },
-  'jaar4': function () {
-    return Session.get("cse4");
-  },
-  'jaar5': function () {
-    return Session.get("cse5");
-  }
-});
-
 /**
  *
  * @param {[int]} values list of values of all sliders 1,2,2a,2b,3,4,5
@@ -307,3 +299,37 @@ function calculateIndex(id) {
     return id + 1;
   }
 }
+
+
+let creditsPassed = function (semester) {
+  let scorefield = getScoreEntry(semester);
+  let all = Boekingen.find({$and:[{Student:Session.get("student")},{Academischeperiode: semester}]});
+  let creditsPassed = 0;
+  all.forEach(function (p) {
+    if (p[scorefield] > 9 || p[scorefield] == "G"){
+      creditsPassed += parseInt(p.Studiepunten);
+    }
+  });
+  return creditsPassed;
+};
+
+/**
+ *
+ * @param semester
+ * @returns cse_entry: fieldname of the db
+ */
+let getScoreEntry = function (semester) {
+  var cse_entry = 'Score';
+  switch (semester) {
+    case "Eerste Semester":
+      cse_entry = 'Scorejanuari';
+      break;
+    case "Tweede Semester":
+      cse_entry = 'Scorejuni';
+      break;
+    default:
+      cse_entry = 'Scoreseptember';
+  }
+  return cse_entry;
+
+};

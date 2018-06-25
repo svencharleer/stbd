@@ -1,0 +1,10 @@
+.planning .cse-progress {
+  display: flex;
+  font-size: 11px;
+  width: 100%;
+  color: #777777;
+}
+
+.planning .cse-progress paper-progress {
+  width: 100%;
+}
