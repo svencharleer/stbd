@@ -1,6 +1,6 @@
 import { ReactiveVar } from 'meteor/reactive-var'
 
-Template.cseplanColumn.created = function() {
+Template.planningColumn.created = function() {
   this.failed   = new ReactiveVar(0);
   this.selected = new ReactiveVar(0);
   let courses = Boekingen.find({$and:[{Student: Session.get("student")}, {Score: {$lt: 10}}]});
@@ -15,7 +15,7 @@ Template.cseplanColumn.created = function() {
   Session.set("numChecked",courses.count());
 };
 
-Template.cseplanColumn.helpers({
+Template.planningColumn.helpers({
   "eersteCourses":function () {
     return Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {Score: {$lt: 10}}]}).fetch();
   },
@@ -38,7 +38,7 @@ Template.cseplanColumn.helpers({
   }
 });
 
-Template.cseplanColumn.events({
+Template.planningColumn.events({
   'click paper-checkbox': function(e, template) {
     template.selected.set(document.querySelectorAll('paper-checkbox[checked]').length);
     Session.set("numChecked",document.querySelectorAll('paper-checkbox[checked]').length);

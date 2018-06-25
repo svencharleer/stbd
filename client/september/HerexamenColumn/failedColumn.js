@@ -35,6 +35,17 @@ Template.failedColumn.helpers({
     let cSecond = credits("Tweede Semester");
     let checkedCSE = Session.get("checkedCSE");
     return Math.round(((cPassFirst+cPassSecond+checkedCSE)/(cFirst + cSecond)) * 100);
+  },
+  "csecheck":function() {
+    let cPassFirst  = creditsPassed("Eerste Semester");
+    let cPassSecond = creditsPassed("Tweede Semester");
+    let checkedCSE = Session.get("checkedCSE");
+    return cPassFirst+cPassSecond+checkedCSE;
+  },
+  "csesum":function() {
+    let cFirst  = credits("Eerste Semester");
+    let cSecond = credits("Tweede Semester");
+    return cFirst + cSecond;
   }
 });
 

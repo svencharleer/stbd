@@ -47,7 +47,7 @@ Template.cseplanning.onRendered(function () {
   slider5.setValue(Math.floor(cses.cse5));
   //Put each of them separated in the sessions
   //These are temporary global variables
-  //Needed to check which one is updated 
+  //Needed to check which one is updated
   Session.set("cse1", Math.floor(cses.cse1));
   Session.set("cse2", Math.floor(cses.cse2));
   Session.set("cse2a", Math.floor(cses.cse2a));
@@ -307,4 +307,3 @@ function calculateIndex(id) {
     return id + 1;
   }
 }
-
