@@ -602,8 +602,8 @@ let getCSEs = function (semester, program) {
             ]}).fetch();
           break;
         default:
-          var top    = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJanuari: {$gt: limit1} }]});
-          var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJanuari: { $gte: limit2, $lte: limit1 } }]});
+          var top    = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJuni: {$gt: limit1} }]});
+          var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJuni: { $gte: limit2, $lte: limit1 } }]});
           var low    = Boekingen.find({$and:
             [{Opleiding: program},
               {Academiejaar: {$in: years}},
