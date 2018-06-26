@@ -3,7 +3,7 @@
     "rootroute":"dev",
     "ijkingstoets_juli" : true,
     "ijkingstoets_september" : true,
-    "showJuni": false,
+    "showJuni": true,
     "showSeptember" :false,
     "dynamic": false,
     "logging": false
