@@ -115,7 +115,7 @@ Template.cseplanning.onRendered(function () {
 
   cseslider5.noUiSlider.on('update', function(val) {
     let current = self.cse5.get();
-    if((Session.get("csesum") + val) > 180) {
+    if(Session.get("csesum") >= 180) {
       if (val > current) cseslider5.noUiSlider.set(current);
       if (val < current) self.cse5.set(Math.round(val));
     } else {
