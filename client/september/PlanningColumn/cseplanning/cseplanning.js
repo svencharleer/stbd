@@ -18,9 +18,10 @@ Template.cseplanning.onCreated(function () {
 
 Template.cseplanning.helpers({
   'totalCSE': function () {
-    let cse = 0;
-    cse = Session.get("cse1") + Session.get("cse2") + Session.get("cse3") + Session.get("cse4") + Session.get("cse5")
-    if (cse > 180) cse = 180;
+    let cse   = 0;
+    let ins   =  Template.instance();
+    cse = ins.cse1.get() + ins.cse2a.get() + ins.cse2b.get() + ins.cse3.get() + ins.cse4.get() + ins.cse5.get();
+    Session.set("csesum", cse);
     return cse;
   },
   'jaar1': function () {
@@ -47,21 +48,80 @@ Template.cseplanning.helpers({
 });
 
 Template.cseplanning.onRendered(function () {
-  // let cseslider1  = document.getElementById('cseslider1');
-  // let cseslider2  = document.getElementById('cseslider2');
-  // let cseslider2a = document.getElementById('cseslider2a');
-  // let cseslider2b = document.getElementById('cseslider2b');
-  // let cseslider3  = document.getElementById('cseslider3');
-  // let cseslider4  = document.getElementById('cseslider4');
-  // let cseslider5  = document.getElementById('cseslider5');
-  //
-  // noUiSlider.create(cseslider1 , {start: [0, 72],connect: true,range: {'min': 0,'max': 100}});
-  // noUiSlider.create(cseslider2 , {start: [0, 72],connect: true,range: {'min': 0,'max': 100}});
-  // noUiSlider.create(cseslider2a, {start: [0, 40],connect: true,range: {'min': 0,'max': 100}});
-  // noUiSlider.create(cseslider2b, {start: [0, 40],connect: true,range: {'min': 0,'max': 100}});
-  // noUiSlider.create(cseslider3 , {start: [0, 72],connect: true,range: {'min': 0,'max': 100}});
-  // noUiSlider.create(cseslider4 , {start: [0, 72],connect: true,range: {'min': 0,'max': 100}});
-  // noUiSlider.create(cseslider5 , {start: [0, 72],connect: true,range: {'min': 0,'max': 100}});
+  let self = Template.instance();
+  let cseslider1  = document.getElementById('cseslider1');
+  let cseslider2  = document.getElementById('cseslider2');
+  let cseslider2a = document.getElementById('cseslider2a');
+  let cseslider2b = document.getElementById('cseslider2b');
+  let cseslider3  = document.getElementById('cseslider3');
+  let cseslider4  = document.getElementById('cseslider4');
+  let cseslider5  = document.getElementById('cseslider5');
+  let cse2 = self.cse2a.get() +  self.cse2b.get();
+  noUiSlider.create(cseslider1 , {start: self.cse1.get(),  connect: [true,false],range: {'min': 0,'max': 72}});
+  noUiSlider.create(cseslider2 , {start: cse2            , connect: [true,false],range: {'min': 0,'max': 72}});
+  noUiSlider.create(cseslider2a, {start: self.cse2a.get(), connect: [true,false],range: {'min': 0,'max': 40}});
+  noUiSlider.create(cseslider2b, {start: self.cse2b.get(), connect: [true,false],range: {'min': 0,'max': 40}});
+  noUiSlider.create(cseslider3 , {start: self.cse3.get(),  connect: [true,false],range: {'min': 0,'max': 72}});
+  noUiSlider.create(cseslider4 , {start: self.cse4.get(),  connect: [true,false],range: {'min': 0,'max': 72}});
+  noUiSlider.create(cseslider5 , {start: self.cse5.get(),  connect: [true,false],range: {'min': 0,'max': 72}});
+
+  cseslider1.setAttribute('disabled', true);
+  cseslider2.setAttribute('disabled', true);
+
+  // Define behavior for each slider:
+
+  cseslider2a.noUiSlider.on('update', function(val) {
+    let current = self.cse2a.get();
+    if(Session.get("csesum") >= 180) {
+      if (val > current) cseslider2a.noUiSlider.set(current);
+      if (val < current) self.cse2a.set(Math.round(val));
+    } else {
+      self.cse2a.set(Math.round(val));
+      cseslider2.noUiSlider.set(Math.round(val) + self.cse2b.get());
+    }
+  });
+
+  cseslider2b.noUiSlider.on('update', function(val) {
+    let current = self.cse2b.get();
+    if(Session.get("csesum") >= 180) {
+      if (val > current) cseslider2b.noUiSlider.set(current);
+      if (val < current) self.cse2b.set(Math.round(val));
+    } else {
+      self.cse2b.set(Math.round(val));
+      cseslider2.noUiSlider.set(Math.round(val) + self.cse2a.get());
+    }
+
+  });
+
+  cseslider3.noUiSlider.on('update', function(val) {
+    let current = self.cse3.get();
+    if(Session.get("csesum") >= 180) {
+      if (val > current) cseslider3.noUiSlider.set(current);
+      if (val < current) self.cse3.set(Math.round(val));
+    } else {
+      self.cse3.set(Math.round(val));
+    }
+  });
+
+  cseslider4.noUiSlider.on('update', function(val) {
+    let current = self.cse4.get();
+    if(Session.get("csesum") >= 180) {
+      if (val > current) cseslider4.noUiSlider.set(current);
+      if (val < current) self.cse4.set(Math.round(val));
+    } else {
+      self.cse4.set(Math.round(val));
+    }
+  });
+
+  cseslider5.noUiSlider.on('update', function(val) {
+    let current = self.cse5.get();
+    if((Session.get("csesum") + val) > 180) {
+      if (val > current) cseslider5.noUiSlider.set(current);
+      if (val < current) self.cse5.set(Math.round(val));
+    } else {
+      self.cse5.set(Math.round(val));
+    }
+  });
 
 });
 

@@ -5,6 +5,6 @@ Template.planningColumn.created = function() {
 
 Template.planningColumn.helpers({
   "csesum":function () {
-    return Session.get("cse1");
+    return Session.get("csesum");
   }
 });
