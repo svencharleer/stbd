@@ -1,20 +1,20 @@
 <template name="resultGraph">
-    <div id="{{getStrippedCourseID}}_{{columnindex}}" class="course {{color}}">
-        <div class="course-top">
-            <div class="name">{{Opleidingsonderdeel}}</div>
-            <div class="top-bar {{color}}">
-                <div class="grade">{{Score}}</div>
-                {{#if validCredits }}
-                    <div class="credits">
-                        {{Studiepunten}}<span>stp</span>
-                    </div>
-                {{/if}}
-            </div>
-            <paper-ripple></paper-ripple>
+  <div id="{{getStrippedCourseID}}_{{columnindex}}" class="course {{color}}">
+    <div class="course-top">
+      <div class="name">{{Opleidingsonderdeel}}</div>
+      <div class="top-bar {{color}}">
+        <div class="grade">{{Score}}</div>
+        {{#if validCredits }}
+        <div class="credits">
+          {{Studiepunten}}<span>stp</span>
         </div>
-        <div class="course-bottom">
-            <svg class="histogram"></svg>
-            <paper-ripple></paper-ripple>
-        </div>
+        {{/if}}
+      </div>
+      <paper-ripple></paper-ripple>
     </div>
+    <div class="course-bottom">
+      <svg class="histogram"></svg>
+      <paper-ripple></paper-ripple>
+    </div>
+  </div>
 </template>

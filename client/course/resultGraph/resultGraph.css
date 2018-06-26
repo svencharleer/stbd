@@ -11,6 +11,10 @@
     border-color: var(--Pass);
 }
 
+.course.error {
+  border-color: var(--Error);
+}
+
 .course.tolerable {
     border-color: var(--Tolerable);
 }
@@ -27,10 +31,32 @@
     background: var(--Tolerable);
 }
 
+.course .top-bar.error {
+    background: var(--Error);
+}
+
+
 /*.course .top-bar.failed:hover    { background: #ec877e; }
 .course .top-bar.passed:hover    { background: #9fcca1; }
 .course .top-bar.tolerable:hover { background: #eabd79; }*/
 
-.course .top-bar {
-    cursor: pointer;
+
+.course-top.white {
+    border-color: white;
+}
+
+.course-top.failed {
+    border-color: var(--Fail);
+}
+
+.course-top.passed {
+    border-color: var(--Pass);
+}
+
+.course-top.tolerable {
+    border-color: var(--Tolerable);
+}
+
+.course-top.error {
+    border-color: var(--Error);
 }

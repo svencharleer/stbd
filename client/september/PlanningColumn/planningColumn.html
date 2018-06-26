@@ -1,0 +1,17 @@
+<template name="planningColumn">
+  <div class="flex-column planning">
+    <div class="vertical-title">Studiebelastingplanning</div>
+    <div class="top">
+      <div class="fa compress-planning fa-compress">
+        <paper-ripple></paper-ripple>
+      </div>
+      <div class="column-title">Studiebelastingplanning</div>
+      <div class="cse-progress middle">
+        <paper-progress value="{{csesum}}" max="180" min="0"></paper-progress>{{csesum}}/<strong>180</strong>
+      </div>
+    </div>
+    <div class="bottom">
+      {{> cseplanning}}
+    </div>
+  </div>
+</template>

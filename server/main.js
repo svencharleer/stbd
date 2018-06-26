@@ -5,6 +5,7 @@ let currentAcademiejaar = "2017-2018";
 let Boekingen = new Mongo.Collection('boekingen');
 let Historic = new Mongo.Collection("doorloop");
 let Tokens = new Mongo.Collection("tokens");
+let Resits = new Mongo.Collection("resits");
 
 //Publish all collections
 Meteor.publish('own_boekingen', function (program, studentid) {
@@ -12,6 +13,9 @@ Meteor.publish('own_boekingen', function (program, studentid) {
   return own;
 });
 
+Meteor.publish('resits', function(){
+  return Resits.find({});
+});
 
 Meteor.methods({
   /**
@@ -290,22 +294,20 @@ Meteor.methods({
     */
     getRootRoute() {
       if (process.env.ROOTROUTE != undefined) {
-        console.log(process.env.ROOTROUTE);
+        //console.log(process.env.ROOTROUTE);
         return process.env.ROOTROUTE;
       }
       else {
         return "dev";
       }
     },
-
-
   });
   /**
   * Sven
   */
   Meteor.startup(() => {
     if (process.env.KEY != undefined) {//console.log(process.env.KEY)
-      console.log("SSL activated ", process.env.ROOTROUTE, process.env.KEY, process.env.CERT);
+      //console.log("SSL activated ", process.env.ROOTROUTE, process.env.KEY, process.env.CERT);
       SSLProxy({
         port: process.env.SSL_PORT, //or 443 (normal port/requires sudo)
         ssl: {
@@ -317,7 +319,7 @@ Meteor.methods({
       });
     }
     else {
-      console.log("process.env.KEY/CERT is not set, running without certificate/ssl");
+      //console.log("process.env.KEY/CERT is not set, running without certificate/ssl");
     }
   });
 
@@ -555,7 +557,7 @@ let getCSEs = function (semester, program) {
     * @returns {{numberPerGrades: {}, min: Number, max: Number, total: number}}
     */
     let getCoursePointDistributionSemester = function (courseid, gradeField) {
-      console.log(courseid, gradeField)
+      //console.log(courseid, gradeField)
       var numberPerGrades = {};
       var total = 0;
       let allGrades  = Boekingen.find({$and:[{IDOPO : courseid},{Academiejaar: currentAcademiejaar}]});

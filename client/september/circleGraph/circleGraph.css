@@ -1,4 +1,106 @@
-.circleGraph {
-    text-align: center;
-    height: 180px;
+.cg-container {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  clip-path: circle(50px at center);
+}
+
+.cg-container .circleGraph {
+  text-align: center;
+  overflow: visible;
+}
+
+.cg-container .cg-bar {
+  width: 100px;
+  height: 0px;
+  position: absolute;
+  bottom: 0;
+}
+
+.cg-container .cg-bar h5 {
+  position: absolute;
+  top: 0;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cg-container .all {
+  height: 0px;
+  background-color: #648694fc;
+  background-image: url(/pattern.png);
+  transition: all 0.4s ease;
+}
+
+.cg-container .checked {
+  height: 0px;
+  background: #81A8B8;
+  transition: all 1.2s ease;
+}
+
+.cg-border {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  border: 1px dotted grey;
+  position: absolute;
+  bottom: 12px;
+  z-index: -1;
+}
+
+.cg-container .checked:hover {
+  cursor: pointer;
+  background: #7db0c5;
+}
+
+.cg-container .all:hover {
+  cursor: pointer;
+  background: #567582fc;
+  background-image: url(/pattern.png);
+}
+
+/* THE LEGEND */
+
+.cg-legend {
+  visibility: hidden;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  background: rgba(251,251,251,0.9);
+  z-index: 1;
+  border-radius: 5px;
+  padding: 10px;
+  color: #525252;
+  right: -200px;
+  top: 0px;
+  box-shadow: 0px 0px 4px #888888;
+}
+
+.cg-legend h2 {
+  font-size: 12px;
+  font-weight: 300;
+  padding-left: 10px;
+}
+
+.cg-legend .cg-legend-text{
+  display: flex;
+}
+
+.cg-legend .cg-legend-square {
+  min-width: 20px;
+  min-height: 20px;
+  max-width: 20px;
+  max-height: 20px;
+  background: white;
+}
+
+.cg-legend .cg-blue {
+  background: #81A8B8;
+}
+
+.cg-legend .cg-pattern {
+  background-color: #648694fc;
+  background-image: url(/pattern.png);
 }
