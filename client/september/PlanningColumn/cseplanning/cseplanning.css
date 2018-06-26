@@ -1,15 +1,22 @@
-div.d3slider.yearTwoa {
-  width: 50%;
-}
+#cseslider1 .noUi-handle { display:none;}
+#cseslider2 .noUi-handle { display:none;}
 
-div.d3slider.yearTwob {
-  width: 50%;
-}
+#cseslider1 { cursor: default;}
+#cseslider2 { cursor: default;}
 
-.d3slider {
-  width: 100%;
-  z-index: 0 !important;
-}
+.noUi-handle { width: 20px !important; height: 20px !important; border-radius: 50% !important; cursor: pointer !important;}
+.noUi-horizontal {height: 10px !important;}
+.noUi-handle:after  {display: none !important; content: "";}
+.noUi-handle:before {display: none !important; content: "";}
+
+#cseslider1  .noUi-connect {background: var(--TopStudent)}
+#cseslider2  .noUi-connect {background: var(--TopStudent)}
+#cseslider2a .noUi-connect {background: var(--TopStudent)}
+#cseslider2b .noUi-connect {background: var(--TopStudent)}
+#cseslider3  .noUi-connect {background: var(--TopStudent)}
+#cseslider4  .noUi-connect {background: var(--MiddleStudent)}
+#cseslider5  .noUi-connect {background: var(--LowStudent)}
+
 
 /* dragger outer */
 .default {
@@ -61,30 +68,31 @@ rect[class^=d3slider-rect-range] {
 #cseplanning {
   overflow: hidden;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  /* flex-direction: column; */
+  /* justify-content: flex-start; */
+  /* align-items: center; */
   width: 90%;
   overflow: visible;
 }
 
-.slideflex {
+.slider-flex {
   display: flex;
-  align-items: center;
+  /* align-items: center; don't do this */
   flex-direction: column;
   justify-content: center;
   width: 100%;
   cursor: default;
-  min-height: 60px;
+  margin-top: 16px;
+  z-index: 0;
 }
 
-.slideflex .slider-top {
+.slider-flex .slider-top {
   display: flex;
   width: 100%;
   justify-content: space-between;
   color: #424242;
-  margin-bottom: 8px;
-  font-size: 14px;
+  margin-bottom: 4px;
+  font-size: 12px;
 }
 
 .slider-top span {
@@ -98,7 +106,6 @@ rect[class^=d3slider-rect-range] {
 .semester span {
   font-size: 12px;
   font-weight: 300;
-  margin-left: 15px;
 }
 
 .slideflex > span {
