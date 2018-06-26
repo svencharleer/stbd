@@ -57,13 +57,13 @@ Template.cseplanning.onRendered(function () {
   let cseslider4  = document.getElementById('cseslider4');
   let cseslider5  = document.getElementById('cseslider5');
   let cse2 = self.cse2a.get() +  self.cse2b.get();
-  noUiSlider.create(cseslider1 , {start: self.cse1.get(),  connect: [true,false],range: {'min': 0,'max': 72}});
-  noUiSlider.create(cseslider2 , {start: cse2            , connect: [true,false],range: {'min': 0,'max': 72}});
-  noUiSlider.create(cseslider2a, {start: self.cse2a.get(), connect: [true,false],range: {'min': 0,'max': 40}});
-  noUiSlider.create(cseslider2b, {start: self.cse2b.get(), connect: [true,false],range: {'min': 0,'max': 40}});
-  noUiSlider.create(cseslider3 , {start: self.cse3.get(),  connect: [true,false],range: {'min': 0,'max': 72}});
-  noUiSlider.create(cseslider4 , {start: self.cse4.get(),  connect: [true,false],range: {'min': 0,'max': 72}});
-  noUiSlider.create(cseslider5 , {start: self.cse5.get(),  connect: [true,false],range: {'min': 0,'max': 72}});
+  noUiSlider.create(cseslider1 , {start: self.cse1.get(),  connect: [true,false],format: wNumb({decimals: 0}), range: {'min': 0,'max': 72}});
+  noUiSlider.create(cseslider2 , {start: cse2            , connect: [true,false],format: wNumb({decimals: 0}), range: {'min': 0,'max': 72}});
+  noUiSlider.create(cseslider2a, {start: self.cse2a.get(), connect: [true,false],format: wNumb({decimals: 0}), range: {'min': 0,'max': 40}});
+  noUiSlider.create(cseslider2b, {start: self.cse2b.get(), connect: [true,false],format: wNumb({decimals: 0}), range: {'min': 0,'max': 40}});
+  noUiSlider.create(cseslider3 , {start: self.cse3.get(),  connect: [true,false],format: wNumb({decimals: 0}), range: {'min': 0,'max': 72}});
+  noUiSlider.create(cseslider4 , {start: self.cse4.get(),  connect: [true,false],format: wNumb({decimals: 0}), range: {'min': 0,'max': 72}});
+  noUiSlider.create(cseslider5 , {start: self.cse5.get(),  connect: [true,false],format: wNumb({decimals: 0}), range: {'min': 0,'max': 72}});
 
   cseslider1.setAttribute('disabled', true);
   cseslider2.setAttribute('disabled', true);
@@ -121,6 +121,31 @@ Template.cseplanning.onRendered(function () {
     } else {
       self.cse5.set(Math.round(val));
     }
+  });
+
+  cseslider2a.noUiSlider.on('end', function(val) {
+    let extra = Session.get("csesum") - 180;
+    if(extra > 0) self.cse2a.set(Math.round(val - extra));
+  });
+
+  cseslider2b.noUiSlider.on('end', function(val) {
+    let extra = Session.get("csesum") - 180;
+    if(extra > 0) self.cse2b.set(Math.round(val - extra));
+  });
+
+  cseslider3.noUiSlider.on('end', function(val) {
+    let extra = Session.get("csesum") - 180;
+    if(extra > 0) self.cse3.set(Math.round(val - extra));
+  });
+
+  cseslider4.noUiSlider.on('end', function(val) {
+    let extra = Session.get("csesum") - 180;
+    if(extra > 0) self.cse4.set(Math.round(val - extra));
+  });
+
+  cseslider5.noUiSlider.on('end', function(val) {
+    let extra = Session.get("csesum") - 180;
+    if(extra > 0) self.cse5.set(Math.round(val - extra));
   });
 
 });
