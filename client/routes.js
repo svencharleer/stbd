@@ -26,7 +26,7 @@ Router.route('/' + rootRoute + '/:_year/', function () {
     Session.set("student", undefined);
     Session.set("Year", yearString);
     Session.set("StartYear", year);
-    this.render("main")
+    //this.render("main")
     //reset();
   }
 );
