@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 let _ = require('lodash');
 
-console.log("Important: Dossi Server runs Node 4.9.1 that means we are stuck with Meteor 1.5 until we get Docker.")
+console.log("Note: Dossi Server runs [Node 4.9.1] We are stuck in [Meteor 1.5] until we get Docker.")
 
 let currentAcademiejaar = "2017-2018";
 let Boekingen = new Mongo.Collection('boekingen');
