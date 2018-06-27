@@ -1,41 +1,42 @@
 <body>
   {{> register}}
   <div class="loading-screen">
-      <paper-spinner alt="Loading Dashboard" active></paper-spinner>
-      <h1>Loading Dashboard...</h1>
+    <paper-spinner alt="Loading Dashboard" active></paper-spinner>
+    <h1>Loading Dashboard...</h1>
   </div>
 
   <div class="loading-csetool">
-      <paper-spinner alt="Loading CSE Tool" active></paper-spinner>
-      <h1>Loading CSE Tool...</h1>
+    <paper-spinner alt="Loading CSE Tool" active></paper-spinner>
+    <h1>Loading CSE Tool...</h1>
   </div>
 </body>
 
 <template name="dashboard">
   <div class="dashboardcontainer"  >
-      {{> student}}
-
-      <div class="flex-container">
-          <div class="flex-row">
-              {{#with GetColumnInfo 0}}
-                  {{> column}}
-              {{/with}}
-              {{#with GetColumnInfo 1}}
-                  {{> column}}
-              {{/with}}
-              {{#with GetColumnInfo 2}}
-                  {{> column}}
-              {{/with}}
-              <!--{{#with GetColumnInfo 3}}-->
-                <!--{{> column}}-->
-              <!--{{/with}}-->
-              <!--{{#with GetColumnInfo 4}}-->
-                <!--{{> column}}-->
-              <!--{{/with}}-->
-              <!--Always show the bachelor column-->
-              {{> futurecolumn}}
-          </div>
+    {{> student}}
+    <div class="flex-container">
+      <div class="flex-row">
+        {{#with GetColumnInfo 0}}
+        {{> column}}
+        {{/with}}
+        {{#with GetColumnInfo 1}}
+        {{> column}}
+        {{/with}}
+        {{#with GetColumnInfo 2}}
+        {{> column}}
+        {{/with}}
+        {{#with GetColumnInfo 3}}
+        {{> column}}
+        {{/with}}
+        <!-- {{#with GetColumnInfo 4}} This is september ;)
+        {{> column}}
+        {{/with}} -->
+        {{> failedColumn}}
+        <!-- Planning stuff -->
+        {{> planningColumn}}
+        <!--Always show the bachelor column-->
+        {{> futurecolumn}}
       </div>
+    </div>
   </div>
-
 </template>

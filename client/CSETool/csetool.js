@@ -17,9 +17,9 @@ Template.CSETool.onRendered(function () {
   let slider1  = document.getElementById('limit-slider1');
   let slider2  = document.getElementById('limit-slider2');
   var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-  noUiSlider.create(slider1, { start: Session.get("limit1"), connect: "lower", range: {min: 0, max: 100}});
-  noUiSlider.create(slider2, { start: Session.get("limit2"), connect: "lower", range: {min: 0, max: 100}});
-
+  noUiSlider.create(slider1, { start: Session.get("limit1"), connect: [true, false], range: {min: 0, max: 100}});
+  noUiSlider.create(slider2, { start: Session.get("limit2"), connect: [true, false], range: {min: 0, max: 100}});
+  // Important: When updating NPM noUiSlider ALSO copy/UPDATE THE CSS IN NOUISLIDER.CSS FROM THE node_modules.
   slider1.noUiSlider.on('update', function(value) {
     if (value < Session.get("limit2")) {
       $('#cse-limit1').css('color', "#e74c3c");

@@ -1,0 +1,18 @@
+.CSE {
+    color: #777777;
+    text-align: center;
+    font-size: 12px;
+    min-height: 16px;
+    display: flex;
+    align-items: baseline;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.CSE paper-progress {
+    border: 0 !important;
+}
+
+.CSE paper-progress #primaryProgress {
+    background: #81a8b8 !important;
+}

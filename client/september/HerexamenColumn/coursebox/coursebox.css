@@ -1,0 +1,12 @@
+.failbox {
+  flex-direction: row !important;
+}
+
+.failbox paper-checkbox {
+  align-self: center;
+  margin-left: 8px;
+}
+
+.failbox .course-top {
+  border-right: 1px solid;
+}

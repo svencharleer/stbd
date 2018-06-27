@@ -6,14 +6,15 @@ Template.dashboard.events({
     let column = element.replace(/.*-/, '');
     template.$("." + element).removeClass("fa-compress").addClass("fa-expand");
     template.$("." + column + " .vertical-title").fadeIn();
-    template.$("." + column + " .traject").css("visibility", "hidden");
-    template.$("." + column + " .bottom").css("visibility", "hidden");
     template.$("." + column + " .top").css("border-bottom", "0px dotted #ececec");
     template.$("." + column + " .top .column-title").css("visibility", "hidden");
     template.$("." + column + " .top .CSE").css("visibility", "hidden");
     template.$("." + column + " .top .tolerantiepunten").css("visibility", "hidden");
     template.$("." + column + " .top .creditsplanned").css("visibility", "hidden");
     template.$("." + column + " .top .periode").css("visibility", "hidden");
+    template.$("." + column + " .traject").fadeOut();
+    template.$("." + column + " .middle").fadeOut();
+    template.$("." + column + " .bottom").fadeOut();
     template.$("." + column + "").css("min-width", "27px");
     template.$("." + column + "").css("max-width", "27px");
 
@@ -21,34 +22,30 @@ Template.dashboard.events({
   "click .fa-expand": function (event, template) {
     let element = $(event.target).attr('class').split(' ')[1];
     let column = element.replace(/.*-/, '');
-
     template.$("." + element).removeClass("fa-expand").addClass("fa-compress");
     template.$("." + column + " .vertical-title").fadeOut();
-    template.$("." + column + " .traject").css("visibility", "visible");
-    template.$("." + column + " .bottom").css("visibility", "visible");
     template.$("." + column + " .top").css("border-bottom", "1px dotted #ececec");
     template.$("." + column + " .top .column-title").css("visibility", "visible");
     template.$("." + column + " .top .CSE").css("visibility", "visible");
     template.$("." + column + " .top .tolerantiepunten").css("visibility", "visible");
     template.$("." + column + " .top .creditsplanned").css("visibility", "visible");
     template.$("." + column + " .top .periode").css("visibility", "visible");
+    template.$("." + column + " .traject").fadeIn();
+    template.$("." + column + " .middle").fadeIn();
+    template.$("." + column + " .bottom").fadeIn();
     template.$("." + column + "").css("max-width", "var(--ColumnWidth)");
     template.$("." + column + "").css("min-width", "var(--ColumnWidth)");
-
   },
-
   "click .button": function (event, template) {
     let started = template.started.get();
     if (started) {
       event.target.value = "Start session";
       template.started.set(false);
-
     }
     else {
       event.target.value = "Stop session";
       template.started.set(true);
     }
-
   }
 });
 
@@ -107,8 +104,6 @@ Template.dashboard.onCreated(function () {
     Session.set('semester', currentSemester);
     Session.set("semesterString", semesterString);
 
-
-
     //get the CSE for the student
     var year = Session.get("Year");
     //Helpers_GetCSE comes from imports/helpers/CSE.js
@@ -123,11 +118,6 @@ Template.dashboard.onCreated(function () {
     // Session.set("CSE_september_pure", Helpers_CalculateCSE(3, year, true));
     Session.set("CSE_Planning", Helpers_CalculateStartValues(Session.get('CSE_september_pure')));
 
-
-
-
-
-
     Meteor.call("getCreditsTaken", Session.get('student'), 1, function (err, credits) {
       Session.set('creditsTaken', credits)
     });
@@ -140,8 +130,6 @@ Template.dashboard.helpers({
   toleranceCredits() {
     return Session.get('toleranceCredits');
   },
-
-
   totalCSE() {
     let cse = 0;
     if (Session.get("CSE_Planning") != undefined) {
@@ -150,7 +138,6 @@ Template.dashboard.helpers({
     }
     return cse;
   },
-
   ShowJuni() {
     return Meteor.settings.public.showSeptember != undefined ? Meteor.settings.public.showJuni : false;
 
@@ -165,11 +152,11 @@ Template.dashboard.helpers({
   },
 
   /**
-   *
-   * @param number: Indicates the index of the column
-   * @returns {{class, period, percent, raw, credits, title, subTitle, columnindex}|*}
-   * @constructor
-   */
+  *
+  * @param number: Indicates the index of the column
+  * @returns {{class, period, percent, raw, credits, title, subTitle, columnindex}|*}
+  * @constructor
+  */
   'GetColumnInfo':function (number) {
     var r = [
       {
@@ -230,11 +217,7 @@ Template.dashboard.helpers({
       },
     ];
     return r[number]
-  },
-
-
-
-
+  }
 });
 
 let getCSETests = function(studentid, period, year, program){
@@ -260,4 +243,3 @@ let getCSETests = function(studentid, period, year, program){
   }
   return cse;
 };
-

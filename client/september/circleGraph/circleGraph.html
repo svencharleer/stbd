@@ -1,0 +1,26 @@
+<!-- Hey look, without d3 or svg ;D -->
+
+<template name="circleGraph">
+  <div class="cg-container">
+    <div class="cg-bar checked" style="height: {{checked}}px">
+      <h5>{{checked}}%</h5>
+      <paper-ripple></paper-ripple>
+    </div>
+    <div class="cg-bar all" style="height: {{all}}px">
+      <h5>{{all}}%</h5>
+      <paper-ripple></paper-ripple>
+    </div>
+  </div>
+  <div class="cg-border"></div>
+  <div class="cg-legend">
+    <div class="cg-legend-text">
+      <div class="cg-legend-square cg-blue"></div>
+      <h2><strong>{{checked}}</strong>% studenten die op <strong>{{numchecked}}</strong> vakken succesvol slagen in september.</h2>
+    </div>
+    <br>
+    <div class="cg-legend-text">
+      <div class="cg-legend-square cg-pattern"></div>
+      <h2><strong>{{all}}</strong>% studenten die op <strong>{{numall}}</strong> vakken succesvol slagen in september.</h2>
+    </div>
+  </div>
+</template>

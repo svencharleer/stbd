@@ -21,6 +21,7 @@
   background: #3F51B5;
   color: white;
   margin-top: 8px;
+  height: 50px;
 }
 
 .register .access-tool a {
@@ -38,4 +39,18 @@
   display: none;
   position: absolute;
   color: #e74c3c;
+}
+
+.register h3 {
+  font-size: 14px;
+}
+
+.register .cse-tool {
+  display: flex;
+  align-items: flex-end;
+}
+
+.register .cse-tool a {
+  margin-left: 10px;
+  color: #002984;
 }

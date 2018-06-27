@@ -1,10 +1,13 @@
 import {Meteor} from 'meteor/meteor';
 let _ = require('lodash');
 
+console.log("Important: Dossi Server runs Node 4.9.1 that means we are stuck with Meteor 1.5 until we get Docker.")
+
 let currentAcademiejaar = "2017-2018";
 let Boekingen = new Mongo.Collection('boekingen');
 let Historic = new Mongo.Collection("doorloop");
 let Tokens = new Mongo.Collection("tokens");
+let Resits = new Mongo.Collection("resits");
 
 //Publish all collections
 Meteor.publish('own_boekingen', function (program, studentid) {
@@ -12,6 +15,9 @@ Meteor.publish('own_boekingen', function (program, studentid) {
   return own;
 });
 
+Meteor.publish('resits', function(){
+  return Resits.find({});
+});
 
 Meteor.methods({
   /**
@@ -184,8 +190,8 @@ Meteor.methods({
   * Frank CSE Tool
   * @String: program. The selected program to filter everything.
   */
-  getCSETool: function (program) {
-    let students = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: ["2009-2010", "2010-2011", "2011-2012", "2012-2013", "2013-2014"]}}]}).fetch();
+  getCSETool: function (program, cse) {
+    let students = Boekingen.find({$and:[{Opleiding: program}, {"Nieuwi/dopleiding": "J"}, {Academiejaar: {$in: ["2009-2010", "2010-2011", "2011-2012", "2012-2013", "2013-2014"]}}]}).fetch();
     //let students = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: ["2009-2010", "2010-2011", "2011-2012", "2012-2013"]}}]}).fetch();
     students = _.uniqBy(students, 'Student');
     //get all the students, only once.
@@ -194,8 +200,13 @@ Meteor.methods({
     let historic    = [];
     //push student's data to array.
     students.forEach(function(b){
+      let cse_opt = null;
+      //console.log(cse);
+      if(cse == "cse1") cse_opt =  b.CSEJanuari;
+      if(cse == "cse2") cse_opt =  b.CSEJuni;
+      if(cse == "cse3") cse_opt =  b.CSESeptember;
       studentList.push(b.Student);
-      studentCSE.push({student: b.Student, cse: b.CSEJanuari});
+      studentCSE.push({student: b.Student, cse: cse_opt});
     });
     //push historic data to array.
     Historic.find({Student: {$in: studentList}}).forEach(function (s) {
@@ -285,22 +296,20 @@ Meteor.methods({
     */
     getRootRoute() {
       if (process.env.ROOTROUTE != undefined) {
-        console.log(process.env.ROOTROUTE);
+        //console.log(process.env.ROOTROUTE);
         return process.env.ROOTROUTE;
       }
       else {
         return "dev";
       }
     },
-
-
   });
   /**
   * Sven
   */
   Meteor.startup(() => {
     if (process.env.KEY != undefined) {//console.log(process.env.KEY)
-      console.log("SSL activated ", process.env.ROOTROUTE, process.env.KEY, process.env.CERT);
+      //console.log("SSL activated ", process.env.ROOTROUTE, process.env.KEY, process.env.CERT);
       SSLProxy({
         port: process.env.SSL_PORT, //or 443 (normal port/requires sudo)
         ssl: {
@@ -312,7 +321,7 @@ Meteor.methods({
       });
     }
     else {
-      console.log("process.env.KEY/CERT is not set, running without certificate/ssl");
+      //console.log("process.env.KEY/CERT is not set, running without certificate/ssl");
     }
   });
 
@@ -550,7 +559,7 @@ let getCSEs = function (semester, program) {
     * @returns {{numberPerGrades: {}, min: Number, max: Number, total: number}}
     */
     let getCoursePointDistributionSemester = function (courseid, gradeField) {
-      console.log(courseid, gradeField)
+      //console.log(courseid, gradeField)
       var numberPerGrades = {};
       var total = 0;
       let allGrades  = Boekingen.find({$and:[{IDOPO : courseid},{Academiejaar: currentAcademiejaar}]});
@@ -595,8 +604,8 @@ let getCSEs = function (semester, program) {
             ]}).fetch();
           break;
         default:
-          var top    = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJanuari: {$gt: limit1} }]});
-          var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJanuari: { $gte: limit2, $lte: limit1 } }]});
+          var top    = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJuni: {$gt: limit1} }]});
+          var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJuni: { $gte: limit2, $lte: limit1 } }]});
           var low    = Boekingen.find({$and:
             [{Opleiding: program},
               {Academiejaar: {$in: years}},

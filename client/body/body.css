@@ -7,13 +7,26 @@
     --LowSelected: rgb(119, 133, 215);
     --BadStudent: rgba(255, 193, 227, 1);
     --BadSelected: rgb(246, 122, 190);
-    --ColumnWidth: 350px;
+    --ColumnWidth: 180px; /* 350 for double column. */
     --TextColor: #424242;
     --Pass: #a5d6a7;
     --Tolerable: #ffcc80;
     --Fail: #ff8a80;
+    --Error: #C2CBCE;
 }
 
+* {
+    font-family: 'Roboto', Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome and Opera */
+}
 
 body {
     /* TODO: Need to fix this.. to a standard size */
@@ -97,9 +110,7 @@ body {
 }
 
 .column {
-
     justify-content: space-around;
-
     display: flex; /* or inline-flex */
     flex-direction: column;
     display: -webkit-box;
@@ -107,7 +118,6 @@ body {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-
     -webkit-flex-flow: column wrap;
     flex-flow: column wrap;
 }
@@ -127,7 +137,7 @@ body {
 }
 
 .flex-item {
-    width: 45%;
+    width: 95%; /* 45% double column */
     justify-content: space-around;
 }
 
@@ -151,21 +161,21 @@ body {
     min-height: 700px;
     border-right: 1px solid #ececec;
     border-bottom: 1px solid #ececec;
-    border-top: 1px solid #ececec;
+    /* border-top: 1px solid #ececec; */
     transition: all 0.7s ease-out;
     position: relative;
 }
 
 #colfuture{
     /*flex-grow: 1;*/
-    min-width: 180px;
+    /* min-width: 180px;
     max-width: 180px;
     min-height: 700px;
     border-right: 1px solid #ececec;
     border-bottom: 1px solid #ececec;
     border-top: 1px solid #ececec;
     transition: all 0.7s ease-out;
-    position: relative;
+    position: relative; */
 }
 
 .flex-column .vertical-title {
