@@ -82,12 +82,6 @@ Template.dashboard.onCreated(function () {
     let nio = studentBoeking["Nieuwi/dopleiding"];
 
     Session.set("studentName", studentGivenName + " " + studentSurName);
-    if (nio == "J"){
-      Session.set("new", true);
-    }
-    else{
-      Session.set("new", false);
-    }
 
     let currentSemester = 1;
     let semesterString = "Eerste Semester";
@@ -151,7 +145,22 @@ Template.dashboard.helpers({
     return r[number]
   },
 
-  /**
+	'NewInProgram':function () {
+		let studentID = Session.get("student");
+		let studentBoeking = Boekingen.findOne({$and: [{Student: studentID},{"Student-Voornaam(Key)": {$ne: "Undefined"}} ]});
+		let nio = studentBoeking["Nieuwi/dopleiding"];
+		if (nio === "J"){
+			Session.set("new", true);
+			return true
+
+		}
+		else{
+			Session.set("new", false);
+			return false
+		}
+	},
+
+	/**
   *
   * @param number: Indicates the index of the column
   * @returns {{class, period, percent, raw, credits, title, subTitle, columnindex}|*}
