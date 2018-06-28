@@ -33,7 +33,7 @@ Template.future.onRendered(function () {
     let yValues = [nb3, nb4, nb5, nbNot];
     var data = d3.range(100);
     var x = d3.scale.linear()
-      .domain([0, 9])
+      .domain([0, 10])
       .range([0, width]);
 
     var y = d3.scale.linear()
