@@ -56,10 +56,15 @@ def find_failed_students(opleiding, boekingen, dictList):
             localDict[nb_passed_resits] += 1
 
 def make_query_program(opleiding):
+    # regex_industria = re.compile("^(S MA industri| ABA industri)", re.IGNORECASE)
+    regex_industria = re.compile("^(ABA industri|S MA industri)", re.IGNORECASE)
+    regex_archi = re.compile("^(ABA architectuur|ABA interieurarchitectuur)", re.IGNORECASE)
 
-    if (opleiding == "S MA industriële wetenschappen (Brug/Oost)"):
-        regex = re.compile("^S MA I2W", re.IGNORECASE)
-        query_opleiding = {'$and': [{ "Opleiding": regex }, { "Nieuwi/dopleiding": "J" }]}
+    if regex_industria.match(opleiding):
+        query_opleiding = {'$and': [{ "Opleiding": regex_industria }, { "Nieuwi/dopleiding": "J" }]}
+
+    elif regex_archi.match(opleiding):
+        query_opleiding = {'$and': [{ "Opleiding": regex_archi }, { "Nieuwi/dopleiding": "J" }]}
 
     elif(opleiding == "S MA biowetenschappen (Geel)"):
         hulp_query = { '$or': 
@@ -181,6 +186,10 @@ def main():
     "ABA TEW: handelsingenieur (Leuv)", "ABA geschiedenis (Leuv)", "ABA taal- & letterkunde (Leuv)", "S MA verpleegkunde en vroedkunde (Leuv ea)",  "ABA TEW: handelsingenieur beleidsinformatica (Leuv)" ]
     for program in programList:
         writeProgram(program, boekingen)
+
+    regex_industria = re.compile("^(ABA architectuur|ABA interieurarchitectuur)", re.IGNORECASE)
+    print regex_industria.match("ABA architectuur (Gent)")
+    print regex_industria.match("ABA interieurarchitectuur (Gent)")
 
     
 
