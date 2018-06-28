@@ -56,25 +56,32 @@ def find_failed_students(opleiding, boekingen, dictList):
             localDict[nb_passed_resits] += 1
 
 def make_query_program(opleiding):
-    # regex_industria = re.compile("^(S MA industri| ABA industri)", re.IGNORECASE)
-    regex_industria = re.compile("^(ABA industri|S MA industri)", re.IGNORECASE)
-    regex_archi = re.compile("^(ABA architectuur|ABA interieurarchitectuur)", re.IGNORECASE)
+    regex_industria_ABA = re.compile("^(ABA industri|ABA biowetenschappen)", re.IGNORECASE)
+    regex_industria_SMA = re.compile("^(S MA industri|S MA biowetenschappen|S MA I2W)", re.IGNORECASE)
 
-    if regex_industria.match(opleiding):
-        query_opleiding = {'$and': [{ "Opleiding": regex_industria }, { "Nieuwi/dopleiding": "J" }]}
+    regex_archi = re.compile("^(ABA architectuur)", re.IGNORECASE)
+    regex_interieur = re.compile("^(ABA interieurarchitectuur)", re.IGNORECASE)
+
+    regex_tew = re.compile("^(ABA TEW)", re.IGNORECASE)
+
+
+
+    if regex_industria_ABA.match(opleiding):
+        query_opleiding = {'$and': [{ "Opleiding": regex_industria_ABA }, { "Nieuwi/dopleiding": "J" }]}
+    
+    elif regex_industria_SMA.match(opleiding):
+        query_opleiding = {'$and': [{ "Opleiding": regex_industria_SMA }, { "Nieuwi/dopleiding": "J" }]}
 
     elif regex_archi.match(opleiding):
         query_opleiding = {'$and': [{ "Opleiding": regex_archi }, { "Nieuwi/dopleiding": "J" }]}
 
-    elif(opleiding == "S MA biowetenschappen (Geel)"):
-        hulp_query = { '$or': 
-        [ 
-            { "Opleiding": "S MA biowetenschappen: land- en tuinbouwkunde (Geel)" }, 
-            { "Opleiding": "S MA biowetenschappen: voedingsindustrie (Geel)" },
-            { "Opleiding" : "S MA biowetenschappen: voedingsindustrie VT (Geel)"},
-            { "Opleiding" : "S MA biowetenschappen: voedingsindustrie VD (Geel)"}
-        ]}
-        query_opleiding = {'$and': [hulp_query, { "Nieuwi/dopleiding": "J" }]}
+    elif regex_interieur.match(opleiding):
+        query_opleiding = {'$and': [{ "Opleiding": regex_interieur }, { "Nieuwi/dopleiding": "J" }]}
+
+    elif regex_tew.match(opleiding):
+        query_opleiding = {'$and': [{ "Opleiding": regex_tew }, { "Nieuwi/dopleiding": "J" }]}
+
+    
     else:
         query_opleiding = {'$and': [{ "Opleiding": opleiding }, { "Nieuwi/dopleiding": "J" }]}
     return query_opleiding
@@ -183,7 +190,7 @@ def main():
     "ABA industriële wetenschappen (Gent)",  "S MA biowetenschappen (Geel)", "S MA industriële wetenschappen (Geel)", "S MA industriële wetenschappen (Aals)", "S MA industriële wetenschappen (Diepenbeek)", "S MA industriële wetenschappen (Leuv)", 
     "S MA industriële wetenschappen (Brug/Oost)", "S MA industriële wetenschappen (StKa)", "ABA architectuur (Gent)", "ABA architectuur (Brus)", "ABA interieurarchitectuur (Gent)",  "ABA interieurarchitectuur (Brus)", 
     "ABA geneeskunde (Leuv)", "ABA tandheelkunde (Leuv)", "ABA biomedische wetenschappen (Leuv)",  "ABA logopedische en audiologische wetenschappen (Leuv)",  "ABA farmaceutische wetenschappen (Leuv)", 
-    "ABA TEW: handelsingenieur (Leuv)", "ABA geschiedenis (Leuv)", "ABA taal- & letterkunde (Leuv)", "S MA verpleegkunde en vroedkunde (Leuv ea)",  "ABA TEW: handelsingenieur beleidsinformatica (Leuv)" ]
+     "ABA geschiedenis (Leuv)", "ABA taal- & letterkunde (Leuv)", "S MA verpleegkunde en vroedkunde (Leuv ea)", "ABA TEW: handelsingenieur (Leuv)", "ABA TEW: handelsingenieur beleidsinformatica (Leuv)" ]
     for program in programList:
         writeProgram(program, boekingen)
 
