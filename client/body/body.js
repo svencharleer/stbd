@@ -82,12 +82,7 @@ Template.dashboard.onCreated(function () {
     let nio = studentBoeking["Nieuwi/dopleiding"];
 
     Session.set("studentName", studentGivenName + " " + studentSurName);
-    if (nio == "J"){
-      Session.set("new", true);
-    }
-    else{
-      Session.set("new", false);
-    }
+
 
     let currentSemester = 1;
     let semesterString = "Eerste Semester";
@@ -149,6 +144,21 @@ Template.dashboard.helpers({
   'GetPeriod':function(number){
     var r = [{period: "ijkingstoets"}, {period: "TTT"}, {period: "januari"}, {period: "juni"}, {period: "september"}];
     return r[number]
+  },
+
+  'NewInProgram':function () {
+	  let studentID = Session.get("student");
+	  let studentBoeking = Boekingen.findOne({$and: [{Student: studentID},{"Student-Voornaam(Key)": {$ne: "Undefined"}} ]});
+	  let nio = studentBoeking["Nieuwi/dopleiding"];
+	  if (nio === "J"){
+		  Session.set("new", true);
+		  return true
+
+	  }
+	  else{
+		  Session.set("new", false);
+		  return false
+	  }
   },
 
   /**
@@ -219,6 +229,8 @@ Template.dashboard.helpers({
     return r[number]
   }
 });
+
+
 
 let getCSETests = function(studentid, period, year, program){
   let boekingen = Boekingen.find({$and: [{Student: studentid}, {Academischeperiode: period},{ "Score": { $ne: "#" }}, {Opleiding:program}, {Academiejaar: year}]});

@@ -31,7 +31,9 @@
         <!-- {{#with GetColumnInfo 4}} This is september ;)
         {{> column}}
         {{/with}} -->
-        {{> failedColumn}}
+        {{#if NewInProgram}}
+            {{> failedColumn}}
+        {{/if}}
         <!-- Planning stuff -->
         {{> planningColumn}}
         <!--Always show the bachelor column-->
