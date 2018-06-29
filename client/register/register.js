@@ -1,15 +1,18 @@
 Template.register.events({
   'click paper-button': function (event, template) {
     let token = $(".user-token").val();
+    let student = $("#student > input").val();
     Session.set("token", token);
+    Session.set("student", parseInt(student));
+    $("#student").remove();
     setProgramSettings(token, template);
-
   },
   'keypress paper-input': function (event, template) {
     if (event.keyCode === 13) {
       let token = $(".user-token").val();
       Session.set("token", token);
       setProgramSettings(token, template);
+      $("#student").remove();
     }
   },
   'click .cse1': function (event) {

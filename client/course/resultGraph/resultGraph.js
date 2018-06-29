@@ -33,6 +33,8 @@ Template.resultGraph.helpers({
     let courseSemester = this.Academischeperiode;
     let scoreEntry = getScoreEntry(courseSemester);
     let score = this[scoreEntry];
+    // Check if its a number, otherwise parseInt;
+    if(!isNaN(parseInt(score))) score = parseInt(score);
     return score;
   }
 });
