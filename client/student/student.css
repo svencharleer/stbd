@@ -29,9 +29,8 @@
     align-self: flex-end;
     background: #3F51B5;
     color: white;
-    margin-top: 4px;
+    margin-top: 0px !important;
     width:auto;
-    height: 20px;
-    width: 40px;
-    display: none;
+    height: 20px !important;
+    width: 20px !important;
 }

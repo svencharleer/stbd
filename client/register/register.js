@@ -4,7 +4,8 @@ Template.register.events({
     let student = $("#student > input").val();
     Session.set("token", token);
     Session.set("student", parseInt(student));
-    $("#student").remove();
+    // $("#student").remove();
+    console.log(student);
     setProgramSettings(token, template);
   },
   'keypress paper-input': function (event, template) {
@@ -12,7 +13,7 @@ Template.register.events({
       let token = $(".user-token").val();
       Session.set("token", token);
       setProgramSettings(token, template);
-      $("#student").remove();
+      // $("#student").remove();
     }
   },
   'click .cse1': function (event) {
@@ -48,6 +49,7 @@ let setProgramSettings = function (token, template) {
       //Prevent that the dashboard is rendered twice
       if (!Session.get("alive")){
         loadDashboard();
+        // $("#student").remove();
       }
     }
     else{

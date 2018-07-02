@@ -2,7 +2,7 @@ import {Meteor} from 'meteor/meteor';
 let _ = require('lodash');
 
 console.log("Note: Dossi Server runs [Node 4.9.1] We are stuck in [Meteor 1.5] until we get Docker.")
-
+console.log("We should consider everything in Mongo as a String and convert them as needed in the client.")
 let currentAcademiejaar = "2017-2018";
 let Boekingen = new Mongo.Collection('boekingen');
 let Historic = new Mongo.Collection("doorloop");
