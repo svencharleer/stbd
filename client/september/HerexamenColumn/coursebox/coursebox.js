@@ -45,7 +45,8 @@ Template.coursebox.helpers({
     let courseSemester = this.Academischeperiode;
     let scoreEntry = getScoreEntry(courseSemester);
     let score = this[scoreEntry];
-    return parseInt(score);
+    if(!isNaN(parseInt(score))) score = parseInt(score);
+    return score;
   }
 });
 

@@ -3,7 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var'
 Template.failedColumn.created = function() {
   this.failed   = new ReactiveVar(0);
   this.selected = new ReactiveVar(0);
-  let courses = Boekingen.find({$and:[{Student: Session.get("student")}, {Score: {$lt: 10}}]});
+  let courses = Boekingen.find({$and:[{Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}  ]});
   //Checkboxes start all checked at max number of failed courses.
   this.selected.set(courses.count());
   // CSE bar needs percentage
@@ -17,24 +17,32 @@ Template.failedColumn.created = function() {
 
 Template.failedColumn.helpers({
   "eersteCourses":function () {
-    return Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {Score: {$lt: 10}}]}).fetch();
+    //return Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {Score: {$lt: 10}}]}).fetch();
+    let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}]}).fetch();
+    let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}]}).fetch();
+    return _.flatten([ownboekingen,academiejaar]);
   },
   "tweedeCourses":function () {
-    return Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")}, {Score: {$lt: 10}}]}).fetch();
+    //return Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")}, {Score: {$lt: 10}}]}).fetch();
+    let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejanuari: "#"}]}).fetch();
+    let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}]}).fetch();
+    return _.flatten([ownboekingen,academiejaar]);
   },
   "checked": function () {
     return Template.instance().selected.get();
   },
   "failed": function () {
-    return Boekingen.find({$and:[{Student: Session.get("student")}, {Score: {$lt: 10}}]}).count();
+    //return Boekingen.find({$and:[{Student: Session.get("student")}, {Score: {$lt: 10}}]}).count();
+    return Boekingen.find({$and:[{Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}  ]}).count();
   },
   "percent": function() {
     let cPassFirst  = creditsPassed("Eerste Semester");
     let cPassSecond = creditsPassed("Tweede Semester");
     let cFirst  = credits("Eerste Semester");
     let cSecond = credits("Tweede Semester");
+    let cThird  = credits("Academiejaar");
     let checkedCSE = Session.get("checkedCSE");
-    return Math.round(((cPassFirst+cPassSecond+checkedCSE)/(cFirst + cSecond)) * 100);
+    return Math.round(((cPassFirst+cPassSecond+checkedCSE)/(cFirst + cSecond + cThird)) * 100);
   },
   "csecheck":function() {
     let cPassFirst  = creditsPassed("Eerste Semester");
@@ -45,7 +53,8 @@ Template.failedColumn.helpers({
   "csesum":function() {
     let cFirst  = credits("Eerste Semester");
     let cSecond = credits("Tweede Semester");
-    return cFirst + cSecond;
+    let cThird  = credits("Academiejaar");
+    return cFirst + cSecond + cThird;
   }
 });
 

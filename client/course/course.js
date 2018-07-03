@@ -1,8 +1,8 @@
 Template.course.onRendered(function () {
   let instance = this;
   instance.autorun(function () {
-    let studentGrade = instance.data.Scorejanuari;
     let courseSemester = instance.data.Academischeperiode;
+    let studentGrade = parseInt(instance.data[getScoreEntry(courseSemester)]); //instance.data.Scorejanuari;
     let svg = d3.select(instance.find("svg"));
     let courseId = instance.data.IDOPO;
     if (courseSemester == undefined) courseSemester = 3;
@@ -100,4 +100,23 @@ Template.course.onRendered(function () {
 
 });
 
+/**
+ *
+ * @param semester
+ * @returns score_entry: fieldname of the db
+ */
+let getScoreEntry = function (semester) {
+  var score_entry = 'Score';
+  switch (semester) {
+    case "Eerste Semester":
+      score_entry = 'Scorejanuari';
+      break;
+    case "Tweede Semester":
+      score_entry = 'Scorejuni';
+      break;
+    default:
+      score_entry = 'Score';
+  }
+  return score_entry;
 
+};
