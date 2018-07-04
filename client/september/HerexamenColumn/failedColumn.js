@@ -5,7 +5,7 @@ Template.failedColumn.created = function() {
   this.selected = new ReactiveVar(0);
   let courses = Boekingen.find({$and:[{Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}  ]});
   //Checkboxes start all checked at max number of failed courses.
-  this.selected.set(courses.count());
+  // this.selected.set(courses.count());
   // CSE bar needs percentage
   let credits = 0;
   courses.fetch().forEach(function (p) {
@@ -32,8 +32,11 @@ Template.failedColumn.helpers({
     return Template.instance().selected.get();
   },
   "failed": function () {
-    //return Boekingen.find({$and:[{Student: Session.get("student")}, {Score: {$lt: 10}}]}).count();
-    return Boekingen.find({$and:[{Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}  ]}).count();
+	  let nb1 = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}]}).count();
+	  let nb2 = Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}]}).count();
+	  let nb3 = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejanuari: "#"}]}).count();
+	  let nb4 = Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}]}).count();
+    return nb1 + nb2 + nb3 + nb4;
   },
   "percent": function() {
     let cPassFirst  = creditsPassed("Eerste Semester");
