@@ -21,10 +21,8 @@ Template.CSE_bar.helpers({
 
 
 let credits = function (semester) {
-  console.log(semester)
   let all = []
   if( semester == "Eerste Semester"){
-    console.log('eerste')
 	  let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}]}).fetch();
 	  let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}]}).fetch()
     all = _.flatten([ownboekingen,academiejaar]);
@@ -43,7 +41,6 @@ let credits = function (semester) {
 
 let creditsPassed = function (semester) {
 	if( semester == "Eerste Semester"){
-		console.log('eerste')
 		let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}]}).fetch();
 		let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch()
 		all = _.flatten([ownboekingen,academiejaar]);

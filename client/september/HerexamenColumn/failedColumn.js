@@ -18,13 +18,14 @@ Template.failedColumn.created = function() {
 Template.failedColumn.helpers({
   "eersteCourses":function () {
     //return Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {Score: {$lt: 10}}]}).fetch();
-    let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}]}).fetch();
+    let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}, {$or: [{Scorejanuari: "NA"}, {Scorejanuari: {$lt: 10}}]} ]}).fetch();
     let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}]}).fetch();
+
     return _.flatten([ownboekingen,academiejaar]);
   },
   "tweedeCourses":function () {
     //return Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")}, {Score: {$lt: 10}}]}).fetch();
-    let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejanuari: "#"}]}).fetch();
+    let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}]}).fetch();
     let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}]}).fetch();
     return _.flatten([ownboekingen,academiejaar]);
   },
@@ -32,9 +33,9 @@ Template.failedColumn.helpers({
     return Template.instance().selected.get();
   },
   "failed": function () {
-	  let nb1 = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}]}).count();
+	  let nb1 = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}, {$or: [{Scorejanuari: "NA"}, {Scorejanuari: {$lt: 10}}]} ]}).count();
 	  let nb2 = Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}]}).count();
-	  let nb3 = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejanuari: "#"}]}).count();
+	  let nb3 = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}]}).count();
 	  let nb4 = Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")}, {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}]}).count();
     return nb1 + nb2 + nb3 + nb4;
   },
@@ -43,9 +44,8 @@ Template.failedColumn.helpers({
     let cPassSecond = creditsPassed("Tweede Semester");
     let cFirst  = credits("Eerste Semester");
     let cSecond = credits("Tweede Semester");
-    let cThird  = credits("Academiejaar");
     let checkedCSE = Session.get("checkedCSE");
-    return Math.round(((cPassFirst+cPassSecond+checkedCSE)/(cFirst + cSecond + cThird)) * 100);
+    return Math.round(((cPassFirst+cPassSecond+checkedCSE)/(cFirst + cSecond)) * 100);
   },
   "csecheck":function() {
     let cPassFirst  = creditsPassed("Eerste Semester");
@@ -56,8 +56,7 @@ Template.failedColumn.helpers({
   "csesum":function() {
     let cFirst  = credits("Eerste Semester");
     let cSecond = credits("Tweede Semester");
-    let cThird  = credits("Academiejaar");
-    return cFirst + cSecond + cThird;
+    return cFirst + cSecond;
   }
 });
 
@@ -77,35 +76,40 @@ Template.failedColumn.events({
 });
 
 let credits = function (semester) {
-  let all = Boekingen.find(
-    {$and:[
-      {Student:Session.get("student")},
-      {Academischeperiode: semester},
-    ]},
-    {fields: {Studiepunten: 1}}
-  );
-  let creditsPassed = 0;
-  all.forEach(function (p) {
-    creditsPassed += parseInt(p.Studiepunten);
-  });
-  return creditsPassed;
+	let all = []
+	if( semester === "Eerste Semester"){
+		let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}]}).fetch();
+		let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}]}).fetch()
+		all = _.flatten([ownboekingen,academiejaar]);
+	}
+	else{
+		let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejanuari: "#"}]}).fetch();
+		let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")}]}).fetch();
+		all=  _.flatten([ownboekingen,academiejaar]);
+	}
+	let credits = 0;
+	all.forEach(function (p) {
+		credits += parseInt(p.Studiepunten);
+	});
+	return credits;
 };
 
 let creditsPassed = function (semester) {
-  let scorefield = getScoreEntry(semester);
-  let all = Boekingen.find(
-    {$and:[
-      {Student:Session.get("student")},
-      {Academischeperiode: semester},
-    ]}
-  );
-  let creditsPassed = 0;
-  all.forEach(function (p) {
-    if (p[scorefield] > 9 || p[scorefield] == "G"){
-      creditsPassed += parseInt(p.Studiepunten);
-    }
-  });
-  return creditsPassed;
+	if( semester === "Eerste Semester"){
+		let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}]}).fetch();
+		let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch()
+		all = _.flatten([ownboekingen,academiejaar]);
+	}
+	else{
+		let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejanuari: "#"}]}).fetch();
+		let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")},{$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch();
+		all=  _.flatten([ownboekingen,academiejaar]);
+	}
+	let creditsPassed = 0;
+	all.forEach(function (p) {
+		creditsPassed += parseInt(p.Studiepunten);
+	});
+	return creditsPassed;
 };
 
 /**

@@ -3,7 +3,10 @@ import { ReactiveVar } from 'meteor/reactive-var'
 Template.circleGraph.created = function() {
 
   this.failed = new ReactiveVar(0);
-  let courses = Boekingen.find({$and:[{Student: Session.get("student")}, {Score: {$lt: 10}}]});
+
+	let courses = Boekingen.find({$and:[{Student: Session.get("student")}, {Score: {$lt: 10}}]});
+
+
   this.failed.set(courses.count());
 
   let program = [];
