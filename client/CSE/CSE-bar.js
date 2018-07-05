@@ -21,35 +21,43 @@ Template.CSE_bar.helpers({
 
 
 let credits = function (semester) {
-  let all = Boekingen.find(
-    {$and:[
-      {Student:Session.get("student")},
-      {Academischeperiode: semester},
-    ]},
-    {fields: {Studiepunten: 1}}
-  );
-  let creditsPassed = 0;
+  console.log(semester)
+  let all = []
+  if( semester == "Eerste Semester"){
+    console.log('eerste')
+	  let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}]}).fetch();
+	  let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}]}).fetch()
+    all = _.flatten([ownboekingen,academiejaar]);
+  }
+  else{
+	  let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejanuari: "#"}]}).fetch();
+	  let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")}]}).fetch();
+	  all=  _.flatten([ownboekingen,academiejaar]);
+  }
+  let credits = 0;
   all.forEach(function (p) {
-    creditsPassed += parseInt(p.Studiepunten);
+    credits += parseInt(p.Studiepunten);
   });
-  return creditsPassed;
+  return credits;
 };
 
 let creditsPassed = function (semester) {
-  let scorefield = getScoreEntry(semester);
-  let all = Boekingen.find(
-    {$and:[
-      {Student:Session.get("student")},
-      {Academischeperiode: semester},
-    ]}
-  );
-  let creditsPassed = 0;
-  all.forEach(function (p) {
-    if (p[scorefield] > 9 || p[scorefield] == "G"){
-      creditsPassed += parseInt(p.Studiepunten);
-    }
-  });
-  return creditsPassed;
+	if( semester == "Eerste Semester"){
+		console.log('eerste')
+		let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}]}).fetch();
+		let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch()
+		all = _.flatten([ownboekingen,academiejaar]);
+	}
+	else{
+		let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejanuari: "#"}]}).fetch();
+		let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")},{$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch();
+		all=  _.flatten([ownboekingen,academiejaar]);
+	}
+	let creditsPassed = 0;
+	all.forEach(function (p) {
+		creditsPassed += parseInt(p.Studiepunten);
+	});
+	return creditsPassed;
 };
 
 /**
