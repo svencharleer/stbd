@@ -6,6 +6,7 @@ Template.trajectoryperiod.onRendered(function () {
     var cse = Session.get("CSE_" + period);
     var svg = d3.select("#distribution_" + period + " svg.distribution");
     Meteor.call("getDistribution", semester, Session.get("program"), function (err, data) {
+      console.log(data)
       //find max value and min value
       var min = Number.MAX_VALUE;
       var max = Number.MIN_VALUE;

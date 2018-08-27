@@ -7,7 +7,7 @@
     --LowSelected: rgb(119, 133, 215);
     --BadStudent: rgba(255, 193, 227, 1);
     --BadSelected: rgb(246, 122, 190);
-    --ColumnWidth: 180px; /* 350 for double column. */
+    --ColumnWidth: 200px; /* 350 for double column. */
     --TextColor: #424242;
     --Pass: #a5d6a7;
     --Tolerable: #ffcc80;

@@ -214,7 +214,7 @@ Template.dashboard.helpers({
       },
       {
         title: "September",
-        semester: 3,
+        semester: "Resits",
         class: "column-odd",
         period: "september",
         percent: Session.get("CSE_september"),
