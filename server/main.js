@@ -519,6 +519,11 @@ let getCSEs = function (semester, program) {
           cses.push(cse)
         });
         break;
+      case "Resits":
+        boekingen.forEach(function (b) {
+          let cse = b.CSE
+          cses.push(cse)
+        })
       default:
         boekingen.forEach(function (b) {
           let cse = b.CSEJanuari;
