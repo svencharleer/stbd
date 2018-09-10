@@ -30,10 +30,14 @@ Template.resultGraph.helpers({
     let credits = this.Studiepunten;
     return credits > 0;
   },
-  Score: function () {
-    let courseSemester = this.Academischeperiode;
-    let scoreEntry = getScoreEntry(courseSemester);
-    let score = this[scoreEntry];
+  Score: function (index) {
+    let score = this.Score
+    if (index < 4){
+	    let courseSemester = this.Academischeperiode;
+	    let scoreEntry = getScoreEntry(courseSemester);
+	    score = this[scoreEntry];
+    }
+
     // Check if its a number, otherwise parseInt;
     if(!isNaN(parseInt(score))) score = parseInt(score);
     return score;

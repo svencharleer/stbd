@@ -1,11 +1,11 @@
 <template name="failedCourse">
     <div id="{{id}}_failed" class="course failed-course {{color}}" style="border-color: {{color}}; min-height: 50px;">
         <div class="course-top {{color}} {{canTolerate}}">
-            <div class="name">{{name}}</div>
+            <div class="name">{{Opleidingsonderdeel}}</div>
             <div class="top-bar {{color}} {{canTolerate}} ">
                 <div class="grade">
-                    <div class="try {{try1.bold}}">{{try1.grade}} |</div>
-                    <div class="try {{try2.bold}}">&nbsp; {{try2.grade}}</div>
+                    <div class="try {{bold try1 try2}}">{{try1}} |</div>
+                    <div class="try {{bold try1 try2}}">&nbsp; {{try2}}</div>
                     <div class="getolereerd">Getolereerd</div>
                 </div>
 

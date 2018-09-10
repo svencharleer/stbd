@@ -521,7 +521,7 @@ let getCSEs = function (semester, program) {
         break;
       case "Resits":
         boekingen.forEach(function (b) {
-          let cse = b.CSE
+          let cse = b.CSE;
           cses.push(cse)
         })
       default:

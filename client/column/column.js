@@ -1,21 +1,21 @@
 Template.column.helpers({
-  /**
-  * @returns [{id,name,grade,semester,credits, columnindex}]
-  */
-  studentCourses() {
+  'studentCourses': function() {
     let semester = this.semester;
+    let columnindex = this.columnindex;
     let ownboekingen = [];
     if ( this.semester === "Resits"){
+    	//find all failed courses from januari
 	    let ownboekingen1 = Boekingen.find(
 	      {$and:[
 	        {Academischeperiode: "Eerste Semester"},
           {Student: Session.get("student")},
-          {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}
+          {$or: [{Scorejanuari: "NA"}, {Scorejanuari: {$lt: "10"}}]}
           ]}).fetch();
+	    //find all failed coursis from june
 	    let ownboekingen2 = Boekingen.find(
 	      {$and:[{Academischeperiode: "Tweede Semester"},
           {Student: Session.get("student")},
-          {$or: [{Score: "NA"}, {Score: {$lt: 10}}]}]}).fetch();
+          {$or: [{Scorejuni: "NA"}, {Scorejuni: {$lt: "10"}}]}]}).fetch();
 	    ownboekingen = _.flatten([ownboekingen1,ownboekingen2]);
     }
     else{
@@ -39,30 +39,26 @@ Template.column.helpers({
           {Student: Session.get("student")},
           {Scorejuni: "#"},
           {$or: [{Scorejanuari: "NA"}, {Scorejanuari: {$lt: 10}}]},
-		      {$or: [{Scoreseptember: "NA"}, {Scoreseptember: {$lt: 10}}]}
 
 	      ]}).fetch();
 	    let academiejaar2 = Boekingen.find(
 	      {$and:[{Academischeperiode: "Academiejaar"},
           {Student: Session.get("student")},
 		      {Scorejanuari: "#"},
-		      {$or: [{Scorejuni: "NA"}, {Scorejuni: {$lt: 10}}]},
-		      {$or: [{Scoreseptember: "NA"}, {Scoreseptember: {$lt: 10}}]}
-	      ]}).fetch();
+		      {$or: [{Scorejuni: "NA"}, {Scorejuni: {$lt: 10}}]}
+		      ]}).fetch();
 
 	    academiejaar = _.flatten([academiejaar1, academiejaar2]);
     }
-
-    return _.flatten([ownboekingen,academiejaar]); //http://www.flatmapthatshit.com/ ;)
+		let flatten = _.flatten([ownboekingen,academiejaar]);
+    flatten.forEach(function (course) {
+	    course.columnindex = columnindex
+    });
+    return  flatten
   },
   "cseAvailable":function() {
     return this.credits !== undefined
   },
-  // "getFailedCourses":function () {
-  //   Meteor.call("getFailedCourses", Session.get("student"), function (err, data) {
-  //     return data;
-  //   })
-  // },
   "trajectInfo":function () {
     let semester = this.semester;
     let columnindex = this.columnindex;
@@ -73,4 +69,5 @@ Template.column.helpers({
       period: period
     }
   }
+
 });

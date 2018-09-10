@@ -18,11 +18,13 @@
     </div>
     <div class="bottom">
       {{#if Template.subscriptionsReady}}
-      {{#each studentCourses}}
-      <div class="flex-item">
-        {{> course}}
-      </div>
-      {{/each}}
+          {{#with trajectInfo}}
+              {{#each studentCourses}}
+                  <div class="flex-item">
+                      {{> course}}
+                  </div>
+              {{/each}}
+          {{/with}}
       {{else}}
       <div class="loading">
         <paper-spinner alt="Loading" active></paper-spinner>

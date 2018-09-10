@@ -120,3 +120,17 @@ let getScoreEntry = function (semester) {
   return score_entry;
 
 };
+
+Template.course.helpers({
+		"trajectInfo": function () {
+			let semester = this.semester;
+			let columnindex = this.columnindex;
+			let period = this.period;
+			return {
+				semester: semester,
+				columnindex: columnindex,
+				period: period
+			}
+		}
+	}
+)

@@ -1,0 +1,28 @@
+<template name="tolerateColumn">
+    <div class="flex-column column-even colfail">
+        <div class="vertical-title">herexamen</div>
+        <div class="top">
+            <div class="fa compress-colfail fa-compress"><paper-ripple></paper-ripple></div>
+            <div class="column-title">Onsuccesvolle vakken</div>
+            <div class="periode">Tolerantiepunten</div>
+            <div id='tolerantiepunten' class="tolerantiepunten flickering">
+                <paper-progress value={{toleranceCredits}} max="12" min="0"></paper-progress>
+                <span> {{toleranceCredits}} </span><b> /12</b>
+            </div>
+        </div>
+        <div class="space">
+
+        </div>
+        <div class="bottom">
+            <div class="eerste-failed">
+                {{#each failedCourses}}
+                    <div class="flex-item">
+                        {{> failedCourse}}
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</template>
+
+

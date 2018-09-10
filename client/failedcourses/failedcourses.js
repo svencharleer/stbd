@@ -9,11 +9,30 @@ Template.failedCourse.onCreated(function () {
 Template.failedCourse.helpers({
   color: function () {
     let color = "white"; //"#ef9a9a";
-    if (this.grade < 8) color = "failed" //"#ff8a80"; //failed
-    else if (this.grade > 9) color = "passed" //"#a5d6a7"; //passed
-    else if (this.grade >= 8 && this.grade <= 9) color = "tolerable"; // "#ffcc80"; //tolerable
+    if (this.Score < 8) color = "failed" //"#ff8a80"; //failed
+    else if (this.Score > 9) color = "passed" //"#a5d6a7"; //passed
+    else if (this.Score >= 8 && this.Score <= 9) color = "tolerable"; // "#ffcc80"; //tolerable
     else color = "failed"; // "#ff8a80"; //failed
     return color;
+  },
+  try1: function () {
+    if ( this.Academischeperiode === "Eerste Semester"){
+      return parseInt(this.Scorejanuari)
+    }
+    else if ( this.Academischeperiode === "Tweede Semester"){
+	    return parseInt(this.Scorejuni)
+    }
+    else if (this.Academischeperiode === "Academiejaar"){
+      if (this.Scorejanuari === "#"){
+        return parseInt(this.Scorejuni)
+      }
+      else{
+        return parseInt(this.Scorejanuari)
+      }
+    }
+  },
+  try2: function () {
+    return this.Scoreseptember
   },
   courseLabel: function () {
     let label = "NT";
@@ -22,15 +41,10 @@ Template.failedCourse.helpers({
     else label = "NT";
     return label;
   },
-  try1: function () {
+  bold: function (try1, try2) {
     let bold = "bold";
-    if (grade(this.try1) < grade(this.try2)) bold = "notbold";
-    return {"grade": this.try1, "bold": bold};
-  },
-  try2: function () {
-    let bold = "bold";
-    if (grade(this.try1) > grade(this.try2)) bold = "notbold";
-    return {"grade": this.try2, "bold": bold};
+    if (try1 < try2) bold = "notbold";
+    return {"grade": try1, "bold": bold};
   },
   /**
    * Check if current CSE >= 50
@@ -38,13 +52,7 @@ Template.failedCourse.helpers({
    * @return {String} : "cannotTolerate" of "canTolerate"
    */
   canTolerate: function () {
-    let semester = Session.get('semester');
-    let CSE_september = Session.get('CSE_september');
-    let CSE_juni = Session.get('CSE_juni');
-    let CSE_januari = Session.get('CSE_januari');
-    let CSE_list = [CSE_januari, CSE_juni, CSE_september];
-    let currentCSE = CSE_list[semester - 1]
-    if (currentCSE < 50) {
+    if (this.CSE < 50) {
       return "cannotTolerate"
     }
     else {
