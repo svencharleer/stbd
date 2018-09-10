@@ -204,7 +204,7 @@ Meteor.methods({
       //console.log(cse);
       if(cse == "cse1") cse_opt =  b.CSEJanuari;
       if(cse == "cse2") cse_opt =  b.CSEJuni;
-      if(cse == "cse3") cse_opt =  b.CSESeptember;
+      if(cse == "cse3") cse_opt =  b.CSE;
       studentList.push(b.Student);
       studentCSE.push({student: b.Student, cse: cse_opt});
     });
