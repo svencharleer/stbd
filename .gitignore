@@ -72,5 +72,6 @@ fabric.properties
 .idea/*
 public/*
 
+public/bower_components/*
 
-bower_components/
+bower_components/*
