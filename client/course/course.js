@@ -1,8 +1,16 @@
 Template.course.onRendered(function () {
   let instance = this;
   instance.autorun(function () {
-    let courseSemester = instance.data.Academischeperiode;
-    let studentGrade = parseInt(instance.data[getScoreEntry(courseSemester)]); //instance.data.Scorejanuari;
+	  let courseSemester = instance.data.Academischeperiode;
+	  let index = instance.data.columnindex;
+	  let score = instance.data.Score;
+	  if (index < 4){
+		  let scoreEntry = getScoreEntry(courseSemester);
+		  score = instance.data[scoreEntry];
+	  }
+	  // Check if its a number, otherwise parseInt;
+	  if(!isNaN(parseInt(score))) score = parseInt(score);
+    let studentGrade = score;
     let svg = d3.select(instance.find("svg"));
     let courseId = instance.data.IDOPO;
     if (courseSemester == undefined) courseSemester = 3;

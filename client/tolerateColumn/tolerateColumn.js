@@ -1,5 +1,9 @@
 Template.tolerateColumn.helpers({
 
+	toleranceCredits(){
+		return Session.get('toleranceCredits');
+	},
+
 	failedCourses() {
 		//find all failed courses from first semester
 		let ownboekingen1 = Boekingen.find(
@@ -36,7 +40,6 @@ Template.tolerateColumn.helpers({
 
 		let academiejaar = _.flatten([academiejaar1, academiejaar2]);
 		let flatten = _.flatten([ownboekingen,academiejaar]); //http://www.flatmapthatshit.com/ ;)
-		console.log(flatten)
 		return flatten
 	}
 

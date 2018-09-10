@@ -6,12 +6,18 @@ Template.resultGraph.onCreated(function () {
 });
 
 Template.resultGraph.helpers({
-  color: function () {
+  color: function (index) {
     let color = "white"; //"#ef9a9a";
-    //todo fix this for resits
-    let courseSemester = this.Academischeperiode;
-    let scoreEntry = getScoreEntry(courseSemester);
-    let score = this[scoreEntry];
+	  let score = this.Score
+	  if (index < 4){
+		  let courseSemester = this.Academischeperiode;
+		  let scoreEntry = getScoreEntry(courseSemester);
+		  score = this[scoreEntry];
+	  }
+
+	  // Check if its a number, otherwise parseInt;
+	  if(!isNaN(parseInt(score))) score = parseInt(score);
+
     if (score < 8) color = "failed"; //"#ff8a80"; //failed
     else if (score > 9 || score === "G") color = "passed"; //"#a5d6a7"; //passed
     else if (score >= 8 && score <= 9) color = "tolerable"; // "#ffcc80"; //tolerable

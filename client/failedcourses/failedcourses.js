@@ -34,13 +34,7 @@ Template.failedCourse.helpers({
   try2: function () {
     return this.Scoreseptember
   },
-  courseLabel: function () {
-    let label = "NT";
-    if ((this.try1 > 9) || (this.try2 > 9)) label = "G"; // Passed
-    else if ((this.try1 >= 8 && this.try1 <= 9) || (this.try2 >= 8 && this.try2 <= 9)) label = "T";
-    else label = "NT";
-    return label;
-  },
+
   bold: function (try1, try2) {
     let bold = "bold";
     if (try1 < try2) bold = "notbold";
@@ -62,14 +56,7 @@ Template.failedCourse.helpers({
 
 });
 
-var grade = function (grade) {
-  if (typeof(grade) != 'number') {
-    return 0
-  }
-  else {
-    return grade
-  }
-}
+
 
 Template.failedCourse.events({
   "click .course-top.tolerable.canTolerate": function (event, template) {
@@ -116,7 +103,7 @@ Template.failedCourse.events({
      */
 
     if (!template.checkFail.get()) {
-      let creditsLeft = Session.get('toleranceCredits')
+      let creditsLeft = Session.get('toleranceCredits');
       let cancelToleration = parseInt(creditsLeft) + parseInt(this.credits);
       if (cancelToleration <= 12) {
         Session.set('toleranceCredits', cancelToleration)
@@ -136,9 +123,6 @@ Template.failedCourse.events({
 
       }
     }
-    else {
-
-    }
   },
 
   "click .tolerate-course": function (event, template) {
@@ -152,10 +136,8 @@ Template.failedCourse.events({
      *  update boolean checkFail
      */
     if (template.checkFail.get()) {
-
-
       let creditsLeft = Session.get('toleranceCredits')
-      let afterToleration = creditsLeft - this.credits;
+      let afterToleration = creditsLeft - this.Studiepunten;
       if (afterToleration >= 0) {
         template.$(".check-fail").css("color", "transparent");
         template.$(".stay-failed").css("opacity", "0.5");
