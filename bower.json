@@ -1,9 +1,9 @@
 {
-  "name": "STBD",
+  "name": "stbd",
   "version": "0.0.1",
   "dependencies": {
     "d3": "~3.5.17",
-    "polymer": "latest",
+    "polymer": "1.9 - 2",
     "paper-button": "PolymerElements/paper-button#latest",
     "paper-progress": "PolymerElements/paper-progress#latest",
     "paper-spinner": "PolymerElements/paper-spinner#latest",

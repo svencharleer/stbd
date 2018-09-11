@@ -1,5 +1,5 @@
 {
-  "name": "STBD",
+  "name": "stbd",
   "private": true,
   "scripts": {
     "start": "meteor run"
