@@ -61,13 +61,13 @@ Meteor.methods({
   * Calculate gradefield and call GetDistribution
   * @param courseid
   * @param year
-  * @param semester: -2,-1,0,1,2,3: for which semester you want the distribution
+  * @param semester: for which semester you want the distribution
   * @returns {{numberPerGrades, min, max, total}}
   */
   getCoursePointDistribution : function (courseid, semester) {
     let gradeField = "Score";
-    if (semester === 3){ //only in resits you need the score of that specific period
-      gradeField = "ScoreSeptember";
+    if (semester === "Resits"){ //only in resits you need the score of that specific period
+      gradeField = "Scoreseptember";
     }
     return getCoursePointDistributionSemester(courseid, gradeField);
   },
@@ -564,7 +564,7 @@ let getCSEs = function (semester, program) {
     * @returns {{numberPerGrades: {}, min: Number, max: Number, total: number}}
     */
     let getCoursePointDistributionSemester = function (courseid, gradeField) {
-      //console.log(courseid, gradeField)
+      console.log(courseid, gradeField)
       var numberPerGrades = {};
       var total = 0;
       let allGrades  = Boekingen.find({$and:[{IDOPO : courseid},{Academiejaar: currentAcademiejaar}]});

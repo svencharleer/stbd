@@ -1,87 +1,87 @@
-<!--<head>-->
-<!--<meta charset="utf-8">-->
-<!--<meta name="google" content="notranslate" />-->
-<!--<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">-->
-<!--<title>LISSA Dashboard</title>-->
-<!--<script src="/lissa/bower_components/d3/d3.js"></script>-->
-<!--<link rel='stylesheet' href='//fonts.googleapis.com/css?family=Roboto:900,400,300,100' type='text/css'>-->
-<!--<link rel="import" href="/lissa/bower_components/paper-material/paper-material.html">-->
-<!--<link rel="import" href="/lissa/bower_components/paper-progress/paper-progress.html">-->
-<!--<link rel="import" href="/lissa/bower_components/paper-ripple/paper-ripple.html">-->
-<!--<link rel="import" href="/lissa/bower_components/paper-spinner/paper-spinner.html">-->
-<!--<link rel="import" href="/lissa/bower_components/paper-input/paper-input.html">-->
-<!--<link rel="import" href="/lissa/bower_components/paper-button/paper-button.html">-->
-<!--<link rel="import" href="/lissa/bower_components/paper-checkbox/paper-checkbox.html">-->
-<!--<link rel="stylesheet" href="/lissa/d3slider/d3.slider.css" />-->
-<!--<link rel="icon" sizes="16x16 32x32" href="/lissa/favicon.ico?v=2">-->
-<!--<script src='https://cdnjs.cloudflare.com/ajax/libs/wnumb/1.0.4/wNumb.min.js'></script>-->
-<!--<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>-->
-<!--<style is="custom-style">-->
-<!--paper-progress {-->
-  <!--width: 50%;-->
-  <!--border: solid 1px #81a8b8;-->
-  <!----paper-progress-active-color: #81a8b8;-->
-  <!--margin: auto;-->
-  <!----paper-progress-transition-duration: 1s;-->
-  <!----paper-progress-transition-timing-function: ease;-->
-  <!----paper-progress-transition-transition-delay: 0s;-->
-<!--}-->
-<!--paper-checkbox.boxfailed {-->
-  <!----paper-checkbox-checked-color: var(--Fail);-->
-  <!----paper-checkbox-checked-ink-color: var(--Fail);-->
-  <!----paper-checkbox-unchecked-color: var(--paper-red-900);-->
-  <!----paper-checkbox-unchecked-ink-color: var(--paper-red-900);-->
-<!--}-->
-<!--paper-checkbox.boxtolerable {-->
-  <!----paper-checkbox-checked-color: var(--Tolerable);-->
-  <!----paper-checkbox-checked-ink-color: var(--Tolerable);-->
-  <!----paper-checkbox-unchecked-color: var(--paper-yellow-a700);-->
-  <!----paper-checkbox-unchecked-ink-color: var(--paper-yellow-a700);-->
-<!--}-->
-<!--</style>-->
-<!--</head>-->
-
 <head>
-  <meta charset="utf-8">
-  <meta name="google" content="notranslate"/>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
-  <title>LISSA Dashboard</title>
-  <script src="/bower_components/d3/d3.js"></script>
-  <script src="/d3slider/d3.slider.js"></script>
-  <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Roboto:900,400,300,100' type='text/css'>
-  <link rel="import" href="/bower_components/paper-material/paper-material.html">
-  <link rel="import" href="/bower_components/paper-progress/paper-progress.html">
-  <link rel="import" href="/bower_components/paper-ripple/paper-ripple.html">
-  <link rel="import" href="/bower_components/paper-spinner/paper-spinner.html">
-  <link rel="import" href="/bower_components/paper-input/paper-input.html">
-  <link rel="import" href="/bower_components/paper-button/paper-button.html">
-  <link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
-  <link rel="stylesheet" href="/bower_components/animate.css/animate.min.css"/>
-  <link rel="stylesheet" href="/d3slider/d3.slider.css"/>
-  <link rel="icon" sizes="16x16 32x32" href="/favicon.ico?v=2">
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/wnumb/1.0.4/wNumb.min.js'></script>
-  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-  <style is="custom-style">
-  paper-progress {
-    width: 50%;
-    border: solid 1px #81a8b8;
-    --paper-progress-active-color: #81a8b8;
-    margin: auto;
-    --paper-progress-transition-duration: 1s;
-    --paper-progress-transition-timing-function: ease;
-    --paper-progress-transition-transition-delay: 0s;
-  }
-  paper-checkbox.boxfailed {
-    --paper-checkbox-checked-color: var(--Fail);
-    --paper-checkbox-checked-ink-color: var(--Fail);
-    --paper-checkbox-unchecked-color: var(--paper-red-900);
-    --paper-checkbox-unchecked-ink-color: var(--paper-red-900);
-  }
-  paper-checkbox.boxtolerable {
-    --paper-checkbox-checked-color: var(--Tolerable);
-    --paper-checkbox-checked-ink-color: var(--Tolerable);
-    --paper-checkbox-unchecked-color: var(--paper-yellow-a700);
-    --paper-checkbox-unchecked-ink-color: var(--paper-yellow-a700);
-  }
-  </style>
+<meta charset="utf-8">
+<meta name="google" content="notranslate" />
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+<title>LISSA Dashboard</title>
+<script src="/lissa/bower_components/d3/d3.js"></script>
+<link rel='stylesheet' href='//fonts.googleapis.com/css?family=Roboto:900,400,300,100' type='text/css'>
+<link rel="import" href="/lissa/bower_components/paper-material/paper-material.html">
+<link rel="import" href="/lissa/bower_components/paper-progress/paper-progress.html">
+<link rel="import" href="/lissa/bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="/lissa/bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="/lissa/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/lissa/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/lissa/bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="stylesheet" href="/lissa/d3slider/d3.slider.css" />
+<link rel="icon" sizes="16x16 32x32" href="/lissa/favicon.ico?v=2">
+<script src='https://cdnjs.cloudflare.com/ajax/libs/wnumb/1.0.4/wNumb.min.js'></script>
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+<style is="custom-style">
+paper-progress {
+  width: 50%;
+  border: solid 1px #81a8b8;
+  --paper-progress-active-color: #81a8b8;
+  margin: auto;
+  --paper-progress-transition-duration: 1s;
+  --paper-progress-transition-timing-function: ease;
+  --paper-progress-transition-transition-delay: 0s;
+}
+paper-checkbox.boxfailed {
+  --paper-checkbox-checked-color: var(--Fail);
+  --paper-checkbox-checked-ink-color: var(--Fail);
+  --paper-checkbox-unchecked-color: var(--paper-red-900);
+  --paper-checkbox-unchecked-ink-color: var(--paper-red-900);
+}
+paper-checkbox.boxtolerable {
+  --paper-checkbox-checked-color: var(--Tolerable);
+  --paper-checkbox-checked-ink-color: var(--Tolerable);
+  --paper-checkbox-unchecked-color: var(--paper-yellow-a700);
+  --paper-checkbox-unchecked-ink-color: var(--paper-yellow-a700);
+}
+</style>
 </head>
+
+<!--<head>-->
+  <!--<meta charset="utf-8">-->
+  <!--<meta name="google" content="notranslate"/>-->
+  <!--<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">-->
+  <!--<title>LISSA Dashboard</title>-->
+  <!--<script src="/bower_components/d3/d3.js"></script>-->
+  <!--<script src="/d3slider/d3.slider.js"></script>-->
+  <!--<link rel='stylesheet' href='//fonts.googleapis.com/css?family=Roboto:900,400,300,100' type='text/css'>-->
+  <!--<link rel="import" href="/bower_components/paper-material/paper-material.html">-->
+  <!--<link rel="import" href="/bower_components/paper-progress/paper-progress.html">-->
+  <!--<link rel="import" href="/bower_components/paper-ripple/paper-ripple.html">-->
+  <!--<link rel="import" href="/bower_components/paper-spinner/paper-spinner.html">-->
+  <!--<link rel="import" href="/bower_components/paper-input/paper-input.html">-->
+  <!--<link rel="import" href="/bower_components/paper-button/paper-button.html">-->
+  <!--<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">-->
+  <!--<link rel="stylesheet" href="/bower_components/animate.css/animate.min.css"/>-->
+  <!--<link rel="stylesheet" href="/d3slider/d3.slider.css"/>-->
+  <!--<link rel="icon" sizes="16x16 32x32" href="/favicon.ico?v=2">-->
+  <!--<script src='https://cdnjs.cloudflare.com/ajax/libs/wnumb/1.0.4/wNumb.min.js'></script>-->
+  <!--<script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>-->
+  <!--<style is="custom-style">-->
+  <!--paper-progress {-->
+    <!--width: 50%;-->
+    <!--border: solid 1px #81a8b8;-->
+    <!----paper-progress-active-color: #81a8b8;-->
+    <!--margin: auto;-->
+    <!----paper-progress-transition-duration: 1s;-->
+    <!----paper-progress-transition-timing-function: ease;-->
+    <!----paper-progress-transition-transition-delay: 0s;-->
+  <!--}-->
+  <!--paper-checkbox.boxfailed {-->
+    <!----paper-checkbox-checked-color: var(--Fail);-->
+    <!----paper-checkbox-checked-ink-color: var(--Fail);-->
+    <!----paper-checkbox-unchecked-color: var(--paper-red-900);-->
+    <!----paper-checkbox-unchecked-ink-color: var(--paper-red-900);-->
+  <!--}-->
+  <!--paper-checkbox.boxtolerable {-->
+    <!----paper-checkbox-checked-color: var(--Tolerable);-->
+    <!----paper-checkbox-checked-ink-color: var(--Tolerable);-->
+    <!----paper-checkbox-unchecked-color: var(--paper-yellow-a700);-->
+    <!----paper-checkbox-unchecked-ink-color: var(--paper-yellow-a700);-->
+  <!--}-->
+  <!--</style>-->
+<!--</head>-->

@@ -9,13 +9,14 @@ Template.column.helpers({
 	      {$and:[
 	        {Academischeperiode: "Eerste Semester"},
           {Student: Session.get("student")},
-          {$or: [{Scorejanuari: "NA"}, {Scorejanuari: {$lt: "10"}}]}
+          {$or: [{Scorejanuari: "NA"}, {Scorejanuari: {$lt: "10"}},{Scorejanuari: {$lt: 10}}]}
           ]}).fetch();
+	    console.log(ownboekingen1)
 	    //find all failed coursis from june
 	    let ownboekingen2 = Boekingen.find(
 	      {$and:[{Academischeperiode: "Tweede Semester"},
           {Student: Session.get("student")},
-          {$or: [{Scorejuni: "NA"}, {Scorejuni: {$lt: "10"}}]}]}).fetch();
+          {$or: [{Scorejuni: "NA"}, {Scorejuni: {$lt: "10"}},{Scorejuni: {$lt: 10}}]}]}).fetch();
 	    ownboekingen = _.flatten([ownboekingen1,ownboekingen2]);
     }
     else{
@@ -45,7 +46,7 @@ Template.column.helpers({
 	      {$and:[{Academischeperiode: "Academiejaar"},
           {Student: Session.get("student")},
 		      {Scorejanuari: "#"},
-		      {$or: [{Scorejuni: "NA"}, {Scorejuni: {$lt: 10}}]}
+		      {$or: [{Scorejuni: "NA"},{Scorejuni: {$lt: "10"}}, {Scorejuni: {$lt: 10}}]}
 		      ]}).fetch();
 
 	    academiejaar = _.flatten([academiejaar1, academiejaar2]);
