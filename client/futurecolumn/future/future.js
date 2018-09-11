@@ -176,38 +176,30 @@ Template.future.onRendered(function () {
   let middlesvg = d3.select('#middle');
   let lowsvg = d3.select('#low');
 
+	[highProfile, middleProfile, lowProfile] = [false, true, false];
+	let topDict = {
+		0: 92,
+		1: 5,
+		2:0
+	}
+	let middleDict = {
+		0: 54,
+		1: 26,
+		2: 5
+	}
+	let lowDict = {
+		0: 19,
+		1: 15,
+		2: 6
+	}
+	topCSEDistribution = [topDict['0'], topDict['1'], topDict['2']];
+	middleCSEDistribution = [middleDict['0'], middleDict['1'], middleDict['2']];
+	lowCSEDistribution = [lowDict['0'], lowDict['1'], lowDict['2']];
+	//make the fields
+	makeProfileField(topsvg, topCSEDistribution, highProfile);
+	makeProfileField(middlesvg, middleCSEDistribution, middleProfile);
+	makeProfileField(lowsvg, lowCSEDistribution, lowProfile);
 
-  //server function needs this guy's grades.
-  this.autorun(function () {
-    if (Session.get('student') == undefined || Session.get('semesterString') == undefined) {
-      return;
-    }
-    /**
-     * Get the profile of the student
-     * [{boolean}]
-     */
-    Meteor.call("getCSEProfile", Session.get('student'), Session.get('semester'), Session.get('limit1'), Session.get('limit2'), function (err, profile) {
-      [highProfile, middleProfile, lowProfile] = profile;
-    });
-
-    /**
-     * Get for each profile the number of students in each of the categories
-     * e.g. {+0: 85, +1: 6, +2: 2, B: 1, D: 6}
-     */
-    Meteor.call("getHistoricDistribution", Session.get('program'), Session.get("semesterString"), Session.get('limit1'), Session.get('limit2'), function (err, listDicts) {
-      [topDict, middleDict, lowDict] = listDicts;
-      console.log(listDicts)
-      //Make list of dictionary
-      topCSEDistribution = [topDict['0'], topDict['1'], topDict['2']];
-      middleCSEDistribution = [middleDict['0'], middleDict['1'], middleDict['2']];
-      lowCSEDistribution = [lowDict['0'], lowDict['1'], lowDict['2']];
-      //make the fields
-      makeProfileField(topsvg, topCSEDistribution, highProfile);
-      makeProfileField(middlesvg, middleCSEDistribution, middleProfile);
-      makeProfileField(lowsvg, lowCSEDistribution, lowProfile);
-    });
-
-  })
 
 
 })

@@ -28,12 +28,8 @@
         {{#with GetColumnInfo 3}}
         {{> column}}
         {{/with}}
-        {{#with GetColumnInfo 4}}
-        {{> column}}
-        {{/with}}
-        {{#with GetColumnInfo 4}}
-            {{> tolerateColumn}}
-        {{/with}}
+
+        {{> failedColumn}}
 
           <!-- Planning stuff -->
         {{> planningColumn}}
