@@ -3,7 +3,6 @@ Template.trajectoryperiod.onRendered(function () {
   instance.autorun(function () {
     var period = instance.data.period;
     var semester = instance.data.semester;
-    console.log(semester)
     var cse = Session.get("CSE_" + period);
     var svg = d3.select("#distribution_" + period + " svg.distribution");
 	  let data = {distribution:
@@ -70,10 +69,10 @@ Template.trajectoryperiod.onRendered(function () {
 			  [
 				  {bucket: 0, count: 8},
 				  {bucket: 1, count: 6},
-				  {bucket: 2, count: 0},
-				  {bucket: 3, count: 0},
-				  {bucket: 4, count: 0},
-				  {bucket: 5, count: 28},
+				  {bucket: 2, count: 4},
+				  {bucket: 3, count: 8},
+				  {bucket: 4, count: 6},
+				  {bucket: 5, count: 18},
 				  {bucket: 6, count: 25},
 				  {bucket: 7, count: 21},
 				  {bucket: 8, count: 8},

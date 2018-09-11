@@ -69,7 +69,12 @@ Template.dashboard.onCreated(function () {
 
 
     let studentID = Session.get("student");
-    let studentBoeking = Boekingen.findOne({$and: [{Student: studentID},{"Student-Voornaam(Key)": {$ne: "Undefined"}} ]});
+    let studentBoeking = Boekingen.findOne({$and: [
+        {Student: studentID},
+        {"Student-Voornaam(Key)": {$ne: "Undefined"}},
+        {"Academischeperiode": {$ne: "IJK"}},
+        {"Academischeperiode": {$ne: "TTT"}}
+	    ]});
     if (studentBoeking === undefined){
       console.log("studentboeking not defined");
 
