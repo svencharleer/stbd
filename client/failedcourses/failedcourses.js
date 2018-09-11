@@ -17,17 +17,17 @@ Template.failedCourse.helpers({
   },
   try1: function () {
     if ( this.Academischeperiode === "Eerste Semester"){
-      return parseInt(this.Scorejanuari)
+      return parseScore(this.Scorejanuari)
     }
     else if ( this.Academischeperiode === "Tweede Semester"){
-	    return parseInt(this.Scorejuni)
+	    return parseScore(this.Scorejuni)
     }
     else if (this.Academischeperiode === "Academiejaar"){
       if (this.Scorejanuari === "#"){
-        return parseInt(this.Scorejuni)
+        return parseScore(this.Scorejuni)
       }
       else{
-        return parseInt(this.Scorejanuari)
+        return parseScore(this.Scorejanuari)
       }
     }
   },
@@ -55,6 +55,15 @@ Template.failedCourse.helpers({
   }
 
 });
+
+let parseScore = function (score) {
+  if(score != "NA" && score != "#" && score != "G" && score != "NG"){
+    return parseInt(score)
+  }
+  else{
+    return score
+  }
+}
 
 
 
@@ -104,7 +113,7 @@ Template.failedCourse.events({
 
     if (!template.checkFail.get()) {
       let creditsLeft = Session.get('toleranceCredits');
-      let cancelToleration = parseInt(creditsLeft) + parseInt(this.credits);
+      let cancelToleration = parseInt(creditsLeft) + parseInt(this.Studiepunten);
       if (cancelToleration <= 12) {
         Session.set('toleranceCredits', cancelToleration)
         // $('#tolerantiepunten').find("paper-progress").attr('value', cancelToleration);
@@ -118,7 +127,7 @@ Template.failedCourse.events({
         template.$(".course").css("border-color", "#ffcc80");
         template.$(".getolereerd").css("display", "none");
         template.$(".try").css("display", "flex");
-        updateSession(false, this.credits)
+        updateSession(false, this.Studiepunten)
         template.checkFail.set(true);
 
       }
@@ -153,7 +162,7 @@ Template.failedCourse.events({
         template.$(".getolereerd").css("display", "flex");
         template.$(".try").css("display", "none");
         template.checkFail.set(false);
-        updateSession(true, this.credits);
+        updateSession(true, this.Studiepunten);
 
 
       }

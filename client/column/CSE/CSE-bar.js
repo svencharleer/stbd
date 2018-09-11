@@ -135,7 +135,7 @@ let getCSEEntry = function (semester) {
       cse_entry = 'CSEJuni';
       break;
     default:
-      cse_entry = 'CSESeptember';
+      cse_entry = 'CSE';
   }
   return cse_entry;
 

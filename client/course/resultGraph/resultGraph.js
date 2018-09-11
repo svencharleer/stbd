@@ -43,6 +43,9 @@ Template.resultGraph.helpers({
 	    let scoreEntry = getScoreEntry(courseSemester);
 	    score = this[scoreEntry];
     }
+    else{
+      score = this.Scoreseptember
+    }
 
     // Check if its a number, otherwise parseInt;
     if(!isNaN(parseInt(score))) score = parseInt(score);
