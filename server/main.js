@@ -564,7 +564,7 @@ let getCSEs = function (semester, program) {
     * @returns {{numberPerGrades: {}, min: Number, max: Number, total: number}}
     */
     let getCoursePointDistributionSemester = function (courseid, gradeField) {
-      console.log(courseid, gradeField)
+      // console.log(courseid, gradeField)
       var numberPerGrades = {};
       var total = 0;
       let allGrades  = Boekingen.find({$and:[{IDOPO : courseid},{Academiejaar: currentAcademiejaar}]});

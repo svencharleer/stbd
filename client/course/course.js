@@ -3,11 +3,11 @@ Template.course.onRendered(function () {
   instance.autorun(function () {
 	  let courseSemester = "Resits";
 	  let index = instance.data.columnindex;
-	  let score = instance.data.Score;
+	  let score = instance.data.Scoreseptember;
 	  if (index < 4){
+		  courseSemester = instance.data.Academischeperiode;
 		  let scoreEntry = getScoreEntry(courseSemester);
 		  score = instance.data[scoreEntry];
-		  courseSemester = instance.data.Academischeperiode;
 	  }
 	  // Check if its a number, otherwise parseInt;
 	  if(!isNaN(parseInt(score))) score = parseInt(score);
@@ -114,6 +114,7 @@ Template.course.onRendered(function () {
  * @returns score_entry: fieldname of the db
  */
 let getScoreEntry = function (semester) {
+	console.log(semester)
   let score_entry = 'Score';
   switch (semester) {
     case "Eerste Semester":

@@ -3,8 +3,8 @@ let noUiSlider = require('nouislider');
 // Note: Dropping d3 slider in favor of nouislider since it's a lot better.
 
 Template.cseplanning.onCreated(function () {
-  let cPassFirst  = creditsPassed("Eerste Semester");
-  let cPassSecond = creditsPassed("Tweede Semester");
+
+  let cPassResit = creditsPassed("Resits");
   //Setup Reactive Vars for the data.
   this.cse1  = new ReactiveVar(0);
   this.cse2a = new ReactiveVar(0);
@@ -13,7 +13,7 @@ Template.cseplanning.onCreated(function () {
   this.cse4  = new ReactiveVar(0);
   this.cse5  = new ReactiveVar(0);
 
-  this.cse1.set(cPassFirst+cPassSecond);
+  this.cse1.set(cPassResit);
 });
 
 Template.cseplanning.helpers({
@@ -150,17 +150,40 @@ Template.cseplanning.onRendered(function () {
 
 });
 
-// Other queries...
 let creditsPassed = function (semester) {
-  let scorefield = getScoreEntry(semester);
-  let all = Boekingen.find({$and:[{Student:Session.get("student")},{Academischeperiode: semester}]});
-  let creditsPassed = 0;
-  all.forEach(function (p) {
-    if (p[scorefield] > 9 || p[scorefield] == "G"){
-      creditsPassed += parseInt(p.Studiepunten);
-    }
-  });
-  return creditsPassed;
+	if( semester === "Eerste Semester"){
+		let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}, {$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch();
+		let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {$or: [{Scorejanuari: "G"}, {Scorejanuari: {$gte: 10}}]}]}).fetch()
+		all = _.flatten([ownboekingen,academiejaar]);
+	}
+	else if(semester === "Tweede Semester"){
+		let academiejaar = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejanuari: "#"}, {$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch();
+		let ownboekingen = Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")}, {$or: [{Scorejuni: "G"}, {Scorejuni: {$gte: "10"}}]}]}).fetch();
+		all=  _.flatten([ownboekingen,academiejaar]);
+	}
+	else if(semester === "Resits"){
+		//find all passed
+		let academiejaar1 = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}, {$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch();
+		let ownboekingen1 = Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch()
+		let academiejaar2 = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejanuari: "#"}, {$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch();
+		let ownboekingen2 = Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")}, {$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch();
+		all=  _.flatten([ownboekingen1, ownboekingen2, academiejaar1, academiejaar2]);
+
+	}
+	else{
+		console.log("default ")
+		let academiejaar1 = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejuni: "#"}, {$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch();
+		let ownboekingen1 = Boekingen.find({$and:[{Academischeperiode: "Eerste Semester"},{Student: Session.get("student")}, {$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch()
+		let academiejaar2 = Boekingen.find({$and:[{Academischeperiode: "Academiejaar"},   {Student: Session.get("student")}, {Scorejanuari: "#"}, {$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch();
+		let ownboekingen2 = Boekingen.find({$and:[{Academischeperiode: "Tweede Semester"},{Student: Session.get("student")}, {$or: [{Score: "G"}, {Score: {$gte: 10}}]}]}).fetch();
+		all=  _.flatten([ownboekingen1, ownboekingen2, academiejaar1, academiejaar2]);
+
+	}
+	let creditsPassed = 0;
+	all.forEach(function (p) {
+		creditsPassed += parseInt(p.Studiepunten);
+	});
+	return creditsPassed;
 };
 
 let getScoreEntry = function (semester) {
