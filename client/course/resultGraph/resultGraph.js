@@ -141,6 +141,9 @@ let getScoreEntry = function (semester) {
     case "Tweede Semester":
       score_entry = 'Scorejuni';
       break;
+	  case "Academiejaar":
+		  score_entry = 'Scorejuni';
+		  break;
     default:
       score_entry = 'Score';
   }

@@ -21,24 +21,14 @@ Template.tolerateColumn.helpers({
 
 
 		//find all failed courses "academiejaar"
-		let academiejaar1 = Boekingen.find(
+		let academiejaar = Boekingen.find(
 			{$and:[
 				{Academischeperiode: "Academiejaar"},
 				{Student: Session.get("student")},
-				{Scorejuni: "#"},
-				{$or: [{Scorejanuari: "NA"}, {Scorejanuari: {$lt: 10}}]},
-				{$or: [{Scoreseptember: "NA"}, {Scoreseptember: {$lt: 10}}]}
+				{$or: [{Score: "NA"}, {Score: {$lt: 10}}]},
 			]}).fetch();
 
-		let academiejaar2 = Boekingen.find(
-			{$and:[{Academischeperiode: "Academiejaar"},
-				{Student: Session.get("student")},
-				{Scorejanuari: "#"},
-				{$or: [{Scorejuni: "NA"}, {Scorejuni: {$lt: 10}}]},
-				{$or: [{Scoreseptember: "NA"}, {Scoreseptember: {$lt: 10}}]}
-			]}).fetch();
 
-		let academiejaar = _.flatten([academiejaar1, academiejaar2]);
 		let flatten = _.flatten([ownboekingen,academiejaar]); //http://www.flatmapthatshit.com/ ;)
 		return flatten
 	}

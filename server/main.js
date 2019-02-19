@@ -131,9 +131,9 @@ Meteor.methods({
     let middle;
     let low;
     [top, middle, low] = getStudentIds(program, limit1, limit2, semester);
-    let topdoorloop    = Historic.find({Student: {$in: top}});
-    let middledoorloop = Historic.find({Student: {$in: middle}});
-    let lowdoorloop    = Historic.find({Student: {$in: low}});
+    let topdoorloop    = Historic.find({$and:[{Student: {$in: top}},{'JaarX:Opleiding': program}]});
+    let middledoorloop = Historic.find({$and:[{Student: {$in: middle}},{'JaarX:Opleiding': program}]});
+    let lowdoorloop    = Historic.find({$and:[{Student: {$in: low}},{'JaarX:Opleiding': program}]});
     if (typeof topdoorloop.forEach == "function"){
       topdoorloop.forEach(function (student) {
         let trajectStudent = student["Doorloop:Studieduur"];
@@ -165,6 +165,7 @@ Meteor.methods({
 	      }
       });
     }
+    let lowPass3j = []
     if (typeof lowdoorloop.forEach == "function"){
       lowdoorloop.forEach(function (student) {
         let trajectStudent = student["Doorloop:Studieduur"];
@@ -173,14 +174,18 @@ Meteor.methods({
 		      lowDict[2] += 1;
 	      }
 	      else if (trajectStudent < 0){
+		      lowPass3j.push(student)
 		      lowDict[0] += 1;
 	      }
 	      else{
+	        if (trajectStudent=== 0){
+            lowPass3j.push(student)
+	        }
 		      lowDict[trajectStudent] += 1;
 	      }
       });
     }
-
+    console.log(lowPass3j)
     topDict    = helper_relativateDict(topDict);
     middleDict = helper_relativateDict(middleDict);
     lowDict    = helper_relativateDict(lowDict);
@@ -609,14 +614,14 @@ let getCSEs = function (semester, program) {
             ]}).fetch();
           break;
         default:
-          var top    = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJuni: {$gt: limit1} }]});
-          var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSEJuni: { $gte: limit2, $lte: limit1 } }]});
+          var top    = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSE: {$gt: limit1} }]});
+          var middle = Boekingen.find({$and:[{Opleiding: program},{Academiejaar: {$in: years}}, {CSE: { $gte: limit2, $lte: limit1 } }]});
           var low    = Boekingen.find({$and:
             [{Opleiding: program},
               {Academiejaar: {$in: years}},
-              {CSEJanuari: {$lt: limit2}},
+              {CSE: {$lt: limit2}},
             ]});
-            break;
+          break;
         }
         let toplist = [];
         let midlist = [];
@@ -636,5 +641,7 @@ let getCSEs = function (semester, program) {
           lowlist.push(boeking.Student)
         });
       }
-      return [toplist, midlist, lowlist]
+
+
+	    return [toplist, midlist, lowlist]
       }
