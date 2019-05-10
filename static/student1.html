@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src='https://d3js.org/d3.v3.min.js'></script>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="stylesheets/global.css">
+<link rel="stylesheet" href="stylesheets/student.css">
+<link rel="stylesheet" href="stylesheets/body.css">
+<link rel="stylesheet" href="stylesheets/distribution.css">
+<link rel="stylesheet" href="stylesheets/trajectory.css">
+<link rel="stylesheet" href="stylesheets/course.css">
+<link rel="stylesheet" href="stylesheets/resultGraph.css">
+<link rel="stylesheet" href="stylesheets/ijkingtoets.css">
+<link rel="stylesheet" href="stylesheets/CSE-bar.css">
+
+
+
+
+
+
+
+
+<div id="student">
+    <i class="fa fa-user" aria-hidden="true"></i>
+    <span id="studentName">Student Name</span>
+    <input type="text" placeholder="Student #">
+</div>
+
+<div class="flex-container">
+    <div class="flex-row">
+        <div id="trajectory">
+            <h2>Positionering ten opzichte van je medestudenten
+                <paper-ripple>
+
+
+                    <div id="background" class="style-scope paper-ripple"></div>
+                    <div id="waves" class="style-scope paper-ripple"></div>
+                </paper-ripple>
+                <a class="hider fa fa-chevron-up"></a>
+            </h2>
+            <div class="rowtraject">
+                <div class="traject-legend">
+                    <span>100</span>
+                    <span></span>
+                    <span>80</span>
+                    <span></span>
+                    <span>60</span>
+                    <span></span>
+                    <span>40</span>
+                    <span></span>
+                    <span>20</span>
+                    <span></span>
+                </div>
+                <div id="trajectory-bg" style="">
+                    <div id="trajectory-bg-middleline"></div>
+                </div>
+                <!-- <canvas id="trajectory-overlay"></canvas> -->
+
+
+                <div id="distribution_ijkingstoets" class="distribution">
+                    <svg id="distribution_ijkingstoets_svg" class="distribution" width="180" height="100">
+                        <rect class="trace trace0" fill="white" width="100%" height="10" x="0" y="92"></rect>
+                        <rect class="trace trace1" fill="#E8F3F8" width="100%" height="10" x="0" y="82"></rect>
+                        <rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect>
+                        <rect class="trace trace3" fill="white" width="100%" height="10" x="0" y="62"></rect>
+                        <rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect>
+                        <rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect>
+                        <rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect>
+                        <rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect>
+                        <rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect>
+                        <rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect>
+                        <g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text><rect class="trace trace0" fill="white" width="100%" height="10" x="0" y="92"></rect><rect class="trace trace1" fill="white" width="100%" height="10" x="0" y="82"></rect><rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect><rect class="trace trace3" fill="white" width="100%" height="10" x="0" y="62"></rect><rect class="trace trace4" fill="#E8F3F8" width="100%" height="10" x="0" y="52"></rect><rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect><rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect><rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect><rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect><rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text></svg></div>
+
+                <div id="distribution_TTT" class="distribution">
+                    <svg id="distribution_TTT_svg" class="distribution" width="180" height="100"><rect class="trace
+                    trace0" fill="white" width="100%" height="10" x="0" y="92"></rect><rect class="trace trace1" fill="white" width="100%" height="10" x="0" y="82"></rect><rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect><rect class="trace trace3" fill="white" width="100%" height="10" x="0" y="62"></rect><rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect><rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect><rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect><rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect><rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect><rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text><rect class="trace trace0" fill="white" width="100%" height="10" x="0" y="92"></rect><rect class="trace trace1" fill="white" width="100%" height="10" x="0" y="82"></rect><rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect><rect class="trace trace3" fill="#E8F3F8" width="100%" height="10" x="0" y="62"></rect><rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect><rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect><rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect><rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect><rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect><rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text></svg></div>
+
+                <div id="distribution_januari" class="distribution">
+                    <svg id="distribution_januari_svg" class="distribution" width="180" height="100"><rect class="trace
+                    trace0" fill="white" width="100%" height="10" x="0" y="92"></rect><rect class="trace trace1"
+                                                                                               fill="white" width="100%" height="10" x="0" y="82"></rect><rect class="trace trace2" fill="#E8F3F8" width="100%" height="10" x="0" y="72"></rect><rect class="trace trace3" fill="white" width="100%" height="10" x="0" y="62"></rect><rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect><rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect><rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect><rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect><rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect><rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text></svg></div>
+
+                <div id="distribution_juni" class="distribution">
+                    <svg id="distribution_juni_svg" class="distribution" width="180" height="100"><rect class="trace
+                    trace0" fill="white" width="100%" height="10" x="0" y="92"></rect><rect class="trace trace1"
+                                                                                        fill="white" width="100%" height="10" x="0" y="82"></rect><rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect><rect class="trace trace3" fill="#E8F3F8" width="100%" height="10" x="0" y="62"></rect><rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect><rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect><rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect><rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect><rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect><rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text></svg></div>
+
+                <div id="distribution_september" class="distribution">
+                    <svg id="distribution_september_svg" class="distribution" width="180" height="100"><rect
+                            class="trace trace0" fill="white" width="100%" height="10" x="0" y="92"></rect><rect
+                            class="trace trace1" fill="white" width="100%" height="10" x="0" y="82"></rect><rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect><rect class="trace trace3" fill="white" width="100%" height="10" x="0" y="62"></rect><rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect><rect class="trace trace5" fill="#E8F3F8" width="100%" height="10" x="0" y="42"></rect><rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect><rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect><rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect><rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text></svg></div>
+
+            </div>
+        </div>
+    </div>
+    <div class="flex-row">
+        <div class="flex-column column-even colijkingstoets">
+            <div class="vertical-title">IJkingstoets</div>
+            <div class="top">
+                <div class="fa compress-colijkingstoets fa-compress"><paper-ripple>
+
+
+                    <div id="background" class="style-scope paper-ripple"></div>
+                    <div id="waves" class="style-scope paper-ripple"></div>
+                </paper-ripple></div>
+                <div class="column-title">IJkingstoets</div>
+                <div class="CSE"></div>
+            </div>
+            <div class="bottom">
+
+
+                <div class="flex-item">
+                    <div id="ijkingstoets_juli_" class="course failed">
+                        <div class="course-top">
+                            <div class="name">IJkingstoets juli</div>
+                            <div class="top-bar failed">
+                                <div class="grade">5</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    0<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="ijkingstoets_september_" class="course tolerable">
+                        <div class="course-top">
+                            <div class="name">IJkingstoets september</div>
+                            <div class="top-bar tolerable">
+                                <div class="grade">9</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    0<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+    </div>
+</div>
+
+
+
+
+
+<script src="js/addHistogram.js"></script>
+<script src="js/addDistribution.js"></script>
+</body>
+</html>
