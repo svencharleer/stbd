@@ -125,3 +125,7 @@
     font-weight: 500;
     color: #424242;
 }
+
+.course .open{
+    max-height: 60px;
+}

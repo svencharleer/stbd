@@ -1,0 +1,14 @@
+.top {
+    overflow: hidden;
+    position: relative;
+    min-height: 67px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dotted #ececec;
+    padding: 8px;
+    padding-top: 8px;
+    padding-top: 4px;
+    cursor: default;
+}

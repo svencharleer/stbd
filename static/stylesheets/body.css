@@ -154,16 +154,18 @@ body {
 }
 
 .flex-column {
-    flex-grow: 1;
-    justify-content: flex-start;
-    min-width: var(--ColumnWidth);
-    max-width: var(--ColumnWidth);
+    min-width: 180px;
+    max-width: 180px;
     min-height: 700px;
     border-right: 1px solid #ececec;
     border-bottom: 1px solid #ececec;
-    /* border-top: 1px solid #ececec; */
+    border-top: 1px solid #ececec;
     transition: all 0.7s ease-out;
     position: relative;
+}
+
+.column-even {
+    background-color: #fafafa;
 }
 
 #colfuture{
