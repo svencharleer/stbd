@@ -27,6 +27,7 @@
   line-height: 1;
   padding-left: 4px;
   color: grey;
+  width: 900px ;
 }
 
 #trajectory h2:hover {
@@ -90,3 +91,34 @@
   cursor: pointer;
   min-height: 10px;
 }
+
+.hider {
+  text-decoration: none;
+  color: grey;
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.hider:hover {
+  color: #81A8B8;
+}
+
+.show {
+  text-decoration: none;
+  color: grey;
+  display: none;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.show:hover {
+  color: #81A8B8;
+}
+
+
+

@@ -215,6 +215,7 @@ body {
     padding: 8px;
     padding-top: 4px;
     cursor: default;
+    transition: height 1s, width 2s, padding 1s, visibility 1s, opacity 0.5s ease-out;
 }
 
 .flex-column .bottom {
@@ -224,7 +225,8 @@ body {
     justify-content: space-around;
     align-items: flex-start;
     /*height: 100%;*/
-    border-top: 1px dotted #ececec
+    border-top: 1px dotted #ececec;
+    transition: height 1s, width 2s, padding 1s, visibility 1s, opacity 1s ease-out;
 }
 
 .flex-column .top .fa {
@@ -294,19 +296,7 @@ body {
     width: 100%;
 }
 
-.hider {
-    text-decoration: none;
-    color: grey;
-    display: inline-block;
-    margin-left: 10px;
-    margin-right: 10px;
-    font-size: 14px;
-    cursor: pointer;
-}
 
-.hider:hover {
-    color: #81A8B8;
-}
 
 .bottomheader {
     text-align: center;

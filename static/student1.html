@@ -19,31 +19,21 @@
 <link rel="stylesheet" href="stylesheets/resultGraph.css">
 <link rel="stylesheet" href="stylesheets/ijkingtoets.css">
 <link rel="stylesheet" href="stylesheets/CSE-bar.css">
-
-
-
-
-
-
-
+<link rel="stylesheet" href="stylesheets/future.css">
 
 <div id="student">
     <i class="fa fa-user" aria-hidden="true"></i>
     <span id="studentName">Student Name</span>
     <input type="text" placeholder="Student #">
 </div>
-
 <div class="flex-container">
     <div class="flex-row">
         <div id="trajectory">
             <h2>Positionering ten opzichte van je medestudenten
-                <paper-ripple>
 
-
-                    <div id="background" class="style-scope paper-ripple"></div>
-                    <div id="waves" class="style-scope paper-ripple"></div>
-                </paper-ripple>
                 <a class="hider fa fa-chevron-up"></a>
+                <a class="show fa fa-chevron-down"></a>
+
             </h2>
             <div class="rowtraject">
                 <div class="traject-legend">
@@ -76,26 +66,375 @@
                         <rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect>
                         <rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect>
                         <rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect>
-                        <g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text><rect class="trace trace0" fill="white" width="100%" height="10" x="0" y="92"></rect><rect class="trace trace1" fill="white" width="100%" height="10" x="0" y="82"></rect><rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect><rect class="trace trace3" fill="white" width="100%" height="10" x="0" y="62"></rect><rect class="trace trace4" fill="#E8F3F8" width="100%" height="10" x="0" y="52"></rect><rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect><rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect><rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect><rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect><rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text></svg></div>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <rect class="trace trace0" fill="white" width="100%" height="10" x="0" y="92"></rect>
+                        <rect class="trace trace1" fill="white" width="100%" height="10" x="0" y="82"></rect>
+                        <rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect>
+                        <rect class="trace trace3" fill="white" width="100%" height="10" x="0" y="62"></rect>
+                        <rect class="trace trace4" fill="#E8F3F8" width="100%" height="10" x="0" y="52"></rect>
+                        <rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect>
+                        <rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect>
+                        <rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect>
+                        <rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect>
+                        <rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                    </svg>
+                </div>
 
                 <div id="distribution_TTT" class="distribution">
-                    <svg id="distribution_TTT_svg" class="distribution" width="180" height="100"><rect class="trace
-                    trace0" fill="white" width="100%" height="10" x="0" y="92"></rect><rect class="trace trace1" fill="white" width="100%" height="10" x="0" y="82"></rect><rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect><rect class="trace trace3" fill="white" width="100%" height="10" x="0" y="62"></rect><rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect><rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect><rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect><rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect><rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect><rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text><rect class="trace trace0" fill="white" width="100%" height="10" x="0" y="92"></rect><rect class="trace trace1" fill="white" width="100%" height="10" x="0" y="82"></rect><rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect><rect class="trace trace3" fill="#E8F3F8" width="100%" height="10" x="0" y="62"></rect><rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect><rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect><rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect><rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect><rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect><rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text></svg></div>
+                    <svg id="distribution_TTT_svg" class="distribution" width="180" height="100">
+                        <rect class="trace
+                    trace0" fill="white" width="100%" height="10" x="0" y="92"></rect>
+                        <rect class="trace trace1" fill="white" width="100%" height="10" x="0" y="82"></rect>
+                        <rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect>
+                        <rect class="trace trace3" fill="white" width="100%" height="10" x="0" y="62"></rect>
+                        <rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect>
+                        <rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect>
+                        <rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect>
+                        <rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect>
+                        <rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect>
+                        <rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <rect class="trace trace0" fill="white" width="100%" height="10" x="0" y="92"></rect>
+                        <rect class="trace trace1" fill="white" width="100%" height="10" x="0" y="82"></rect>
+                        <rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect>
+                        <rect class="trace trace3" fill="#E8F3F8" width="100%" height="10" x="0" y="62"></rect>
+                        <rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect>
+                        <rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect>
+                        <rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect>
+                        <rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect>
+                        <rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect>
+                        <rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                    </svg>
+                </div>
 
                 <div id="distribution_januari" class="distribution">
-                    <svg id="distribution_januari_svg" class="distribution" width="180" height="100"><rect class="trace
-                    trace0" fill="white" width="100%" height="10" x="0" y="92"></rect><rect class="trace trace1"
-                                                                                               fill="white" width="100%" height="10" x="0" y="82"></rect><rect class="trace trace2" fill="#E8F3F8" width="100%" height="10" x="0" y="72"></rect><rect class="trace trace3" fill="white" width="100%" height="10" x="0" y="62"></rect><rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect><rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect><rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect><rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect><rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect><rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text></svg></div>
+                    <svg id="distribution_januari_svg" class="distribution" width="180" height="100">
+                        <rect class="trace
+                    trace0" fill="white" width="100%" height="10" x="0" y="92"></rect>
+                        <rect class="trace trace1"
+                              fill="white" width="100%" height="10" x="0" y="82"></rect>
+                        <rect class="trace trace2" fill="#E8F3F8" width="100%" height="10" x="0" y="72"></rect>
+                        <rect class="trace trace3" fill="white" width="100%" height="10" x="0" y="62"></rect>
+                        <rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect>
+                        <rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect>
+                        <rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect>
+                        <rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect>
+                        <rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect>
+                        <rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                    </svg>
+                </div>
 
                 <div id="distribution_juni" class="distribution">
-                    <svg id="distribution_juni_svg" class="distribution" width="180" height="100"><rect class="trace
-                    trace0" fill="white" width="100%" height="10" x="0" y="92"></rect><rect class="trace trace1"
-                                                                                        fill="white" width="100%" height="10" x="0" y="82"></rect><rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect><rect class="trace trace3" fill="#E8F3F8" width="100%" height="10" x="0" y="62"></rect><rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect><rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect><rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect><rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect><rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect><rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text></svg></div>
+                    <svg id="distribution_juni_svg" class="distribution" width="180" height="100">
+                        <rect class="trace
+                    trace0" fill="white" width="100%" height="10" x="0" y="92"></rect>
+                        <rect class="trace trace1"
+                              fill="white" width="100%" height="10" x="0" y="82"></rect>
+                        <rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect>
+                        <rect class="trace trace3" fill="#E8F3F8" width="100%" height="10" x="0" y="62"></rect>
+                        <rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect>
+                        <rect class="trace trace5" fill="white" width="100%" height="10" x="0" y="42"></rect>
+                        <rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect>
+                        <rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect>
+                        <rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect>
+                        <rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip1" style="z-index: 1000;" x="180" text-anchor="end" y="90"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip2" style="z-index: 1000;" x="180" text-anchor="end" y="80"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip3" style="z-index: 1000;" x="180" text-anchor="end" y="70"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip4" style="z-index: 1000;" x="180" text-anchor="end" y="60"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip5" style="z-index: 1000;" x="180" text-anchor="end" y="50"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip6" style="z-index: 1000;" x="180" text-anchor="end" y="40"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip7" style="z-index: 1000;" x="180" text-anchor="end" y="30"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip8" style="z-index: 1000;" x="180" text-anchor="end" y="20"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip9" style="z-index: 1000;" x="180" text-anchor="end" y="10"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                    </svg>
+                </div>
 
                 <div id="distribution_september" class="distribution">
-                    <svg id="distribution_september_svg" class="distribution" width="180" height="100"><rect
-                            class="trace trace0" fill="white" width="100%" height="10" x="0" y="92"></rect><rect
-                            class="trace trace1" fill="white" width="100%" height="10" x="0" y="82"></rect><rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect><rect class="trace trace3" fill="white" width="100%" height="10" x="0" y="62"></rect><rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect><rect class="trace trace5" fill="#E8F3F8" width="100%" height="10" x="0" y="42"></rect><rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect><rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect><rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect><rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><g class="row"></g><text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip1" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="90" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip2" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="80" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip3" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="70" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip4" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="60" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip5" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="50" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip6" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="40" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip7" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="30" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip8" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="20" width="180" height="4" font-size="10">NaN%</text><text class="tooltip tooltip9" style="z-index: 1000; display: none;" x="180" text-anchor="end" y="10" width="180" height="4" font-size="10">NaN%</text></svg></div>
+                    <svg id="distribution_september_svg" class="distribution" width="180" height="100">
+                        <rect
+                                class="trace trace0" fill="white" width="100%" height="10" x="0" y="92"></rect>
+                        <rect
+                                class="trace trace1" fill="white" width="100%" height="10" x="0" y="82"></rect>
+                        <rect class="trace trace2" fill="white" width="100%" height="10" x="0" y="72"></rect>
+                        <rect class="trace trace3" fill="white" width="100%" height="10" x="0" y="62"></rect>
+                        <rect class="trace trace4" fill="white" width="100%" height="10" x="0" y="52"></rect>
+                        <rect class="trace trace5" fill="#E8F3F8" width="100%" height="10" x="0" y="42"></rect>
+                        <rect class="trace trace6" fill="white" width="100%" height="10" x="0" y="32"></rect>
+                        <rect class="trace trace7" fill="white" width="100%" height="10" x="0" y="22"></rect>
+                        <rect class="trace trace8" fill="white" width="100%" height="10" x="0" y="12"></rect>
+                        <rect class="trace trace9" fill="white" width="100%" height="10" x="0" y="2"></rect>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <g class="row"></g>
+                        <text class="tooltip tooltip0" style="z-index: 1000;" x="180" text-anchor="end" y="100"
+                              width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip1" style="z-index: 1000; display: none;" x="180" text-anchor="end"
+                              y="90" width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip2" style="z-index: 1000; display: none;" x="180" text-anchor="end"
+                              y="80" width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip3" style="z-index: 1000; display: none;" x="180" text-anchor="end"
+                              y="70" width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip4" style="z-index: 1000; display: none;" x="180" text-anchor="end"
+                              y="60" width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip5" style="z-index: 1000; display: none;" x="180" text-anchor="end"
+                              y="50" width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip6" style="z-index: 1000; display: none;" x="180" text-anchor="end"
+                              y="40" width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip7" style="z-index: 1000; display: none;" x="180" text-anchor="end"
+                              y="30" width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip8" style="z-index: 1000; display: none;" x="180" text-anchor="end"
+                              y="20" width="180" height="4" font-size="10">NaN%
+                        </text>
+                        <text class="tooltip tooltip9" style="z-index: 1000; display: none;" x="180" text-anchor="end"
+                              y="10" width="180" height="4" font-size="10">NaN%
+                        </text>
+                    </svg>
+                </div>
 
             </div>
         </div>
@@ -104,27 +443,293 @@
         <div class="flex-column column-even colijkingstoets">
             <div class="vertical-title">IJkingstoets</div>
             <div class="top">
-                <div class="fa compress-colijkingstoets fa-compress"><paper-ripple>
-
-
-                    <div id="background" class="style-scope paper-ripple"></div>
-                    <div id="waves" class="style-scope paper-ripple"></div>
-                </paper-ripple></div>
+                <div class="fa compress-colijkingstoets fa-compress"></div>
                 <div class="column-title">IJkingstoets</div>
                 <div class="CSE"></div>
+            </div>
+            <div class="bottom">
+                <div class="flex-item">
+                <div id="ijkingstoets_juli_" class="course failed">
+                    <div class="course-top">
+                        <div class="name">IJkingstoets juli</div>
+                        <div class="top-bar failed">
+                            <div class="grade">5</div>
+                            <div class="credits">
+                                <!-- <div class="bracket">[</div> -->
+                                0<span>stp</span>
+                                <!-- <div class="bracket">]</div> -->
+                            </div>
+                        </div>
+                        <paper-ripple>
+
+
+                            <div id="background" class="style-scope paper-ripple"></div>
+                            <div id="waves" class="style-scope paper-ripple"></div>
+                        </paper-ripple>
+                    </div>
+                    <div class="course-bottom">
+                        <svg class="histogram" width="140" height="60" x="0" y="0">
+                            <g class="main-container">
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                            </g>
+                            <rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)"
+                                  class="redbars"></rect>
+                            <rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)"
+                                  class="yellowbars"></rect>
+                            <rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)"
+                                  class="greenbars"></rect>
+                        </svg>
+                        <paper-ripple>
+
+
+                            <div id="background" class="style-scope paper-ripple"></div>
+                            <div id="waves" class="style-scope paper-ripple"></div>
+                        </paper-ripple>
+                    </div>
+                </div>
+            </div>
+                <div class="flex-item">
+                <div id="ijkingstoets_september_" class="course tolerable">
+                    <div class="course-top">
+                        <div class="name">IJkingstoets september</div>
+                        <div class="top-bar tolerable">
+                            <div class="grade">9</div>
+                            <div class="credits">
+                                <!-- <div class="bracket">[</div> -->
+                                0<span>stp</span>
+                                <!-- <div class="bracket">]</div> -->
+                            </div>
+                        </div>
+                        <paper-ripple>
+
+
+                            <div id="background" class="style-scope paper-ripple"></div>
+                            <div id="waves" class="style-scope paper-ripple"></div>
+                        </paper-ripple>
+                    </div>
+                    <div class="course-bottom">
+                        <svg class="histogram" width="140" height="60" x="0" y="0">
+                            <g class="main-container">
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                                <g class="dots-container"></g>
+                            </g>
+                            <rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)"
+                                  class="redbars"></rect>
+                            <rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)"
+                                  class="yellowbars"></rect>
+                            <rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)"
+                                  class="greenbars"></rect>
+                        </svg>
+                        <paper-ripple>
+
+
+                            <div id="background" class="style-scope paper-ripple"></div>
+                            <div id="waves" class="style-scope paper-ripple"></div>
+                        </paper-ripple>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="flex-column colttt">
+            <div class="vertical-title">Tussentijdse Toetsen</div>
+            <div class="top">
+                <div class="fa compress-colttt fa-compress"></div>
+                <div class="column-title">Tussentijdse Toetsen</div>
+                <div class="CSE"></div>
+            </div>
+            <div class="bottom">
+                <div class="flex-item">
+                    <div id="TTTScheik_0" class="course failed">
+                        <div class="course-top">
+                            <div class="name">Algemene en technische scheikunde</div>
+                            <div class="top-bar failed">
+                                <div class="grade">5</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    7<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0">
+                                <g class="main-container">
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                </g>
+                                <rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect>
+                                <rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)"
+                                      class="yellowbars"></rect>
+                                <rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)"
+                                      class="greenbars"></rect>
+                            </svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-item">
+                    <div id="TTTAlg_0" class="course tolerable">
+                        <div class="course-top">
+                            <div class="name">Toegepaste algebra</div>
+                            <div class="top-bar tolerable">
+                                <div class="grade">8</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    5<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0">
+                                <g class="main-container">
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                    <g class="dots-container"></g>
+                                </g>
+                                <rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect>
+                                <rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)"
+                                      class="yellowbars"></rect>
+                                <rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)"
+                                      class="greenbars"></rect>
+                            </svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="flex-column column-even coljan">
+
+            <div class="vertical-title">Januari</div>
+            <div class="top">
+                <div class="fa compress-coljan fa-compress"></div>
+                <div class="column-title">Januari</div>
+                <div class="periode">1e examenperiode</div>
+                <div class="CSE">
+                    CSE 30%
+                    <svg height="4px" width="72px">
+                        <rect height="4px" width="72px" style="fill:#e0e0e0 "></rect>
+                        <rect height="4px" width="24px" style="fill:#82A8B7 "></rect>
+                    </svg>
+
+
+                    9<b>/30</b>
+
+                </div>
             </div>
             <div class="bottom">
 
 
                 <div class="flex-item">
-                    <div id="ijkingstoets_juli_" class="course failed">
+                    <div id="H01A8A_1" class="course failed">
                         <div class="course-top">
-                            <div class="name">IJkingstoets juli</div>
+                            <div class="name">Algemene en technische scheikunde</div>
                             <div class="top-bar failed">
-                                <div class="grade">5</div>
+                                <div class="grade">7</div>
                                 <div class="credits">
                                     <!-- <div class="bracket">[</div> -->
-                                    0<span>stp</span>
+                                    7<span>stp</span>
                                     <!-- <div class="bracket">]</div> -->
                                 </div>
                             </div>
@@ -148,14 +753,138 @@
                 </div>
 
                 <div class="flex-item">
-                    <div id="ijkingstoets_september_" class="course tolerable">
+                    <div id="H01A0B_1" class="course failed">
                         <div class="course-top">
-                            <div class="name">IJkingstoets september</div>
-                            <div class="top-bar tolerable">
-                                <div class="grade">9</div>
+                            <div class="name">Analyse, deel 1</div>
+                            <div class="top-bar failed">
+                                <div class="grade">7</div>
                                 <div class="credits">
                                     <!-- <div class="bracket">[</div> -->
-                                    0<span>stp</span>
+                                    6<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01B9A_1" class="course passed">
+                        <div class="course-top">
+                            <div class="name">Probleemoplossen en ontwerpen, deel 1</div>
+                            <div class="top-bar passed">
+                                <div class="grade">12</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    4<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01A4A_1" class="course passed">
+                        <div class="course-top">
+                            <div class="name">Toegepaste algebra</div>
+                            <div class="top-bar passed">
+                                <div class="grade">11</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    5<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01B0A_1" class="course failed">
+                        <div class="course-top">
+                            <div class="name">Toegepaste mechanica, deel 1</div>
+                            <div class="top-bar failed">
+                                <div class="grade">3</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    5<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01C4B_1" class="course failed">
+                        <div class="course-top">
+                            <div class="name">Wijsbegeerte</div>
+                            <div class="top-bar failed">
+                                <div class="grade">6</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    3<span>stp</span>
                                     <!-- <div class="bracket">]</div> -->
                                 </div>
                             </div>
@@ -180,14 +909,594 @@
 
 
             </div>
+
         </div>
+        <div class="flex-column coljun">
+
+            <div class="vertical-title">Juni</div>
+            <div class="top">
+                <div class="fa compress-coljun fa-compress"></div>
+                <div class="column-title">Juni</div>
+                <div class="periode">2e examenperiode</div>
+                <div class="CSE">
+
+                    CSE 30%
+                    <svg height="4px" width="72px">
+                        <rect height="4px" width="72px" style="fill:#e0e0e0 "></rect>
+                        <rect height="4px" width="24px" style="fill:#82A8B7 "></rect>
+                    </svg>
 
 
+                    18<b>/60</b>
+
+                </div>
+            </div>
+            <div class="bottom">
 
 
+                <div class="flex-item">
+                    <div id="H01B2B_2" class="course failed">
+                        <div class="course-top">
+                            <div class="name">Algemene natuurkunde</div>
+                            <div class="top-bar failed">
+                                <div class="grade">6</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    6<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
 
 
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
 
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01A2A_2" class="course failed">
+                        <div class="course-top">
+                            <div class="name">Analyse, deel 2</div>
+                            <div class="top-bar failed">
+                                <div class="grade">2</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    5<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01Z2A_2" class="course failed">
+                        <div class="course-top">
+                            <div class="name">Elektrische netwerken</div>
+                            <div class="top-bar failed">
+                                <div class="grade">7</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    3<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01D0A_2" class="course failed">
+                        <div class="course-top">
+                            <div class="name">Inleiding tot de materiaalkunde</div>
+                            <div class="top-bar failed">
+                                <div class="grade">6</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    3<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01B6B_2" class="course passed">
+                        <div class="course-top">
+                            <div class="name">Methodiek van de informatica</div>
+                            <div class="top-bar passed">
+                                <div class="grade">12</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    6<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01C2A_2" class="course passed">
+                        <div class="course-top">
+                            <div class="name">Probleemoplossen en ontwerpen, deel 2</div>
+                            <div class="top-bar passed">
+                                <div class="grade">12</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    3<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01B4B_2" class="course failed">
+                        <div class="course-top">
+                            <div class="name">Thermodynamica</div>
+                            <div class="top-bar failed">
+                                <div class="grade">5</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    4<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <div class="flex-column column-even colsept">
+
+            <div class="vertical-title">Augustus</div>
+            <div class="top">
+                <div class="fa compress-colsept fa-compress"></div>
+                <div class="column-title">Augustus</div>
+                <div class="periode">3e examenperiode</div>
+                <div id="CSE_sept" class="CSE flickering">
+
+                    CSE 72%
+                    <svg height="4px" width="72px">
+                        <rect height="4px" width="72px" style="fill:#e0e0e0 "></rect>
+                        <rect height="4px" width="52px" style="fill:#82A8B7 "></rect>
+                    </svg>
+
+
+                    43<b>/60</b>
+
+                </div>
+            </div>
+            <div class="bottom">
+
+
+                <div class="flex-item">
+                    <div id="H01A8A_3" class="course passed">
+                        <div class="course-top">
+                            <div class="name">Algemene en technische scheikunde</div>
+                            <div class="top-bar passed">
+                                <div class="grade">12</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    7<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01A0B_3" class="course passed">
+                        <div class="course-top">
+                            <div class="name">Analyse, deel 1</div>
+                            <div class="top-bar passed">
+                                <div class="grade">12</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    6<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01B0A_3" class="course failed">
+                        <div class="course-top">
+                            <div class="name">Toegepaste mechanica, deel 1</div>
+                            <div class="top-bar failed">
+                                <div class="grade">NA</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    5<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01C4B_3" class="course passed">
+                        <div class="course-top">
+                            <div class="name">Wijsbegeerte</div>
+                            <div class="top-bar passed">
+                                <div class="grade">12</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    3<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="courseseparator"></div>
+
+                <div class="flex-item">
+                    <div id="H01B2B_3" class="course passed">
+                        <div class="course-top">
+                            <div class="name">Algemene natuurkunde</div>
+                            <div class="top-bar passed">
+                                <div class="grade">11</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    6<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01A2A_3" class="course failed">
+                        <div class="course-top">
+                            <div class="name">Analyse, deel 2</div>
+                            <div class="top-bar failed">
+                                <div class="grade">4</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    5<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01Z2A_3" class="course passed">
+                        <div class="course-top">
+                            <div class="name">Elektrische netwerken</div>
+                            <div class="top-bar passed">
+                                <div class="grade">14</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    3<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01D0A_3" class="course failed">
+                        <div class="course-top">
+                            <div class="name">Inleiding tot de materiaalkunde</div>
+                            <div class="top-bar failed">
+                                <div class="grade">4</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    3<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex-item">
+                    <div id="H01B4B_3" class="course tolerable">
+                        <div class="course-top">
+                            <div class="name">Thermodynamica</div>
+                            <div class="top-bar tolerable">
+                                <div class="grade">8</div>
+                                <div class="credits">
+                                    <!-- <div class="bracket">[</div> -->
+                                    4<span>stp</span>
+                                    <!-- <div class="bracket">]</div> -->
+                                </div>
+                            </div>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                        <div class="course-bottom">
+                            <svg class="histogram" width="140" height="60" x="0" y="0"><g class="main-container"><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g><g class="dots-container"></g></g><rect fill="#ff8a80" width="60" height="2" transform="translate(-2,60)" class="redbars"></rect><rect stroke="#ffcc80" fill="#ffcc80" width="18" height="2" transform="translate(54,60)" class="yellowbars"></rect><rect stroke="#a5d6a7" fill="#a5d6a7" width="78" height="2" transform="translate(68,60)" class="greenbars"></rect></svg>
+                            <paper-ripple>
+
+
+                                <div id="background" class="style-scope paper-ripple"></div>
+                                <div id="waves" class="style-scope paper-ripple"></div>
+                            </paper-ripple>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+        <div class="flex-column colfuture">
+            <div class="vertical-title">bachelor</div>
+            <div class="top">
+                <div class="fa compress-colsept fa-compress"></div>
+                <div class="column-title">Bachelor</div>
+                <div class="periode"></div>
+                <div id="legend" class="periode legend">
+                    <div class="legend-item legend3">3j</div>
+                    <div class="legend-item legend4">4j</div>
+                    <div class="legend-item legend5">5j</div>
+                    <div class="legend-item legendnot">Niet</div>
+                </div>
+            </div>
+            <div class="bottom">
+
+                <!-- <div id="profile" class="profile"> Jouw profiel: <div id="profilebox" class="box"></div></div> -->
+                <div class="fields">
+                    <div class="group flex-item">
+                        <div id="legendbest" class="fieldlegend"> CSE &gt; 85 </div>
+                        <svg id="best" class="best" width="150" height="150" opacity="0.6"><rect class="topstudent box" x="3" y="3" id="0" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="3" id="1" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="3" id="2" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="3" id="3" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="3" id="4" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="3" id="5" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="3" id="6" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="3" id="7" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="3" id="8" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="3" id="9" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="18" id="10" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="18" id="11" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="18" id="12" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="18" id="13" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="18" id="14" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="18" id="15" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="18" id="16" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="18" id="17" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="18" id="18" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="18" id="19" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="33" id="20" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="33" id="21" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="33" id="22" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="33" id="23" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="33" id="24" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="33" id="25" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="33" id="26" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="33" id="27" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="33" id="28" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="33" id="29" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="48" id="30" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="48" id="31" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="48" id="32" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="48" id="33" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="48" id="34" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="48" id="35" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="48" id="36" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="48" id="37" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="48" id="38" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="48" id="39" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="63" id="40" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="63" id="41" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="63" id="42" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="63" id="43" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="63" id="44" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="63" id="45" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="63" id="46" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="63" id="47" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="63" id="48" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="63" id="49" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="78" id="50" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="78" id="51" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="78" id="52" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="78" id="53" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="78" id="54" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="78" id="55" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="78" id="56" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="78" id="57" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="78" id="58" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="78" id="59" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="93" id="60" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="93" id="61" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="93" id="62" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="93" id="63" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="93" id="64" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="93" id="65" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="93" id="66" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="93" id="67" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="93" id="68" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="93" id="69" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="108" id="70" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="108" id="71" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="108" id="72" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="108" id="73" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="108" id="74" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="108" id="75" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="108" id="76" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="108" id="77" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="108" id="78" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="108" id="79" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="123" id="80" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="123" id="81" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="123" id="82" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="123" id="83" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="123" id="84" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="123" id="85" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="123" id="86" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="123" id="87" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="123" id="88" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="123" id="89" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="138" id="90" style="opacity: 1;"></rect><rect class="middlestudent box" x="19.666666666666664" y="138" id="91" style="opacity: 1;"></rect><rect class="middlestudent box" x="36.33333333333333" y="138" id="92" style="opacity: 1;"></rect><rect class="middlestudent box" x="53" y="138" id="93" style="opacity: 1;"></rect><rect class="lowstudent box" x="69.66666666666666" y="138" id="94" style="opacity: 1;"></rect><rect class="badstudent box" x="86.33333333333334" y="138" id="95" style="opacity: 1;"></rect><rect class="badstudent box" x="103" y="138" id="96" style="opacity: 1;"></rect><rect class="badstudent box" x="119.66666666666667" y="138" id="97" style="opacity: 1;"></rect><rect class="badstudent box" x="136.33333333333331" y="138" id="98" style="opacity: 1;"></rect><rect class="badstudent box" x="153" y="138" id="99" style="opacity: 1;"></rect></svg>
+                    </div>
+                    <div class="group flex-item">
+                        <div id="legendbest" class="fieldlegend"> 50 ≤ CSE ≤ 85</div>
+                        <svg id="middle" class="fieldborder" width="150" height="150"><rect class="topstudent box" x="3" y="3" id="0" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="3" id="1" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="3" id="2" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="3" id="3" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="3" id="4" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="3" id="5" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="3" id="6" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="3" id="7" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="3" id="8" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="3" id="9" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="18" id="10" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="18" id="11" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="18" id="12" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="18" id="13" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="18" id="14" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="18" id="15" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="18" id="16" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="18" id="17" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="18" id="18" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="18" id="19" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="33" id="20" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="33" id="21" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="33" id="22" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="33" id="23" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="33" id="24" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="33" id="25" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="33" id="26" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="33" id="27" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="33" id="28" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="33" id="29" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="48" id="30" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="48" id="31" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="48" id="32" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="48" id="33" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="48" id="34" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="48" id="35" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="48" id="36" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="48" id="37" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="48" id="38" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="48" id="39" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="63" id="40" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="63" id="41" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="63" id="42" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="63" id="43" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="63" id="44" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="63" id="45" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="63" id="46" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="63" id="47" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="63" id="48" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="63" id="49" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="78" id="50" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="78" id="51" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="78" id="52" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="78" id="53" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="78" id="54" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="78" id="55" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="78" id="56" style="opacity: 1;"></rect><rect class="topstudent box" x="119.66666666666667" y="78" id="57" style="opacity: 1;"></rect><rect class="topstudent box" x="136.33333333333331" y="78" id="58" style="opacity: 1;"></rect><rect class="topstudent box" x="153" y="78" id="59" style="opacity: 1;"></rect><rect class="topstudent box" x="3" y="93" id="60" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="93" id="61" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="93" id="62" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="93" id="63" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="93" id="64" style="opacity: 1;"></rect><rect class="middlestudent box" x="86.33333333333334" y="93" id="65" style="opacity: 1;"></rect><rect class="middlestudent box" x="103" y="93" id="66" style="opacity: 1;"></rect><rect class="middlestudent box" x="119.66666666666667" y="93" id="67" style="opacity: 1;"></rect><rect class="middlestudent box" x="136.33333333333331" y="93" id="68" style="opacity: 1;"></rect><rect class="middlestudent box" x="153" y="93" id="69" style="opacity: 1;"></rect><rect class="middlestudent box" x="3" y="108" id="70" style="opacity: 1;"></rect><rect class="middlestudent box" x="19.666666666666664" y="108" id="71" style="opacity: 1;"></rect><rect class="middlestudent box" x="36.33333333333333" y="108" id="72" style="opacity: 1;"></rect><rect class="middlestudent box" x="53" y="108" id="73" style="opacity: 1;"></rect><rect class="middlestudent box" x="69.66666666666666" y="108" id="74" style="opacity: 1;"></rect><rect class="middlestudent box" x="86.33333333333334" y="108" id="75" style="opacity: 1;"></rect><rect class="middlestudent box" x="103" y="108" id="76" style="opacity: 1;"></rect><rect class="middlestudent box" x="119.66666666666667" y="108" id="77" style="opacity: 1;"></rect><rect class="middlestudent box" x="136.33333333333331" y="108" id="78" style="opacity: 1;"></rect><rect class="middlestudent box" x="153" y="108" id="79" style="opacity: 1;"></rect><rect class="middlestudent box" x="3" y="123" id="80" style="opacity: 1;"></rect><rect class="middlestudent box" x="19.666666666666664" y="123" id="81" style="opacity: 1;"></rect><rect class="middlestudent box" x="36.33333333333333" y="123" id="82" style="opacity: 1;"></rect><rect class="middlestudent box" x="53" y="123" id="83" style="opacity: 1;"></rect><rect class="lowstudent box" x="69.66666666666666" y="123" id="84" style="opacity: 1;"></rect><rect class="lowstudent box" x="86.33333333333334" y="123" id="85" style="opacity: 1;"></rect><rect class="lowstudent box" x="103" y="123" id="86" style="opacity: 1;"></rect><rect class="lowstudent box" x="119.66666666666667" y="123" id="87" style="opacity: 1;"></rect><rect class="badstudent box" x="136.33333333333331" y="123" id="88" style="opacity: 1;"></rect><rect class="badstudent box" x="153" y="123" id="89" style="opacity: 1;"></rect><rect class="badstudent box" x="3" y="138" id="90" style="opacity: 1;"></rect><rect class="badstudent box" x="19.666666666666664" y="138" id="91" style="opacity: 1;"></rect><rect class="badstudent box" x="36.33333333333333" y="138" id="92" style="opacity: 1;"></rect><rect class="badstudent box" x="53" y="138" id="93" style="opacity: 1;"></rect><rect class="badstudent box" x="69.66666666666666" y="138" id="94" style="opacity: 1;"></rect><rect class="badstudent box" x="86.33333333333334" y="138" id="95" style="opacity: 1;"></rect><rect class="badstudent box" x="103" y="138" id="96" style="opacity: 1;"></rect><rect class="badstudent box" x="119.66666666666667" y="138" id="97" style="opacity: 1;"></rect><rect class="badstudent box" x="136.33333333333331" y="138" id="98" style="opacity: 1;"></rect><rect class="badstudent box" x="153" y="138" id="99" style="opacity: 1;"></rect></svg>
+                    </div>
+                    <div class="group flex-item">
+                        <div id="legendbest" class="fieldlegend"> CSE &lt; 50 </div>
+                        <svg id="low" class="low" width="150" height="150" opacity="0.6"><rect class="topstudent box" x="3" y="3" id="0" style="opacity: 1;"></rect><rect class="topstudent box" x="19.666666666666664" y="3" id="1" style="opacity: 1;"></rect><rect class="topstudent box" x="36.33333333333333" y="3" id="2" style="opacity: 1;"></rect><rect class="topstudent box" x="53" y="3" id="3" style="opacity: 1;"></rect><rect class="topstudent box" x="69.66666666666666" y="3" id="4" style="opacity: 1;"></rect><rect class="topstudent box" x="86.33333333333334" y="3" id="5" style="opacity: 1;"></rect><rect class="topstudent box" x="103" y="3" id="6" style="opacity: 1;"></rect><rect class="middlestudent box" x="119.66666666666667" y="3" id="7" style="opacity: 1;"></rect><rect class="middlestudent box" x="136.33333333333331" y="3" id="8" style="opacity: 1;"></rect><rect class="middlestudent box" x="153" y="3" id="9" style="opacity: 1;"></rect><rect class="middlestudent box" x="3" y="18" id="10" style="opacity: 1;"></rect><rect class="middlestudent box" x="19.666666666666664" y="18" id="11" style="opacity: 1;"></rect><rect class="middlestudent box" x="36.33333333333333" y="18" id="12" style="opacity: 1;"></rect><rect class="middlestudent box" x="53" y="18" id="13" style="opacity: 1;"></rect><rect class="middlestudent box" x="69.66666666666666" y="18" id="14" style="opacity: 1;"></rect><rect class="middlestudent box" x="86.33333333333334" y="18" id="15" style="opacity: 1;"></rect><rect class="middlestudent box" x="103" y="18" id="16" style="opacity: 1;"></rect><rect class="middlestudent box" x="119.66666666666667" y="18" id="17" style="opacity: 1;"></rect><rect class="lowstudent box" x="136.33333333333331" y="18" id="18" style="opacity: 1;"></rect><rect class="lowstudent box" x="153" y="18" id="19" style="opacity: 1;"></rect><rect class="lowstudent box" x="3" y="33" id="20" style="opacity: 1;"></rect><rect class="lowstudent box" x="19.666666666666664" y="33" id="21" style="opacity: 1;"></rect><rect class="lowstudent box" x="36.33333333333333" y="33" id="22" style="opacity: 1;"></rect><rect class="badstudent box" x="53" y="33" id="23" style="opacity: 1;"></rect><rect class="badstudent box" x="69.66666666666666" y="33" id="24" style="opacity: 1;"></rect><rect class="badstudent box" x="86.33333333333334" y="33" id="25" style="opacity: 1;"></rect><rect class="badstudent box" x="103" y="33" id="26" style="opacity: 1;"></rect><rect class="badstudent box" x="119.66666666666667" y="33" id="27" style="opacity: 1;"></rect><rect class="badstudent box" x="136.33333333333331" y="33" id="28" style="opacity: 1;"></rect><rect class="badstudent box" x="153" y="33" id="29" style="opacity: 1;"></rect><rect class="badstudent box" x="3" y="48" id="30" style="opacity: 1;"></rect><rect class="badstudent box" x="19.666666666666664" y="48" id="31" style="opacity: 1;"></rect><rect class="badstudent box" x="36.33333333333333" y="48" id="32" style="opacity: 1;"></rect><rect class="badstudent box" x="53" y="48" id="33" style="opacity: 1;"></rect><rect class="badstudent box" x="69.66666666666666" y="48" id="34" style="opacity: 1;"></rect><rect class="badstudent box" x="86.33333333333334" y="48" id="35" style="opacity: 1;"></rect><rect class="badstudent box" x="103" y="48" id="36" style="opacity: 1;"></rect><rect class="badstudent box" x="119.66666666666667" y="48" id="37" style="opacity: 1;"></rect><rect class="badstudent box" x="136.33333333333331" y="48" id="38" style="opacity: 1;"></rect><rect class="badstudent box" x="153" y="48" id="39" style="opacity: 1;"></rect><rect class="badstudent box" x="3" y="63" id="40" style="opacity: 1;"></rect><rect class="badstudent box" x="19.666666666666664" y="63" id="41" style="opacity: 1;"></rect><rect class="badstudent box" x="36.33333333333333" y="63" id="42" style="opacity: 1;"></rect><rect class="badstudent box" x="53" y="63" id="43" style="opacity: 1;"></rect><rect class="badstudent box" x="69.66666666666666" y="63" id="44" style="opacity: 1;"></rect><rect class="badstudent box" x="86.33333333333334" y="63" id="45" style="opacity: 1;"></rect><rect class="badstudent box" x="103" y="63" id="46" style="opacity: 1;"></rect><rect class="badstudent box" x="119.66666666666667" y="63" id="47" style="opacity: 1;"></rect><rect class="badstudent box" x="136.33333333333331" y="63" id="48" style="opacity: 1;"></rect><rect class="badstudent box" x="153" y="63" id="49" style="opacity: 1;"></rect><rect class="badstudent box" x="3" y="78" id="50" style="opacity: 1;"></rect><rect class="badstudent box" x="19.666666666666664" y="78" id="51" style="opacity: 1;"></rect><rect class="badstudent box" x="36.33333333333333" y="78" id="52" style="opacity: 1;"></rect><rect class="badstudent box" x="53" y="78" id="53" style="opacity: 1;"></rect><rect class="badstudent box" x="69.66666666666666" y="78" id="54" style="opacity: 1;"></rect><rect class="badstudent box" x="86.33333333333334" y="78" id="55" style="opacity: 1;"></rect><rect class="badstudent box" x="103" y="78" id="56" style="opacity: 1;"></rect><rect class="badstudent box" x="119.66666666666667" y="78" id="57" style="opacity: 1;"></rect><rect class="badstudent box" x="136.33333333333331" y="78" id="58" style="opacity: 1;"></rect><rect class="badstudent box" x="153" y="78" id="59" style="opacity: 1;"></rect><rect class="badstudent box" x="3" y="93" id="60" style="opacity: 1;"></rect><rect class="badstudent box" x="19.666666666666664" y="93" id="61" style="opacity: 1;"></rect><rect class="badstudent box" x="36.33333333333333" y="93" id="62" style="opacity: 1;"></rect><rect class="badstudent box" x="53" y="93" id="63" style="opacity: 1;"></rect><rect class="badstudent box" x="69.66666666666666" y="93" id="64" style="opacity: 1;"></rect><rect class="badstudent box" x="86.33333333333334" y="93" id="65" style="opacity: 1;"></rect><rect class="badstudent box" x="103" y="93" id="66" style="opacity: 1;"></rect><rect class="badstudent box" x="119.66666666666667" y="93" id="67" style="opacity: 1;"></rect><rect class="badstudent box" x="136.33333333333331" y="93" id="68" style="opacity: 1;"></rect><rect class="badstudent box" x="153" y="93" id="69" style="opacity: 1;"></rect><rect class="badstudent box" x="3" y="108" id="70" style="opacity: 1;"></rect><rect class="badstudent box" x="19.666666666666664" y="108" id="71" style="opacity: 1;"></rect><rect class="badstudent box" x="36.33333333333333" y="108" id="72" style="opacity: 1;"></rect><rect class="badstudent box" x="53" y="108" id="73" style="opacity: 1;"></rect><rect class="badstudent box" x="69.66666666666666" y="108" id="74" style="opacity: 1;"></rect><rect class="badstudent box" x="86.33333333333334" y="108" id="75" style="opacity: 1;"></rect><rect class="badstudent box" x="103" y="108" id="76" style="opacity: 1;"></rect><rect class="badstudent box" x="119.66666666666667" y="108" id="77" style="opacity: 1;"></rect><rect class="badstudent box" x="136.33333333333331" y="108" id="78" style="opacity: 1;"></rect><rect class="badstudent box" x="153" y="108" id="79" style="opacity: 1;"></rect><rect class="badstudent box" x="3" y="123" id="80" style="opacity: 1;"></rect><rect class="badstudent box" x="19.666666666666664" y="123" id="81" style="opacity: 1;"></rect><rect class="badstudent box" x="36.33333333333333" y="123" id="82" style="opacity: 1;"></rect><rect class="badstudent box" x="53" y="123" id="83" style="opacity: 1;"></rect><rect class="badstudent box" x="69.66666666666666" y="123" id="84" style="opacity: 1;"></rect><rect class="badstudent box" x="86.33333333333334" y="123" id="85" style="opacity: 1;"></rect><rect class="badstudent box" x="103" y="123" id="86" style="opacity: 1;"></rect><rect class="badstudent box" x="119.66666666666667" y="123" id="87" style="opacity: 1;"></rect><rect class="badstudent box" x="136.33333333333331" y="123" id="88" style="opacity: 1;"></rect><rect class="badstudent box" x="153" y="123" id="89" style="opacity: 1;"></rect><rect class="badstudent box" x="3" y="138" id="90" style="opacity: 1;"></rect><rect class="badstudent box" x="19.666666666666664" y="138" id="91" style="opacity: 1;"></rect><rect class="badstudent box" x="36.33333333333333" y="138" id="92" style="opacity: 1;"></rect><rect class="badstudent box" x="53" y="138" id="93" style="opacity: 1;"></rect><rect class="badstudent box" x="69.66666666666666" y="138" id="94" style="opacity: 1;"></rect><rect class="badstudent box" x="86.33333333333334" y="138" id="95" style="opacity: 1;"></rect><rect class="badstudent box" x="103" y="138" id="96" style="opacity: 1;"></rect><rect class="badstudent box" x="119.66666666666667" y="138" id="97" style="opacity: 1;"></rect><rect class="badstudent box" x="136.33333333333331" y="138" id="98" style="opacity: 1;"></rect><rect class="badstudent box" x="153" y="138" id="99" style="opacity: 1;"></rect></svg>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     </div>
 </div>
 
@@ -197,5 +1506,11 @@
 
 <script src="js/addHistogram.js"></script>
 <script src="js/addDistribution.js"></script>
+<script src="js/addFuture.js"></script>
+<script src="js/compress.js"></script>
+<script src="js/zoom.js"></script>
+
+
+
 </body>
 </html>

@@ -25,30 +25,30 @@
 
 /* Students getting bachelor in 3 years */
 .topstudent {
-    fill: var(--TopStudent);
+    fill: rgba(165, 214, 167, 1);
 }
 
 .selected.topstudent.box {
-    fill: var(--TopSelected);
+    fill: rgb(125, 214, 129);
 }
 
 .legend3 {
-    background-color: var(--TopStudent);
+    background-color: rgba(165, 214, 167, 1);
     width: 25%;
     text-align: center;
 }
 
 /* Students getting bachelor in 4 years */
 .middlestudent {
-    fill: var(--MiddleStudent);
+    fill: rgba(128, 222, 234, 1);
 }
 
 .selected.middlestudent.box {
-    fill: var(--MiddleSelected);
+    fill: rgb(83, 216, 232)
 }
 
 .legend4 {
-    background-color: var(--MiddleStudent);
+    background-color: rgba(128, 222, 234, 1);
     width: 25%;
     text-align: center;
 
@@ -56,15 +56,15 @@
 
 /* Students getting bachelor in 5 years */
 .lowstudent {
-    fill: var(--LowStudent);
+    fill: rgba(159, 168, 218, 1);
 }
 
 .selected.lowstudent.box {
-    fill: var(--LowSelected);
+    fill: rgb(119, 133, 215);
 }
 
 .legend5 {
-    background-color: var(--LowStudent);
+    background-color:rgba(159, 168, 218, 1);
     width: 25%;
     text-align: center;
 
@@ -72,15 +72,15 @@
 
 /* Students not getting bachelor */
 .badstudent {
-    fill: var(--BadStudent);
+    fill: rgba(255, 193, 227, 1);
 }
 
 .selected.badstudent.box {
-    fill: var(--BadSelected);
+    fill: rgb(246, 122, 190);
 }
 
 .legendnot {
-    background-color: var(--BadStudent);
+    background-color: rgba(255, 193, 227, 1);
     width: 25%;
     text-align: center;
 }
