@@ -14,7 +14,8 @@ $(document).ready(function () {
 	})
 
 	$('.flex-column').click(function (event) {
-		if(event.target === event.currentTarget){
+		var classTarget = $(event.target).attr('class');
+		if(event.target === event.currentTarget || classTarget === "vertical-title"  ){
 			let column = $(this);
 			column.find('.vertical-title').css('display', 'none');
 			let top = column.find('.top')[0];
