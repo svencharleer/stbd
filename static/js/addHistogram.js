@@ -2,17 +2,25 @@
 $(document).ready(function(){
 	$(".top-bar").click(function () {
 		event.stopPropagation();
-
 		let course = $(this).parent().parent();
-		let courseBottomQuery = $('.course-bottom');
-		let courseBottom = course.find(courseBottomQuery);
-		if (courseBottom.hasClass('open')){
-			courseBottom.removeClass('open')
-		}
-		else{
-			courseBottom.addClass('open')
+		let courseClass = course.attr('class');
+		let index = courseClass.indexOf('tolerable')
+		let column = course.parent().parent().parent().attr('class');
+		console.log(column);
+		console.log(index)
+		if (column != 'flex-column colfailed' || index != -1){
+			let courseBottomQuery = $('.course-bottom');
+			let courseBottom = course.find(courseBottomQuery);
+			if (courseBottom.hasClass('open')){
+				courseBottom.removeClass('open')
+			}
+			else{
+				courseBottom.addClass('open')
+			}
 		}
 	})
+
+	$("")
 
 
 
