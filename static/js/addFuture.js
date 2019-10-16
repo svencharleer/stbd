@@ -1,5 +1,6 @@
 
 $(document).ready(function(){
+	console.log('add units')
 	addUnitCharts()
 })
 
@@ -149,14 +150,14 @@ function makeProfileField(svg, numbers, border) {
 		})
 		.on('click', function () {
 
-		})
+		});
 
 	if (border) {
 		svg.attr('class', 'fieldborder');
 	}
 	else (
 		svg.attr('opacity', 0.6)
-	)
+	);
 
 	svg.selectAll('rect.profilebox')
 		.data(data)
@@ -165,8 +166,8 @@ function makeProfileField(svg, numbers, border) {
 		.attr('class', function (d) {
 			return calculateClass(d);
 		})
-		.attr('width', '8px')
-		.attr('height', '8px')
+		.attr('width', '10px')
+		.attr('height', '10px')
 		.attr('x', function (d) {
 			return x(d % 10) + margin;
 		})
