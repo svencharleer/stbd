@@ -1,6 +1,5 @@
 
 $(document).ready(function(){
-	console.log('add units')
 	addUnitCharts()
 })
 

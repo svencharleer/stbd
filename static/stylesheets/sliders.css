@@ -1,6 +1,4 @@
-.planning-slider{
 
-}
 
 .sliderInfo{
     display: flex;
@@ -34,38 +32,68 @@
     transition: opacity .2s;
 }
 
+.slider.first{
+    width: 85%;
+}
+
+.slider.semester{
+    width: 50%;
+    margin-left: 20%;
+}
+
 .slider:hover {
     opacity: 1;
 }
 
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background: #4CAF50;
-    cursor: pointer;
-}
 
 .slider::-moz-range-thumb {
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    background: #4CAF50;
     cursor: pointer;
+    background-color: rgba(165, 214, 167, 1);
 }
+
 input[type=range]::-moz-focus-outer {
     border: 0;
+}
+
+#plan1.slider::-moz-range-thumb {
+    width: 0px;
+    height: 0px;
+}
+
+#plan2.slider::-moz-range-thumb {
+    width: 0px;
+    height: 0px;
+}
+
+
+
+#plan4.slider::-moz-range-thumb {
+    background-color: rgba(128, 222, 234, 1);
+}
+
+#plan5.slider::-moz-range-thumb {
+    background-color: rgba(159, 168, 218, 1);
 }
 
 
 
 
 /*Background of slider*/
-input[type="range"]::-moz-range-progress {
-    background-color: #4CAF50;
+.slider::-moz-range-progress {
+    background-color: rgba(165, 214, 167, 1);;
 }
+
+#plan4.slider::-moz-range-progress {
+    background-color: rgba(128, 222, 234, 1);
+}
+
+#plan5.slider::-moz-range-progress {
+    background-color: rgba(159, 168, 218, 1);
+}
+
 
 /*input[type="range"]::-moz-range-track {*/
     /*background-color: blue;*/

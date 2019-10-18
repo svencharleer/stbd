@@ -4,11 +4,9 @@ $(document).ready(function(){
 		event.stopPropagation();
 		let course = $(this).parent().parent();
 		let courseClass = course.attr('class');
-		let index = courseClass.indexOf('tolerable')
 		let column = course.parent().parent().parent().attr('class');
 		console.log(column);
-		console.log(index)
-		if (column != 'flex-column colfailed' || index != -1){
+		if (column != 'flex-column colfailed'){
 			let courseBottomQuery = $('.course-bottom');
 			let courseBottom = course.find(courseBottomQuery);
 			if (courseBottom.hasClass('open')){
@@ -18,9 +16,23 @@ $(document).ready(function(){
 				courseBottom.addClass('open')
 			}
 		}
+		else{
+      let index1 = courseClass.indexOf('tolerable');
+      let index2 = courseClass.indexOf('tolerated');
+      if (index1 != -1 || index2 != -1) {
+        let courseBottomQuery = $('.course-bottom');
+        let courseBottom = course.find(courseBottomQuery);
+        if (courseBottom.hasClass('open')) {
+          courseBottom.removeClass('open')
+        }
+        else {
+          courseBottom.addClass('open')
+        }
+      }
+      
+    }
 	})
 
-	$("")
 
 
 

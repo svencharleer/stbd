@@ -71,7 +71,7 @@
 }
 
 .check-tolerate {
-    background-color: #81A8B8;
+    background-color: var(--Tolerated);
     align-self: flex-start;
     text-align: center;
     color: transparent;

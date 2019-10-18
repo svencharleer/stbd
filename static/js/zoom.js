@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	$('.course').click(function () {
+	$('.course').not('.failed-course').click(function () {
 		course = $(this);
 		if (course.hasClass('zoomed')){
 			course.removeClass('zoomed')
