@@ -7,7 +7,7 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "catty": "0.0.7",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.19",
     "meteor-node-stubs": "^0.2.11",
     "nouislider": "^10.1.0"
   }
